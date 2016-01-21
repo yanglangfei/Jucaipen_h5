@@ -31,6 +31,10 @@
 			var intoLive=document.getElementById("intoLive");
 			var touziIdea=document.getElementById("touziIdea");
 			var intoAsk=document.getElementById("intoAsk");
+			var intoIntroduce=document.getElementById("intoIntroduce");
+			var ask=document.getElementById("ask");
+			var attention=document.getElementById("attention");
+			var sign=document.getElementById("sign");
 			
 			<!--获取讲师详细信息-->
 			mui.ajax(teacherDetails,{
@@ -55,6 +59,7 @@
 				}
 			})
 			
+			//进入粉丝列表
 			fansList.addEventListener("tap",function(){
 				mui.openWindow({
 					url:"fansList.html",
@@ -64,6 +69,7 @@
 					}
 				})
 			})
+			//进入看盘直播
 			intoLive.addEventListener("tap",function(){
 				mui.openWindow({
 				url:"txtLive.html",
@@ -75,6 +81,7 @@
 				}
 				})
 			})
+			//进入投资观点
 			touziIdea.addEventListener("tap",function(){
 				mui.openWindow({
 					url:"intrvlIdea.html",
@@ -83,7 +90,8 @@
 						teacherId:id
 					}
 				})
-			})
+			}) 
+			//进入最新提问
 			intoAsk.addEventListener("tap",function(){
 				mui.openWindow({
 					url:"answerList.html",
@@ -92,7 +100,42 @@
 						teacherId:id
 					}
 				})
+			})
+			//进入讲师简介
+			intoIntroduce.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"teacherIntroduce.html",
+					id:"teacherIntroduce",
+					extras:{
+						introduce:introduce.innerText
+					}
+				})
+			})
+			
+			//关注讲师
+			attention.addEventListener("tap",function(){
 				
+				
+			})
+			//咨询名师
+			ask.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"askQuestion.html",
+					id:"askQuestion",
+					extras:{
+						teacherId:id
+					}
+				})
+			})
+			//签约
+			sign.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"choseQuace.html",
+					id:"choseQuace",
+					extras:{
+						teacherId:id
+					}
+				})
 			})
 			
 			
@@ -145,8 +188,8 @@
 								<h3>加入时间</h3><span><em id="joinDate"></em></span></li>
 							<li>
 								<h3>擅长领域</h3><span><em id="hody" style="white-space: nowrap;text-overflow: ellipsis;"> </em></span></li>
-							<li class="noborder">
-								<h3>名师简介</h3><span><a href="mingshi_detail.aspx?tearchId=4"><b id="introduce" style="height: 30px;white-space: nowrap;text-overflow: ellipsis;"></b><i><img src="image/into_next.png" /></i></a></span></li>
+							<li class="noborder" id="intoIntroduce">
+								<h3>名师简介</h3><span><a><b id="introduce" style="height: 30px;white-space: nowrap;text-overflow: ellipsis;"></b><i><img src="image/into_next.png" /></i></a></span></li>
 						</ul>
 
 					</div>
@@ -169,9 +212,9 @@
 
 				<div class="tearch_footer">
 					<ul>
-						<li><a><i><img src="image/zixun.png" /></i><em>咨询</em></a></li>
-						<li><a><i><img src="image/remarks.png" /></i><em>签约</em></a></li>
-						<li><a><i id="img_guanzhu"><img src="image/guanzhu.png" /></i><em>关注</em></a></li>
+						<li id="ask"><a><i><img src="image/zixun.png" /></i><em>咨询</em></a></li>
+						<li id="sign"><a><i><img src="image/remarks.png" /></i><em>签约</em></a></li>
+						<li id="attention"><a><i id="img_guanzhu"><img src="image/guanzhu.png" /></i><em>关注</em></a></li>
 					</ul>
 				</div>
 				<!------------底部定位层---------->

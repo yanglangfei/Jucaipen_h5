@@ -42,13 +42,24 @@
 				timeout:10000,
 				success: function(data){
 					for(var i=0;i<data.length;i++){
-					  ideaStr=ideaStr+"<div class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
+					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
                            +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
                            +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
                            +"<a><p>"+data[i].bodys+"</p></a></div>"
                         +"<div class='img_read'> <span><i><img src='image/hit.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
+					mui("#intrivlIdea").on("tap",".item",function(){
+						var id=this.getAttribute("id");
+						mui.openWindow({
+							url:"ideaDetail.html",
+							id:"ideaDetail",
+							extras:{
+								ideaId:id
+							}
+						})
+					})
+					
 				},
 				error: function(e){
 				}
@@ -67,13 +78,23 @@
 				timeout:10000,
 				success: function(data){
 					for(var i=0;i<data.length;i++){
-					  ideaStr=ideaStr+"<div class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
+					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
                            +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
                            +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
                            +"<a><p>"+data[i].bodys+"</p></a></div>"
                         +"<div class='img_read'> <span><i><img src='image/hit.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
+					mui("#intrivlIdea").on("tap",".item",function(){
+						var id=this.getAttribute("id");
+						mui.openWindow({
+							url:"ideaDetail.html",
+							id:"ideaDetail",
+							extras:{
+								ideaId:id
+							}
+						})
+					})
 				},
 				error: function(e){
 				}

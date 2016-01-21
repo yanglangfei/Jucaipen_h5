@@ -18,7 +18,21 @@
 		mui.plusReady(function(){
 			var askListPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
 			var askList=document.getElementById("askList");
-			<!--提问列表-->
+			var retAnswer=document.getElementById("retAnswer");
+			var web=plus.webview.currentWebview();
+			var retAsk=document.getElementById("retAsk")
+			var teacherId=web.teacherId;
+			if(teacherId>0){
+				//根据讲师ID获取提问列表
+				findByTeacherId();
+				
+			}else{
+				//获取全部的提问信息
+				findAll();
+			}
+			
+			function findAll(){
+			//获取全部提问列表
 			var askStr="";
 			mui.ajax(askListPath,{
 				data:{
@@ -38,9 +52,54 @@
 					askList.innerHTML=askStr;
 				},
 				error: function(e){
-					
 				}
-				
+			})
+			}
+			
+			
+			function findByTeacherId(){
+			//根据讲师ID获取提问列表
+			var askStr="";
+			mui.ajax(askListPath,{
+				data:{
+					isAll:1,
+					teacherId:teacherId,
+					page:1
+				},
+				type:"get",
+				dataType:"json",
+				timeout:10000,
+				success: function(data){
+					for(var i=0;i<data.length;i++){
+						askStr=askStr+"<div class='item'><div class='userhead'>"
+						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
+					+"<div class='content'><a><span class='u_name'>"+data[i].userName+"</span></a><span class='u_date'>"+data[i].insertDate+"</span>"
+						+"<div class='bodys'><a>"+data[i].askBodys+"</a></div><span class='type'>0人回答</span></div></div>"
+					}
+					askList.innerHTML=askStr;
+				},
+				error: function(e){
+				}
+			})
+			}
+			
+			
+			retAnswer.addEventListener("tap",function(){
+				//跳转最新回答
+				mui.openWindow({
+					url:"answerList.html",
+					id:"answerList",
+					extras:{
+						teacherId:teacherId
+					}
+				})
+			})
+			
+			retAsk.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"askList.html",
+				    id:"askList"
+				})
 			})
 			
 			
@@ -78,8 +137,8 @@
 			</header>
 			<!------------居中部分---------->
 			<div class="ask_type">
-				<a href="answerList.html">最新回答</a>
-				<a href="askList.html" class="def">最新提问</a>
+				<a id="retAnswer">最新回答</a>
+				<a id="retAsk" class="def">最新提问</a>
 			</div>
 			<!--------名家问答开始---------->
 			<div class="mingjiaask_wen_list " style="margin-top: 4.5rem" data-tid="0" id="askList">

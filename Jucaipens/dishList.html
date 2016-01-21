@@ -18,38 +18,78 @@
 			mui.plusReady(function() {
 				var dishList = document.getElementById("dishList");
 				var dishPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousDish";
-				<!--获取名师看盘信息-->
-				var dishStr = "";
-				mui.ajax(dishPath, {
-					data: {
-						page: 1
-					},
-					dataType: "json",
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						for (var i = 0; i < data.length; i++) {
-							dishStr = dishStr + "<div title="+data[i].nickName+" id="+data[i].id+" class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[昨日主题]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
-						}
-						dishList.innerHTML = dishStr;
-						mui("#dishList").on("tap",".item",function(){
-							var liveId=this.getAttribute("id");
-							var title=this.getAttribute("title");
-							mui.openWindow({
-								url:"txtLive.html",
-								id:"txtLive",
-								extras:{
-									liveId:liveId,
-									title:title,
-									querryType:0
-								}
-							})
-							
-						})
-					},
-					error: function(e) {
+				var txtlive_gd = document.getElementById("txtlive_gd");
+				var currentPage = 1;
+				var totlePage;
+				getDishList(currentPage);
+				//加载更多
+				txtlive_gd.addEventListener("tap", function() {
+					if (currentPage < totlePage) {
+						getDishList(++currentPage);
 					}
 				})
+
+				function getDishList(i) {
+					//获取名师看盘信息
+					var dishStr = dishList.innerText;
+					mui.ajax(dishPath, {
+						data: {
+							page: i
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							totlePage = data[0].totlePage;
+							for (var i = 0; i < data.length; i++) {
+								dishStr = dishStr + "<div type=" + data[i].liveType + " title=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[昨日主题]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
+							}
+							dishList.innerHTML = dishStr;
+							mui("#dishList").on("tap", ".item", function() {
+								var liveId = this.getAttribute("id");
+								var title = this.getAttribute("title");
+								var type = this.getAttribute("type");
+								if (type == 1) {
+									//免费直播
+									intoTxtLive(liveId,title);
+								}else{
+									//收费直播
+									//intoPayRoom(liveId);
+									alert("需要");
+								//	plus.nativeUI.alert("需要购买才能进入",null,"title","确定");
+									var UIAlertView=plus.ios.importClass("UIAlertView");
+									var view=new UIAlertView();
+									view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("标题","需要购买才能进入",null,"确定",null);
+									//view.show();
+								}
+							})
+						},
+						error: function(e) {}
+					})
+				}
+                 
+                 //进入直播间
+				function intoTxtLive(lId,t) {
+					mui.openWindow({
+						url: "txtLive.html",
+						id: "txtLive",
+						extras: {
+							liveId: lId,
+							title: t,
+							querryType: 0
+						}
+					})
+				}
+				//进入支付页面
+				function intoPayRoom(lId){
+					mui.openWindow({
+						url:"purchAndSign.html",
+						id:"purchAndSign"
+					})
+				}
+				
+				
+				
 			})
 		</script>
 	</head>
@@ -57,6 +97,8 @@
 	<body>
 		<div class="wrapper">
 			<!------------头部--------------->
+			
+			
 
 			<header class="header">
 				<div class="head">
@@ -72,6 +114,10 @@
 					</div>
 				</div>
 			</header>
+			<div id="popover" class="mui-popover">
+				jooijoijo
+				<button type="button" class="mui-btn mui-btn-blue">按钮</button>
+				</div>
 
 			<!------------居中部分---------->
 			<!------------热门观点开始---------->
@@ -82,7 +128,7 @@
 				<!------------------------->
 			</div>
 			<div class="linkmore">
-				<a href="javascript:void(0)" id="txtlive_gd">更多>></a>
+				<a id="txtlive_gd">更多>></a>
 			</div>
 			<!--------热门观点结束---------->
 

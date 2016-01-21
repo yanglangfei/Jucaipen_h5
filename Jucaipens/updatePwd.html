@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var oldPwd=document.getElementById("oldPwd");
+      		var newPwd=document.getElementById("newPwd");
+      		var surePwd=document.getElementById("surePwd");
+      		var update=document.getElementById("update");
+      		var uId=plus.storage.getItem("userId");
+      		var url="http://192.168.1.60:8080/AccumulateWealth/jucaipen/updatePwd";
+      		
+      		update.addEventListener("tap",function(){
+      			
+      			if(uId<=0){
+      			plus.nativeUI.toast("请先登录");
+      			return ;
+      	      	}
+      		   if(newPwd.value.length<6||surePwd.value.length<6){
+      			plus.nativeUI.toast("密码长度必须是6-23位");
+      			return ;
+      		   }   
+      		   if(newPwd.value!=surePwd.value){
+      		     	plus.nativeUI.toast("两次密码必须一致");
+      			  return ;
+      		    }
+      			mui.ajax(url,{
+      				data:{
+      					userId:uId,
+      					oldPwd:oldPwd.value,
+      					newPwd:newPwd.value,
+      					repPwd:surePwd.value
+      				},
+      				dataType:"json",
+      				type:"post",
+      				timeout:10000,
+      				success: function(data){
+      					if(data.ret_code==0){
+      						plus.nativeUI.toast("密码修改成功");
+      						mui.back();
+      					}else{
+      						plus.nativeUI.toast(data.err_msg);
+      					}
+      				},
+      				error: function(e){
+      					
+      				}
+      			});
+      		});
+      		
+      	})
+    </script>
+    <style type="text/css">
+    	 #head{
+    	 	background: #CF2D28;
+    	 }
+    </style>
+    <style type="text/css">
+    	.mui-content{
+    		margin: 12px;
+    	}
+    	#update{
+    		background: #CF2D28;
+    		color: white;
+    		margin-top: 12px; 
+    	}
+    
+    	#update:active{
+    		background: #DD524D; 
+    	}
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" id="head">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="color: white;">修改密码</h1>
+</header>
+<div class="mui-content">
+    <form class="mui-input-group">
+    <div class="mui-input-row">
+    	<label>旧密码</label>
+     <input type="password" class="mui-input-clear" id="oldPwd"/>
+    </div>
+    <div class="mui-input-row">
+    	<label>新密码</label>
+     <input type="password" class="mui-input-clear" id="newPwd"/>
+    </div>
+    <div class="mui-input-row">
+    	<label>确认密码</label>
+     <input type="password" class="mui-input-clear" id="surePwd"/>
+    </div>
+    </form>
+    <button type="button" class="mui-btn-block" id="update">确认</button>
+</div>
+	
+</body>
+</html>

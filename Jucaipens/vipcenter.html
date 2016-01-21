@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+	作者：185601452@qq.com
+	时间：2016-01-07
+	描述：会员中心
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      mui.plusReady(function(){
+      	var abord=document.getElementById("abord");
+      	abord.addEventListener("tap",function(){
+      		plus.storage.setItem("userId",-1+"");
+      		mui.back();
+      	});
+      	
+      	 mui(".mui-table-view").on("tap",".mui-table-view-cell",function(){
+      	   var attr=this.getAttribute("id");
+      	   if(attr=="user"){
+      	   	mui.openWindow({
+      	   		url:"userInfo.html",
+      	   		id:"user"
+      	   	});
+      	   }else if(attr=="updatePwd"){
+      	   	mui.openWindow({
+      	   		url:"updatePwd.html",
+      	   		id:"updatePwd"
+      	   	});
+      	   }else if(attr=="bind"){
+      	   	mui.openWindow({
+      	   		url:"bindAccount.html",
+      	   		id:"bindAccount"
+      	   	});
+      	   }else if(attr=="vip-service"){
+      	   	mui.openWindow({
+      	   		url:"vipService.html",
+      	   		id:"vipService"
+      	   	});
+      	   }else if(attr=="collect-remark"){
+      	   	mui.openWindow({
+      	   		  	url:"CollectAndComment.html",
+      	          	id:"collect-comment"
+      	   	});
+      	   }else if(attr=="order"){
+      	   	mui.openWindow({
+      	   		url:"myOrder.html",
+      	   		id:"myOrder"
+      	   	});
+      	   }else if(attr=="infoCenter"){
+      	   	mui.openWindow({
+      	   		url:"infoCenter.html",
+      	   		id:"infoCenter"
+      	   	});
+      	   }
+      });
+      
+      
+      });
+     
+      	
+    </script>
+    <style type="text/css">
+    .mui-content{
+     margin: 12px 10px 0 10px;
+    }
+    #abord{
+    	margin-top: 15px;
+    	background: #CF2D28;
+    	color: white;
+    }
+    #abord:active{
+    	background: #DD524D;
+    }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="color: white;">会员中心</h1>
+    
+</header>
+ <div class="mui-content">
+     <form class="mui-input-group">
+             <ul class="mui-table-view">
+                 <li class="mui-table-view-cell" id="user">
+                     <a class="mui-navigate-right">
+                          个人资料
+                     </a>
+                 </li>
+                 <li class="mui-table-view-cell" id="updatePwd">
+                     <a class="mui-navigate-right">
+                          修改密码
+                     </a>
+                 </li>
+                 <li class="mui-table-view-cell" id="bind">
+                     <a class="mui-navigate-right">
+                          账号绑定
+                     </a>
+                 </li>
+                 <li class="mui-table-view-cell" id="vip-service">
+                     <a class="mui-navigate-right">
+                          会员服务
+                     </a>
+                 </li>
+                 <li class="mui-table-view-cell" id="collect-remark">
+                     <a class="mui-navigate-right">
+                          我的收藏／评论
+                     </a>
+                 </li>
+                 <li class="mui-table-view-cell" id="order">
+                     <a class="mui-navigate-right">
+                          我的预约
+                     </a>
+                 </li>
+                 <li class="mui-table-view-cell" id="infoCenter">
+                     <a class="mui-navigate-right">
+                          消息中心
+                     </a>
+                 </li>
+             </ul>
+     </form>
+     <button type="button" class="mui-btn mui-btn-block"  id="abord">退出当前账号</button>
+ </div>
+ 
+  
+  
+   
+	
+</body>
+      
+</html>

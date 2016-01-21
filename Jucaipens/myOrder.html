@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var order=document.getElementById("data-order");
+      		var id=plus.storage.getItem("userId");
+      		if(id<=0){
+      			plus.ui.toast("请先登录");
+      			return ;
+      		}
+      		var orderStr="";
+      		mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/myOrder",{
+      			data:{
+      				userId:id,
+      				pager:1
+      			},
+      			type:"get",
+      			dataType:"json",
+      			timeout:10000,
+      			success: function(data){
+      				for(var i=0;i<data.length;i++){
+      					orderStr=orderStr+"<li class='mui-table-view-cell'>"
+                    +"<label>"+data[i].equityName+"</label><br />"
+                   +" <label>"+data[i].trueName+"</label><br>"
+                    	 +"<label> 联系方式:"+data[i].mobileNum+"</label><br />"
+                    +"<label> 投资金额:"+data[i].touziMoney+"</label><br />"
+                    +"<label>备注说明:"+data[i].remark+"</label><br />"
+                    +"<label>预约时间:"+data[i].insertDate+"</label><br /></li>"
+      				}
+      				order.innerHTML=orderStr;
+      			},
+      			error: function(e){
+      				
+      			}
+      		})
+      	})
+    </script>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="color: white;">我的预约</h1>
+</header>
+<div class="mui-content">
+    <div class="mui-card">
+        <ul class="mui-table-view" id="data-order">     
+           
+        </ul>
+    </div>
+</div>
+	
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+   <link href="css/style.css" rel="stylesheet" type="text/css" />
+   <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var web=plus.webview.currentWebview();
+      		var get_video="http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
+      		var getVideoInfo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoDetaile";
+      		var add_remark="http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
+      	    var querry_comm='http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
+      		var video=document.getElementById("video");
+      		 var teach=document.getElementById("teachInfo");
+      		 var commBody=document.getElementById("commBody");
+      		 var video_comment=document.getElementById("video-comment");
+      		 var videoTitle=document.getElementById("show_Video_title");
+      		 var hitCount=document.getElementById("show_Video_hitCount");
+      		 var showDate=document.getElementById("show_Video_InsertDate");
+      		 var commList=document.getElementById("page_commenlist");
+      		 var plain=document.getElementById("plain");
+      		 var commCount=document.getElementById("show_Video_CommCount");
+      		var id=web.liveId;
+      		if(id<=0){
+      			return ;
+      		}
+      		<!--获取视频资源-->
+      		mui.ajax(get_video,{
+      			data:{
+      				typeId:1,
+      				id:id
+      			},
+      			dataType:"json",
+      			type:"get",
+      			timeout:10000,
+      			success: function(data){
+      				video.src=data.videoUrl;
+      			},
+      			error: function(e){
+      				
+      			}
+      		})
+      		<!--获取视频相关信息-->
+      		mui.ajax(getVideoInfo,{
+      			data:{
+      				videoId:id
+      			},
+      			type:"get",
+      			dataType:"json",
+      			timeout:10000,
+      			success: function(data){
+   	                  videoTitle.innerHTML=data.title;
+   	                  hitCount.innerHTML=data.hitCount;
+   	                  showDate.innerHTML=data.insertDate;
+   	                  plain.innerHTML=data.title;
+      			},
+      			error: function(e){
+      			}
+      		})
+      		/*send.addEventListener("tap",function(){
+      			var uId=plus.storage.getItem("userId");
+
+      			if(commBody.value.length<=0){
+      				plus.nativeUI.toast("评论内容不能为空");
+      				return ;
+      			}
+      			
+      			if(uId<=0){
+      				mui.openWindow({
+      					url:"login.html",
+      					id:"login"
+      				})
+      				return ;
+      			}
+      			mui.ajax(add_remark,{
+      				data:{
+      					typeId:1,
+      					userId:uId,
+      					classId:0,
+      					newsId:id,
+      					bodys:commBody.value
+      				},
+      				dataType:"json",
+      				type:"get",
+      				timeout:10000,
+      				success: function(data){
+      					if(data.ret_code==0){
+      						plus.nativeUI.toast("评论发表成功");
+      					}else{
+      						plus.nativeUI.toast(data.err_msg);
+      					}
+      				},error: function(e){
+      					plus.nativeUI.toast("连接失败");
+      				}
+      				
+      			})
+      		})*/
+      		<!--获取评论列表-->
+      		var commUrl="";
+      		mui.ajax(querry_comm,{
+      			data:{
+      				typeId:1,
+      				id:id,
+      				pager:1
+      			},
+      			dataType:"json",
+      			type:"get",
+      			timeout:10000,
+      			success: function(data){
+      				commCount.innerHTML="共"+data.length+"条";
+      				for(var i=0;i<data.length;i++){
+    	                      commUrl=commUrl+" <li><div class='userhead'><img src="+data[i].userLogo+"></div>"
+                        +" <div class='vItem'> <h4> <span class='name'>"+data[i].userName+"</span>"
+                        +" <span class='good'><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em>0</em></a></span>"
+                         +"  <span class='comm'><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>"
+                       +" </h4><span class='bodys'>"+data[i].body+" </span> <span class='date'>"+data[i].insertDate+"</span>"
+                        +"</div></li>"
+    	                      	  }
+    	                      	   commList.innerHTML=commUrl;
+      			},
+      			error: function(e){
+      				
+      			}
+      		})
+      		
+      		
+      		
+      	})
+    </script>
+    
+    <style type="text/css">
+    	html{
+    		  overflow-x: hidden;
+    	}
+    	body{
+    		overflow-x: hidden;
+    	}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="head">
+           <div class="fanhui">返回</div>
+           <div class="denglu1 mui-action-back">
+              <a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+           </div>
+           <div class="logo1">
+              <span>线下会场</span>
+           </div>
+         
+           <div class="sousuo1">
+              <a><img src="image/index.png" /></a>
+           </div>
+        </div>
+     </header> 
+   <div class="mui-content" style="width: 100%;">
+   	 <div id="show_Video_url" class="showvideo_player">
+         	<iframe id="video"  frameborder='0' style="width: 100%;"></iframe>
+         </div>
+   	
+   	
+   	
+   	<div class="mui-slider">
+   		
+   	    <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+   	        <a class="mui-control-item" href="#item1">视频详情</a>
+   	        <a class="mui-control-item" href="#item2">讲师信息</a>
+   	        <a class="mui-control-item" href="#item3">评论</a>
+
+   	    </div>
+   	    <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+   	    <div class="mui-slider-group">
+   	        <div  class="mui-slider-item mui-control-content mui-active" >
+   	        	<div id="videoDetaile"   style="margin: 10px;">
+   	        		<ul>
+           	<h3 id="show_Video_title"></h3>
+            <li>
+            	<span class="play"><i><img src="image/kaishi.png" style="width: 15px;height: 15px;"></i><em id="show_Video_hitCount" style="margin-left: 10px;"></em></span>
+            </li>
+            <li>
+            	<span>更新：<em id="show_Video_InsertDate"></em></span>
+            </li>
+              <li>
+            	<span>栏目：<em id="show_Video_ClassName">线下会场</em></span>
+            </li>
+             <li>
+                <p id="show_Video_Body"><span style="white-space:nowrap;" id="plain"></span></p>
+            </li>
+        </ul>
+        
+        
+   	        	</div>
+   	           
+   	        </div>
+   	        <div  class="mui-slider-item mui-control-content" id="teachInfo" >
+   	          <div class="show_videoinfo_detail showvideoinfo_Div"  id="showvideoinfo_2">
+        <ul>
+             <li>
+            	<span>主讲：<em id="show_Video_TearcherName">讲师名称</em></span>
+            </li>
+             <li>
+                <p id="show_Video_TeacherBodys">讲师简介</p>
+            </li>
+        </ul>
+        </div>
+   	        </div>
+   	        
+   	        
+   	        <!-------评论-------------->
+   	         <div  class="mui-slider-item mui-control-content" id="videoComment" style="width: 100%; height: 100%;">
+   	              
+   	              <div class="show_videoinfo_pl showvideoinfo_Div" id="showvideoinfo_3">
+         	   <h3><em>评论</em><i id="show_Video_CommCount"></i></h3>
+            	<ul>
+              	<li>
+                	<div class="userhead"><img src="image/head.png"></div>
+                    <div class="form">
+                    	<a href="javascript:;" class="showinput">我来说两句</a>
+                    </div>
+                </li></ul>
+                
+             <ul id="page_commenlist">
+            </ul>
+            <a href="javascript:;" class="morepinglun">更多</a>
+           
+         </div>
+   	              
+   	              
+   	              
+   	        </div>
+   	    
+   	    </div>
+   	</div>
+   	
+   	
+   
+   	
+   	
+   	
+   	
+   </div>
+	
+</body>
+</html>

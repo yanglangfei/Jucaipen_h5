@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><link href="css/style.css" rel="stylesheet" type="text/css" /><link href="css/tuch.css" rel="stylesheet" type="text/css" />
+    <title></title>
+   	<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+     	
+    <script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      mui.init();mui.plusReady(function(){
+        var simuEquity="http://121.40.227.121:8080/AccumulateWealth/accumulate/equityNews";
+        var equityKnowlege="http://121.40.227.121:8080/AccumulateWealth/accumulate/knowledgeOwnership";
+        var equityRepoter="http://121.40.227.121:8080/AccumulateWealth/accumulate/equityReport";
+        var konw=document.getElementById("data-knowlege");
+     	var equityNews=document.getElementById("equityNews");
+     	var repoter=document.getElementById("data-repoter");
+     	<!--私募股权要闻-->
+     	var simuStr="";
+     	mui.ajax(simuEquity,{
+     		data:{
+     			type:1
+     		},
+     		type:"get",
+     		dataType:"json",
+     		timeout:10000,
+     		success: function(data){
+     			for(var i=0;i<data.length;i++){
+     				simuStr=simuStr+ "<li id="+data[i].id+">•<a >"+data[i].title+"</a></li>";
+     			}
+     			equityNews.innerHTML=simuStr;
+     			mui("#equityNews").on("tap","li",function(){
+     				var nId=this.getAttribute("id");
+     				mui.openWindow({
+     					url:"newsDetail.html",
+     					id:"newsDetail",
+     					extras:{
+     						newsId:nId
+     					}
+     				})
+     			})
+     			
+     			
+     		},
+     		error: function(e){
+     			
+     		}
+     	});
+     	<!--私募股权知识-->
+     	var knowStr="";
+     	mui.ajax(equityKnowlege,{
+     		data:{
+     			type:1
+     		},
+     		type:"get",
+     		dataType:"json",
+     		timeout:10000,
+     		success: function(data){
+     			for(var i=0;i<data.length;i++){
+     				knowStr=knowStr+"  <li id="+data[i].id+">•<a href=''>"+data[i].title+"</a></li>";
+     			}
+     			konw.innerHTML=knowStr;
+     			mui("#data-knowlege").on("tap","li",function(){
+     				var nId=this.getAttribute("id");
+     				mui.openWindow({
+     					url:"newsDetail.html",
+     				id: "newsDetaile",
+     				extras:{
+     					newsId:nId
+     				}
+     				})
+     			})
+     		},
+     		error: function(e){
+     		}
+     	});
+     	<!--私募股权报告-->
+     	 var reportStr="";
+     	 mui.ajax(equityKnowlege,{
+     	 	data:{
+     	 		type:1
+     	 	},
+     	 	type:"get",
+     	 	dataType:"json",
+     	 	timeout:10000,
+     	 	success: function(data){
+     	 		for(var i=0;i<data.length;i++){
+     	 			reportStr=reportStr+" <li id="+data[i].id+">•<a>"+data[i].title+"</a></li>";
+     	 		}
+     	 		repoter.innerHTML=reportStr;
+     	 		mui("#data-repoter").on("tap","li",function(){
+     				var nId=this.getAttribute("id");
+     				mui.openWindow({
+     					url:"newsDetail.html",
+     				id: "newsDetaile",
+     				extras:{
+     					newsId:nId
+     				}
+     				})
+     			})
+     	 	},
+     	 	error: function(e){
+     	 		
+     	 	}
+     	 });
+     	
+
+      })
+    </script>
+
+</head>
+<body>
+
+   <div class="wrapper">
+     <!------------头部--------------->
+
+     <header class="header">
+        <div class="head">
+           <div class="fanhui">返回</div>
+           <div id="pageTop1_show_login_link" class="denglu"> <a href="login.html"><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
+           <div class="logo">
+              <a><img src="image/huanyings.png" style="width: 40px;height: 40px;" /></a>
+           </div>
+           <div class="sousuo">
+              <a href="#"><img src="image/index.png" /></a>
+           </div>
+        </div>
+     </header> 
+           <!------------理财栏目---------->
+           <div class="licai_fixed">
+              <ul>
+                  <li><a href="hotIdea.html" class="def">私募股权</a></li>
+                  <li><a href="simu.html">阳光私募</a></li>
+                  <li><a href="trhreeBoard.html">新三板</a></li>
+                  
+              </ul>
+           </div>
+           <div class="lcxm">
+             <div class="lcxmcenter">
+                <div class="smgq">
+                <!--------------------私募股权项目----------------------------->
+                   <div class="xiangmu">
+                      <div class="xiangmu_t">
+                         <h3>私募股权项目</h3>
+                         <a>更多</a>
+                      </div>
+                      <div class="xiangmu_b">
+                         <ul>
+                         </ul>
+                      </div>
+                   </div>
+                   <!------------------------私募股权要闻------------------------->
+                   <div class="yaowen">
+                      <div class="xiangmu_t">
+                         <h3>私募股权要闻</h3>
+                         <a>更多</a>
+                      </div>
+                       <div class="zhishi_b">
+                         <ul id="equityNews">
+                         </ul>
+                      </div>
+                   </div>
+                   <!------------------------私募股权知识------------------------->
+                   <div class="zhishi">
+                      <div class="xiangmu_t">
+                         <h3>私募股权知识</h3>
+                         <a >更多</a>
+                      </div>
+                      <div class="zhishi_b">
+                         <ul id="data-knowlege">
+                         </ul>
+                      </div>
+                   </div>
+                   <!------------------------私募股权报告------------------------->
+                   <div class="baogao">
+                      <div class="xiangmu_t">
+                         <h3>私募股权报告</h3>
+                         <a>更多</a>
+                      </div>
+                       <div class="zhishi_b">
+                         <ul id="data-repoter">
+                         </ul>
+                      </div>
+                   </div>
+                </div>
+             </div>
+           </div>
+            
+        <!------------底部定位层---------->
+   
+ <footer class="footer">
+           <div class="foot">
+              <div class="footcenter">
+              <ul>
+                  <li><a href="index.html"><span><img src="image/indexnormal.png" /></span></a></li>
+                  <li><a href="hotIdea.html"><span><img src="image/licaipress.png" /></span></a></li>
+                  <li class="menu"><a href="liveList.html"><span><img src="image/livenormal.png" /></span></a>
+                  <li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
+                  <li><a href="famousDish.html"><span><img src="image/classnormal.png" /></span></a></li>
+              </ul>
+              </div>
+           </div>
+        </footer>
+  </div>
+</body>
+</html>

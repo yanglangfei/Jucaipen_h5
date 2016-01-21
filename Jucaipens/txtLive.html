@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<script src="js/mingjia.js" type="text/javascript"></script>
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var livePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/todayIdeas";
+				var web = plus.webview.currentWebview();
+				var typeId=web.querryType;
+				var liveTitle = document.getElementById("liveTitle");
+				var todayLive=document.getElementById("todatLive");
+				var today=document.getElementById("toady");
+				var communite=document.getElementById("communite");
+				var title = web.title;
+				var liveId;
+				liveTitle.innerText = title + "直播室";
+				<!--获取今日直播信息-->
+				var todayStr="";
+				if(typeId==0){
+					liveId=web.liveId;
+					findByLiveId();
+				}else{
+					findByTeacherId();
+				}
+			
+				today.addEventListener("tap",function(){
+					mui.openWindow({
+						url:"txtLive.html",
+						id:"txtLive"
+					})
+					
+				})
+				communite.addEventListener("tap",function(){
+					mui.openWindow({
+						url:"communite.html",
+						id:"communite",
+						extras:{
+							liveId:liveId,
+							title:title
+						}
+					})
+					
+				})
+				
+				function findByLiveId(){
+					mui.ajax(livePath, {
+					data: {
+						querryType: typeId,
+						liveId: web.liveId,
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						for(var i=0;i<data.length;i++){
+							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date'>"+data[i].insertDate+"</span></li>"
+					+"</ul><div class='content'><div>"+data[i].bodys+"</div><div><br></div></div></div>";
+						}
+						todayLive.innerHTML=todayStr;
+					},
+					error: function(e) {
+					}
+				})
+				}
+				function findByTeacherId(){
+					
+					mui.ajax(livePath, {
+					data: {
+						querryType: typeId,
+						teacherId: web.teacherId,
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						for(var i=0;i<data.length;i++){
+							liveId=data[i].relete_liveId;
+							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date'>"+data[i].insertDate+"</span></li>"
+					+"</ul><div class='content'><div>"+data[i].bodys+"</div><div><br></div></div></div>";
+						}
+						todayLive.innerHTML=todayStr;
+					},
+					error: function(e) {
+					}
+				})
+				
+					
+				}
+				
+				
+				
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div class="fanhui">返回</div>
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+					</div>
+					<div class="logo1">
+						<span id="liveTitle"></span>
+					</div>
+					<div class="sousuo1">
+						<a><img src="image/index.png" /></a>
+					</div>
+				</div>
+			</header>
+			<!------------居中部分---------->
+			<div class="ask_type ">
+				<a id="toady"   class="def">今日观点</a>
+				<a id="communite">交流区</a>
+			</div>
+			<!------------热门观点开始---------->
+			<div class="liveimglist" id="todatLive">
+				<!------------------------->
+
+			
+
+				<!------------------------->
+			</div>
+			<!--------热门观点结束---------->
+			<div class="linkmore">
+				<a class="liveing_gengduo" href="javascript:void(0)">更多>></a>
+			</div>
+			<!------------底部定位层---------->
+			<div class="layer_img" id="layer_img" style="display:none;padding:0px;margin:0px;">
+				<img id="img_l" src="http://img.jucaipen.com//jucaipenUpload/2015/10/9/201510916536.jpg" />
+				<h5 style="width:100%;text-align:center;padding:0 0 5px 0;color:#808080;font-weight:100;font-size:0.8em;">图片来源：聚财盆财富网</h5>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title></title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var page = document.getElementById('pager');
+				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
+				var teacherList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
+				var teacherQuestion="http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion";
+				var sumData="http://121.40.227.121:8080/AccumulateWealth/jucaipen/indexStatisticsData";
+				var hotIdeas = document.getElementById("data-hotIdeas");
+				var intoLogin = document.getElementById("pageTop1_show_login_link");
+				var uId = plus.storage.getItem("userId");
+				var famousList = document.getElementById("famousList");
+				var question=document.getElementById("data-question");
+				var renqi=document.getElementById("renqi");
+				var answerCount=document.getElementById("answerCount");
+				var ideaCount=document.getElementById("ideaCount");
+				var fans=document.getElementById("fans");
+				var dish=document.getElementById("dish");
+				var intoAsk=document.getElementById("intoAsk");
+				var intrial=document.getElementById("intrialIdea");
+				var findTeacher=document.getElementById("findTeacher");
+				<!--获取广告-->
+				var url = "";
+				mui.ajax(queryAdice, {
+					data: {
+						type: 1
+					},
+					dataType: 'json',
+					type: "get",
+					timeout: 10000,
+					success: function(data) {
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " /></a></div>";
+						for (var i = 0; i < data.length; i++) {
+							var imageUrl = data[i].imageUrl;
+							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " /></a></div>";
+						}
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " /></a></div>";
+						page.innerHTML = url;
+					},
+					error: function(e) {}
+				});
+				<!--热门观点-->
+				var hotUrl = '';
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList", {
+						data: {
+							whichPage: 0,
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								hotUrl = hotUrl + "<li  id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  style='width:50px;height:50px;'/></a></span> " + " <div><h3>" + data[i].title + "</h3><lable style='width:100%;height:100px;overflow:hidden;float:right;  white-space: nowrap;text-overflow: ellipsis;'>" + data[i].bodys+ "</lable></div> </li>";
+							}
+							hotIdeas.innerHTML = hotUrl;
+							mui("#data-hotIdeas").on("tap", "li", function() {
+								var iId = this.getAttribute("id");
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: iId
+									}
+								})
+							})
+						},
+						error: function(e) {}
+					})
+					<!--推荐名师-->
+				var teacherStr = "";
+				mui.ajax(teacherList, {
+					data: {
+						whichPage: 0
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						for (var i = 0; i < data.length; i++) {
+						  teacherStr=teacherStr+"  <div id="+data[i].id+" class='item'><a><span>"
+                              +"  <img src="+data[i].headFace+"></span></a>"
+                            +"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
+                            +"</a><em>"+ data[i].level +"</em><a> <p id='introduce'>"+ strSub(data[i].introduce) +"</p>"
+                            +"</a> </div>";
+						}
+						famousList.innerHTML = teacherStr;
+						mui("#famousList").on("tap",".item",function(){
+							var tId=this.getAttribute("id");
+							mui.openWindow({
+								url:"teacherDetail.html",
+								id:"teacherDetail",
+								extras:{
+									teacherId:tId
+								}
+							})
+							
+						})
+					
+					},
+					error: function(e) {
+					}
+				})
+				<!--名师问答-->
+				var questionStr="";
+				mui.ajax(teacherQuestion,{
+					data:{
+						whichPage:0
+					},
+					type:"get",
+					dataType:"json",
+					timeout:10000,
+					success: function(data){
+						for(var i=0;i<data.length;i++){
+							questionStr=questionStr+"<div class='item'><div class='huida'><a><span>"
+                            +"<img src="+data[i].headFace+"></span></a><div class='name'>"
+						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
+						+"</a><em>"+data[i].level+"</em></div><a class='ask'>咨询</a></div><div class='wen'>"
+					+"<span> <img src='image/askInfo.png'></span><p><a>"+data[i].askName+":</a>"
+						+"<a style='color: #666'>"+data[i].askBody+"</a></p><em>已回答</em></div>"
+				+"<div class='huida_body'>"+data[i].answerBody+"</div></div>"
+						}
+						question.innerHTML=questionStr;
+					},
+					error: function(e){
+						
+					}
+				})
+				<!--获取首页统计数据-->
+				mui.ajax(sumData,{
+					type:"get",
+					dataType:"json",
+					timeout:10000,
+					success: function(data){
+						renqi.innerText="人气："+data.renQi+"人";
+						answerCount.innerText="回答:"+data.answerCount+"个";
+						ideaCount.innerText="观点："+data.ideas+"篇";
+						fans.innerText="粉丝："+data.fans+"人";
+					},
+					error: function(e){
+						
+					}
+				})
+				
+				dish.addEventListener("tap",function(){
+					mui.openWindow({
+						url:"dishList.html",
+						id:"dishList"
+					})
+					
+				})
+				
+				intoAsk.addEventListener("tap",function(){
+					mui.openWindow({
+						url:"answerList.html",
+				      	id:"answerList"
+					})
+					
+				})
+				
+				intrial.addEventListener("tap",function(){
+					mui.openWindow({
+						url:"intrvlIdea.html",
+						id:"intrvlIdea"
+					})
+				})
+				findTeacher.addEventListener("tap",function(){
+					mui.openWindow({
+						url:"teacherList.html",
+						id:"teacherList" 
+					})
+				})
+				
+				
+				intoLogin.addEventListener("tap", function() {
+					if (uId > 0) {
+						mui.openWindow({
+							url: "vipCenter.html",
+							id: "vipCenter"
+						})
+					} else {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+					}
+				})
+				
+				function strSub(str){
+					if(str.length>50){
+						str=str.substring(0,50)+"...";
+					}
+					return str;
+				}
+				
+				
+			})
+		</script>
+
+		<style type="text/css">
+			.mj_menu {
+				width: 100%;
+				float: left;
+			}
+			.mj_menu a p {
+				display: block;
+				float: left;
+				width: 32%;
+				padding-left: 3%;
+			}
+			
+			.mj_menu a p img {
+				width: 100%;
+			}
+			
+			.mj_menu a h3 {
+				width: 65%;
+				float: left;
+				font-size: 1.1rem;
+				font-weight: normal;
+				display: block;
+				line-height: 1.5rem;
+				margin-top: 0.6rem;
+				text-indent: 0.2rem;
+				color: #333;
+			}
+			
+			.mj_menu a span {
+				display: block;
+				float: left;
+				width: 65%;
+				font-size: 0.8rem;
+				color: #999;
+				text-indent: 0.3rem;
+			}
+			
+			.mj_menu a {
+				width: 50%;
+				float: left;
+				border-bottom: 1px solid #EBEBEB;
+				padding-top: 0.5rem;
+				display: block;
+				background: #FFF none repeat scroll 0% 0%;
+			}
+			
+			
+		
+		</style>
+	</head>
+
+	<body>
+
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div class="fanhui">返回</div>
+					<div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
+					<div class="logo">
+						<a><img src="image/huanyings.png" style="width: 40px; height: 40px;" /></a>
+					</div>
+
+					<div class="sousuo">
+						<a href="#"><img src="image/index.png" /></a>
+					</div>
+				</div>
+			</header>
+			<!------------首页轮播图---------->
+			<div class="banner">
+				<div id="focus" class="focus region" style="float: left">
+					<!-- 轮播图 -->
+					<div class="bd">
+						<div class="mui-slider">
+							<div class="mui-slider-group mui-slider-loop" id="pager">
+								<!--广告-->
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<!------------导航---------->
+
+			<div class="mj_menu">
+				<a class="left_border" id="dish">
+					<p>
+						<img src="image/lookimage.png" /></p>
+					<h3>名师看盘</h3>
+					<span id="renqi"></span>
+				</a>
+				<a  id="intoAsk">
+					<p>
+						<img src="image/answerimage.png" /></p>
+					<h3>名家问答</h3>
+					<span id="answerCount"></span>
+				</a>
+				<a class="left_border" id="intrialIdea">
+					<p>
+						<img src="image/seeimage.png" /></p>
+					<h3>投资观点</h3>
+					<span id="ideaCount"></span>
+				</a>
+				<a  id="findTeacher">
+					<p>
+						<img src="image/findimage.png" /></p>
+					<h3>找名家</h3>
+					<span id="fans"></span>
+				</a>
+			</div>
+			<!------------居中部分---------->
+			<!------------热门观点开始---------->
+			<div class="remengd" style="margin-left: 10px;margin-top: 50px;">
+				<div class="licai_top">
+					<h3>热门观点</h3>
+					<a>更多</a>
+				</div>
+				<div class="yaowen_b">
+					<ul id="data-hotIdeas">
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<!--------热门观点结束---------->
+		<!------------推荐名师开始---------->
+		<div class="mingshi" style="margin-left: 10px;margin-top: 10px;">
+			<div class="licai_top">
+				<h3>推荐名师</h3>
+				<span><a>更多></a></span></div>
+			<div id="famousList">
+				
+			</div>
+
+		</div>
+		<!--------推荐名师结束---------->
+		<!--------名家问答开始---------->
+		<div class="mingjiaask" style="margin-left: 10px;margin-top: 10px;">
+			<div class="licai_top">
+				<h3>名家问答</h3>
+				<span><a>更多></a></span></div>
+			<!-------------->
+          <div id="data-question">
+          	
+          </div>
+			
+		</div>
+		<!--------名家问答结束---------->
+		<div class="middle">
+			<div class="middlecenter">
+			</div>
+		</div>
+		<!------------底部定位层---------->
+
+		<footer class="footer">
+			<div class="foot">
+				<div class="footcenter">
+					<ul>
+						<li><a href="index.html"><span><img src="image/indexnormal.png" /></span></a></li>
+						<li><a href="hotIdea.html"><span><img src="image/licainorma.png" /></span></a></li>
+						<li class="menu"><a href="liveList.html" class="showmenu"><span><img src="image/livenormal.png" /></span></a>
+							<li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
+							<li><a href="famousDish.html"><span><img src="image/classpress.png" /></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+	</body>
+
+</html>

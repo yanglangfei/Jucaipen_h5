@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><link href="css/style.css" rel="stylesheet" type="text/css" />
+    <title> </title>
+    <!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+     	
+    <script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      mui.init();
+      mui.plusReady(function(){
+      	var  news_detailUrl="http://121.40.227.121:8080/AccumulateWealth/accumulate/newsDetail";
+      	var relate_news="http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
+      	var add_remark="http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
+      	var querry_comm='http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
+      	var add_goods="http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
+      	var web=plus.webview.currentWebview();
+      	var title=document.getElementById("show_newstit");
+      	var repoter=document.getElementById("show_newsinfo");
+      	var content=document.getElementById("show_newsbody");
+      	var relate=document.getElementById("data-relate");
+      	var comm_count=document.getElementById("show_Video_CommCount");
+      	var comment=document.getElementById("newscommlist");
+      	var uId=plus.storage.getItem("userId");
+      	var id=web.newsId;
+      		if(id<=0){
+      			plus.nativeUI.toast("新闻ID异常");
+      			return ;
+      		}
+      		<!--获取新闻详细信息-->
+      		mui.ajax(news_detailUrl,{
+      			data:{
+      				id:id
+      			},
+      			dataType:"json",
+      			type:"get",
+      			timeout:10000,
+      			success: function(data){
+      				title.innerHTML=data.title;
+      				repoter.innerHTML=data.from+"   发布时间："+data.publishDate;
+      				content.innerHTML=data.Bodys;
+      			},
+      			error: function(e){
+      			}
+      		});
+      		<!--获取相关新闻-->
+      		var relaUrl="";
+      		mui.ajax(relate_news,{
+      			data:{
+      				id:id
+      			},
+      			dataType:"json",
+      			type:"get",
+      			timeout:10000,
+      			success: function(data){
+      				for(var i=0;i<data.length;i++){
+      					relaUrl=relaUrl+"<li id="+data[i].id+">•<a>"+data[i].title+"</a></li>";
+      				}
+      				relate.innerHTML=relaUrl;
+      				mui("#data-relate").on("tap","li",function(){
+      					var nId=this.getAttribute("id");
+      					mui.openWindow({
+      						url:"newsDetaile.html",
+      						id:"newsDetaile",
+      						extras:{
+      							newsId:nId
+      						}
+      					})
+      				})
+      			},
+      			error: function(e){
+      			}
+      		});
+      		<!--获取评论信息-->
+      		var commUrl="";
+      		mui.ajax(querry_comm,{
+      			data:{
+      				typeId:0,
+      				id:id,
+      				pager:1
+      			},
+      			dataType:"json",
+      			type:"get",
+      			timeout:10000,
+      			success: function(data){
+      				comm_count.innerHTML="共"+data.length+"条"; 
+      				for(var i=0;i<data.length;i++){
+    	                 commUrl=commUrl+"  <li ><div  class='headFace'><img   id='headLogo' src="+data[i].userLogo+" />"
+                 +"	</div><div id='vItem' ><h4 ><span id='nickName'>"+data[i].userName+"</span>"
+                 		+"	<span id='sp_good'><img src='image/good.png' id='iv_good''/>"
+                 			+"</span><span id='sp_comm'><img src='image/comm_icon1.png' id='iv_comm'/>"
+                 			+"</span></h4><span id='comBody'>"+data[i].body+"</span><span id='commTime'>"+data[i].insertDate+"</span>"
+                 +"	</div></li> "     	   
+      				}
+      				comment.innerHTML=commUrl;
+      				if(data.length>0){
+      			     var goods=document.getElementById("sp_good");
+      			     var reply=document.getElementById("sp_comm");
+      			     <!--点赞-->
+                     goods.addEventListener("tap",function(){
+                     	var commId=this.getAttribute("id");
+      			          if(uId<=0){
+      			          	plus.nativeUI.toast("请先登录");
+      			          	return ;
+      			          }
+      			          mui.ajax(add_goods,{
+      			          	data:{
+      			          		userId:uId,
+      			          		commId:commId
+      			          	},
+      			          	dataType:"json",
+      			          	type:"get",
+      			          	timeout:10000,
+      			          	success: function(data){
+      			          		console.log(JSON.stringify(data));
+      			          	},error: function(e){
+      			          		plus.nativeUI.toast("连接失败");
+      			          	}
+      			          });
+      	             });
+      	             <!--回复评论-->
+                     reply.addEventListener("tap",function(){
+                     	if(uId<=0){
+                     		plus.nativeUI.toast("请先登录");
+                     		return ;
+                     	}
+                     	mui.ajax(add_remark,{
+                     		data:{
+                     			typeId:0,
+                     			userId:uId,
+                     			classId:1,
+                     			newsId:id,
+                     			bodys:""
+                     		},
+                     		dataType:"json",
+                     		type:"get",
+                     		timeout:10000,
+                     		success: function(data){
+                     			if(date.ret_code){
+                     				plus.nativeUI.toast("评论提交成功");
+                     			}else{
+                     				plus.nativeUI.toast(data.err_code);
+                     			}
+                     		},
+                     		error: function(e){
+                     			plus.nativeUI.toast("连接失败");
+                     		}
+                     		
+                     	});
+                     })
+      				}
+      			},
+      			error: function(e){
+      			}
+      		});
+      	
+      	
+      	
+      })
+    
+    </script>
+    
+    <style type="text/css">
+      #newscommlist{
+      	float: left;
+      	display: block;
+      }
+      #newscommlist li{
+      	width: 100%;
+      	float: left;
+      	display:block;
+      	margin-top: 0.7rem;
+      }
+      .headFace{
+      	width: 15%;
+      }
+      #headLogo{
+      	width: 100%;
+      	border-radius: 50%;
+      }
+      #vItem{
+      	width: 83%;
+      	 margin-left: 2%;
+      	 border-bottom: 1px solid #EAEAEA;
+      	 padding-bottom: 0.5rem;
+      }
+      #vItem h4{
+      	display: block; 
+      	width: 100%;  
+      	font-weight: normal;
+      }
+      #nickName{
+      	width: 60%;
+      	color: #C2C2C2;
+      	font-size: 0.8rem;
+      	float: left;
+      }
+      #sp_good{
+      	width: 20%;
+      	color: #C2C2C2;
+      	font-size: 0.8rem;
+      	text-align: right;
+      	display: block;
+      	float: left;
+      }
+      #iv_good{
+      	width: 20px;
+      	height: 20px;
+      }
+      #sp_comm{
+      	width: 20%;
+      	text-align: right;
+      	float: left;
+      }
+      #iv_comm{
+      	width: 20px;
+      	height: 20px;
+      	margin-right: 0.2rem;
+      }
+      #comBody{
+      	width: 100%;
+      	font-size: 0.9rem;
+      	color: #666;
+      	line-height: 1.5rem;
+      	float: left;
+      	display: block;
+      }
+      #commTime{
+      	width: 100%; 
+      	font-size: 0.8rem;
+      	color: #C2C2C2; 
+      	float: left;
+      	display: block;
+      }
+    </style>
+
+
+</head>
+<body>
+    <form method="post" action="shownews.aspx?id=14711" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMjA3NzQ2MjEzNg9kFgICAw9kFgwCAw8WAh4JaW5uZXJodG1sBXLpppbpobUgICA+IDxhIGhyZWY9J25ld3NsaXN0LmFzcHg/YmlkPTInPuengeWLn+iCoeadgzwvYT4gPiA8YSBocmVmPSduZXdzbGlzdC5hc3B4P2JpZD0yJnNpZD0xMic+56eB5Yuf5Yqo5oCBIDwvYT5kAgUPFgIfAAU/56eB5Yuf5ZCE5aSn5qac5Y2V56ys5LiA4oCc56We5Z+64oCd5Ye654KJIOacgOeJm+S4gOW5tOa2qDE05YCNZAIHDxYCHwAFP+aJgOWxnuWIhuexu++8muengeWLn+WKqOaAgSAgIOWPkeW4g+aXtumXtO+8mjIwMTYvMS8xOCAxMDoxOToxM2QCCQ8WAh8ABcwjPHA+DQoJ56eB5Yuf6KGM5Lia5LuO5p2l5LiN57y65bCR6buR6ams44CC5pyA6L+R77yM5ZCE5aSn56ys5LiJ5pa556CU56m25py65p6E55qEMjAxNeW5tOiCoeelqOWei+engeWLn+aOkuihjOamnOmZhue7reWHuueCieOAguaXoOiuuuWTquS7veamnOWNle+8jOWFtuS4reeahOKAnOesrOS4gOelnuWfuuKAneW+gOW+gOWboOS4uui/nOmrmOS6juW4guWcuuWQjOexu+S6p+WTgeeahOaUtuebiueOh+iAjOS7pOW4guWcuuWSi+iIjO+8jOacieS6m+eUmuiHs+WBmuWHuuW5tOWMljblgI3jgIExNOWAjeeahOi2hemrmOaUtuebiueOh+OAgg0KPC9wPg0KPHA+DQoJ5Lia5YaF5Lq65aOr5o+Q6YaS77yM5q+P5bm055qE56eB5Yuf5o6S5L2N5oiY6YO95Lya5raM546w5Ye65LiN5bCR5biC5Zy65paw5pif77yM5o6S5ZCN5pyA5aW955qE56eB5Yuf5Z+66YeR5aSn5aSa5pWw6YeH55So4oCc6KeE5qih5o2i5Lia57up4oCd5qih5byP77yM5LiU5a6i5oi357uT5p6E6L6D5Li65Y2V5LiA77yM5LiN5bCR5p2l6Ieq5YWs5Y+46Ieq5pyJ6LWE6YeR77yM5Lul6IqC55yB5rKf6YCa5oiQ5pys44CB5o+Q6auY5oqV6LWE5pWI546H44CC5ZCM5pe277yM5Y2a5Y+W6auY5pS255uK546H5b6A5b6A5Ly06ZqP552A6L6D6auY6aOO6Zmp44CC5ZCI5qC85oqV6LWE6ICF5Zyo6YCJ5oup56eB5Yuf5Z+66YeR5pe25bqU6K+l6LCo5oWO77yM5rOo6YeN5Z+66YeR55qE6ZW/5pyf56iz5YGl6KGo546w5ZKM5Z+66YeR566h55CG5Lq65omA566h5Z+66YeR55qE5bmz5Z2H6KGo546w44CCDQo8L3A+DQo8cD4NCgk8c3Ryb25nPiDigJzljY7pk7bnsr7pgInigJ3kuIDlubQxNOWAjTwvc3Ryb25nPg0KPC9wPg0KPHA+DQoJ5qC85LiK55CG6LSi5pWw5o2u5pi+56S677yM5bey57uP6L+R5Y2K5bm05pyq5Zyo5omY566h5bmz5Y+w5YWs5biD5YeA5YC855qE4oCc5Y2O6ZO257K+6YCJ4oCd5YeA5YC85rWu5Ye65rC06Z2i77yM5pyA57uI5LulMTQwMy4wNyXnmoTotoXpq5jmlLbnm4rnjofotoXotorigJzosaHoiIbooYzmgJ3mupAx5pyf4oCd77yM5pGY5Y+W5qC85LiK55CG6LSi6IKh56Wo5Z6L56eB5Yuf5qac5Y2V5Yag5Yab44CCDQo8L3A+DQo8cD4NCgnkuK3lm73or4HliLjmiqXorrDogIXkuobop6PliLDvvIzor6Xlj6rln7rph5HmiYDlsZ7nmoTmt7HlnLPluILljY7pk7bnsr7msrvotYTkuqfnrqHnkIbmnInpmZDlhazlj7go5Lul5LiL566A56ew5Y2O6ZO257K+5rK76ZO26KGMKe+8jOaIkOeri+S6jjIwMDflubQ05pyI77yM5LqOMjAxNOW5tDTmnIjlnKjln7rph5HkuJrljY/kvJrlpIfmoYjvvIzkuJrliqHojIPlm7TmtrXnm5bnp4Hli5/ln7rph5HnrqHnkIbjgIHkuIrluILlhazlj7jluILlgLznrqHnkIbjgIHlrprlkJHlop7lj5HjgIHogqHmnYPmv4DlirHnrYnjgILnm67liY3vvIzigJzljY7pk7bnsr7pgInigJ3op4TmqKHkuLo1MDAw5LiH5YWD77yM5Lqn5ZOB5Li76KaB55Sx6Ieq5pyJ6LWE6YeR5p6E5oiQ44CCDQo8L3A+DQo8cD4NCgnmlbDmja7mmL7npLrvvIzigJzljY7pk7bnsr7pgInigJ3kuJrnu6nniIblj5HmnJ/lnKjkuIvljYrlubTvvIzogqHngb7liY3or6Xkuqflk4EyMDE15bm05pS255uK546HODUuMzEl44CC6IKh54G+5ZCO5YW25Lia57up5oyB57ut54iG5Y+R77yM5rao5bmF6L6+NzExLjA5JeOAguaNruS6huino++8jOWNjumTtueyvuayu+S4u+imgeWBmuS4gOS6jOe6p+W4guWcuuiBlOWKqOaKlei1hOOAguWFrOWPuOaMgeiCoemrmOW6pumbhuS4re+8jOaMgeiCoeWRqOacn+S4gOiIrOWcqOS4gOS4pOW5tO+8jOacn+mXtOS8muWBmuazouauteaTjeS9nOOAgjIwMTXlubTvvIzlhazlj7jmipXotYTnu4TlkIjkuK3mnIkx5Y+q6YeN5LuT6IKh5LuK5bm057+7MTDlgI3vvIzkuIvljYrlubTmnIDpq5jmtqjluYXov5E4MDAl77yb5Y+m5pyJM+WPquS4quiCoea2qOW5hei2hei/hzXlgI3jgILmja7ljY7pk7bnsr7msrvpgI/pnLLvvIzlhbYyMDEz5bm05byA5aeL5biD5bGA4oCc6YeR6K+B6IKh5Lu94oCd77yM5oyB5pyJ5pyf6Ze06K+l6IKh5pyA6auY5rao5bmF6LaF6L+HMTXlgI3vvIzku4rlubTmnIDpq5jmtqjluYXov5E1MDAl44CC5YC85b6X5ZCM5pe25rOo5oSP55qE5piv77yM4oCc5Y2O6ZO257K+6YCJ4oCdMjAxNeW5tOeahOacgOWkp+WbnuaSpOS4ujY0JSjmoLnmja7mnIjluqblhazlvIDmlbDmja7orqHnrpflvpfmnaUp77yM5peX5LiL5YW25LuW5Lqn5ZOB5pyA5aSn5Zue5pKk5aSa5ZyoMzUl6IezNDUl44CCDQo8L3A+DQo8cD4NCgnnm67liY3vvIzln7rph5Hnu4/nkIbkuIHmtIvlkoznoJTnqbbmgLvnm5HlvKDlub/mrKPkuLrlhazlj7jkuLvopoHogqHkuJzjgILigJzljY7pk7bnsr7pgInigJ3lnKjmi5vllYbor4HliLjov5vooYzmiZjnrqHvvIzlhazlj7jml5fkuIvlhbblroPkuqflk4HkuZ/mnInkuI7lm73kv6Hor4HliLjjgIHplb/ln47or4HliLjnrYnliLjllYblkIjkvZzjgILlr7nkuo4yMDE15bm06IKh54G+5ZCO5LiA5bqm57uI5q2i5YeA5YC85YWs56S677yM5Y2O6ZO257K+5rK76KGo56S65piv5Zug5Li64oCc5LiN5oOz5Y+X5Yiw5biC5Zy66L+H5bqm5YWz5rOo6ICM5b2x5ZON5pON5L2c5Y+Y5b2i4oCd44CCDQo8L3A+DQo8cD4NCgnlr7nkuo4yMDE25bm077yM5Y2O6ZO257K+5rK76KGo56S677yM55Sx5LqO6L+R5pyf5biC5Zy65aSn5bmF5LiL6LeM77yM5LiN5bCR5LyY6LSo5Liq6IKh6KKr6ZSZ5p2A77yM5YaN5Yqg5LiK6auY6YCB6L2s5qaC5b+15Lul5Y+K5Lia57up6LaF6aKE5pyf55qE5Liq6IKh6KGM5oOF77yM5LiA5a2j5bqm5biC5Zy65Y+v6IO95Lya5pyJ6LaF6LeM5Y+N5by555qE5py65Lya44CCDQo8L3A+DQo8cD4NCgk8c3Ryb25nPuKAnOacgOWFt+W3tOiPsueJuea9nOWKm+WvueWGsuWfuumHkTHmnJ/igJ08L3N0cm9uZz4NCjwvcD4NCjxwPg0KCTxzdHJvbmc+IOS4gOW5tDblgI08L3N0cm9uZz4NCjwvcD4NCjxwPg0KCTUwMOWAjeWfuumHkee9kTIwMTXlubTogqHnpajnrZbnlaXln7rph5HmlLbnm4rmppzljZXmmL7npLrvvIzkuIrmtbflrp3pk7bliJvotaLltJTlhpvml5fkuIvigJzmnIDlhbflt7Toj7LnibnmvZzlipvlr7nlhrLln7rph5Ex5pyf4oCd5LulNjA4LjIyJeeahOaUtuebiueOh+WkuuW+l+ivpeamnOWNleahguWGoO+8jOi/keacn+eDremXqOKAnOixoeiIhuihjMK35oCd5rqQMeacn+KAneWkhOS6juivpeamnOWNleesrOS6jOWQjeOAguatpOWklu+8jOWunemTtuezu+WFhui1ouWfuumHkeKAnOW3tOiPsueJuTUwMOWAjeWfuumHkTHmnJ/igJ3ku6UzMzcuNDEl55qE5pS255uK546H5pap6I6356ys5LiJ5ZCN44CCDQo8L3A+DQo8cD4NCgnkuJrlhoXkurrlo6vnp7DvvIzmnIkyMuW5tOivgeWIuOS7juS4mue7j+mqjOeahOW0lOWGm+WWhOS6juaKiuaPoemXqueUteW8j+S4iua2qOacuuS8muOAguW0lOWGm+ihqOekuu+8jOe+juWbveiCoeW4gjcw5bm05pyf6Ze04oCc6Zeq55S15LiK5rao4oCd55qE5pe26Ze05Y+q5pyJNjDkuKrmnIjvvIzkuIDml6bplJnov4fov5k2MOS4quaciO+8jDcw5bm05bCx5LiN5Lya6LWa6ZKx44CC5ZyoMjAxNeW5tOS4iuWNiuW5tOS4gOi3r+S4iua2qOeahOihjOaDheS4re+8jOW0lOWGm+mihOinge+8jOmrmOS8sOWAvOiCoeelqOWcqOW4guWcuuWKqOiNoeaXtuWwhuS4i+i3jOacgOWkmuOAgemjjumZqeacgOWkp++8jOaJgOS7peWdmuaMgeKAnDTmr5vkubAx5Z2X4oCd55qE5Y6f5YiZ77yM5Y+q5Lmw5YWl5L2O5Lyw5YC86IKh56Wo44CCDQo8L3A+DQo8cD4NCgk8c3Ryb25nPiDigJzosaHoiIbooYzCt+aAnea6kDHmnJ/igJ3kuIDlubQ05YCNPC9zdHJvbmc+DQo8L3A+DQo8cD4NCgnmja7nu5/orqHvvIzigJzosaHoiIbooYzCt+aAnea6kDHmnJ/igJ3ku6U0MjMuMDYl5pS255uK546H5ouU5b6X6K+l5qac5Y2V5aS0562544CC5o2u5LqG6Kej77yM6K+l5Lqn5ZOB6Ieq5oiQ56uL5Lul5p2l5LiA55u06buY6buY5peg6Ze777yM5Lia57up6KGo546w5bmz5bmz77yM55Sa6Iez57Sv6K6h5YeA5YC85LiA5bqm6LeM6Iez5Y2V5L2N6Z2i5YC85Lul5LiL77yM5Lid5q+r55yL5LiN5Ye65YW35aSH4oCc6buR6ams4oCd57Sg6LSo44CC54S26ICM6L+b5YWlMjAxNeW5tO+8jOS6p+WTgeWHgOWAvOS4jeaWreaUgOWNh++8jOWcqOS4pOi9ruiCoeeBvuacn+mXtO+8jOWug+ihqOeOsOWHuue9leingeeahOaKl+i3jOiDveWKm++8jOW5tuS4lOmAhuWKv+S4iuWNh++8jOWHgOWAvOeUsTIwMTXlubQ25pyIMzDml6XnmoQ1LjYzMzDlhYPlop7plb/oh7M45pyIMzHml6XnmoQ3LjM0MDHlhYPjgILmiKroh7MyMDE15bm0MTLmnIgzMeaXpe+8jOe0r+iuoeWHgOWAvOi+vjkuMjYzNOWFg++8jOW5tOW6puaUtuebiumrmOi+vjQyMy4wNiXjgIINCjwvcD4NCjxwPg0KCeKAnOixoeiIhuihjMK35oCd5rqQMeacn+KAneaKk+S9j+WOu+W5tOWIneeahOaIkOmVv+iCoeazouauteWSjDnmnIjnmoTlj43lvLnooYzmg4XvvIzlubbkuJTlnKg25pyI6IKh54G+5Lit5YWo6Lqr6ICM6YCA44CC6LGh6IiG6KGM6KGM5LqL5L2O6LCD77yM5oC757uP55CG6ZmI5paH5Li65Yi45ZWG6IOM5pmv77yM5pyJMTHlubTor4HliLjku47kuJrnu4/pqozjgIINCjwvcD5kAgsPFgIeC18hSXRlbUNvdW50AgYWDGYPZBYCZg8VAgUxNDc5MzrigJzlhrLliLrigJ3liJvmlrDlsYIg5paw5LiJ5p2/5YWs5Y+45aSa5o6q5bm25Li+5oqi5YWI5py6ZAIBD2QWAmYPFQIFMTQ3OTI76ZO26KGM5oqi6aOf5paw5LiJ5p2/6YC+NTAwMOWutuaMgueJjOS8geS4miDmnI3liqHlhoXlrrnlpJpkAgIPZBYCZg8VAgUxNDc5MUDpvZDpsoHpk7booYzmmoLkuLrmlrDkuInmnb/ln47llYbooYzigJzni6zoi5figJ0g5a2Y6L2s5p2/5Y+v6IO9ZAIDD2QWAmYPFQIFMTQ3OTA55paw5bi45oCB5LiL6LWE5pys5biC5Zy65aaC5L2V5pSv5oyB5paw5LiJ5p2/5LyB5Lia5Y+R5bGVZAIED2QWAmYPFQIFMTQ3ODk64oCc5Yay5Yi64oCd5Yib5paw5bGCIOaWsOS4ieadv+WFrOWPuOWkmuaOquW5tuS4vuaKouWFiOacumQCBQ9kFgJmDxUCBTE0Nzg3HuWkjeWoseaWh+WMlui/m+WGm+S9k+iCsuS6p+S4mmQCDQ8WAh8ABQflhbEw5p2hZGSmzPz9JndMNq7EhC8YmR52Y34LXVsAleejBsGlf6vZfA==" />
+</div>
+
+  <div class="wrapper">
+     <!------------头部--------------->
+    
+     <header class="header">
+        <div class="head">
+           <div class="fanhui">返回</div>
+           <div class="denglu1 mui-action-back">
+              <a ><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+           </div>
+           <div class="logo1">
+              <span>私募动态 </span>
+           </div>
+           <div class="sousuo1">
+              <a><img src="image/index.png" /></a>
+           </div>
+        </div>
+     </header> 
+
+     <!------------新闻详情------------->
+     <div class="indexnewslist">
+       <div class="newsshow">
+   	     <div class="show">
+         <div id="show_newstit" class="newsshow_tit"></div>
+         <div id="show_newsinfo" class="newsshow_info"></div>
+         <div id="show_newsbody" class="newsshow_body"></div>
+       
+        <div class="newsshow_next">
+        	<h3>相关阅读</h3>
+            <ul class="yd" id="data-relate">
+            </ul>
+        </div>
+       
+                <div class="show_videoinfo_pl showvideoinfo_Div" id="showvideoinfo_3">
+         	<h3><em>评论</em><i id="show_Video_CommCount">共0条</i></h3>
+            	<ul>
+            	<li>
+                	<div class="userhead"><img src="image/head.png"></div>
+                    <div class="form">
+                    	<a href="javascript:;" class="showinput" onclick="Recomm('0','')">我来说两句</a>
+                    </div>
+                </li></ul>
+           	<ul id="newscommlist">
+                 
+                    
+            </ul>
+            <a href="javascript:;" class="morepinglun">更多</a>
+           
+         </div>
+       </div>
+      </div>
+     </div>
+     <!------------底部定位层---------->
+  
+  </div>
+        <input type="hidden" name="HiddenFieldcommpage" id="HiddenFieldcommpage" value="1" />
+            <!---->
+             <div class="float_comm_input" id="myinput">
+             <div class="left">
+                 <input type="hidden" name="HiddenFieldId" id="HiddenFieldId" value="14711" />
+                    <input type="hidden" name="HiddenFieldurl" id="HiddenFieldurl" value="aHR0cCUzYSUyZiUyZnd3dy5qdWNhaXBlbi5jb20lMmZtb2JpbGVfVG91Y2glMmZzaG93bmV3cy5hc3B4JTNmaWQlM2QxNDcxMQ==" />
+                 <input type="hidden" name="HiddenField_ParentId" id="HiddenField_ParentId" />
+                 <textarea name="textarea" id="comm_body" name="comm_body" placeholder="想说点什么"></textarea>
+             </div>
+             <div class="right"><input type="button" id="btn_sub_comm" name="btn_sub_comm" value="发送"></div>
+             </div>
+             <!---->
+    </form>
+</body>
+</html>

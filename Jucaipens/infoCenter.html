@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var info=document.getElementById("myInfo");
+      		var id=plus.storage.getItem("userId");
+      		if(id<=0){
+      			plus.ui.toast("请先登录");
+      			return ;
+      		}
+      		 var infoStr="";
+      		mui.ajax("http://192.168.1.59:8080/AccumulateWealth/accumulate/infoCenter",{
+      			data:{
+      				 pager:1,
+      				 userId:id
+      			},
+      			type:"post",
+      			dataType:"json",
+      			timeout:10000,
+      			success: function(data){
+      				console.log(JSON.stringify(data));
+      				for(var i=0;i<data.length;i++){
+      					infoStr=infoStr+ "<li class='mui-table-view-cell'>"
+                     +"<label>"+data[i].title+"</label><br />"
+                      +"<label>"+data[i].sendId+"</label><br>"
+                      +"<label>"+data[i].receiverId+"</label><br />"
+                    +"  <label>"+data[i].bodys+"</label><br />"
+                    +"  <label>"+data[i].sendDate+"</label> </li>";
+      				}
+      				info.innerHTML=infoStr;
+      			},
+      			error: function(e){
+      				
+      			}
+      		})
+      		
+      	})
+    </script>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav"style="background: #CF2D28;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="color: white;">消息中心</h1>
+</header>
+  <div class="mui-content">
+      <div class="mui-card">
+          <ul class="mui-table-view" id="myInfo">
+            
+             
+          </ul>
+      </div>
+  </div>
+	
+</body>
+</html>

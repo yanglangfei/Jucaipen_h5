@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+			var commPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
+			var commLay=document.getElementById("commLay");
+			var today=document.getElementById("today");
+			var communit=document.getElementById("communit");
+			var commTitle=document.getElementById("commTitle");
+			var web=plus.webview.currentWebview();
+			var title=web.title;
+			var liveId=web.liveId;
+			commTitle.innerHTML=title+"直播室";
+			<!--获取评论列表-->
+			var commStr="";
+			mui.ajax(commPath,{
+				data:{
+					liveId:liveId,
+					page:1
+				},
+				type:"get",
+				dataType:"json",
+				timeout:10000,
+				success: function(data){
+					for(var i=0;i<data.length;i++){
+						commStr=commStr+"<div class='item'>"
+					+"<div class='userhead'><img src="+isNull(data[i].userLogo)+"></div>"
+					+"<div class='content'><div class='u_name_face'><span class='u_name'>"+data[i].userName+"</span><span class='u_date'>"+data[i].insertDate+"</span></div>"
+					+"<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>"
+					+"</div><div class='bodys'>"+data[i].bodys+"</div><div class='huifu_185'></div></div></div>";
+					}
+					commLay.innerHTML=commStr;
+					
+				},
+				error: function(e){
+				}
+			})
+			today.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"txtLive.html",
+					id:"txtLive",
+					extras:{
+						liveId:liveId,
+						title:title
+					}
+				})
+			})
+			communit.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"communite.html",
+					id:"communite"
+				})
+			})
+			function isNull(str){
+				if(str.length<=0){
+					str="image/head.png"
+				}
+				return str;
+			}
+			
+			
+				
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div class="fanhui">返回</div>
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+					</div>
+					<div class="logo1">
+						<span id="commTitle"></span>
+					</div>
+					<div class="sousuo1">
+						<a><img src="image/index.png" /></a>
+					</div>
+				</div>
+			</header>
+
+			<!------------居中部分---------->
+			<div class="ask_type ">
+
+				<a id="today">今日观点</a>
+				<a id="communit" class="def">交流区</a>
+			</div>
+			<!--------名家问答开始---------->
+			<div class="livetalk_list" id="commLay">
+
+				
+				
+
+				<!-------------->
+
+			</div>
+			<!--------名家问答结束---------->
+
+			<div class="linkmore">
+				<a class="inter_gengduo" href="javascript:void(0)">更多>></a>
+			</div>
+
+			<div class="livetakl_fload_top">&nbsp;</div>
+			<div id="addContent" class="livetakl_fload">
+
+				<div class="input_txt">
+					<textarea name="textarea" id="textarea" placeholder="来说点什么吧..." cols="45" rows="5"></textarea>
+				</div>
+				<div class="input_btn">
+					<input type="button" name="button" id="button" class="def" value="发表" />
+				</div>
+			</div>
+			<!------------底部定位层---------->
+
+		</div>
+	</body>
+
+</html>

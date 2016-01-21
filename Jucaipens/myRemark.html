@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var remark=document.getElementById("data-remark");
+      		var id=plus.storage.getItem("userId");
+      		var myRemark="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
+      		if(id<=0){
+      			plus.ui.toast("请先登录");
+      			return ;
+      		}
+      		
+      		var remarkStr="";
+      		mui.ajax(myRemark,{
+      			data:{
+      				pager:1,
+      				userId:id
+      			},
+      			dataType:"json",
+      			type:"post",
+      			timeout:10000,
+      			success: function(data){
+      				for(var i=0;i<data.length;i++){
+      					remarkStr=remarkStr+ "<li class='mui-table-view-cell mui-media'id="+data[i].newsId+">"
+                         +"<a href='javascript:;'>"
+                          +"<div class='mui-media-body'>"+data[i].newsTitle
+                         +"<p class='mui-ellipsis'>"+data[i].body+"</p></div> </a></li>";
+      				}
+      				remark.innerHTML=remarkStr;
+      				mui("#data-remark").on("tap","li",function(){
+      					var nId=this.getAttribute("id");
+      					mui.openWindow({
+      						url:"newsDetail.html",
+      						id:"newsDetail",
+      							extras:{
+     					     newsId:nId
+     				       }
+      					})
+      				})
+      			},
+      			error: function(e){
+      			}
+      		})
+      	
+      		
+      	})
+    </script>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="color: white;">我的评论</h1>
+</header>
+ <div class="mui-content">
+     <ul class="mui-table-view" id="data-remark">
+        
+     </ul>
+ </div>
+	
+</body>
+</html>

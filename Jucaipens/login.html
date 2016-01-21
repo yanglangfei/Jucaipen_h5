@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+	作者：185601452@qq.com
+	时间：2016-01-11
+	描述：登录
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	<!--获取认证列表-->
+      	var authos;
+      	document.addEventListener("plusready",function(){
+      		plus.oauth.getServices(function(serice){
+      			authos=serice;
+      		},function(e){
+      		})
+      	},false);
+      	
+      	mui.plusReady(function(){
+      		var regin=document.getElementById("into-regin");
+      		var login=document.getElementById("login");
+      		var account=document.getElementById("username");
+      		var pwds=document.getElementById("password");
+      		var qq=document.getElementById("login-qq");
+      		var weixin=document.getElementById("login-weixin");
+      		var sina=document.getElementById("login-sina");
+      		regin.addEventListener("tap",function(){
+      			mui.openWindow({
+      				url:"regin.html",
+      				id:"regin"
+      			});
+      		});
+      		<!--登录-->
+      		login.addEventListener("tap",function(){
+      			if(account.value.length<=0){
+      				plus.ui.toast("账号不能为空");
+      				return ;
+      			}
+      			if(pwds.value.length<=0){
+      				plus.ui.toast("密码不能为空");
+      				return ;
+      			}
+      			mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login",{
+      				data:{
+      					userName:account.value,
+      					password:pwds.value
+      				},
+      				type:"post",
+      				dataType:"json",
+      				timeout:10000,
+      				success: function(data){
+      					if(data.ret_code==0){
+      						plus.storage.setItem("userId",data.userId+"");
+      						mui.back();
+      					}else{
+      					plus.ui.toast(data.err_msg);
+      					}
+      				},
+      				error: function(e){
+      					plus.nativeUI.toast("连接失败");
+      				}
+      			});
+      		})
+      		
+      		   <!--qq登录-->
+      		 	qq.addEventListener("tap",function() {
+	                authLogin(0);  
+                 })
+      		 	
+      		 	<!--微信登录-->
+      		 	weixin.addEventListener("tap",function(){
+      		 		authLogin(2);
+      		 	})
+      		 	
+      		 	<!--新浪登录-->
+      		 	sina.addEventListener("tap",function(){
+      		 		authLogin(1);
+      		 	})
+      		 	
+      		 	
+      		 	
+      		 	function authLogin(i) {
+	             var s = authos[i];
+	            if (!s.authResult) {
+	          	s.login(function(e) {
+	          		console.log(e.target.authResult.openid);
+		         	alert("登录成功");
+		       }, function(e) {
+			       alert("登录失败！");
+		    });
+	     } else {
+		      alert("已经登录！");
+	   }
+    }
+      		 	
+      		 	
+      	// 注销所有授权登录认证服务
+        function authLogout(){
+	    for ( var i in authos ) {
+	     	var s = authos[i];
+		   if ( s.authResult ) {
+			s.logout(function(e){
+				alert( "注销登录认证成功！" );
+		     	}, function(e){
+				alert( "注销登录认证失败！" );
+			});
+		}
+	}
+}
+
+/**
+ * @description 获取第三方用户信息
+ * 
+ */
+function authUserInfo(i){
+	var s = authos[i];
+	if ( !s.authResult ) {
+		alert("未授权登录！");
+	} else {
+		s.getUserInfo( function(e){
+			alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
+		}, function(e){
+			alert( "获取用户信息失败："+e.message+" - "+e.code );
+		} );
+	}
+}
+      		 	
+      		
+      	});
+     
+
+
+
+</script>
+    <style type="text/css">
+    	 .mui-content{
+    	 	margin-top: 12px;
+    	 	margin-left: 12px;
+    	 	margin-right: 12px;
+    	 }
+    	 #login{
+    	 	margin-top: 12px;
+    	 }
+    #login-qq:active{
+    	src: url(image/loginqq_press.png);
+    }
+    
+
+    </style>
+</head>
+<body>
+ <header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
+     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+     <h1 class="mui-title" style="color: white;">登录</h1>
+     <button type="button"  id="into-regin"  style="font-size: 15px;background: #CF2D28; border: 0px; color: white;"  class="mui-btn  mui-pull-right">注册</button>
+ </header>
+ <div class="mui-content">
+     <form class="mui-input-group">
+     	<div class="mui-input-row">
+     		<label for="">账号</label>
+     		<input type="text"  class="mui-input mui-input-clear" id="username"/>
+     	</div>
+     	<div class="mui-input-row">
+     		<label for="">密码</label>
+     		<input type="password" id="password"  class="mui-input mui-input-clear" placeholder="输入6-23位密码"/>
+     	</div>
+     </form>
+    <div  style="margin: 10px 10px 0 10px;">
+    	<img src="image/loginqq_unpress.png"  class="mui-pull-left"  style="width: 50px; height: 50px;" id="login-qq"/>
+    	 <img src="image/loginweixins.png"  style="width: 50px;height: 50px;margin-left: 30%;" id="login-weixin"/>
+    	<img src="image/loginsina_unpress.png"   class="mui-pull-right"  style="width: 50px; height: 50px;margin: 0 auto ;" id="login-sina"/>
+    </div>
+     <button   id="login"   class="mui-btn-block mui-btn-red">登录</button>
+ </div>
+	
+</body>
+</html>

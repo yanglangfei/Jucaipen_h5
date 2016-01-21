@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+		mui.init();
+		mui.plusReady(function(){
+			var askListPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
+			var askList=document.getElementById("askList");
+			<!--提问列表-->
+			var askStr="";
+			mui.ajax(askListPath,{
+				data:{
+					isAll:0,
+					page:1
+				},
+				type:"get",
+				dataType:"json",
+				timeout:10000,
+				success: function(data){
+					for(var i=0;i<data.length;i++){
+						askStr=askStr+"<div class='item'><div class='userhead'>"
+						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
+					+"<div class='content'><a><span class='u_name'>"+data[i].userName+"</span></a><span class='u_date'>"+data[i].insertDate+"</span>"
+						+"<div class='bodys'><a>"+data[i].askBodys+"</a></div><span class='type'>0人回答</span></div></div>"
+					}
+					askList.innerHTML=askStr;
+				},
+				error: function(e){
+					
+				}
+				
+			})
+			
+			
+			
+			function isNull(images){
+				if(images.length<=0){
+					images='image/jucaipen.png';
+				}
+				return images;
+			}
+			
+			
+		})
+		
+		</script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div class="fanhui">返回</div>
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+					</div>
+					<div class="logo1">
+						<span>名家问答</span>
+					</div>
+					<div class="sousuo1">
+						<a><img src="image/index.png" /></a>
+					</div>
+				</div>
+			</header>
+			<!------------居中部分---------->
+			<div class="ask_type">
+				<a href="answerList.html">最新回答</a>
+				<a href="askList.html" class="def">最新提问</a>
+			</div>
+			<!--------名家问答开始---------->
+			<div class="mingjiaask_wen_list " style="margin-top: 4.5rem" data-tid="0" id="askList">
+
+			
+
+				<!--------名家问答结束---------->
+			</div>
+			<div class="linkmore">
+				<a id="ask_gengduo" href="javascript:void(0)">更多>></a>
+			</div>
+			<div class="nullList">
+				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>
+			</div>
+		</div>
+		<!------------底部定位层---------->
+	</body>
+
+</html>

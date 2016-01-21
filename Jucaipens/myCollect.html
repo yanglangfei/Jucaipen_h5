@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+	作者：185601452@qq.com
+	时间：2016-01-12
+	描述：我的收藏
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		var news=document.getElementById("news");
+      		var simu=document.getElementById("simu");
+      		var uId=plus.storage.getItem("userId");
+      		var mc="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myCollect";
+      		if(uId<=0){
+      			plus.ui.toast("请先进行登录");
+      			return ;
+      		}
+      		
+      		var newsStr="";
+      		mui.ajax(mc,{
+      			data:{
+      				type:1,
+      				pager:1,
+      				userId:uId
+      			},
+      			dataType:"json",
+      			type:"post",
+      			timeout:10000,
+      			success: function(data){
+      				for(var i=0;i<data.length;i++){
+      					newsStr=newsStr+ "<li class='mui-table-view-cell'id="+data[i].newsId+">"+data[i].title+"</li>";
+      				}
+      				news.innerHTML=newsStr;
+      				mui("#news").on("tap","li",function(){
+      				  var nId=this.getAttribute("id");
+      				  mui.openWindow({
+      				  	url:"newsDetail.html",
+      				  	id:"newsDetail",
+      				  	extras:{
+      				  		newsId:nId
+      				  	}
+      				  })
+      				})
+      				
+      				
+      			},
+      			error: function(e){
+      				
+      			}
+      		});
+      		
+      		var simuStr="";
+      		mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/myCollect",{
+      			data:{
+      				type:2,
+      				pager:1,
+      				userId:uId
+      			},
+      			dataType:"json",
+      			type:"post",
+      			timeout:10000,
+      			success: function(data){
+      				
+      				for(var i=0;i<data.length;i++){
+      					simuStr=simuStr+ "<li class='mui-table-view-cell'>"+data[i].title+"</li>";
+      				}
+      				news.innerHTML=simuStr;
+      			},
+      			error: function(e){
+      				
+      			}
+      		});
+      		
+      		
+      	})
+    </script>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="color: white;">我的收藏</h1>
+</header>
+<div class="mui-content">
+   <div class="mui-slider">
+       <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+           <a class="mui-control-item" href="#item1">资讯收藏</a>
+           <a class="mui-control-item" href="#item2">私募股权</a>
+
+       </div>
+       <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+       <div class="mui-slider-group">
+           <div id="item1" class="mui-slider-item mui-control-content mui-active">
+               <ul class="mui-table-view" id="news">
+               </ul>
+           </div>
+           <div id="item2mobile" class="mui-slider-item mui-control-content">
+               <ul class="mui-table-view" id="simu">
+               </ul>
+           </div>
+       </div>
+   </div>
+</div>
+
+	
+</body>
+</html>

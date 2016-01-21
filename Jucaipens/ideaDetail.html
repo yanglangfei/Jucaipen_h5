@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<script src="js/mui.min.js"></script>
+		<!--标准mui.css-->
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var ideaDetail = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaDetaile";
+				var teacherName = document.getElementById("teacherName");
+				var leader = document.getElementById("leader");
+				var times = document.getElementById("time");
+				var titles = document.getElementById("titles");
+				var ideaBody = document.getElementById("ideaBody");
+				var goodsAdd = document.getElementById("goodsAdd");
+				var teacherLogo = document.getElementById("teacherLogo");
+				var vLogo = document.getElementById("vLogo");
+				var web = plus.webview.currentWebview();
+				var id = web.ideaId;
+				<!--获取热门观点详细信息-->
+				mui.ajax(ideaDetail, {
+					data: {
+						ideaId: id
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						teacherName.innerText = data.nickName;
+						leader.innerText = data.level;
+						times.innerText = data.insertDate;
+						titles.innerText = data.title;
+						ideaBody.innerHTML = data.bodys;
+						goodsAdd.innerText = data.goods;
+						teacherLogo.src = data.headFace;
+						var isV = data.isV;
+						console.log(data.isV + "l");
+						if (isV == 0) {
+							vLogo.src = "image/v1.png";
+						} else {
+							vLogo.src = "";
+						}
+					},
+					error: function(e) {}
+				})
+			})
+		</script>
+
+		<style type="text/css">
+			.showarticletit {
+				width: 100%;
+				float: left;
+				background: #FFF none repeat scroll 0% 0%;
+				padding-top: 1rem;
+			}
+			
+			.showarticletit span {
+				width: 15%;
+				float: left;
+				margin-left: 3%;
+			}
+			
+			.showarticletit span img {
+				width: 2.7rem;
+				height: 2.7rem;
+				border-radius: 3px;
+			}
+			
+			.showarticletit h4 {
+				width: 40%;
+				float: left;
+				display: block;
+				font-size: 1rem;
+				font-weight: normal;
+			}
+			
+			.showarticletit h4 i {
+				display: inline-block;
+			}
+			
+			.showarticletit h4 i img {
+				width: 1rem;
+			}
+			
+			.showarticletit em {
+				display: block;
+				float: left;
+				width: 40%;
+				font-size: 0.7rem;
+				color: #999;
+				margin-right: 2%;
+				text-align: right;
+			}
+			
+			.showarticletit p {
+				width: 60%;
+				float: left;
+				display: block;
+				color: #999;
+				font-size: 1rem;
+			}
+			
+			.showarticletit h3 {
+				display: block;
+				float: left;
+				font-size: 1.2rem;
+				width: 96%;
+				padding-left: 3%;
+				padding-right: 3%;
+				margin-top: 1rem;
+				font-weight: normal;
+			}
+			
+			.showarticlebody {
+				background: #FFF none repeat scroll 0% 0%;
+				font-size: 1rem;
+				width: 96%;
+				padding-left: 3%;
+				padding-right: 3%;
+				line-height: 1.8rem;
+				padding-top: 1rem;
+				float: left;
+			}
+			
+			.showarticle_good {
+				width: 100%;
+				float: left;
+				background: #FFF none repeat scroll 0% 0%;
+				padding-top: 2rem;
+				padding-bottom: 2rem;
+			}
+			
+			.showarticle_good #big {
+				height: 1rem;
+			}
+			
+			.showarticle_good a {
+				display: block;
+				width: 90%;
+				margin-left: 5%;
+				margin-right: 5%;
+				background: #C30 none repeat scroll 0% 0%;
+				color: #FFF;
+				text-align: center;
+				font-size: 1rem;
+				border-radius: 5px;
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
+			}
+			
+			.showarticle_good a i,
+			.showarticle_good a em,
+			.showarticle_good a span {
+				display: inline-block;
+			}
+			
+			.showarticle_good a i img {
+				width: 1rem;
+			}
+			
+			.showarticle_good a i,
+			.showarticle_good a em,
+			.showarticle_good a span {
+				display: inline-block;
+			}
+			
+			.showarticle_good a i,
+			.showarticle_good a em,
+			.showarticle_good a span {
+				display: inline-block;
+			}
+			
+			.showarticle_fenxain {
+				width: 94%;
+				float: left;
+				background: #FFF none repeat scroll 0% 0%;
+				padding-left: 3%;
+				padding-right: 3%;
+				font-size: 0.7rem;
+				color: #999;
+				text-align: right;
+				padding-bottom: 2rem;
+			}
+			
+			.livetakl_fload {
+				width: 96%;
+				position: fixed;
+				bottom: 0px;
+				left: 0px;
+				border-top: 1px solid #D0D0D0;
+				background: #F0F0F0 none repeat scroll 0% 0%;
+				padding: 2%;
+			}
+			
+			.livetakl_fload div.input_txt {
+				width: 78%;
+				float: left;
+				margin-right: 2%;
+			}
+			
+			.livetakl_fload div.input_txt textarea {
+				width: 95%;
+				border: 1px solid #C8C8C8;
+				border-radius: 5px;
+				height: 1rem;
+				padding: 0.5rem;
+			}
+			
+			.livetakl_fload div.input_btn {
+				width: 20%;
+				float: left;
+			}
+			
+			.livetakl_fload div.input_btn input.def {
+				background: #BD0B19 none repeat scroll 0% 0%;
+				color: #FFF;
+				font-size: 1rem;
+				width: 99%;
+				height: 2rem;
+				border-radius: 5px;
+				border: 1px solid #BD0B19;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div class="fanhui">返回</div>
+					<div class="denglu1  mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+					</div>
+					<div class="logo1">
+						<span>观点详情</span>
+					</div>
+					<div class="sousuo1">
+						<a href="javascript:;"><img src="image/index.png" /></a>
+					</div>
+				</div>
+			</header>
+
+			<!------------居中部分---------->
+
+			<div class="showarticletit nei_top" style="margin: 60px 10px 10px 10px;">
+				<div class="tit">
+					<span>
+                        <img id="teacherLogo" >
+                    </span>
+					<h4 id="teacherName">&nbsp;<i>&nbsp;<img id="vLogo"></i></h4>
+					<em id="time">&nbsp;</em>
+					<p id="leader">&nbsp;</p>
+				</div>
+
+				<h3 id="titles"></h3>
+			</div>
+			<div class="showarticlebody" id="ideaBody">
+
+			</div>
+			<div class="showarticle_good">
+
+				<p id="big"></p>
+				<a id="sa_zan"><i>
+                    <img src="image/good.png" /></i>&nbsp;<em id="goodsAdd"></em>&nbsp;<span>赞一个</span></a>
+			</div>
+			<div class="showarticle_fenxain">
+				【仅代表个人观点，不构成投资建议，风险自负】
+			</div>
+			<!--------热门观点结束---------->
+			<!----------评论开始------------>
+
+			<div class="log_commen_list">
+
+			</div>
+
+			<div class="linkmore" style="display: none;">
+				<a href="javascript:void(0)" class="commen_gengduo">更多>></a>
+			</div>
+			<div class="livetakl_fload_top"></div>
+			<!----------评论结束------------>
+
+			<div id="addContent" class="livetakl_fload">
+
+				<div class="input_txt">
+					<textarea name="textarea" id="txt_commen" placeholder="来说点什么吧..." cols="45" rows="5"></textarea>
+				</div>
+				<div class="input_btn">
+					<input type="button" name="button" id="btn_commen" class="def" value="发表" />
+				</div>
+			</div>
+			<!------------底部定位层---------->
+		</div>
+	</body>
+
+</html>

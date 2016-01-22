@@ -26,7 +26,7 @@
     			for(var i=0;i<data.length;i++){
     				boardStr=boardStr+"<li id="+data[i].id+" class='noimg'> <div>"
                                     +" <h3><a>"+data[i].title+"</a></h3>"
-                                    +" <p>"+data[i].descripte+"</p></div>  </li>";
+                                    +" <p style='height: 40px;overflow: hidden;'>"+data[i].descripte+"</p></div>  </li>";
     			}
     			board.innerHTML=boardStr;
     			mui("#bopard").on("tap","li",function(){
@@ -55,6 +55,8 @@
     	
     })
     </script>
+    
+  
 
 
 </head>

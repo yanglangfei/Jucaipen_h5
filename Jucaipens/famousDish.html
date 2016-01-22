@@ -65,8 +65,8 @@
 						timeout: 10000,
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
-								hotUrl = hotUrl + "<li  id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  style='width:50px;height:50px;'/></a></span> " + " <div><h3>" + data[i].title + "</h3><lable style='width:100%;height:100px;overflow:hidden;float:right;  white-space: nowrap;text-overflow: ellipsis;'>" + data[i].bodys+ "</lable></div> </li>";
-							}
+                      hotUrl=hotUrl+ "<li id="+data[i].id+"><span><a><img src="+data[i].logImage+"  style='width:80px;height:80px;'/></a></span> "
+                   +" <div><h3><a style='margin-left:20px'>"+data[i].title+"</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>"+data[i].bodys+"</lable></div> </li>";							}
 							hotIdeas.innerHTML = hotUrl;
 							mui("#data-hotIdeas").on("tap", "li", function() {
 								var iId = this.getAttribute("id");
@@ -95,7 +95,7 @@
 						  teacherStr=teacherStr+"  <div id="+data[i].id+" class='item'><a><span>"
                               +"  <img src="+data[i].headFace+"></span></a>"
                             +"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
-                            +"</a><em>"+ data[i].level +"</em><a> <p id='introduce'>"+ strSub(data[i].introduce) +"</p>"
+                            +"</a><em>"+ data[i].level +"</em><a> <p id='introduce' style='style='height: 40px;overflow: hidden;''>"+ strSub(data[i].introduce) +"</p>"
                             +"</a> </div>";
 						}
 						famousList.innerHTML = teacherStr;
@@ -272,7 +272,7 @@
 					<div class="fanhui">返回</div>
 					<div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
 					<div class="logo">
-						<a><img src="image/huanyings.png" style="width: 40px; height: 40px;" /></a>
+						<a><img src="image/jucai.png"/></a>
 					</div>
 
 					<div class="sousuo">

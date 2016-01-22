@@ -21,31 +21,47 @@
 			var byTeacherPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
 			var intrivlIdea=document.getElementById("intrivlIdea");
 			var web=plus.webview.currentWebview();
+			var gengduo=document.getElementById("gengduo");
 			var teacherId=web.teacherId;
+			var currentPage=1;
+			var totlePage;
+			
 			if(teacherId>0){
-				findByTesacherId();
+				findByTesacherId(currentPage);
 			}else{
-				findAll();
+				findAll(currentPage);
 			}
 			
+			//加载更多
+			gengduo.addEventListener("tap",function(){
+				if(currentPage<totlePage){
+					if(teacherId>0){
+						findByTesacherId(++currentPage);
+					}else{
+						findAll(++currentPage);
+					}
+				}
+			})
 			
-			<!--投资观点-->
-		   function findAll(){
-		   	 var ideaStr="";
+			
+			//获取全部的投资观点
+		   function findAll(p){
+		   	var ideaStr=intrivlIdea.innerHTML;
 			mui.ajax(allIdeaPath,{
 				data:{
 					whichPage:1,
-					page:1
-				},
+					page:p
+				}, 
 				type:"get",
 				dataType:"json",
 				timeout:10000,
 				success: function(data){
+					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
 					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
                            +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
                            +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
-                           +"<a><p>"+data[i].bodys+"</p></a></div>"
+                           +"<a><p style='height: 40px;overflow: hidden;'>"+data[i].bodys+"</p></a></div>"
                         +"<div class='img_read'> <span><i><img src='image/hit.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
@@ -66,22 +82,24 @@
 			})
 		   }
 		   
-		   function findByTesacherId(){
-		   	 var ideaStr="";
+		   //根据讲师ID获取投资观点
+		   function findByTesacherId(p){
+		   	 var ideaStr=intrivlIdea.innerHTML;
 			mui.ajax(byTeacherPath,{
 				data:{
 					teacherId:teacherId,
-					page:1
+					page:p
 				},
 				type:"get",
 				dataType:"json",
 				timeout:10000,
 				success: function(data){
+					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
 					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
                            +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
                            +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
-                           +"<a><p>"+data[i].bodys+"</p></a></div>"
+                           +"<a><p style='height: 40px;overflow: hidden;'>"+data[i].bodys+"</p></a></div>"
                         +"<div class='img_read'> <span><i><img src='image/hit.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
@@ -105,6 +123,8 @@
 		})
 		
 		</script>
+		
+		
 	</head>
 
 	<body>
@@ -141,7 +161,7 @@
 
 				</div>
 				<div class="linkmore">
-					<a href="javascript:void(0)" id="gengduo">更多>></a>
+					<a id="gengduo">更多>></a>
 				</div>
 				<!--------热门观点结束---------->
 

@@ -31,7 +31,7 @@
 
 				function getDishList(i) {
 					//获取名师看盘信息
-					var dishStr = dishList.innerText;
+					var dishStr = dishList.innerHTML;
 					mui.ajax(dishPath, {
 						data: {
 							page: i
@@ -42,7 +42,7 @@
 						success: function(data) {
 							totlePage = data[0].totlePage;
 							for (var i = 0; i < data.length; i++) {
-								dishStr = dishStr + "<div type=" + data[i].liveType + " title=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[昨日主题]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
+								dishStr = dishStr + "<div type=" + data[i].liveType + " title=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>["+data[i].startDate+"]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
 							}
 							dishList.innerHTML = dishStr;
 							mui("#dishList").on("tap", ".item", function() {
@@ -97,8 +97,6 @@
 	<body>
 		<div class="wrapper">
 			<!------------头部--------------->
-			
-			
 
 			<header class="header">
 				<div class="head">
@@ -117,7 +115,7 @@
 			<div id="popover" class="mui-popover">
 				jooijoijo
 				<button type="button" class="mui-btn mui-btn-blue">按钮</button>
-				</div>
+			</div>
 
 			<!------------居中部分---------->
 			<!------------热门观点开始---------->

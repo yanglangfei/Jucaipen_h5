@@ -1,48 +1,282 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      	mui.plusReady(function(){
-      		var web=plus.webview.currentWebview();
-      		var liveId=web.liveId;
-      		var live=document.getElementById("live");
-      		mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource",{
-      			data:{
-      				id:liveId,
-      				typeId:0
-      			},
-      			type:"get",
-      			dataType:"json",
-      			timeout:10000,
-      			success: function(data){   
-      				var liveUrl=  "<embed width='100%' height='300px' src="+data.videoUrl+"></embed>";
-                    live.innerHTML=liveUrl;
-      			},
-      			error: function(e){
-      				
-      			}
-      		})
-      	})
-    </script>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: white;">直播室</h1>
-</header>
-<div class="mui-content">
-	<div class="mui-content" style="width: 100%;">
-   	<div   style="width: 100%;" id="live">
-   	
-   	</div >
-   	</div>
-</div>
-	
-</body>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var liveId = web.liveId;
+				var live = document.getElementById("live");
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource", {
+					data: {
+						id: liveId,
+						typeId: 0
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						var liveUrl = "<embed width='100%' height='250px' src=" + data.videoUrl + "></embed>";
+						live.innerHTML = liveUrl;
+					},
+					error: function(e) {}
+				})
+			})
+		</script>
+		<style type="text/css">
+			.pagebody {
+				width: 100%;
+				float: left;
+			}
+			
+			.pagebody_mid {
+				width: 98%;
+				float: left;
+				margin-left: 1%;
+				margin-right: 1%;
+			}
+			
+			.chat_div_btn {
+				width: 100%;
+				float: left;
+				margin-top: 0.2rem;
+			}
+			
+			.chat_div_btn ul {
+				width: 100%;
+				float: left;
+			}
+			
+			.chat_div_btn ul li {
+				width: 33%;
+				float: left;
+			}
+			
+			.chat_div_btn ul li a {
+				display: block;
+				background: #541518 none repeat scroll 0% 0%;
+				font-size: 1rem;
+				text-align: center;
+				line-height: 2.5rem;
+				margin: 0.5rem 0.5rem 0.5rem 0px;
+				color: #FFF;
+				border-radius: 5px;
+			}
+			
+			.chatbody {
+				width: 100%;
+				float: left;
+				background: #9A6D48 none repeat scroll 0% 0%;
+				border-radius: 5px;
+				height: 5rem;
+			}
+			
+			.mCustomScrollBox {
+				position: relative;
+				overflow: hidden;
+				height: 100%;
+				max-width: 100%;
+				outline: medium none;
+				direction: ltr;
+			}
+			
+			.mCSB_container.mCS_no_scrollbar_y.mCS_y_hidden {
+				margin-right: 0px;
+			}
+			
+			.mCSB_container {
+				overflow: hidden;
+				width: auto;
+				height: auto;
+			}
+			
+			.chat_list_item {
+				width: 100%;
+				float: left;
+				padding: 5px 0px;
+			}
+			
+			.chat_list_item span.time {
+				background: #505050 none repeat scroll 0% 0%;
+				border-radius: 2px;
+				padding: 2px 5px;
+				color: #FFF;
+				height: 1.5rem;
+				line-height: 1.5rem;
+			}
+			
+			.chat_list_item span.head {
+				height: 1.5rem;
+				line-height: 1.5rem;
+				padding: 2px;
+			}
+			
+			.chat_list_item span.head img {
+				height: 1.5rem;
+			}
+			
+			.chat_list_item span.name {
+				background: #BD0B19 none repeat scroll 0% 0%;
+				color: #FFF;
+				border-radius: 2px;
+				padding: 2px 5px;
+				height: 1.5rem;
+				line-height: 1.5rem;
+			}
+			
+			.chat_list_item span.content {
+				line-height: 1.5rem;
+				min-height: 1.5rem;
+				padding: 2px;
+				color: #000;
+			}
+			
+			.mCS-autoHide > .mCustomScrollBox > .mCSB_scrollTools,
+			.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools {
+				opacity: 0;
+			}
+			
+			.mCSB_scrollTools .mCSB_draggerContainer {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				bottom: 0px;
+				right: 0px;
+				height: auto;
+			}
+			
+			.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+				background-color: rgba(255, 255, 255, 0.75);
+			}
+			
+			.chat_form {
+				width: 100%;
+				float: left;
+				margin-top: 0.5rem;
+				margin-bottom: 0.5rem;
+			}
+			
+			.chat_form div.txt {
+				float: left;
+				width: 70%;
+			}
+			
+			.chat_form div.txt textarea {
+				width: 100%;
+				height: 5rem;
+				border: medium none;
+				border-radius: 5px 0px 0px 5px;
+				font-size: 0.9rem;
+			}
+			
+			.chat_form div.btn {
+				float: left;
+				width: 30%;
+				border: medium none;
+			}
+			
+			.chat_form div.btn input {
+				width: 100%;
+				border: medium none;
+				border-radius: 0px 5px 5px 0px;
+				background: #BD0B19 none repeat scroll 0% 0%;
+				color: #FFF;
+				height: 5rem;
+				font-size: 1.2rem;
+				cursor: pointer;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: white;">直播室</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content" style="width: 100%;">
+				<div style="width: 100%;" id="live">
+
+				</div>
+
+			</div>
+
+			<div class="pagebody">
+				<div class="pagebody_mid">
+					<div class="chat_div_btn">
+						<ul>
+							<li><a href="javascript:;">yuanqiangqiang</a></li>
+							<li><a href="javascript:;" id="userloginout">退出</a></li>
+							<li style="width: 34%;"><a style="margin-right: 0px;" href="javascript:;" id="connectus">联系我们</a></li>
+						</ul>
+					</div>
+					<div style="height: 530px; position: relative; overflow: visible;" class="chatbody mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar">
+						<div tabindex="0" id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical_horizontal mCSB_outside">
+							<div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; width: 1881.23px; top: 0px; left: 0px;" dir="ltr">
+								<div class="chat_list" id="indexchatlist">
+
+									<div class="chat_list_item" id="msglist_660170" style="">
+										<span class="time">14:52</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">平延光</span><span class="content">002339 老师看看
+</span></div>
+									<div class="chat_list_item" id="msglist_660176" style="">
+										<span class="time">14:53</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">谢小成</span><span class="content">昨天早盘高抛了，下午2.3补进的太早了</span></div>
+									<div class="chat_list_item" id="msglist_660177" style="">
+										<span class="time">14:53</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">剧素红</span><span class="content">300255</span></div>
+									<div class="chat_list_item" id="msglist_660178" style="">
+										<span class="time">14:53</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">王艳芬</span><span class="content"><a>老师， 水晶全卖吗</a></span></div>
+									<div class="chat_list_item" id="msglist_660180" style="">
+										<span class="time">14:53</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">刘睿</span><span class="content">600068</span></div>
+									<div class="chat_list_item" id="msglist_660182" style="">
+										<span class="time">14:53</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">黄勇</span><span class="content">老师看下002551本26.4元割吗/1000gu</span></div>
+									<div class="chat_list_item" id="msglist_660184" style="">
+										<span class="time">14:53</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">樊志春</span><span class="content">000952</span></div>
+									<div class="chat_list_item" id="msglist_660186" style="">
+										<span class="time">14:54</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">钱海</span><span class="content">600833</span></div>
+									<div class="chat_list_item" id="msglist_660189" style="">
+										<span class="time">14:54</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">王艳芬</span><span class="content">好，谢谢</span></div>
+									<div class="chat_list_item" id="msglist_660190" style="">
+										<span class="time">14:54</span><span class="head"><img class="mCS_img_loaded" src="/Images/RoomUser2.png"></span><span class="name">任书敏</span><span class="content">神州还有3手呢，真要到六月份吗？</span></div>
+								</div>
+							</div>
+						</div>
+						<div style="display: none;" id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical">
+							<div class="mCSB_draggerContainer">
+								<div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;" oncontextmenu="return false;">
+									<div style="line-height: 50px;" class="mCSB_dragger_bar"></div>
+								</div>
+								<div class="mCSB_draggerRail"></div>
+							</div>
+						</div>
+						<div style="display: none;" id="mCSB_1_scrollbar_horizontal" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_horizontal">
+							<div class="mCSB_draggerContainer">
+								<div id="mCSB_1_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;" oncontextmenu="return false;">
+									<div class="mCSB_dragger_bar"></div>
+								</div>
+								<div class="mCSB_draggerRail"></div>
+							</div>
+						</div>
+					</div>
+					<div class="chat_form">
+						<div class="txt">
+							<textarea name="textarea" placeholder="请输入内容" id="chatedicontent" cols="45" rows="5"></textarea>
+						</div>
+						<div class="btn">
+							<input name="btn_sendmsg" id="btn_sendmsg" value="发送" type="submit">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+
 </html>

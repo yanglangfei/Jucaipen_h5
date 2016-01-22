@@ -20,29 +20,44 @@
 			var askList=document.getElementById("askList");
 			var retAnswer=document.getElementById("retAnswer");
 			var web=plus.webview.currentWebview();
-			var retAsk=document.getElementById("retAsk")
+			var retAsk=document.getElementById("retAsk");
+			var ask_gengduo=document.getElementById("ask_gengduo");
 			var teacherId=web.teacherId;
+			var totlePage;
+			var currentPage=1;
 			if(teacherId>0){
 				//根据讲师ID获取提问列表
-				findByTeacherId();
+				findByTeacherId(currentPage);
 				
 			}else{
 				//获取全部的提问信息
-				findAll();
+				findAll(currentPage);
 			}
 			
-			function findAll(){
+			//加载更多数据
+			ask_gengduo.addEventListener("tap",function(){
+				if(currentPage<totlePage){
+					if(teacherId>0){
+						findByTeacherId(++currentPage);
+					}else{
+						findAll(++currentPage);
+					}
+				}
+			})
+			
 			//获取全部提问列表
-			var askStr="";
+			function findAll(p){
+			var askStr=askList.innerHTML;;
 			mui.ajax(askListPath,{
 				data:{
 					isAll:0,
-					page:1
+					page:p
 				},
 				type:"get",
 				dataType:"json",
 				timeout:10000,
 				success: function(data){
+					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
 						askStr=askStr+"<div class='item'><div class='userhead'>"
 						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
@@ -57,19 +72,20 @@
 			}
 			
 			
-			function findByTeacherId(){
 			//根据讲师ID获取提问列表
-			var askStr="";
+			function findByTeacherId(p){
+			var askStr=askList.innerHTML;
 			mui.ajax(askListPath,{
 				data:{
 					isAll:1,
 					teacherId:teacherId,
-					page:1
+					page:p
 				},
 				type:"get",
 				dataType:"json",
 				timeout:10000,
 				success: function(data){
+					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
 						askStr=askStr+"<div class='item'><div class='userhead'>"
 						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
@@ -148,7 +164,7 @@
 				<!--------名家问答结束---------->
 			</div>
 			<div class="linkmore">
-				<a id="ask_gengduo" href="javascript:void(0)">更多>></a>
+				<a id="ask_gengduo">更多>></a>
 			</div>
 			<div class="nullList">
 				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>

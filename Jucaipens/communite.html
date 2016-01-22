@@ -25,7 +25,7 @@
 			var title=web.title;
 			var liveId=web.liveId;
 			commTitle.innerHTML=title+"直播室";
-			<!--获取评论列表-->
+			//获取评论列表
 			var commStr="";
 			mui.ajax(commPath,{
 				data:{
@@ -76,6 +76,14 @@
 				
 			})
 		</script>
+		
+		<style type="text/css">
+			#textarea{
+				height: 2rem;
+			}
+		</style>
+		
+		
 	</head>
 
 	<body>

@@ -19,27 +19,42 @@
 		  mui.plusReady(function(){
 		  	var teacherinfo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
 		  	var teacherLay=document.getElementById("teacherLay");
+		  	var currentPage=1;
+		  	var totlePage;
+		  	var find_gengduo=document.getElementById("find_gengduo");
+		  	findAllTeacher(currentPage);
 		  	
-		  	<!--获取讲师列表信息-->
-		  	var teacherStr="";
+		  	//加载更多数据
+		  	find_gengduo.addEventListener("tap",function(){
+		  		if(currentPage<totlePage){
+		  			findAllTeacher(++currentPage);
+		  		}
+		  	})
+		  	
+		  	
+		  	//获取讲师列表信息
+		  	function findAllTeacher(p){
+		  	var teacherStr=teacherLay.innerHTML;
 		  	mui.ajax(teacherinfo,{
 		  		data:{
 		  			whichPage:1,
-		  			page:1
+		  			page:p
 		  		},
 		  		type:"get",
 		  		dataType:"json",
 		  		timeout:10000,
 		  		success: function(data){
+		  			totlePage=data[0].totlePage;
 		  			for(var i=0;i<data.length;i++){
 		  				teacherStr=teacherStr+"<div class='item' id="+data[i].id+">"
 					+"<div class='t_head'><a><span><img src="+data[i].headFace+"></span></a>"
 					+"	<h4><a id='zx'>咨询</a></h4></div><div class='t_name'><h3><a>"+data[i].nickName+"</a><i></i></h3>"
-					+"<h4>"+data[i].level+"</h4><a><p class='msinfo'>"+data[i].introduce+"</p>"
+					+"<h4>"+data[i].level+"</h4><a><p class='msinfo' style='height: 40px;overflow: hidden;'>"+data[i].introduce+"</p>"
 						+"</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;1</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;24</em></span></p>"
 					+"</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
 		  			}
 		  			teacherLay.innerHTML=teacherStr;
+		  			//进入讲师详细界面
 		  			mui("#teacherLay").on("tap",".item",function(){
 		  				var tId=this.getAttribute("id");
 		  				mui.openWindow({
@@ -56,19 +71,15 @@
 		  					var id=this.getAttribute("id");
 		  					console.log(id+"");
 		  				})
-		  				
 		  			}
-		  			
-		  			
-		  			
 		  		},
 		  		error: function(e){
-		  			
-		  		}
-		  	})
+		  		}})}
 		  	
 		  })
 		</script>
+		
+		
 	</head>
 
 	<body>
@@ -97,7 +108,7 @@
 
 			</div>
 			<div class="linkmore">
-				<a href="javascript:void(0)" id="find_gengduo">更多>></a>
+				<a id="find_gengduo">更多>></a>
 			</div>
 			<!--------名师列表结束---------->
 

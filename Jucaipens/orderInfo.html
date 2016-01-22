@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+
+		<script src="js/mui.min.js"></script>
+		<script  src="js/jquery-1.11.0.js"></script>
+		<script>
+			$(".pay_order_detail").css("disply","block");
+		</script>
+		
+		<script type="text/javascript" charset="UTF-8">
+		mui.init();
+		mui.plusReady(function(){
+		 var pay_btn=document.getElementById("pay_btn");	
+		 var newTab=document.getElementById("newTab");
+		  var pay_order_detail=document.getElementById("pay_order_detail");
+		  var pay_order_zb=document.getElementById("pay_order_zb");
+		  var pay_money_zb=document.getElementById("pay_money_zb");
+		  var perPrice=document.getElementById("perPrice");
+		  var nowPrice=document.getElementById("nowPrice");
+		  var week=document.getElementById("week");
+		  
+		 
+		 //展示订单详细表
+		 newTab.addEventListener("tap",function(){
+		 	
+		 })
+		 
+		 //支付订单
+		 pay_btn.addEventListener("tap",function(){
+		 	
+		 })
+			
+			
+		})
+		
+		</script>
+		<style type="text/css">
+			.paybody {
+				margin-top: 80px;
+			}
+			
+			.paybody div.content {
+				width: 90%;
+				float: left;
+				background: #FFF none repeat scroll 0% 0%;
+				border-radius: 5px;
+				margin: 1rem 5%;
+			}
+			
+			.paybody div.content h3 {
+				text-indent: 10px;
+				padding: 5px 0px;
+				border-bottom: 1.5px solid #F1F1F1;
+				width: 90%;
+				display: block;
+				margin: 0px auto;
+			}
+			
+			.paybody div.content div.pay_order {
+				width: 90%;
+				margin: 0px auto;
+			}
+			
+			.paybody div.content div.pay_order p {
+				width: 100%;
+				padding: 0.5rem;
+				display: block;
+				float: left;
+			}
+			
+			.paybody div.content div.pay_order p span {
+				width: 100%;
+				display: block;
+				float: left;
+				padding: 0.5rem;
+			}
+			
+			.paybody div.content div.pay_order p span em {
+				color: #F00;
+				font-size: 16px;
+				font-style: normal;
+			}
+			
+			.paybody div.content div.pay_order p span a {
+				width: 60px;
+				text-align: right;
+				color: #F00;
+				display: inline-block;
+			}
+			
+			.pay_order_detail {
+				width: 95%;
+				float: left;
+				background: #F3F3F3 none repeat scroll 0% 0%;
+				padding: 10px;
+				display: none;
+				border-radius: 5px;
+				margin-bottom: 15px;
+			}
+			
+			.pay_order_detail table {
+				border: 1px solid #D4D4D4;
+				border-collapse: collapse;
+				width: 100%;
+			}
+			
+			.pay_order_detail table tr {
+				background: #FFF none repeat scroll 0% 0%;
+				padding: 20px;
+			}
+			
+			.pay_order_detail table th {
+				background: #EFEFEF none repeat scroll 0% 0%;
+				padding: 10px;
+				border: 1px solid #D4D4D4;
+				font-size: 12px;
+				color: #666;
+			}
+			
+			.pay_yeepay h5 {
+				width: 100%;
+				padding: 0.5rem 1rem;
+			}
+			
+			.pay_yeepay {
+				width: 90%;
+				border: 1px solid #F00;
+				margin: 0px auto;
+				display: none;
+			}
+			
+			.pay_yeepay h5 {
+				width: 100%;
+				padding: 0.5rem 1rem;
+			}
+			
+			.pay_yeepay a {
+				display: inline-block;
+				width: 120px;
+				height: 40px;
+				border: 1px solid #E8E8E8;
+				text-decoration: none;
+			}
+			
+			.paybody div.content div.pay h5 {
+				width: 100%;
+				padding: 0.5rem 1rem;
+			}
+			
+			.pay_button input {
+				background: transparent url("image/pay_bg.png") no-repeat scroll 0% 0%;
+				width: 139px;
+				height: 42px;
+				border: medium none;
+				color: #FFF;
+				font-size: 20px;
+				cursor: pointer;
+				display: table-cell;
+			}
+			
+			#pay_btn {
+				margin-left: 40%;
+				margin-bottom: 10px;
+			}
+			
+			.paybody div.content div.pay_cz,
+			.paybody div.content div.pay {
+				width: 90%;
+				margin: 0px auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="head">
+				<div class="fanhui">返回</div>
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1">
+					<span>购买直播或签约</span>
+				</div>
+				<div class="sousuo1">
+					<a><img src="image/index.png" /></a>
+				</div>
+			</div>
+		</header>
+
+		<div class="paybody">
+			<div id="pay_main" class="content">
+				<h3>订单支付</h3>
+				<div id="pay_order" class="pay_order">
+					<p><span>当前订单号为：<em id="pay_order_zb"></em><a id="newTab" class="order_detail">详情</a></span><span>金额：<em id="pay_money_zb"></em></span></p>
+					<div class="pay_order_detail">
+						<table>
+							<tr>
+								<th>产品名称</th>
+								<th>单价</th>
+								<th>优惠价</th>
+								<th>周期</th>
+							</tr>
+
+							<tr>
+								<td>CCTV智远老师实盘教学直播1.14</td>
+								<td id="perPrice"></td>
+								<td id="nowPrice"></td>
+								<td id="week"></td>
+							</tr>
+
+						</table>
+
+					</div>
+				</div>
+				<h3>支付方式</h3>
+				<div class="pay">
+					<h5>支付宝支付</h5>
+					<a class="alipay def">&nbsp;</a>
+				</div>
+				<div class="pay_button">
+					<input type="button" id="pay_btn"  value="立即支付">
+				</div>
+				<div class="clr"></div>
+			</div>
+			<div class="footer"></div>
+			<div class="clr"></div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+			<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+		mui.init();
+		mui.plusReady(function(){
+			var web=plus.webview.currentWebview();
+			var tId=web.teacherId;
+			var intoSign=document.getElementById("intoSign");
+			//进入完善个人信息页面
+			intoSign.addEventListener("tap",function(){
+				mui.openWindow({
+					url:"completeInfo.html",
+					id:"completeInfo",
+					extras:{
+						teacherId:tId
+					}
+				})
+			})
+			
+		})
+		
+		</script>
+	</head>
+
+	<body>
+
+		<header class="header">
+			<div class="head">
+				<div class="fanhui">返回</div>
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1">
+					<span>选择券商</span>
+				</div>
+				<div class="sousuo1">
+					<a ><img src="image/index.png" /></a>
+				</div>
+			</div>
+		</header>
+			<div class="content_signing">
+				<p class="title_signing">在聚财盆通过以下券商开户，可免费签约投资顾问</p>
+
+				<div class="item">
+					<img src="image/xin.png" class="position_xin" />
+					<div class="text_sign">
+						<div class="img_sign"><img src="image/guquanlogo.png" /></div>
+						<div class="info_content">
+							<div class="info_sign">海通证券</div>
+							<div class="info_bottom">免费开户，支持一人多户，尊享万3超低佣金7×24小时线上服务，视频秒接</div>
+						</div>
+					</div>
+					<div  id="intoSign" class="btn_sign"><a>立即签约</a> </div>
+				</div>
+
+				<div class="s_fuwu_signing">
+					<h4>签约用户专享服务：</h4>
+					<ul>
+						<li><em>√</em> 观看该讲师的所有直播</li>
+						<li><em>√</em> 查阅该讲师的所有观点</li>
+						<li><em>√</em> 享受免费咨询该讲师</li>
+					</ul>
+				</div>
+
+			</div>
+	</body>
+
+</html>

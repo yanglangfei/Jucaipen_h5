@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head id="Head1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var button=document.getElementById("button");
+				var askQuestion="http://121.40.227.121:8080/AccumulateWealth/jucaipen/askQuestion";
+				var Ask_Class=document.getElementById("Ask_Class");
+				var textfield=document.getElementById("textfield");
+				var web=plus.webview.currentWebview();
+				var teacherId=web.teacherId;
+				//提交咨询数据
+				button.addEventListener("tap",function(){
+					var type=Ask_Class.value;
+					var ques=textfield.value;
+					var userId=plus.storage.getItem("userId");
+					if(userId<=0){
+						mui.openWindow({
+							url:"login.html",
+							id:"login"
+						})
+						return ;
+					}
+					if(type<=0){
+						plus.nativeUI.toast("请选择提问分类");
+						return ;
+					}
+					if(ques.length<=0){
+						plus.nativeUI.toast('提问内容不能为空');
+						return ;
+					}
+					mui.ajax(askQuestion,{
+						data:{
+							questionType:type,
+							userId:userId,
+							askBodys:ques,
+							teacherId:teacherId
+						},
+						dataType:"json",
+						type:"get",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								plus.nativeUI.toast("咨询问题提交成功");
+								plus.back();
+							}else{
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+					
+					
+					
+				})
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+					</div>
+					<div class="logo1">
+						<span>咨询名家</span>
+					</div>
+					<div class="sousuo1">
+						<a><img src="image/index.png" /></a>
+					</div>
+				</div>
+			</header>
+
+			<!------------居中部分---------->
+
+			<!--------名家问答开始---------->
+			<div class="mingjiatoask nei_top" style="margin-top: 50px;">
+				<div class="ask_fenlei" style="height: 60px;">
+					<h3>分类：</h3>
+					<span>
+                        <select name="Ask_Class" id="Ask_Class">
+	                     <option value="0">请选择问题分类</option>
+	                     <option value="1">A股</option>
+	                     <option value="2">期货</option>
+                        	 <option value="3">基金</option>
+	                     <option value="4">黄金外汇</option>
+	                     <option value="5">美股</option>
+	                     <option value="6">港股</option>
+	                     <option value="7">保险</option>
+	                     <option value="8">其他理财</option>
+
+                     </select></span>
+				</div>
+				<div class="ask_content">
+					<textarea name="textfield" id="textfield" placeholder="请输入咨询内容"></textarea>
+				</div>
+				<div class="ask_btn">
+					<input id="button" type="button"value="立即咨询" />
+				</div>
+				<!--------名家问答结束---------->
+				<!------------底部定位层---------->
+
+			</div>
+		</div>
+	</body>
+
+</html>

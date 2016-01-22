@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>
+		</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+			<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+		 mui.init();
+		 mui.plusReady(function(){
+		 	var introduceLay=document.getElementById("introduceLay");
+		 	var web=plus.webview.currentWebview();
+		 	introduceLay.innerHTML=web.introduce;
+		 })
+		
+		</script>
+	</head>
+
+	<body>
+
+		<header class="header">
+			<div class="head">
+				<div class="fanhui">返回</div>
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1">
+					<span>名师简介</span>
+				</div>
+				<div class="sousuo1">
+					<a><img src="image/index.png" /></a>
+				</div>
+			</div>
+		</header>
+			<div class="content_01" id="introduceLay">
+				
+			</div>
+	</body>
+
+</html>

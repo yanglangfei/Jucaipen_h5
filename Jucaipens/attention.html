@@ -19,18 +19,34 @@
 		<script type="text/javascript" charset="UTF-8">
 		mui.init();
 		mui.plusReady(function(){
-			var typePath="http://121.40.227.121:8080/AccumulateWealth/accumulate/finalType";
-			var newsListPath="http://192.168.1.63.:8080/AccumulateWealth/jucaipen/newsIndexList"
+			var newsListPath="http://192.168.1.63.:8080/AccumulateWealth/jucaipen/finalInfo"
 			var typeLay=document.getElementById("typeLay");
 			//获取分类信息
-			mui.ajax(typePath,{
-				type:"get",
+			var str="";
+			mui.ajax(newsListPath,{
+				type:"post",
 				dataType:"json",
 				timeout:10000,
 				success: function(data){
 					for(var i=0;i<data.length;i++){
-						findInfobyTypeId(data[i].bigId,data[i].smallId,data[i].typeName);
+						var typeName=data[i].name;
+						var item=data[i].item;
+						str=str+"<div class='xiangmu_t'><h3>"+typeName+"</h3><a>更多</a></div><div class='yaowen_b'><ul>";
+						for(var j=0;j<item.length;j++){
+							var title=item[j].title;
+							var id=item[j].id;
+							var desc=item[j].desc;
+							str=str+"<li  id="+id+" class='noimg'><div><h3><a>"+title+"</a></h3>"
+										+"<p style='height:40px;overflow: hidden;'>"+desc+"</p></div></li>";
+						}
+						str=str+"</ul></div>";
 					}
+					typeLay.innerHTML=str;
+					mui(".xiangmu_t").on("tap","li",function(){
+						var id=this.getAttribute("id");
+						console.log(id);
+					})
+					
 				},
 				error: function(e){
 				}
@@ -70,6 +86,8 @@
 		
 		
 		</script>
+		
+	
 
 
 	</head>

@@ -34,7 +34,7 @@
 				var intoAsk=document.getElementById("intoAsk");
 				var intrial=document.getElementById("intrialIdea");
 				var findTeacher=document.getElementById("findTeacher");
-				<!--获取广告-->
+				//获取广告
 				var url = "";
 				mui.ajax(queryAdice, {
 					data: {
@@ -65,8 +65,9 @@
 						timeout: 10000,
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
+								var body=data[i].bodys.replace(/<[^>]+>/g,"");
                       hotUrl=hotUrl+ "<li id="+data[i].id+"><span><a><img src="+data[i].logImage+"  style='width:80px;height:80px;'/></a></span> "
-                   +" <div><h3><a style='margin-left:20px'>"+data[i].title+"</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>"+data[i].bodys+"</lable></div> </li>";							}
+                   +" <div><h3><a style='margin-left:20px'>"+data[i].title+"</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>"+body+"</lable></div> </li>";							}
 							hotIdeas.innerHTML = hotUrl;
 							mui("#data-hotIdeas").on("tap", "li", function() {
 								var iId = this.getAttribute("id");
@@ -92,10 +93,11 @@
 					timeout: 10000,
 					success: function(data) {
 						for (var i = 0; i < data.length; i++) {
+						var intro=data[i].introduce.replace(/<[^>]+>/g,"");
 						  teacherStr=teacherStr+"  <div id="+data[i].id+" class='item'><a><span>"
                               +"  <img src="+data[i].headFace+"></span></a>"
                             +"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
-                            +"</a><em>"+ data[i].level +"</em><a> <p id='introduce' style='style='height: 40px;overflow: hidden;''>"+ strSub(data[i].introduce) +"</p>"
+                            +"</a><em>"+ data[i].level +"</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>"+ intro +"</p>"
                             +"</a> </div>";
 						}
 						famousList.innerHTML = teacherStr;
@@ -200,14 +202,6 @@
 					}
 				})
 				
-				function strSub(str){
-					if(str.length>50){
-						str=str.substring(0,50)+"...";
-					}
-					return str;
-				}
-				
-				
 			})
 		</script>
 
@@ -256,10 +250,9 @@
 				display: block;
 				background: #FFF none repeat scroll 0% 0%;
 			}
-			
-			
-		
 		</style>
+		
+		
 	</head>
 
 	<body>
@@ -372,8 +365,8 @@
 				<div class="footcenter">
 					<ul>
 						<li><a href="index.html"><span><img src="image/indexnormal.png" /></span></a></li>
-						<li><a href="hotIdea.html"><span><img src="image/licainorma.png" /></span></a></li>
-						<li class="menu"><a href="liveList.html" class="showmenu"><span><img src="image/livenormal.png" /></span></a>
+						<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" /></span></a></li>
+						<li><a href="liveList.html" class="showmenu"><span><img src="image/livenormal.png" /></span></a>
 							<li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
 							<li><a href="famousDish.html"><span><img src="image/classpress.png" /></span></a></li>
 					</ul>

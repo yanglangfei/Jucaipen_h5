@@ -46,10 +46,11 @@
 		  		success: function(data){
 		  			totlePage=data[0].totlePage;
 		  			for(var i=0;i<data.length;i++){
+		  				var intro= data[i].introduce.replace(/<[^>]+>/g,"");  		  				
 		  				teacherStr=teacherStr+"<div class='item' id="+data[i].id+">"
 					+"<div class='t_head'><a><span><img src="+data[i].headFace+"></span></a>"
 					+"	<h4><a id='zx'>咨询</a></h4></div><div class='t_name'><h3><a>"+data[i].nickName+"</a><i></i></h3>"
-					+"<h4>"+data[i].level+"</h4><a><p style='height: 40px;overflow: hidden;'>"+data[i].introduce+"</p>"
+					+"<h4>"+data[i].level+"</h4><a><p style='height: 40px;overflow: hidden;'>"+intro+"</p>"
 						+"</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;1</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;24</em></span></p>"
 					+"</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
 		  			}

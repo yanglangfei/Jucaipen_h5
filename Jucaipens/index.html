@@ -1,358 +1,289 @@
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-    <title></title>
 
-	<!--标准mui.css-->
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<title></title>
+
+		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-     	
-    <script src="js/mui.min.js"></script>
-    <script type="text/javascript" charset="UTF-8">
-    mui.init();
-    mui.plusReady(function(){
-     var page=document.getElementById('pager');
-     var queryAdice="http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
-     var simu=document.getElementById("simuDy");
-     var live=document.getElementById("data-live");
-     var board=document.getElementById("data-threeboard");
-     var attention=document.getElementById("data-attention");
-     var hotIdea=document.getElementById('data-hotidea');
-     var intoLogin=document.getElementById("loginState");
-     var morePrive=document.getElementById("morePrive");
-     var url="";
-     //获取广告
-     	mui.ajax(queryAdice,{
-     		data:{
-     			type:1
-     		},
-     		dataType:'json',
-     		type:"get",
-     		timeout:10000,
-     		success: function(data){
-     			url=url+"<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src="+data[data.length-1].imageUrl+" /></a></div>";
-     			for(var i=0;i<data.length;i++){
-     				var imageUrl=data[i].imageUrl;
-     				url=url+"<div class='mui-slider-item'><a href='#'><img src="+imageUrl+" /></a></div>";
-     			}
-     			url=url+"<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src="+data[0].imageUrl+" /></a></div>";
-     			page.innerHTML=url;
-     		},
-     		error: function(e){
-     			
-     		}
-     	});
-     		var title="";
-     		//私募动态
-     	mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/privateDynamic",{
-     		data:{
-     			whichPage:0
-     		},
-     		dataType:'json',
-     		type:'post',
-     		timeout:10000,
-     		success: function(data){
-     			for(var i=0;i<data.length;i++){
-     				title=title+"<li id="+data[i].id+"><a style='color:#5d5c5c' >"+data[i].title+"</a></li>";
-     			} 
-     			simu.innerHTML=title;
-     			mui("#simuDy").on("tap","li",function(){
-     				var tag=this.getAttribute("id");
-     				mui.openWindow({
-     					url:"newsDetail.html",
-     					id:"newsDetail",
-     					extras:{
-     						newsId:tag
-     					}
-     				})
-     			})	   			
-     		},
-     		error: function(){
-     		}
-     	});
-     		var liveUrl='';
-     		//直播回顾
-     	mui.ajax(" http://121.40.227.121:8080/AccumulateWealth/accumulate/indexSchool",{
-     		dataType:'json',
-     		type:'post',
-     		timeout:10000,
-     		success: function(data){
-     			for(var i=0;i<data.length;i++){
-     				liveUrl=liveUrl+"<li style='float: left;width: 150px;'id="+data[i].id+">"
-                          +"<span><a ><img src="+data[i].url+"  /><h3>"+data[i].title+"</h3></a></span></li>";
-     			}
-     			live.innerHTML=liveUrl;
-     			mui("#data-live").on("tap","li",function(){
-     				var liveId=this.getAttribute("id");
-     				mui.openWindow({
-     					url:"historyLive.html",
-     					id:"historyLive",
-     					extras:{
-     						liveId:liveId
-     					}
-     				})
-     			})
-     			
-     			
-     		},
-     		error: function(e){
-     			
-     		}
-     	});
-     	var three_board='';
-        //新三板
-     	mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/indexNews",{
-     		data:{
-     			type:2
-     		},
-     		dataType:'json',
-     		type:'post',
-     		timeout:10000,
-     		success: function(data){
-     			for(var i=0;i<data.length;i++){
-     				three_board=three_board+"<li id="+data[i].id+"><span><a><img src="+data[i].imageThumb+" /></a></span> "
-                   +" <div><h3><a>"+data[i].title+"</a></h3><p style='height: 40px;overflow: hidden;'>"+data[i].descript+"</p></div> </li>";
-     			}     	
-     			mui("#data-threeboard").on("tap","li",function(){
-     				var nId=this.getAttribute("id");
-     				mui.openWindow({
-     					url:"newsDetail.html",
-     					id:"newsDetail",
-     					extras:{
-     						newsId:nId
-     					}
-     				})
-     			})
-     			board.innerHTML=three_board;
-     		},
-     		error: function(e){
-     		}
-     	});
-     	 //特别关注
-     		var attentionUrl='';
-     	mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/indexNews",{
-     		data:{
-     			type:1
-     		},
-     		dataType:'json',
-     		type:'post',
-     		timeout:10000,
-     		success: function(data){
-     			for(var i=0;i<data.length;i++){
-     				attentionUrl=attentionUrl+ " <li id="+data[i].id+"><a>"+data[i].title+"</a></li>";
-     			}
-     			attention.innerHTML=attentionUrl;
-     			mui("#data-attention").on("tap","li",function(){
-     				var nId=this.getAttribute("id");
-     				mui.openWindow({
-     					url:"newsDetail.html",
-     					id:"newsDetail",
-     					extras:{
-     						newsId:nId
-     					}
-     				})
-     			})
-     		},
-     		error: function(e){
-     		}
-     	});
-       //热门观点
-     	var hotUrl='';
-     	mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList",{
-     		data:{
-     			whichPage:0,
-     		},
-     		dataType:'json',
-     		type:'post',
-     		timeout:10000,
-     		success: function(data){
-     			for(var i=0;i<data.length;i++){
-     				hotUrl=hotUrl+ "<li id="+data[i].id+"><span><a><img src="+data[i].logImage+"  style='width:80px;height:80px;'/></a></span> "
-                   +" <div><h3><a style='margin-left:20px'>"+data[i].title+"</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>"+data[i].bodys+"</lable></div> </li>";
-     			}
-     			hotIdea.innerHTML=hotUrl;
-     			mui("#data-hotidea").on("tap","li",function(){
-     				var nId=this.getAttribute("id");
-     				mui.openWindow({
-     					url:"ideaDetail.html",
-     					id:"ideaDetail",
-     					extras:{
-     					ideaId:nId
-     				}
-     				})
-     			})
-     			
-     			
-     			
-     		},
-     		error: function(e){
-     		}
-     	})
-     	//进入登录页面
-     	intoLogin.addEventListener("tap",function(){
-     		var uId=plus.storage.getItem("userId");
-     		if(uId>0){
-     			mui.openWindow({
-     				url:"vipCenter.html",
-     				id:"vipCenter"
-     			})
-     		}else{
-     			mui.openWindow({
-     				url:"login.html",
-     				id:"login"
-     			})
-     		}
-     	})
-     	
-     	//更多私募动态
-     	morePrive.addEventListener("tap",function(){
-     		mui.openWindow({
-     			url:"news/moreNews.html",
-     			id:"moreNews",
-     			extras:{
-     				type:0
-     			}
-     		})
-     	})
-     	
-     	
-     	
-     	
-     	
-    })
-    </script>
-    
-    
-    </style>
 
-</head>
-<body>
-    <form method="post" action="" id="form1">
-<div class="aspNetHidden">
-</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var page = document.getElementById('pager');
+				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
+				var live = document.getElementById("data-live");
+				var board = document.getElementById("data-threeboard");
+				var attention = document.getElementById("data-attention");
+				var hotIdea = document.getElementById('data-hotidea');
+				var intoLogin = document.getElementById("loginState");
+				var url = "";
+				//获取广告
+				mui.ajax(queryAdice, {
+					data: {
+						type: 1
+					},
+					dataType: 'json',
+					type: "get",
+					timeout: 10000,
+					success: function(data) {
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " /></a></div>";
+						for (var i = 0; i < data.length; i++) {
+							var imageUrl = data[i].imageUrl;
+							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " /></a></div>";
+						}
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " /></a></div>";
+						page.innerHTML = url;
+					},
+					error: function(e) {
+					}
+				});
+				var liveUrl = '';
+				//直播回顾
+				mui.ajax(" http://121.40.227.121:8080/AccumulateWealth/accumulate/indexSchool", {
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						for (var i = 0; i < data.length; i++) {
+							liveUrl = liveUrl + "<li style='float: left;width: 150px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
+						}
+						live.innerHTML = liveUrl;
+						mui("#data-live").on("tap", "li", function() {
+							var liveId = this.getAttribute("id");
+							mui.openWindow({
+								url: "historyLive.html",
+								id: "historyLive",
+								extras: {
+									liveId: liveId
+								}
+							})
+						})
+					},
+					error: function(e) {
+					}
+				});
+				var three_board = '';
+				//新三板
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/indexNews", {
+					data: {
+						type: 2
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						for (var i = 0; i < data.length; i++) {
+							three_board = three_board + "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
+						}
+						mui("#data-threeboard").on("tap", "li", function() {
+							var nId = this.getAttribute("id");
+							mui.openWindow({
+								url: "newsDetail.html",
+								id: "newsDetail",
+								extras: {
+									newsId: nId
+								}
+							})
+						})
+						board.innerHTML = three_board;
+					},
+					error: function(e) {}
+				});
+				//特别关注
+				var attentionUrl = '';
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/indexNews", {
+					data: {
+						type: 1
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						for (var i = 0; i < data.length; i++) {
+							attentionUrl = attentionUrl + " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
+						}
+						attention.innerHTML = attentionUrl;
+						mui("#data-attention").on("tap", "li", function() {
+							var nId = this.getAttribute("id");
+							mui.openWindow({
+								url: "newsDetail.html",
+								id: "newsDetail",
+								extras: {
+									newsId: nId
+								}
+							})
+						})
+					},
+					error: function(e) {}
+				});
+				//热门观点
+				var hotUrl = '';
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList", {
+						data: {
+							whichPage: 0,
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								var body=data[i].bodys.replace(/<[^>]+>/g,"");
+								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  style='width:80px;height:80px;'/></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+							}
+							hotIdea.innerHTML = hotUrl;
+							mui("#data-hotidea").on("tap", "li", function() {
+								var nId = this.getAttribute("id");
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: nId
+									}
+								})
+							})
+						},
+						error: function(e) {}
+					})
+					//进入登录页面
+				intoLogin.addEventListener("tap", function() {
+					var uId = plus.storage.getItem("userId");
+					if (uId > 0) {
+						mui.openWindow({
+							url: "vipCenter.html",
+							id: "vipCenter"
+						})
+					} else {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+					}
+				})
+			})
+		</script>
 
-   <div class="wrapper">
-     <!------------头部--------------->
-     
-     <header class="header">
-        <div class="head">
-           <div id="pageTop1_show_login_link" style="display: table-cell;vertical-align: middle;" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
-           <div class="logo">
-              <a href=""><img src="image/jucai.png"/></a>
-           </div>
-           <div class="sousuo">
-              <a href="#"><img src="image/index.png" /></a>
-           </div>
-           
-        </div>
-     </header> 
-     <!------------首页轮播图---------->
-     <div class="banner">
-       <div id="focus" class="focus region" style=" float:left">
-         <div class="hd">
-           <ul></ul>
-         </div>
-           <div class="bd">
-              <div class="mui-slider">
-           <div class="mui-slider-group mui-slider-loop" id="pager">
-       	<!--广告-->
-        </div>
-     </div>  
-           </div>
-       </div>
-     </div>
-    <!------------导航---------->
-     <nav class="nav">
-        <div class="page_menu">
-           <ul>
-              <li><a href="liveList.html"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
-              <li><a href="famousDish.html"><span><img src="image/class_index.png"></span><h4>名家看市</h4></a></li>
-              <li><a href="hotIdea.html"><span><img src="image/licai_index.png"></span><h4>热门投资</h4></a></li>
-              <li><a href="attention.html" ><span><img src="image/fince_index.png"></span><h4>特别关注</h4></a></li>  	   
-           </ul>
-        </div>
-     </nav>
-     <!------------居中部分---------->
-        <div class="middle">
-           <div class="middlecenter">
-           <!------------私募动态---------->
-              <div class="zhishi">
-                  <div class="xiangmu_t">
-                     <h3 style="color:#d30b36">私募动态</h3>
-                     <a style="color:#4d4d4d" id="morePrive">更多</a>
-                  </div>
-                  
-                  <div class="zhishi_b">
-                  <ul id="simuDy">
-                  </ul>
-                </div>
+		</style>
 
-              </div>
-              <!------------直播回顾---------->
-              <div class="zhibohuigu">
-                <div class="zhibohuigu_top">
-                   <h3>直播回顾</h3>
-                  
-                </div>
-                <div class="zhibohuigu_mian">
-                   <ul style="list-style: none;" id="data-live">
-                   </ul>
-                </div>
-              </div>
-               <!------------------>
-               <div class="zhishi">
-                     <div class="licai_top">
-                   <h3>新三板</h3>
-                   <a>更多</a>   
-                 </div>
-                       <div class="yaowen_b">
-                         <ul id="data-threeboard">
-                         </ul>
-                      </div>
-                   </div>
-              <!------------财经栏目---------->
-              <div class="caijing">
-                 <div class="licai_top">
-                   <h3>特别关注</h3>
-                   <a>更多</a> 
-                 </div>
-                 <div class="caijing_mian">
-                    <ul id="data-attention">
-                    </ul>
-                 </div>
-              </div>
-              <!------------热门观点---------->
-              <div class="remengd" style="background:none">
-                 <div class="licai_top" style="margin-bottom:0.4rem;">
-                   <h3>热门观点</h3>
-                   <a>更多</a>
-                 </div>
-                  <div class="yaowen_b">
-                         <ul id="data-hotidea">
-                         </ul>
-                      </div>
-              </div>
-           </div>
-        </div>
-        <!------------底部定位层---------->
- 
- <footer class="footer">
-           <div class="foot">
-              <div class="footcenter">
-              <ul>
-                  <li><a href="index.html"><span><img src="image/indexpress.png" /></span></a></li>
-                  <li><a href="hotIdea.html"><span><img src="image/licainorma.png" /></span></a></li>
-                  <li class="menu"><a href="liveList.html"><span><img src="image/livenormal.png" /></span></a>
-                  <li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
-                  <li><a href="famousDish.html"><span><img src="image/classnormal.png" /></span></a></li>
-              </ul>
-              </div>
-           </div>
-        </footer>
-  </div>
-    </form>
-</body>
+	</head>
+
+	<body>
+		<form method="post" action="" id="form1">
+			<div class="aspNetHidden">
+			</div>
+
+			<div class="wrapper">
+				<!------------头部--------------->
+
+				<header class="header">
+					<div class="head">
+						<div id="pageTop1_show_login_link" style="display: table-cell;vertical-align: middle;" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
+						<div class="logo">
+							<a href=""><img src="image/jucai.png" /></a>
+						</div>
+						<div class="sousuo">
+							<a href="#"><img src="image/index.png" /></a>
+						</div>
+
+					</div>
+				</header>
+				<!------------首页轮播图---------->
+				<div class="banner">
+					<div id="focus" class="focus region" style=" float:left">
+						<div class="hd">
+							<ul></ul>
+						</div>
+						<div class="bd">
+							<div class="mui-slider">
+								<div class="mui-slider-group mui-slider-loop" id="pager">
+									<!--广告-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------导航---------->
+				<nav class="nav">
+					<div class="page_menu">
+						<ul>
+							<li><a href="liveList.html"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
+							<li><a href="famousDish.html"><span><img src="image/class_index.png"></span><h4>名家看市</h4></a></li>
+							<li><a href="trhreeBoard.html"><span><img src="image/licai_index.png"></span><h4>热门投资</h4></a></li>
+							<li><a href="attention.html"><span><img src="image/fince_index.png"></span><h4>特别关注</h4></a></li>
+						</ul>
+					</div>
+				</nav>
+				<!------------居中部分---------->
+				<div class="middle">
+					<div class="middlecenter">
+                       <!----新三板------->
+						<div class="zhishi">
+							<div class="licai_top">
+								<h3>新三板</h3>
+								<a>更多</a>
+							</div>
+							<div class="yaowen_b">
+								<ul id="data-threeboard">
+								</ul>
+							</div>
+						</div>
+						<!------------直播回顾---------->
+						<div class="zhibohuigu">
+							<div class="zhibohuigu_top">
+								<h3>直播回顾</h3>
+
+							</div>
+							<div class="zhibohuigu_mian">
+								<ul style="list-style: none;" id="data-live">
+								</ul>
+							</div>
+						</div>
+						<!------------财经栏目---------->
+						<div class="caijing">
+							<div class="licai_top">
+								<h3>特别关注</h3>
+								<a>更多</a>
+							</div>
+							<div class="caijing_mian">
+								<ul id="data-attention">
+								</ul>
+							</div>
+						</div>
+						<!------------热门观点---------->
+						<div class="remengd" style="background:none">
+							<div class="licai_top" style="margin-bottom:0.4rem;">
+								<h3>热门观点</h3>
+								<a>更多</a>
+							</div>
+							<div class="yaowen_b">
+								<ul id="data-hotidea">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------底部定位层---------->
+
+				<footer class="footer">
+					<div class="foot">
+						<div class="footcenter">
+							<ul>
+								<li><a href="index.html"><span><img src="image/indexpress.png" /></span></a></li>
+								<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" /></span></a></li>
+								<li class="menu"><a href="liveList.html"><span><img src="image/livenormal.png" /></span></a>
+									<li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
+									<li><a href="famousDish.html"><span><img src="image/classnormal.png" /></span></a></li>
+							</ul>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</form>
+	</body>
+
 </html>

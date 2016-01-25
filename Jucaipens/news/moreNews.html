@@ -7,63 +7,85 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="../css/style.css" rel="stylesheet" type="text/css" />
 		<link href="../css/tuch.css" rel="stylesheet" type="text/css" />
-		<title></title>
-			<!--标准mui.css-->
-		<link rel="stylesheet" href="../css/mui.min.css">
-		<script src="../js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-		//启用双击监听
-		mui.init({
-			gestureConfig:{
-				doubletap:true
-			},
-			subpages:[{
-				url:'news_sub.html',
-				id:'news_sub.html',
-				styles:{
-					top: '45px',
-					bottom: '0px',
-				}
-			}]
-		});
-		var contentWebview = null;
-		document.querySelector('header').addEventListener('doubletap',function () {
-			if(contentWebview==null){
-				contentWebview = plus.webview.currentWebview().children()[0];
-			}
-			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
-		});
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script type="text/javascript">
+		mui.init();
 		mui.plusReady(function(){
+			var moreDymic="http://121.40.227.121:8080/AccumulateWealth/jucaipen/privateDynamic";
+			var totlePage;
+            findDymic(1);
 			
+			
+			//获取所有私募动态
+			
+			function findDymic(p){ 
+				var layStr="";
+				mui.ajax(moreDymic,{
+				data:{
+					whichPage:1,
+					pager:1
+				},
+				type:'get',
+				dataType:"json",
+				timeout:10000,
+				success: function(data){
+					for(var i=0;i<data.length;i++){
+						totlePage=data[i].totlePager;
+						layStr=layStr+"<li>•<a>"+data[i].title+"</a></li>"; 
+					}
+					newsLay.innerHTML=layStr;
+				},
+				error: function(e){
+				}
+			})
+			}
 			
 			
 		})
-		
+			
 		</script>
+		<title>
+		</title>
 	</head>
 
 	<body>
+
+			<div class="wrapper">
 				<!------------头部--------------->
 
 				<header class="header">
 					<div class="head">
-						<div class="fanhui">返回</div>
 						<div class="denglu1 mui-action-back">
 							<a><img src="../image/into_back.png" style="margin-top:0.2rem;" /></a>
 						</div>
 						<div class="logo1">
 							<span>私募动态 </span>
 						</div>
-						<div class="sousuo1">
-							<a><img src="../image/index.png" /></a>
-						</div>
 					</div>
 				</header>
-			
-				
-				
 				<!------------理财栏目---------->
+
+				<div class="lcxm_list">
+					<div class="lcxmcenter">
+
+						<!------------------------私募股权要闻------------------------->
+						<div class="yaowen">
+
+							<div class="zhishi_b">
+								<ul id="newsLay">
+
+								</ul>
+								<p><a href="javascript:;" class="linkmore">查看更多>></a></p>
+							</div>
+						</div>
+						<!------------------------私募股权知识------------------------->
+
+					</div>
+				</div>
+
 				<!------------底部定位层---------->
+			</div>
 	</body>
 
 </html>

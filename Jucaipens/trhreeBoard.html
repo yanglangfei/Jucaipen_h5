@@ -1,121 +1,106 @@
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><link href="css/style.css" rel="stylesheet" type="text/css" /><link href="css/tuch.css" rel="stylesheet" type="text/css" />
-    <title></title>
-    <!--标准mui.css-->
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<title></title>
+		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-     	
-    <script src="js/mui.min.js"></script>
-    <script type="text/javascript" charset="UTF-8">
-    mui.init();
-    mui.plusReady(function(){
-    	var threeBoard="http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoard";
-    	var board=document.getElementById("bopard");
-    	<!--新三板-->
-    	var boardStr="";
-    	mui.ajax(threeBoard,{
-    		data:{
-    			pager:1
-    		},
-    		type:"get",
-    		dataType:"json",
-    		timeout:10000,
-    		success: function(data){
-    			for(var i=0;i<data.length;i++){
-    				boardStr=boardStr+"<li id="+data[i].id+" class='noimg'> <div>"
-                                    +" <h3><a>"+data[i].title+"</a></h3>"
-                                    +" <p style='height: 40px;overflow: hidden;'>"+data[i].descripte+"</p></div>  </li>";
-    			}
-    			board.innerHTML=boardStr;
-    			mui("#bopard").on("tap","li",function(){
-    				var nId=this.getAttribute("id");
-    				mui.openWindow({
-    					url:"newsDetail.html",
-    					id:"newsDetail",
-    					extras:{
-    						newsId:nId
-    					}
-    				})
-    				
-    				
-    			})
-    			
-    			
-    		},
-    		error: function(e){
-    			
-    		}
-    	})
-    	
-    	
-    	
-    	
-    	
-    })
-    </script>
-    
-  
 
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoard";
+				var board = document.getElementById("bopard");
+				<!--新三板-->
+				var boardStr = "";
+				mui.ajax(threeBoard, {
+					data: {
+						pager: 1
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						for (var i = 0; i < data.length; i++) {
+							boardStr = boardStr + "<li id=" + data[i].id + " class='noimg'> <div>" + " <h3><a>" + data[i].title + "</a></h3>" + " <p style='height: 40px;overflow: hidden;'>" + data[i].descripte + "</p></div>  </li>";
+						}
+						board.innerHTML = boardStr;
+						mui("#bopard").on("tap", "li", function() {
+							var nId = this.getAttribute("id");
+							mui.openWindow({
+								url: "newsDetail.html",
+								id: "newsDetail",
+								extras: {
+									newsId: nId
+								}
+							})
+						})
+					},
+					error: function(e) {
+					}
+				})
+			})
+		</script>
+		<style type="text/css">
+			.lcxms{
+				margin-top: 50px;
+			}
+		</style>
 
-</head>
-<body>
+	</head>
 
-   
-     <!------------头部--------------->
+	<body>
 
-     <header class="header">
-        <div class="head">
-           <div class="fanhui">返回</div>
-           <div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
-           <div class="logo">
-              <a ><img src="image/huanyings.png" style="width: 40px; height: 40px;" /></a>
-           </div>
-        
-           <div class="sousuo">
-              <a href="#"><img src="image/index.png" /></a>
-           </div>
-        </div>
-     </header> 
-           <!------------理财栏目---------->
-           <div class="licai_fixed">
-              <ul>
-                  <li><a href="index.html" >私募股权</a></li>
-                  <li><a href="simu.html">阳光私募</a></li>
-                  <li><a href="trhreeBoard.html" class="def">新三板</a></li>
-                  
-              </ul>
-           </div>
-           <div class="lcxm">
-             <div class="lcxmcenter">
-            <!------------------>
-                       <div class="yaowen_b">
-                         <ul id="bopard">
-                         </ul>
-                      </div>
-                   </div>
-                         
-                 <!--------------------->
-           
-           </div>
-            
-        <!------------底部定位层---------->
-   
+		<!------------头部--------------->
 
- <footer class="footer">
-           <div class="foot">
-              <div class="footcenter">
-              <ul>
-                  <li><a href="index.html"><span><img src="image/indexnormal.png" /></span></a></li>
-                  <li><a href="hotIdea.html"><span><img src="image/licaipress.png" /></span></a></li>
-                  <li class="menu"><a href="liveList.html" class="showmenu"><span><img src="image/livenormal.png" /></span></a>
-                  <li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
-                  <li><a href="famousDish.html"><span><img src="image/classnormal.png" /></span></a></li>
-              </ul>
-              </div>
-           </div>
-        </footer>
-           
-</body>
+		<header class="header">
+			<div class="head">
+				<div class="fanhui">返回</div>
+				<div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
+				<div class="logo">
+					<a><img src="image/huanyings.png" style="width: 40px; height: 40px;" /></a>
+				</div>
+
+				<div class="sousuo">
+					<a href="#"><img src="image/index.png" /></a>
+				</div>
+			</div>
+		</header>
+		<div class="lcxms">
+			<div class="lcxmcenter">
+				<!------------------>
+				<div class="yaowen_b">
+					<ul id="bopard">
+					</ul>
+				</div>
+			</div>
+
+			<!--------------------->
+
+		</div>
+
+		<!------------底部定位层---------->
+
+		<footer class="footer">
+			<div class="foot">
+				<div class="footcenter">
+					<ul>
+						<li><a href="index.html"><span><img src="image/indexnormal.png" /></span></a></li>
+						<li><a href="trhreeBoard.html"><span><img src="image/licaipress.png" /></span></a></li>
+						<li class="menu"><a href="liveList.html" class="showmenu"><span><img src="image/livenormal.png" /></span></a>
+							<li><a href="attention.html"><span><img src="image/fincenormal.png" /></span></a></li>
+							<li><a href="famousDish.html"><span><img src="image/classnormal.png" /></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+
+	</body>
+
 </html>

@@ -58,10 +58,11 @@
 				success: function(data){
 					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
+						var body=data[i].bodys.replace(/<[^>]+>/g,"");
 					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
                            +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
                            +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
-                           +"<a><p style='height: 40px;overflow: hidden;'>"+data[i].bodys+"</p></a></div>"
+                           +"<a><p style='height: 40px;overflow: hidden;'>"+body+"</p></a></div>"
                         +"<div class='img_read'> <span><i><img src='image/hit.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
@@ -96,10 +97,11 @@
 				success: function(data){
 					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
+					  var body=data[i].bodys.replace(/<[^>]+>/g,"");
 					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
                            +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
                            +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
-                           +"<a><p style='height: 40px;overflow: hidden;'>"+data[i].bodys+"</p></a></div>"
+                           +"<a><p style='height: 40px;overflow: hidden;'>"+body+"</p></a></div>"
                         +"<div class='img_read'> <span><i><img src='image/hit.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;

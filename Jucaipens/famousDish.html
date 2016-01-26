@@ -128,15 +128,40 @@
 					timeout:10000,
 					success: function(data){
 						for(var i=0;i<data.length;i++){
-							questionStr=questionStr+"<div class='item'><div class='huida'><a><span>"
+							questionStr=questionStr+"<div id="+data[i].teacherId+" class='item'><div class='huida'><a><span>"
                             +"<img src="+data[i].headFace+"></span></a><div class='name'>"
 						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='image/V1.png'></i></h4>"
-						+"</a><em>"+data[i].level+"</em></div><a class='ask'>咨询</a></div><div class='wen'>"
+						+"</a><em>"+data[i].level+"</em></div><a class='ask' t="+data[i].teacherId+">咨询</a></div><div class='wen'>"
 					+"<span> <img src='image/askInfo.png'></span><p><a>"+data[i].askName+":</a>"
 						+"<a style='color: #666'>"+data[i].askBody+"</a></p><em>已回答</em></div>"
 				+"<div class='huida_body'>"+data[i].answerBody+"</div></div>"
 						}
 						question.innerHTML=questionStr;
+						
+						
+						mui("#data-question").on("tap",".ask",function(){
+							var tId=this.getAttribute("t");
+							mui.openWindow({
+								url:"askQuestion.html",
+								id:"askQuestion",
+								extras:{
+									teacherId:tId
+								}
+							})
+							return ;
+						})
+						
+						mui("#data-question").on("tap",".item",function(){
+							var tId=this.getAttribute("id");
+							mui.openWindow({
+								url:"teacherDetail.html",
+								id:"teacherDetail",
+								extras:{
+									teacherId:tId
+								}
+							})
+						})
+						
 					},
 					error: function(e){
 						

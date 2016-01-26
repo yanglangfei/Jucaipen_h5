@@ -7,6 +7,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<script src="js/mingjia.js" type="text/javascript"></script>
 		<title></title>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
@@ -17,38 +19,53 @@
 			mui.plusReady(function() {
 				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoard";
 				var board = document.getElementById("bopard");
-				<!--新三板-->
-				var boardStr = "";
-				mui.ajax(threeBoard, {
-					data: {
-						pager: 1
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						for (var i = 0; i < data.length; i++) {
-							boardStr = boardStr + "<li id=" + data[i].id + " class='noimg'> <div>" + " <h3><a>" + data[i].title + "</a></h3>" + " <p style='height: 40px;overflow: hidden;'>" + data[i].descripte + "</p></div>  </li>";
-						}
-						board.innerHTML = boardStr;
-						mui("#bopard").on("tap", "li", function() {
-							var nId = this.getAttribute("id");
-							mui.openWindow({
-								url: "newsDetail.html",
-								id: "newsDetail",
-								extras: {
-									newsId: nId
-								}
-							})
-						})
-					},
-					error: function(e) {
+				var more_three = document.getElementById("more_three");
+				var currentPage=1;
+				var totlePage;
+				findThreeBoard(currentPage);
+				
+				//获取更多信息
+				more_three.addEventListener("tap",function(){
+					if(currentPage<totlePage){
+						findThreeBoard(++currentPage);
 					}
 				})
+				
+
+				function findThreeBoard(p) {
+					//获取新三板列表
+					var boardStr = board.innerHTML;
+					mui.ajax(threeBoard, {
+						data: {
+							pager: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								totlePage=data[i].totlePager;
+								boardStr = boardStr + "<li id=" + data[i].id + " class='noimg'> <div>" + " <h3><a>" + data[i].title + "</a></h3>" + " <p style='height: 40px;overflow: hidden;'>" + data[i].descripte + "</p></div>  </li>";
+							}
+							board.innerHTML = boardStr;
+							mui("#bopard").on("tap", "li", function() {
+								var nId = this.getAttribute("id");
+								mui.openWindow({
+									url: "newsDetail.html",
+									id: "newsDetail",
+									extras: {
+										newsId: nId
+									}
+								})
+							})
+						},
+						error: function(e) {}
+					})
+				}
 			})
 		</script>
 		<style type="text/css">
-			.lcxms{
+			.lcxms {
 				margin-top: 50px;
 			}
 		</style>
@@ -75,6 +92,10 @@
 					<ul id="bopard">
 					</ul>
 				</div>
+				<div class="linkmore">
+					<a id="more_three">更多>></a>
+				</div>
+
 			</div>
 
 			<!--------------------->

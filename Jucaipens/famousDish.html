@@ -96,7 +96,7 @@
 						var intro=data[i].introduce.replace(/<[^>]+>/g,"");
 						  teacherStr=teacherStr+"  <div id="+data[i].id+" class='item'><a><span>"
                               +"  <img src="+data[i].headFace+"></span></a>"
-                            +"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
+                            +"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='image/V1.png'></i></h4>"
                             +"</a><em>"+ data[i].level +"</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>"+ intro +"</p>"
                             +"</a> </div>";
 						}
@@ -130,7 +130,7 @@
 						for(var i=0;i<data.length;i++){
 							questionStr=questionStr+"<div class='item'><div class='huida'><a><span>"
                             +"<img src="+data[i].headFace+"></span></a><div class='name'>"
-						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
+						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='image/V1.png'></i></h4>"
 						+"</a><em>"+data[i].level+"</em></div><a class='ask'>咨询</a></div><div class='wen'>"
 					+"<span> <img src='image/askInfo.png'></span><p><a>"+data[i].askName+":</a>"
 						+"<a style='color: #666'>"+data[i].askBody+"</a></p><em>已回答</em></div>"
@@ -262,14 +262,9 @@
 
 			<header class="header">
 				<div class="head">
-					<div class="fanhui">返回</div>
-					<div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em>我的</em></a></div>
+					<div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em></em></a></div>
 					<div class="logo">
 						<a><img src="image/jucai.png"/></a>
-					</div>
-
-					<div class="sousuo">
-						<a href="#"><img src="image/index.png" /></a>
 					</div>
 				</div>
 			</header>
@@ -321,7 +316,7 @@
 			<div class="remengd" style="margin-left: 10px;margin-top: 50px;">
 				<div class="licai_top">
 					<h3>热门观点</h3>
-					<a>更多</a>
+					<a href="intrvlIdea.html">更多</a>
 				</div>
 				<div class="yaowen_b">
 					<ul id="data-hotIdeas">
@@ -335,7 +330,7 @@
 		<div class="mingshi" style="margin-left: 10px;margin-top: 10px;">
 			<div class="licai_top">
 				<h3>推荐名师</h3>
-				<span><a>更多></a></span></div>
+				<span><a href="teacherList.html">更多></a></span></div>
 			<div id="famousList">
 				
 			</div>
@@ -346,7 +341,7 @@
 		<div class="mingjiaask" style="margin-left: 10px;margin-top: 10px;">
 			<div class="licai_top">
 				<h3>名家问答</h3>
-				<span><a>更多></a></span></div>
+				<span><a href="answerList.html">更多></a></span></div>
 			<!-------------->
           <div id="data-question">
           	

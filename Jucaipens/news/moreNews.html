@@ -12,19 +12,35 @@
 		<script type="text/javascript">
 		mui.init();
 		mui.plusReady(function(){
-			var moreDymic="http://121.40.227.121:8080/AccumulateWealth/jucaipen/privateDynamic";
+			var moreNews="http://121.40.227.121:8080/AccumulateWealth/accumulate/tapeAnalysis";
+			var more=document.getElementById("moreNews");
+			var web=plus.webview.currentWebview();
+			var smallId=web.smallId;
+			var bigId=web.bigId;
 			var totlePage;
-            findDymic(1);
+			var currentPage=1;
+            findNews(currentPage);
+            
+            //获取更多新闻
+            more.addEventListener("tap",function(){
+            	if(currentPage<totlePage){
+            		findNews(++currentPage);
+            	}else{
+            		more.innerHTML="暂无更多数据";
+            	}
+            })
+
 			
 			
 			//获取所有私募动态
 			
-			function findDymic(p){ 
-				var layStr="";
-				mui.ajax(moreDymic,{
+			function findNews(p){ 
+				var layStr=newsLay.innerHTML;
+				mui.ajax(moreNews,{
 				data:{
-					whichPage:1,
-					pager:1
+					bigId:bigId,
+					smallId:smallId,
+					pager:p
 				},
 				type:'get',
 				dataType:"json",
@@ -32,9 +48,21 @@
 				success: function(data){
 					for(var i=0;i<data.length;i++){
 						totlePage=data[i].totlePager;
-						layStr=layStr+"<li>•<a>"+data[i].title+"</a></li>"; 
+						layStr=layStr+"<li id="+data[i].id+">•<a>"+data[i].title+"</a></li>"; 
 					}
 					newsLay.innerHTML=layStr;
+					mui("#newsLay").on("tap","li",function(){
+						var id=this.getAttribute("id");
+						mui.openWindow({
+							url:"../newsDetail.html",
+							id:"newsDetail",
+							extras:{
+								newsId:id
+							}
+						})
+					})
+					
+					
 				},
 				error: function(e){
 				}
@@ -76,7 +104,7 @@
 								<ul id="newsLay">
 
 								</ul>
-								<p><a href="javascript:;" class="linkmore">查看更多>></a></p>
+								<p><a class="linkmore" id="moreNews">查看更多>></a></p>
 							</div>
 						</div>
 						<!------------------------私募股权知识------------------------->

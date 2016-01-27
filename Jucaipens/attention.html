@@ -19,10 +19,10 @@
 		<script type="text/javascript" charset="UTF-8">
 		mui.init();
 		mui.plusReady(function(){
-			var newsListPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
+			var newsListPath="http://192.168.1.67:8080/AccumulateWealth/jucaipen/finalInfo"
 			var typeLay=document.getElementById("typeLay");
 			//获取分类信息
-			var str="";
+			var str=typeLay.innerHTML;
 			mui.ajax(newsListPath,{
 				type:"post",
 				dataType:"json",
@@ -31,56 +31,50 @@
 					for(var i=0;i<data.length;i++){
 						var typeName=data[i].name;
 						var item=data[i].item;
-						str=str+"<div class='xiangmu_t'><h3>"+typeName+"</h3><a>更多</a></div><div class='yaowen_b'><ul>";
+						str=str+"<div class='xiangmu_t'><h3>"+typeName+"</h3><a sId="+data[i].smallId+" bId="+data[i].bigId+">更多</a></div><div class='yaowen_b'><ul class='layer'>";
 						for(var j=0;j<item.length;j++){
 							var title=item[j].title;
 							var id=item[j].id;
 							var desc=item[j].desc;
-							str=str+"<li  id="+id+" class='noimg'><div><h3><a>"+title+"</a></h3>"
+							str=str+"<li  id="+id  +" class='noimg'><div><h3><a>"+title+"</a></h3>"
 										+"<p style='height:40px;overflow: hidden;'>"+desc+"</p></div></li>";
 						}
 						str=str+"</ul></div>";
+						typeLay.innerHTML=str;
+						
+						
+						
 					}
 					typeLay.innerHTML=str;
-					mui(".xiangmu_t").on("tap","li",function(){
+					
+					mui(".layer").on("tap","li",function(){
 						var id=this.getAttribute("id");
-						console.log(id);
+						mui.openWindow({
+							url:"newsDetail.html",
+							id:"newsDetail",
+							extras:{
+								newsId:id
+							}
+						})
 					})
+					mui(".xiangmu_t").on("tap","a",function(){
+						var sId=this.getAttribute("sId");
+						var bId=this.getAttribute("bId");
+						mui.openWindow({
+							url:"news/moreNews.html",
+							id:"moreNews",
+							extras:{
+								bigId:bId,
+								smallId:sId
+							}
+						})
+					})
+					
 					
 				},
 				error: function(e){
 				}
 			})
-			
-			//通过分类ID获取分类下的详细信息
-			function findInfobyTypeId(bigId,smallId,name){
-				var str="";
-				mui.ajax(newsListPath,{
-					data:{
-						bigId:bigId,
-						smallId:smallId
-					},
-					type:"get",
-					dataType:"json",
-					timeout:10000,
-					success: function(data){
-						str=str+"<div class='xiangmu_t'><h3>"+name+"</h3><a>更多</a></div><div class='yaowen_b'><ul>";
-						console.log(JSON.stringify(data));
-						for(var i=0;i<data.length;i++){
-							str=str+"<li class='noimg'><div><h3><a>"+data[i].title+"</a></h3>"
-										+"<p>今日开盘期间,财智人生老师在和讯名家实盘直播中与投资者实时在线互动。</p></div></li>";
-						}
-						str=str+"</ul></div>";
-						typeLay.innerHTML=str;
-					},
-					error: function(e){
-						
-					}
-				})
-				
-			}
-			
-			
 			
 		})
 		

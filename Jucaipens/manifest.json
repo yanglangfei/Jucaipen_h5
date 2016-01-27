@@ -1,5 +1,9 @@
 {
-	"@platforms": ["android", "iPhone", "iPad"],
+	"@platforms": [
+		"android",
+		"iPhone",
+		"iPad"
+	],
 	"id": "H5E5BFE12",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "聚财盆",/*应用名称，程序桌面图标名称*/
 	"version": {
@@ -18,88 +22,93 @@
 	},
 	"permissions": {
 		"Accelerometer": {
-            "description": "访问加速度感应器"
-        },
-        "Audio": {
-            "description": "访问麦克风"
-        },
-        "Cache": {
-            "description": "管理应用缓存"
-        },
-        "Camera": {
-            "description": "访问摄像头"
-        },
-        "Console": {
-            "description": "跟踪调试输出日志"
-        },
-        "Contacts": {
-            "description": "访问系统联系人信息"
-        },
-        "Device": {
-            "description": "访问设备信息"
-        },
-        "Downloader": {
-            "description": "文件下载管理"
-        },
-        "Events": {
-            "description": "应用扩展事件"
-        },
-        "File": {
-            "description": "访问本地文件系统"
-        },
-        "Gallery": {
-            "description": "访问系统相册"
-        },
-        "Geolocation": {
-            "description": "访问位置信息"
-        },
-         "Invocation": {
-            "description": "使用Native.js能力"
-        },
-        
-        "Orientation": {
-            "description": "访问方向感应器"
-        },
-        "Proximity": {
-            "description": "访问距离感应器"
-        },
-        "Storage": {
-            "description": "管理应用本地数据"
-        },
-        
-        "Uploader": {
-            "description": "管理文件上传任务"
-        },
-        "Runtime": {
-            "description": "访问运行期环境"
-        },
-        "XMLHttpRequest": {
-            "description": "跨域网络访问"
-        },
-        "Zip": {
-            "description": "文件压缩与解压缩"
-        },
-        "Barcode": {
-            "description": "管理二维码扫描插件"
-        },
-        "Maps": {
-            "description": "管理地图插件"
-        },
-        "Speech": {
-            "description": "管理语音识别插件"
-        },
-        "Webview":{
-        	"description": "窗口管理"
-        },
-        "NativeUI":{
-        	"description": "原生UI控件"
-        },
-        "Navigator":{
-        	"description": "浏览器信息"
-        },
-        "NativeObj":{
-        	"description": "原生对象"
-        },"OAuth":{}
+			"description": "访问加速度感应器"
+		},
+		"Audio": {
+			"description": "访问麦克风"
+		},
+		"Cache": {
+			"description": "管理应用缓存"
+		},
+		"Camera": {
+			"description": "访问摄像头"
+		},
+		"Console": {
+			"description": "跟踪调试输出日志"
+		},
+		"Contacts": {
+			"description": "访问系统联系人信息"
+		},
+		"Device": {
+			"description": "访问设备信息"
+		},
+		"Downloader": {
+			"description": "文件下载管理"
+		},
+		"Events": {
+			"description": "应用扩展事件"
+		},
+		"File": {
+			"description": "访问本地文件系统"
+		},
+		"Gallery": {
+			"description": "访问系统相册"
+		},
+		"Geolocation": {
+			"description": "访问位置信息"
+		},
+		"Invocation": {
+			"description": "使用Native.js能力"
+		},
+
+		"Orientation": {
+			"description": "访问方向感应器"
+		},
+		"Proximity": {
+			"description": "访问距离感应器"
+		},
+		"Push": {
+			"description": "管理推送消息插件"
+		},
+		"Storage": {
+			"description": "管理应用本地数据"
+		},
+
+		"Uploader": {
+			"description": "管理文件上传任务"
+		},
+		"Runtime": {
+			"description": "访问运行期环境"
+		},
+		"XMLHttpRequest": {
+			"description": "跨域网络访问"
+		},
+		"Zip": {
+			"description": "文件压缩与解压缩"
+		},
+		"Barcode": {
+			"description": "管理二维码扫描插件"
+		},
+		"Maps": {
+			"description": "管理地图插件"
+		},
+		"Speech": {
+			"description": "管理语音识别插件"
+		},
+		"Webview": {
+			"description": "窗口管理"
+		},
+		"NativeUI": {
+			"description": "原生UI控件"
+		},
+		"Navigator": {
+			"description": "浏览器信息"
+		},
+		"NativeObj": {
+			"description": "原生对象"
+		},
+		"OAuth": {},
+		"Push": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -108,7 +117,25 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {"plugins":{"oauth":{"qq":{"appid":"100226886"},"weixin":{"appid":"wx4e03910ab5dec31d","appsecret":"59825b766d9eb9ed7afd07e33547e0f1"}}},
+		"distribute": {
+			"plugins": {
+				"push": {
+					"igexin": {
+						"appid": "fcsfpKg6TT63rs47CRxG42",
+						"appkey": "7ZpsKKg0TT6fqcZDLfE066",
+						"appsecret": "9xmhjvRdA387aGOciFNEj3"
+					}
+				},
+				"oauth": {
+					"qq": {
+						"appid": "100226886"
+					},
+					"weixin": {
+						"appid": "wx4e03910ab5dec31d",
+						"appsecret": "59825b766d9eb9ed7afd07e33547e0f1"
+					}
+				}
+			},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -122,9 +149,40 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.GET_TASKS\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
+				]
 			},
-			"orientation": ["portrait-primary", "portrait-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": [
+				"portrait-primary",
+				"portrait-secondary"
+			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -137,7 +195,9 @@
 						"spotlight-retina": "unpackage/res/icons/58x58.png", /*iPhone高分屏Spotlight搜索程序图标，分辨率：58x58*/
 						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPhone iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
 						"settings-normal": "unpackage/res/icons/29x29.png", /*iPhone设置页面程序图标，分辨率：29x29*/
-						"settings-retina": "unpackage/res/icons/58x58.png","retina8":"unpackage/res/icons/180x180.png","settings-retina8":"unpackage/res/icons/87x87.png"
+						"settings-retina": "unpackage/res/icons/58x58.png",
+						"retina8": "unpackage/res/icons/180x180.png",
+						"settings-retina8": "unpackage/res/icons/87x87.png"
 					},
 					"ipad": {
 						"normal": "unpackage/res/icons/72x72.png", /*iPad普通屏幕程序图标，分辨率：72x72*/
@@ -186,6 +246,448 @@
 					"xxhdpi": ""
 				}
 			}
+		}
+	},
+	"dependencies":{
+		"pages": {
+			"trhreeBoard.html": {
+				"href": "trhreeBoard.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/unlogin.png",
+					"image/indexnormal.png",
+					"image/livenormal.png",
+					"image/jucai.png",
+					"image/fincenormal.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/classnormal.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"image/licaipress.png"
+				],
+				"refer": [
+					"trhreeBoard.html",
+					"famousDish.html",
+					"newsDetail.html",
+					"index.html",
+					"attention.html",
+					"liveList.html"
+				],
+				"priority": 0
+			},
+			"login.html": {
+				"href": "login.html",
+				"priority": 1
+			},
+			"regin.html": {
+				"href": "regin.html",
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"login.html"
+				],
+				"priority": 2
+			},
+			"ideaDetail.html": {
+				"href": "ideaDetail.html",
+				"priority": 9
+			},
+			"intrvlIdea.html": {
+				"href": "intrvlIdea.html",
+				"priority": 2
+			},
+			"famousDish.html": {
+				"href": "famousDish.html",
+				"priority": 3
+			},
+			"index.html": {
+				"href": "index.html",
+				"resources": [
+					"image/unlogin.png",
+					"image/class_index.png",
+					"image/fince_index.png",
+					"image/fincenormal.png",
+					"js/mui.min.js",
+					"image/live_index.png",
+					"image/classnormal.png",
+					"image/licai_index.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"image/livenormal.png",
+					"image/indexpress.png",
+					"image/jucai.png",
+					"css/style.css",
+					"image/licainorma.png"
+				],
+				"refer": [
+					"trhreeBoard.html",
+					"login.html",
+					"intrvlIdea.html",
+					"famousDish.html",
+					"index.html",
+					"attention.html",
+					"newsDetail.html",
+					"liveList.html",
+					"historyLive.html",
+					"ideaDetail.html"
+				],
+				"priority": 0
+			},
+			"newsDetail.html": {
+				"href": "newsDetail.html",
+				"priority": 6
+			},
+			"news/moreNews.html": {
+				"href": "news/moreNews.html",
+				"resources": [
+					"js/mui.min.js",
+					"image/into_back.png",
+					"css/style.css",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"css/tuch.css"
+				],
+				"refer": [
+					"newsDetail.html"
+				],
+				"priority": 7
+			},
+			"attention.html": {
+				"href": "attention.html",
+				"priority": 5
+			},
+			"liveRoom.html": {
+				"href": "liveRoom.html",
+				"resources": [
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/guan.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"priority": 13
+			},
+			"liveList.html": {
+				"href": "liveList.html",
+				"priority": 7
+			},
+			"completeInfo.html": {
+				"href": "completeInfo.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"login.html"
+				],
+				"priority": 7
+			},
+			"choseQuace.html": {
+				"href": "choseQuace.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"image/guquanlogo.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"image/xin.png"
+				],
+				"refer": [
+					"completeInfo.html"
+				],
+				"priority": 7
+			},
+			"fansList.html": {
+				"href": "fansList.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/head.png",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"priority": 9
+			},
+			"txtLive.html": {
+				"href": "txtLive.html",
+				"priority": 11
+			},
+			"communite.html": {
+				"href": "communite.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/head.png",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"communite.html",
+					"txtLive.html"
+				],
+				"priority": 11
+			},
+			"askList.html": {
+				"href": "askList.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"image/jucaipen.png",
+					"css/style.css",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"askList.html",
+					"answerList.html"
+				],
+				"priority": 11
+			},
+			"answerList.html": {
+				"href": "answerList.html",
+				"priority": 8
+			},
+			"teacherIntroduce.html": {
+				"href": "teacherIntroduce.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"css/style.css",
+					"js/mui.min.js",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"css/tuch.css"
+				],
+				"priority": 12
+			},
+			"askQuestion.html": {
+				"href": "askQuestion.html",
+				"priority": 9
+			},
+			"teacherDetail.html": {
+				"href": "teacherDetail.html",
+				"priority": 11
+			},
+			"teacherList.html": {
+				"href": "teacherList.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"teacherDetail.html"
+				],
+				"priority": 7
+			},
+			"purchAndSign.html": {
+				"href": "purchAndSign.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/sign.png",
+					"image/index.png",
+					"image/buy.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"image/into_back.png"
+				],
+				"priority": 10
+			},
+			"dishList.html": {
+				"href": "dishList.html",
+				"resources": [
+					"css/mingjia.css",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/tuch.css",
+					"css/style.css",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"purchAndSign.html",
+					"txtLive.html"
+				],
+				"priority": 10
+			},
+			"historyLive.html": {
+				"href": "historyLive.html",
+				"resources": [
+					"image/kaishi.png",
+					"image/index.png",
+					"js/mui.min.js",
+					"css/style.css",
+					"image/head.png",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"fonts/mui.ttf"
+				],
+				"priority": 8
+			}
+		},
+		"idle": {
+			"resources": [
+				"image/no_network.png",
+				"css/layer.css",
+				"image/logo_sinaweibo.png",
+				"image/sex_men.png",
+				"userInfo.html",
+				"image/logo_wechatmoments.png",
+				"image/skyblue_editpage_image_remove.png",
+				"news/news_sub.html",
+				"image/thumb.png",
+				"image/into_next.png",
+				"image/dur.png",
+				"image/logo_wechatfavorite.png",
+				"image/remarks.png",
+				"image/skyblue_actionbar_back_btn.png",
+				"image/v1.png",
+				"js/layer.js",
+				"image/good.png",
+				"image/hits.png",
+				"js/mui.js",
+				"image/delect.png",
+				"image/guanzhu.png",
+				"image/dup.png",
+				"myCollect.html",
+				"image/ktq.png",
+				"image/findimage.png",
+				"image/zfb.png",
+				"image/skyblue_editpage_image_bg.9.png",
+				"image/zan_unpress.png",
+				"image/ktn.png",
+				"image/shares_panel_to_qq.png",
+				"image/load_video.png",
+				"image/vips.png",
+				"image/noattention.png",
+				"image/tb_gz.png",
+				"image/lookimage.png",
+				"image/myorder.png",
+				"bindAccount.html",
+				"orderInfo.html",
+				"image/logo_email.png",
+				"updatePwd.html",
+				"image/thubm_state.png",
+				"image/weixin_press.png",
+				"image/skyblue_actionbar_ok_btn.png",
+				"js/layer.ext.js",
+				"image/btn_back_nor.9.png",
+				"image/logo_qzone.png",
+				"image/logo.jpg",
+				"image/jianpan.png",
+				"image/touzi.png",
+				"image/unpress_stars.png",
+				"image/pic.png",
+				"image/zixun.png",
+				"image/share_press.png",
+				"image/fincepress.png",
+				"image/loginqq_press.png",
+				"image/logo_shortmessage.png",
+				"image/skyblue_platform_checked.png",
+				"CollectAndComment.html",
+				"image/licainormal.png",
+				"image/play_center.png",
+				"image/classpress.png",
+				"image/delete.png",
+				"image/loginsina_press.png",
+				"image/seeimage.png",
+				"image/ic_launcher.png",
+				"myRemark.html",
+				"image/full_normal.png",
+				"vipService.html",
+				"startPage.html",
+				"image/skyblue_editpage_bg.9.png",
+				"image/v.png",
+				"image/qq.png",
+				"image/exit.png",
+				"image/yx.png",
+				"image/share_normal.png",
+				"image/answerimage.png",
+				"image/collect_c.png",
+				"image/find.png",
+				"vipcenter.html",
+				"image/zhuanjia.9.png",
+				"image/personpush.png",
+				"image/livepress.png",
+				"image/askinfo.png",
+				"image/jiahao.png",
+				"image/loginsina_unpress.png",
+				"image/tb_manyi.png",
+				"image/orders.png",
+				"css/mui.css",
+				"image/zhuanjias.png",
+				"css/lay.ext.css",
+				"image/collect_s.png",
+				"image/logo_qq.png",
+				"image/loginqq_unpress.png",
+				"image/reply_normal.png",
+				"image/return_last.png",
+				"image/weixin.png",
+				"image/pay_bg.png",
+				"image/skyblue_editpage_close.png",
+				"image/response.png",
+				"image/skyblue_platform_checked_disabled.png",
+				"image/zan_press.png",
+				"image/xlistview_arrow.png",
+				"image/loading-0.gif",
+				"js/jquery-1.11.0.js",
+				"image/shijian.jpg",
+				"image/logo_tencentweibo.png",
+				"image/sex_women.png",
+				"image/loginweixins.png",
+				"image/huanyings.png",
+				"myOrder.html",
+				"image/infos.png",
+				"image/jucaipens.png",
+				"css/lay.css",
+				"image/comm_icon1.png",
+				"image/binds.png",
+				"image/press_stars.png",
+				"image/skyblue_editpage_divider.9.png",
+				"infoCenter.html",
+				"image/main.gif",
+				"image/pwd.png",
+				"image/logo_twitter.png",
+				"image/pause.png",
+				"image/small.png"
+			]
 		}
 	}
 }

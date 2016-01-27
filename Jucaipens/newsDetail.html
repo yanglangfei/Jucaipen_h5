@@ -12,13 +12,20 @@
 
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					hold: true,
+					release: true
+				}
+			});
 			mui.plusReady(function() {
 				var news_detailUrl = "http://121.40.227.121:8080/AccumulateWealth/accumulate/newsDetail";
 				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
 				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
 				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
 				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
+				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
+				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
 				var web = plus.webview.currentWebview();
 				var title = document.getElementById("show_newstit");
 				var repoter = document.getElementById("show_newsinfo");
@@ -26,22 +33,28 @@
 				var relate = document.getElementById("data-relate");
 				var comm_count = document.getElementById("show_Video_CommCount");
 				var comment = document.getElementById("newscommlist");
-				var inputs=document.getElementById("input");
-				var myinput=document.getElementById("myinput");
-				var HiddenFieldId=document.getElementById("HiddenFieldId");
-				var btn_sub_comm=document.getElementById("btn_sub_comm");
-				var getMore=document.getElementById("getMore");
-				var currentPage=1;
+				var inputs = document.getElementById("input");
+				var myinput = document.getElementById("myinput");
+				var HiddenFieldId = document.getElementById("HiddenFieldId");
+				var btn_sub_comm = document.getElementById("btn_sub_comm");
+				var getMore = document.getElementById("getMore");
+				var li_share = document.getElementById("li-share");
+				var iv_share = document.getElementById("iv-share");
+				var iv_collect = document.getElementById("iv-collect");
+				var li_collect = document.getElementById("li-collect");
+				var isCollected;
+				var currentPage = 1;
 				var totlePage;
 				var id = web.newsId;
-				var appenStr="";
+				var appenStr = "";
 				var classId;
-				var typeId=0;
+				var typeId = 0;
 				var uId;
 				if (id <= 0) {
 					plus.nativeUI.toast("新闻ID异常");
 					return;
 				}
+				findCollectState();
 				//获取新闻详细信息
 				mui.ajax(news_detailUrl, {
 					data: {
@@ -84,151 +97,225 @@
 					},
 					error: function(e) {}
 				});
-			findCommList(currentPage);
-			function findCommList(p){
-				//获取评论信息
-				var commUrl = "";
-				mui.ajax(querry_comm, {
-					data: {
-						typeId: typeId,
-						id: id,
-						pager: p
-					},
-					dataType: "json",
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						comm_count.innerHTML = "共" + data.length + "条";
-						for (var i = 0; i < data.length; i++) {
-							totlePage=data[i].totlePage;
-							commUrl = commUrl + "  <li><div  class='headFace'><img   id='headLogo' src=" + data[i].userLogo + " />" 
-							+ "	</div><div id='vItem' ><h4 ><span id='nickName'>" + data[i].userName + "</span>" + 
-							"<span id='sp_good' class="+data[i].id+"><img src='image/good.png' id='iv_good' />" + 
-							"</span><span id='sp_comm' class="+data[i].id+" name="+data[i].userName+"><img src='image/comm_icon1.png' id='iv_comm'/>" +
-							"</span></h4><span id='comBody'>" + data[i].body + "</span><span id='commTime'>" +
-							data[i].insertDate + "</span>" + "	</div></li> "
-						}
-						comment.innerHTML = commUrl; 
-						if (data.length > 0) {
-							//点赞
-							mui("#newscommlist").on("tap","#sp_good",function(){
-								 uId = plus.storage.getItem("userId");
-								var commId = this.getAttribute("class");
-								if (uId <= 0) {
-									mui.openWindow({
-										url:"login.html",
-										id:"login"
-									})
-									return;
-								}
-								mui.ajax(add_goods, {
-									data: {
-										userId: uId,
-										commId: commId
-									},
-									dataType: "json",
-									type: "get",
-									timeout: 10000,
-									success: function(data) {
-										if(data.ret_code==0){
-											plus.nativeUI.toast("点赞成功");
-										}else{
-											plus.nativeUI.toast(data.err_msg);
-										}
-									},
-									error: function(e) {
-										plus.nativeUI.toast("连接失败");
+				findCommList(currentPage);
+
+				function findCommList(p) {
+					//获取评论信息
+					var commUrl = "";
+					mui.ajax(querry_comm, {
+						data: {
+							typeId: typeId,
+							id: id,
+							pager: p
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							comm_count.innerHTML = "共" + data.length + "条";
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								commUrl = commUrl + "  <li><div  class='headFace'><img   id='headLogo' src=" + data[i].userLogo + " />" + "	</div><div id='vItem' ><h4 ><span id='nickName'>" + data[i].userName + "</span>" +
+									"<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
+									"</span><span id='sp_comm' class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
+									"</span></h4><span id='comBody'>" + data[i].body + "</span><span id='commTime'>" +
+									data[i].insertDate + "</span>" + "	</div></li> "
+							}
+							comment.innerHTML = commUrl;
+							if (data.length > 0) {
+								//点赞
+								mui("#newscommlist").on("tap", "#sp_good", function() {
+									uId = plus.storage.getItem("userId");
+									var commId = this.getAttribute("class");
+									if (uId <= 0) {
+										mui.openWindow({
+											url: "login.html",
+											id: "login"
+										})
+										return;
 									}
+									mui.ajax(add_goods, {
+										data: {
+											userId: uId,
+											commId: commId
+										},
+										dataType: "json",
+										type: "get",
+										timeout: 10000,
+										success: function(data) {
+											if (data.ret_code == 0) {
+												plus.nativeUI.toast("点赞成功");
+											} else {
+												plus.nativeUI.toast(data.err_msg);
+											}
+										},
+										error: function(e) {
+											plus.nativeUI.toast("连接失败");
+										}
+									});
 								});
-							});
-							//回复评论
-							mui("#newscommlist").on("tap","#sp_comm",function(){
-								var name=this.getAttribute("name");
-								var commId=this.getAttribute("class");
-								myInputState(commId,"回复@"+name+"的评论:");
-							})
-						}
-					},
-					error: function(e) {}
-				});
-			}
-				
-				
-				
-				
-				//弹出评论／回复框
-			inputs.addEventListener("tap",function(){
-				myInputState(0,"想说点什么");
-			});
-			//发表评论，回复
-			btn_sub_comm.addEventListener("tap",function(){
-				if(HiddenFieldId.value.length<=0){
-					plus.nativeUI.toast("请输入内容");
-					return ;
+								//回复评论
+								mui("#newscommlist").on("tap", "#sp_comm", function() {
+									var name = this.getAttribute("name");
+									var commId = this.getAttribute("class");
+									myInputState(commId, "回复@" + name + "的评论:");
+								})
+							}
+						},
+						error: function(e) {}
+					});
 				}
-				remarkNews();
-			})
-			
-			//弹出评论／回复对话框
-			function myInputState(cId,str){
-				 uId=plus.storage.getItem("userId");
-				if(uId<=0){
-					mui.openWindow({
-						url:"login.html",
-						id:"login"
-					})
-					return ;
-				}
-				var d=myinput.style.display;
-				HiddenFieldId.value="";
-				if(d=="block"){
-					myinput.style.display="none";
-				}else{
-					myinput.style.display="block";
-					classId=cId;
-					if(cId>0){
-					appenStr=str;
+				//获取收藏状况
+				function findCollectState() {
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						return;
 					}
-					HiddenFieldId.placeholder=str;
-				}
-			}
-			
-			
-			//发表评论／回复
-			function remarkNews(){
-				mui.ajax(add_remark,{
-					data:{
-						typeId:typeId,
-						classId:classId,
-						userId:uId,
-						newsId:id,
-						bodys:appenStr+HiddenFieldId.value
-					},
-					dataType:"json",
-					type:"post",
-					timeout:10000,
-					success: function(data){
-						if(data.ret_code){
-							plus.nativeUI.toast("评论发表成功");
-							HiddenFieldId.value="";
-						}else{
-							plus.nativeUI.toast(data.err_msg);
+					mui.ajax(queryCollect, {
+						data: {
+							userId: uId,
+							newsId: id
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								iv_collect.src = "image/collect_s.png";
+								isCollected = true;
+							} else {
+								iv_collect.src = "image/collect_c.png";
+								isCollected = false;
+							}
+						},
+						error: function(e) {
 						}
-					},
-					error: function(e){
+					})
+				}
+				//收藏资讯
+				function collectNewsOp(t) {
+					mui.ajax(collectNews, {
+						data: {
+							type: t,
+							userId: uId,
+							newsId: id
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							if (t == 0) {
+								if (data.ret_code == 0) {
+									isCollected = true;
+									iv_collect.src = "image/collect_s.png";
+								} else {
+									isCollected = false;
+								}
+							} else {
+								if (data.ret_code == 0) {
+									isCollected = false;
+									iv_collect.src = "image/collect_c.png";
+								} else {
+									isCollected = true;
+								}
+							}
+						},
+						error: function(e) {
+						}
+					})
+				}
+				li_collect.addEventListener("tap", function() {
+					uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+						return;
+					}
+					if (isCollected) {
+						//取消收藏
+						collectNewsOp(1);
+					} else {
+						//收藏
+						collectNewsOp(0);
 					}
 				})
-			}
-			//获取更多评论信息
-			getMore.addEventListener("tap",function(){
-				if(currentPage<totlePage){
-					findCommList(++currentPage);
-				}else{
-					getMore.innerHTML="暂无更多数据";
+				//弹出评论／回复框
+				inputs.addEventListener("tap", function() {
+					myInputState(0, "想说点什么");
+				});
+				//发表评论，回复
+				btn_sub_comm.addEventListener("tap", function() {
+					if (HiddenFieldId.value.length <= 0) {
+						plus.nativeUI.toast("请输入内容");
+						return;
+					}
+					remarkNews();
+				})
+				//弹出评论／回复对话框
+				function myInputState(cId, str) {
+					uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+						return;
+					}
+					var d = myinput.style.display;
+					HiddenFieldId.value = "";
+					if (d == "block") {
+						myinput.style.display = "none";
+					} else {
+						myinput.style.display = "block";
+						classId = cId;
+						if (cId > 0) {
+							appenStr = str;
+						}
+						HiddenFieldId.placeholder = str;
+					}
 				}
-			});
-			
-			
+				//发表评论／回复
+				function remarkNews() {
+					mui.ajax(add_remark, {
+						data: {
+							typeId: typeId,
+							classId: classId,
+							userId: uId,
+							newsId: id,
+							bodys: appenStr + HiddenFieldId.value
+						},
+						dataType: "json",
+						type: "post",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code) {
+								plus.nativeUI.toast("评论发表成功");
+								HiddenFieldId.value = "";
+							} else {
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(e) {}
+					})
+				}
+				//获取更多评论信息
+				getMore.addEventListener("tap", function() {
+					if (currentPage < totlePage) {
+						findCommList(++currentPage);
+					} else {
+						getMore.innerHTML = "暂无更多数据";
+					}
+				});
+				//分享点击事件
+				li_share.addEventListener("hold", function() {
+						iv_share.src = 'image/share_press.png';
+					})
+					//分享按钮释放事件
+				li_share.addEventListener("release", function() {
+					iv_share.src = 'image/share_normal.png';
+				})
 			})
 		</script>
 
@@ -361,17 +448,27 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 			}
-			#showvideoinfo_3{
+			
+			#showvideoinfo_3 {
 				margin-left: 10px;
 			}
-			#btn_sub_comm{
+			
+			#btn_sub_comm {
 				background: #BD0B19;
 				color: white;
 				border: 0px;
 			}
-			#HiddenFieldId{
+			
+			#HiddenFieldId {
 				color: #808080;
 				font-size: 14px;
+			}
+			
+			.foot li {
+				float: left;
+				width: 50%;
+				text-align: center;
+				line-height: 50px;
 			}
 		</style>
 
@@ -383,12 +480,12 @@
 			<!------------头部--------------->
 
 			<header class="header">
-				<div class="head" >
+				<div class="head">
 					<div class="denglu1 mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
 					<div class="logo1">
-						<span style="line-height: 25px;" >私募动态 </span>
+						<span style="line-height: 25px;">私募动态 </span>
 					</div>
 				</div>
 			</header>
@@ -429,7 +526,7 @@
 			<!------------底部定位层---------->
 
 		</div>
-		<!---->
+		<!--评论弹出层-->
 		<div class="float_comm_input" id="myinput" style="display: none;">
 			<div class="left">
 				<input type="text" name="HiddenFieldId" id="HiddenFieldId" />
@@ -438,6 +535,22 @@
 				<input type="button" id="btn_sub_comm" name="btn_sub_comm" value="发送">
 			</div>
 		</div>
+
+		<footer class="footer">
+			<div class="foot" style="height: 50px;">
+				<li id="li-collect">
+					<span>
+								<img src="image/collect_c.png" style="width: 50px;height: 50px;" id="iv-collect"/>
+							</span>
+				</li>
+				<li id="li-share">
+					<span>
+								<img src="image/share_normal.png" style="width: 50px;height: 50px;" id="iv-share"/>
+							</span>
+				</li>
+
+			</div>
+		</footer>
 	</body>
 
 </html>

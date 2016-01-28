@@ -21,9 +21,7 @@
 		"url": "http://www.dcloud.io"
 	},
 	"permissions": {
-		"Accelerometer": {
-			"description": "访问加速度感应器"
-		},
+
 		"Audio": {
 			"description": "访问麦克风"
 		},
@@ -61,12 +59,8 @@
 			"description": "使用Native.js能力"
 		},
 
-		"Orientation": {
-			"description": "访问方向感应器"
-		},
-		"Proximity": {
-			"description": "访问距离感应器"
-		},
+
+
 		"Push": {
 			"description": "管理推送消息插件"
 		},
@@ -83,18 +77,17 @@
 		"XMLHttpRequest": {
 			"description": "跨域网络访问"
 		},
-		"Zip": {
-			"description": "文件压缩与解压缩"
-		},
+
 		"Barcode": {
 			"description": "管理二维码扫描插件"
 		},
 		"Maps": {
 			"description": "管理地图插件"
 		},
-		"Speech": {
-			"description": "管理语音识别插件"
+		"Share": {
+			"description": "访问分享插件"
 		},
+
 		"Webview": {
 			"description": "窗口管理"
 		},
@@ -108,7 +101,8 @@
 			"description": "原生对象"
 		},
 		"OAuth": {},
-		"Push": {}
+		"Push": {},
+		"Share": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -119,6 +113,17 @@
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
 			"plugins": {
+				"share": {
+					"qq": {
+						"appid": "100226886",
+						"description": "QQ分享"
+					},
+					"weixin": {
+						"appid": "wx4e03910ab5dec31d",
+						"appsecret": "59825b766d9eb9ed7afd07e33547e0f1",
+						"description": "可选，微信分享"
+					}
+				},
 				"push": {
 					"igexin": {
 						"appid": "fcsfpKg6TT63rs47CRxG42",
@@ -152,7 +157,6 @@
 				"permissions": [
 					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
 					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
 					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
 					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
 					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
@@ -163,13 +167,13 @@
 					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
 					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
 					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
 					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
 					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
 					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
 					"<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
@@ -248,7 +252,7 @@
 			}
 		}
 	},
-	"dependencies":{
+	"dependencies": {
 		"pages": {
 			"trhreeBoard.html": {
 				"href": "trhreeBoard.html",
@@ -295,7 +299,14 @@
 			},
 			"ideaDetail.html": {
 				"href": "ideaDetail.html",
-				"priority": 9
+				"priority": 9,
+				"resources": [
+					"image/index.png",
+					"image/v1.png",
+					"image/into_back.png",
+					"image/good.png"
+				],
+				"refer": []
 			},
 			"intrvlIdea.html": {
 				"href": "intrvlIdea.html",
@@ -303,7 +314,20 @@
 			},
 			"famousDish.html": {
 				"href": "famousDish.html",
-				"priority": 3
+				"priority": 3,
+				"resources": [
+					"image/seeimage.png",
+					"image/lookimage.png",
+					"image/answerimage.png",
+					"image/findimage.png",
+					"image/classpress.png",
+					"css/mingjia.css",
+					"image/indexnormal.png",
+					"css/tuch.css"
+				],
+				"refer": [
+					"ideaDetail.html"
+				]
 			},
 			"index.html": {
 				"href": "index.html",
@@ -340,7 +364,20 @@
 			},
 			"newsDetail.html": {
 				"href": "newsDetail.html",
-				"priority": 6
+				"priority": 6,
+				"resources": [
+					"image/head.png",
+					"image/share_press.png",
+					"image/share_normal.png",
+					"image/collect_c.png",
+					"image/into_back.png",
+					"image/comm_icon1.png",
+					"image/good.png",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css"
+				],
+				"refer": []
 			},
 			"news/moreNews.html": {
 				"href": "news/moreNews.html",
@@ -359,7 +396,11 @@
 			},
 			"attention.html": {
 				"href": "attention.html",
-				"priority": 5
+				"priority": 5,
+				"resources": [
+					"image/fincepress.png"
+				],
+				"refer": []
 			},
 			"liveRoom.html": {
 				"href": "liveRoom.html",
@@ -375,7 +416,12 @@
 			},
 			"liveList.html": {
 				"href": "liveList.html",
-				"priority": 7
+				"priority": 7,
+				"resources": [
+					"image/licainorma.png",
+					"image/livepress.png"
+				],
+				"refer": []
 			},
 			"completeInfo.html": {
 				"href": "completeInfo.html",
@@ -557,9 +603,12 @@
 					"image/head.png",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/comm_icon1.png",
+					"image/good.png"
 				],
-				"priority": 8
+				"priority": 8,
+				"refer": []
 			}
 		},
 		"idle": {
@@ -578,9 +627,7 @@
 				"image/logo_wechatfavorite.png",
 				"image/remarks.png",
 				"image/skyblue_actionbar_back_btn.png",
-				"image/v1.png",
 				"js/layer.js",
-				"image/good.png",
 				"image/hits.png",
 				"js/mui.js",
 				"image/delect.png",
@@ -588,7 +635,6 @@
 				"image/dup.png",
 				"myCollect.html",
 				"image/ktq.png",
-				"image/findimage.png",
 				"image/zfb.png",
 				"image/skyblue_editpage_image_bg.9.png",
 				"image/zan_unpress.png",
@@ -598,7 +644,6 @@
 				"image/vips.png",
 				"image/noattention.png",
 				"image/tb_gz.png",
-				"image/lookimage.png",
 				"image/myorder.png",
 				"bindAccount.html",
 				"orderInfo.html",
@@ -616,18 +661,14 @@
 				"image/unpress_stars.png",
 				"image/pic.png",
 				"image/zixun.png",
-				"image/share_press.png",
-				"image/fincepress.png",
 				"image/loginqq_press.png",
 				"image/logo_shortmessage.png",
 				"image/skyblue_platform_checked.png",
 				"CollectAndComment.html",
 				"image/licainormal.png",
 				"image/play_center.png",
-				"image/classpress.png",
 				"image/delete.png",
 				"image/loginsina_press.png",
-				"image/seeimage.png",
 				"image/ic_launcher.png",
 				"myRemark.html",
 				"image/full_normal.png",
@@ -638,14 +679,10 @@
 				"image/qq.png",
 				"image/exit.png",
 				"image/yx.png",
-				"image/share_normal.png",
-				"image/answerimage.png",
-				"image/collect_c.png",
 				"image/find.png",
 				"vipcenter.html",
 				"image/zhuanjia.9.png",
 				"image/personpush.png",
-				"image/livepress.png",
 				"image/askinfo.png",
 				"image/jiahao.png",
 				"image/loginsina_unpress.png",
@@ -677,7 +714,6 @@
 				"image/infos.png",
 				"image/jucaipens.png",
 				"css/lay.css",
-				"image/comm_icon1.png",
 				"image/binds.png",
 				"image/press_stars.png",
 				"image/skyblue_editpage_divider.9.png",

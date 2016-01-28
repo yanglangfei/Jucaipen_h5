@@ -25,6 +25,15 @@
     	var xianjia=document.getElementById("xianjia");
     	var yuanjia=document.getElementById("yuanjia");
     	var tearchimg=document.getElementById("tearchimg");
+    	var web=plus.webview.currentWebview(); 
+    	var nickName=web.nickName;
+    	var logo=web.logo;
+    	var title_value=web.title;
+    	console.log("n:"+nickName+"l:"+logo+"t:"+title);
+    	title.innerHTML=title_value;
+    	tearchername.innerHTML=nickName;
+    	tearchimg.src=logo;
+    	
     	
     	//购买直播
     	buy_live.addEventListener("tap",function(){

@@ -9,6 +9,15 @@
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
+			var auths;
+			//获取服务列表
+			document.addEventListener("plusready",function(){
+					plus.oauth.getServices(function(service){
+						auths=service;
+					}, 
+					function(e){
+					},false); 
+				})
 			mui.plusReady(function(){
 				var bindQQ=document.getElementById("bind-qq");
 				var bindWeixin=document.getElementById("bind-weixin");
@@ -16,17 +25,151 @@
 				var qqState=document.getElementById("qq-state");
 				var weixinState=document.getElementById("weixin-state");
 				var sinaState=document.getElementById("sina-state");
+				var bindList="http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountList";
+				var bindAccount="http://121.40.227.121:8080/AccumulateWealth/jucaipen/updateOtherAccount";
+				var uId=plus.storage.getItem("userId");
+				var isQQBind;
+				var isWeixinBind;
+				var isSinaBind;
+				
+				
+				if(uId<=0){
+					return ;
+				}
+				findBindState();
 				
 				
 				//获取账号绑定状态
 				
+				function findBindState(){
+					mui.ajax(bindList,{
+						data:{
+							userId:uId
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								if(data.qqId.length>0){
+									qqState.innerText='已绑定';
+									bindQQ.innerText='解除绑定';
+									isQQBind=true;
+								}else{
+									qqState.innerText='未绑定';
+									bindQQ.innerText='快速绑定';
+									isQQBind=false;
+								}
+								if(data.weixinId.length>0){
+									weixinState.innerText='已绑定';
+									bindWeixin.innerText='解除绑定';
+									isWeixinBind=true;
+								}else{
+									weixinState.innerText='未绑定';
+									bindWeixin.innerText='快速绑定';
+									isWeixinBind=false;
+								}
+								if(data.sinaId.length>0){
+									sinaState.innerText='已绑定';
+									bindSina.innerText='解除绑定';
+									isSinaBind=true;
+								}else{
+									sinaState.innerText='未绑定';
+									bindSina.innerText='快速绑定';
+									isSinaBind=false;
+								}
+								
+							}
+						},
+						error: function(e){
+						}
+					})
+				}
 				
 				
-				//绑定账号
+				
+				//绑定账号  0
+				bindQQ.addEventListener("tap",function(){
+					var id=login(0);
+					var type=0;
+					if(isQQBind){
+						//解除绑定QQ
+					}else{
+						//绑定QQ
+					}
+				})
+				
+				//新浪   1
+				bindSina.addEventListener("tap",function(){
+					var id=login(1);
+					var type=2;
+					if(isSinaBind){
+						//解除新浪绑定
+					}else{
+						//绑定新浪
+					}
+				})
+				
+				
+				//微信   2
+				bindWeixin.addEventListener("tap",function(){
+					var id=login(2);
+					var type=1;
+					if(isWeixinBind){
+						//解除微信绑定
+						bindAccounts(type,id)
+					}else{
+						//绑定微信
+					}
+				})
+				
+				
+				
+				
+				
+				function bindAccounts(t,id){
+					mui.ajax(bindAccount,{
+						data:{
+							userId:uId,
+							accountType:t,
+							accountId:id
+						},
+						type:'get',
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							
+						},
+						error: function(e){
+							
+						}
+					})
+					
+				}
+				
 				
 				
 				
 				//获取账号openid
+				
+				function login(index){
+					var openId;
+					var a=auths[index];
+					if(!a.authResult){
+						a.login(function(s){
+						  openId=s.target.authResult.openid;
+						},function(e){
+							
+						})
+					}else{
+						//已经登录
+						openId=a.authResult.openid;
+					}
+					console.log(openId);
+					return openId;
+				}
+				
+				
 				
 			})
 		</script>

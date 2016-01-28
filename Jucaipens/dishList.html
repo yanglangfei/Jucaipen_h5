@@ -9,6 +9,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/app.css" />
 		<script src="js/mingjia.js" type="text/javascript"></script>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
@@ -42,25 +43,51 @@
 						success: function(data) {
 							totlePage = data[0].totlePage;
 							for (var i = 0; i < data.length; i++) {
-								dishStr = dishStr + "<div type=" + data[i].liveType + " title=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>["+data[i].startDate+"]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
+								dishStr = dishStr + "<div title="+data[i].title+" logo="+data[i].headFace+" type=" + data[i].liveType + " name=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>["+data[i].startDate+"]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
 							}
 							dishList.innerHTML = dishStr;
 							mui("#dishList").on("tap", ".item", function() {
 								var liveId = this.getAttribute("id");
-								var title = this.getAttribute("title");
+								var name = this.getAttribute("name");
 								var type = this.getAttribute("type");
+								var logo=this.getAttribute("logo");
+								var title=this.getAttribute("title");
 								if (type == 1) {
 									//免费直播
-									intoTxtLive(liveId,title);
+									intoTxtLive(liveId,name);
 								}else{
-									//收费直播
-									//intoPayRoom(liveId);
-									alert("需要");
-								//	plus.nativeUI.alert("需要购买才能进入",null,"title","确定");
-									var UIAlertView=plus.ios.importClass("UIAlertView");
-									var view=new UIAlertView();
-									view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("标题","需要购买才能进入",null,"确定",null);
-									//view.show();
+								//1   是否登录 
+							    var uId=plus.storage.getItem("userId");
+							    if(uId<=0){
+							    	mui.openWindow({
+							    		url:"login.html",
+							    		id:"login"
+							    	})
+							    	return ;
+							   }
+							   //2是否是管理员或者客服
+							   var isServer=plus.storage.getItem("isServer");
+							   var isManager=plus.storage.getItem("isManager");
+							   if(isManager==1||isServer==1){
+							     	intoTxtLive(liveId,name);
+							     	return ;
+							   }
+							   //3是否购买
+							   var buyProductId=plus.storage.getItem("buyProductId");
+							   if(liveId==buyProductId){
+							   	intoTxtLive(liveId,name);
+							   	return ;
+							   }
+							   var array=["取消","确认"];
+							   mui.confirm("当前直播为收费直播，请进行购买查看","",array,function(e){
+							   	
+							   	if(e.index==1){
+							   		intoPayRoom(liveId,name,logo,title);
+							   	}else{
+							   		console.log("取消") ;
+							   	}
+							   })
+								
 								}
 							})
 						},
@@ -81,10 +108,15 @@
 					})
 				}
 				//进入支付页面
-				function intoPayRoom(lId){
+				function intoPayRoom(lId,name,logo,title){
 					mui.openWindow({
 						url:"purchAndSign.html",
-						id:"purchAndSign"
+						id:"purchAndSign",
+						extras:{
+							nickName:name,
+							logo:logo,
+							title:title
+						}
 					})
 				}
 				

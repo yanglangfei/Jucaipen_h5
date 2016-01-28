@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 
 		<script src="js/mui.min.js"></script>
+		<link rel="stylesheet" href="css/app.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
 				gestureConfig: {
@@ -26,6 +27,7 @@
 				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
 				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
 				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
+				var list = document.getElementById("lv-share");
 				var web = plus.webview.currentWebview();
 				var title = document.getElementById("show_newstit");
 				var repoter = document.getElementById("show_newsinfo");
@@ -42,10 +44,13 @@
 				var iv_share = document.getElementById("iv-share");
 				var iv_collect = document.getElementById("iv-collect");
 				var li_collect = document.getElementById("li-collect");
+				var more=document.getElementById("more");
+				var bhref = false;
 				var isCollected;
 				var currentPage = 1;
 				var totlePage;
 				var id = web.newsId;
+				var share;
 				var appenStr = "";
 				var classId;
 				var typeId = 0;
@@ -188,8 +193,7 @@
 								isCollected = false;
 							}
 						},
-						error: function(e) {
-						}
+						error: function(e) {}
 					})
 				}
 				//收藏资讯
@@ -220,40 +224,39 @@
 								}
 							}
 						},
-						error: function(e) {
-						}
+						error: function(e) {}
 					})
 				}
 				li_collect.addEventListener("tap", function() {
-					uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login"
-						})
-						return;
-					}
-					if (isCollected) {
-						//取消收藏
-						collectNewsOp(1);
-					} else {
-						//收藏
-						collectNewsOp(0);
-					}
-				})
-				//弹出评论／回复框
+						uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login"
+							})
+							return;
+						}
+						if (isCollected) {
+							//取消收藏
+							collectNewsOp(1);
+						} else {
+							//收藏
+							collectNewsOp(0);
+						}
+					})
+					//弹出评论／回复框
 				inputs.addEventListener("tap", function() {
 					myInputState(0, "想说点什么");
 				});
 				//发表评论，回复
 				btn_sub_comm.addEventListener("tap", function() {
-					if (HiddenFieldId.value.length <= 0) {
-						plus.nativeUI.toast("请输入内容");
-						return;
-					}
-					remarkNews();
-				})
-				//弹出评论／回复对话框
+						if (HiddenFieldId.value.length <= 0) {
+							plus.nativeUI.toast("请输入内容");
+							return;
+						}
+						remarkNews();
+					})
+					//弹出评论／回复对话框
 				function myInputState(cId, str) {
 					uId = plus.storage.getItem("userId");
 					if (uId <= 0) {
@@ -314,8 +317,108 @@
 					})
 					//分享按钮释放事件
 				li_share.addEventListener("release", function() {
-					iv_share.src = 'image/share_normal.png';
+						iv_share.src = 'image/share_normal.png';
+					})
+					//分享
+				li_share.addEventListener("tap", function() {
+					updateSerivces();
+					console.log("klk");
+					console.log(JSON.stringify(share));
+					shareShow(share);
 				})
+				// 打开分享
+				function shareShow(s) {
+					bhref = false;
+					var ids = [{
+							id: "weixin",
+							ex: "WXSceneSession"
+						}, {
+							id: "weixin",
+							ex: "WXSceneTimeline"
+						}, {
+							id: "sinaweibo"
+						}, {
+							id: "tencentweibo"
+						}],
+						bts = [{
+							title: "发送给微信好友"
+						}, {
+							title: "分享到微信朋友圈"
+						}, {
+							title: "分享到新浪微博"
+						}, {
+							title: "分享到腾讯微博"
+						}];
+					if (plus.os.name == "iOS") {
+						ids.push({
+							id: "qq"
+						});
+						bts.push({
+							title: "分享到QQ"
+						});
+					}
+					plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: bts
+						},
+						function(e) {
+							var i = e.index;
+							if (i > 0) {
+								shareAction(s);
+							}
+						}
+					);
+				}
+				/**
+				 * 更新分享服务
+				 */
+				function updateSerivces() {
+					plus.share.getServices(function(s) {
+						share=s;
+					}, function(e) {
+						console.log("获取分享服务列表失败：" + e.message);
+					});
+				}
+
+				function shareAction(s) {
+					console.log("action:"+JSON.stringify(s));
+					if (!s) {
+						console.log("null");
+						return;
+					}
+					if (s.authenticated) {
+						console.log("正在认证");
+						shareMessage(s);
+					} else {
+						console.log(JSON.stringify(s));
+						shareMessage(s);
+						/*s.authorize(shareMessage, function(e) {
+							alert("未进行认证");
+						})*/
+					}
+				}
+				/**
+				 * 发送分享消息
+				 * @param
+				 */
+				function shareMessage(s) {
+					share[0].send({
+						content: "Hello"
+					}, function() {
+						console.log("成功");
+					}, function(e) {
+						console.log("失败");
+					});
+				}
+				
+				
+				//更多列表
+				more.addEventListener("tap",function(){
+					
+				})
+				
+				
+				
 			})
 		</script>
 
@@ -470,6 +573,22 @@
 				text-align: center;
 				line-height: 50px;
 			}
+			
+				#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+				width: 100px;
+				background: #000000;
+			}
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			#head{
+				display: none!important;
+			}
+			
 		</style>
 
 	</head>
@@ -486,6 +605,9 @@
 					</div>
 					<div class="logo1">
 						<span style="line-height: 25px;">私募动态 </span>
+					</div>
+					<div class="sousuo1" id="more" >
+						<a href="#topPopover" class="mui-action-menu"><img src="image/more.png" /></a>
 					</div>
 				</div>
 			</header>
@@ -504,7 +626,7 @@
 							</ul>
 						</div>
 
-						<div class="show_videoinfo_pl showvideoinfo_Div" id="showvideoinfo_3">
+						<div class="show_videoinfo_pl showvideoinfo_Div" id="showvideoinfo_3" style="background: #ECECEC;">
 							<h3><em>评论</em><i id="show_Video_CommCount">共0条</i></h3>
 							<ul>
 								<li>
@@ -535,22 +657,34 @@
 				<input type="button" id="btn_sub_comm" name="btn_sub_comm" value="发送">
 			</div>
 		</div>
+		<div id="lv-share">
 
-		<footer class="footer">
-			<div class="foot" style="height: 50px;">
-				<li id="li-collect">
-					<span>
-								<img src="image/collect_c.png" style="width: 50px;height: 50px;" id="iv-collect"/>
-							</span>
-				</li>
-				<li id="li-share">
-					<span>
-								<img src="image/share_normal.png" style="width: 50px;height: 50px;" id="iv-share"/>
-							</span>
-				</li>
-
+		</div>
+		
+	
+		
+		
+		
+		
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" style="height: 50px;text-align: center;" id="li-collect" >
+							<span>
+								<img src="image/collect_c.png"  style="width: 30px; height: 30px;line-height: 50px;" id="iv-collect"/>
+							<a href="#" style="line-height: 50px;">收藏</a></span>
+						</li>
+						<li class="mui-table-view-cell"  id="li-share">
+							<span>
+								<img src="image/share_normal.png"  style="width: 30px; height: 30px;" id="iv-share"/>
+							<a href="#" style="line-height: 30px;">分享</a></span>
+						</li>
+					</ul>
 			</div>
-		</footer>
+			</div>
+
 	</body>
 
 </html>

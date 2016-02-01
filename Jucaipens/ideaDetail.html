@@ -15,6 +15,9 @@
 			mui.init();
 			mui.plusReady(function() {
 				var ideaDetail = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaDetaile";
+				var commListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/ideaCommList";
+				var addGoodPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaGoods";
+				
 				var teacherName = document.getElementById("teacherName");
 				var leader = document.getElementById("leader");
 				var times = document.getElementById("time");
@@ -23,9 +26,12 @@
 				var goodsAdd = document.getElementById("goodsAdd");
 				var teacherLogo = document.getElementById("teacherLogo");
 				var vLogo = document.getElementById("vLogo");
+				var zan = document.getElementById("sa_zan");
+				var btn_commen = document.getElementById("btn_commen");
 				var web = plus.webview.currentWebview();
+				var log_commen_list = document.getElementById("commList");
 				var id = web.ideaId;
-				<!--获取热门观点详细信息-->
+				//获取热门观点详细信息
 				mui.ajax(ideaDetail, {
 					data: {
 						ideaId: id
@@ -50,6 +56,59 @@
 					},
 					error: function(e) {}
 				})
+				queryComments();
+				//点赞
+				sa_zan.addEventListener("tap", function() {
+					
+				})
+					//提交评论信息
+				btn_commen.addEventListener("tap", function() {})
+					//获取评论信息
+				function queryComments() {
+					var commStr = log_commen_list.innerText;
+					mui.ajax(commListPath, {
+						data: {
+							ideaId: id,
+							page: 1
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) { 
+							    var imageLogo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo"+"?filename="+data.faceImage;
+								console.log(imageLogo);
+								commStr = commStr + "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'><img src=" + imageLogo+ " style='float: left;margin-right: 10%;text-align: right;width: 1.2rem;'></span>" + "<h4 style='display: block;float: left;font-size: 1rem;font-weight: normal;width: 40%;'>" + data[i].userName + "</h4><em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img src='image/response.png' style='loat: left;margin-right: 2%;text-align: right;width: 1.2rem;' ></em>" + "<p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;'>" + data[i].insertDate + "</p>" + "<div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;'>" + data[i].commBody + "</div></div>";
+							}
+							log_commen_list.innerHTML = commStr;
+						},
+						error: function(e) {}
+					})
+				}
+				
+				//点赞
+				function addGoods(uId){
+					mui.ajax(addGoodPath,{
+						data:{
+						  userId:uId,
+						  ideaId:id
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								plus.nativeUI.toast("点赞成功");
+							}else{
+								plus.nativeUI.toast("点赞失败");
+							}
+						},
+						error: function(e){
+							plus.nativeUI.toast("连接失败");
+						}
+					})
+				}
+				
 			})
 		</script>
 
@@ -121,7 +180,7 @@
 			.showarticlebody {
 				background: #FFF none repeat scroll 0% 0%;
 				font-size: 1rem;
-				width: 96%;
+				width: 100%;
 				padding-left: 3%;
 				padding-right: 3%;
 				line-height: 1.8rem;
@@ -178,7 +237,7 @@
 			}
 			
 			.showarticle_fenxain {
-				width: 94%;
+				width: 100%;
 				float: left;
 				background: #FFF none repeat scroll 0% 0%;
 				padding-left: 3%;
@@ -190,7 +249,7 @@
 			}
 			
 			.livetakl_fload {
-				width: 96%;
+				width: 100%;
 				position: fixed;
 				bottom: 0px;
 				left: 0px;
@@ -205,7 +264,7 @@
 				margin-right: 2%;
 			}
 			
-			.livetakl_fload div.input_txt textarea{
+			.livetakl_fload div.input_txt textarea {
 				width: 95%;
 				border: 1px solid #C8C8C8;
 				border-radius: 5px;
@@ -226,8 +285,13 @@
 				border-radius: 5px;
 				border: 1px solid #BD0B19;
 			}
-			#txt_commen{
-				height:2rem ;
+			
+			#txt_commen {
+				height: 2rem;
+			}
+			
+			.tit {
+				margin: 50px;
 			}
 		</style>
 
@@ -240,50 +304,48 @@
 
 			<header class="header">
 				<div class="head">
-					<div class="fanhui">返回</div>
 					<div class="denglu1  mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
 					<div class="logo1">
 						<span>观点详情</span>
 					</div>
-					<div class="sousuo1">
-						<a href="javascript:;"><img src="image/index.png" /></a>
-					</div>
 				</div>
 			</header>
 
 			<!------------居中部分---------->
+			<div class="mui-content">
 
-			<div class="showarticletit nei_top" style="margin: 60px 10px 10px 10px;">
-				<div class="tit">
-					<span>
+				<div class="showarticletit nei_top">
+					<div class="tit">
+						<span>
                         <img id="teacherLogo" >
                     </span>
-					<h4 id="teacherName">&nbsp;<i>&nbsp;<img id="vLogo"></i></h4>
-					<em id="time">&nbsp;</em>
-					<p id="leader">&nbsp;</p>
+						<h4 id="teacherName">&nbsp;<i>&nbsp;<img id="vLogo"></i></h4>
+						<em id="time">&nbsp;</em>
+						<p id="leader">&nbsp;</p>
+					</div>
+
+					<h3 id="titles"></h3>
+				</div>
+				<div class="showarticlebody" id="ideaBody">
+				</div>
+				<div class="showarticle_good">
+
+					<p id="big"></p>
+					<a id="sa_zan">
+						<i>
+                    <img src="image/good.png" /></i>&nbsp;<em id="goodsAdd"></em>&nbsp;<span>赞一个</span></a>
+				</div>
+				<div class="showarticle_fenxain">
+					【仅代表个人观点，不构成投资建议，风险自负】
 				</div>
 
-				<h3 id="titles"></h3>
-			</div>
-			<div class="showarticlebody" id="ideaBody">
-
-			</div>
-			<div class="showarticle_good">
-
-				<p id="big"></p>
-				<a id="sa_zan"><i>
-                    <img src="image/good.png" /></i>&nbsp;<em id="goodsAdd"></em>&nbsp;<span>赞一个</span></a>
-			</div>
-			<div class="showarticle_fenxain">
-				【仅代表个人观点，不构成投资建议，风险自负】
 			</div>
 			<!--------热门观点结束---------->
 			<!----------评论开始------------>
 
-			<div class="log_commen_list">
-
+			<div class="log_commen_list" id="commList">
 			</div>
 
 			<div class="linkmore" style="display: none;">

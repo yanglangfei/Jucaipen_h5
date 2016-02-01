@@ -7,6 +7,7 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			var auths;
@@ -92,6 +93,8 @@
 				bindQQ.addEventListener("tap",function(){
 					var id=login(0);
 					var type=0;
+					bindAccounts(type,id);
+
 					if(isQQBind){
 						//解除绑定QQ
 					}else{
@@ -105,6 +108,7 @@
 					var type=2;
 					if(isSinaBind){
 						//解除新浪绑定
+						bindAccounts(type,id);
 					}else{
 						//绑定新浪
 					}
@@ -115,9 +119,10 @@
 				bindWeixin.addEventListener("tap",function(){
 					var id=login(2);
 					var type=1;
+					
 					if(isWeixinBind){
 						//解除微信绑定
-						bindAccounts(type,id)
+						bindAccounts(type,id);
 					}else{
 						//绑定微信
 					}
@@ -138,7 +143,7 @@
 						dataType:"json",
 						timeout:10000,
 						success: function(data){
-							
+							console.log(JSON.stringify(data));
 						},
 						error: function(e){
 							
@@ -186,13 +191,11 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
 			<h1 class="mui-title" style="color: white;">账号绑定</h1>
 		</header>
 		<div class="mui-content">
-			<p style="margin: 12px;font-size: 18px;">
-				您可以绑定您的qq号或微信，下次登录时，直接点击，快速登录...
-			</p>
+			
 			<div class="item1">
 				<img src="image/qq.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
 				<label style="line-height: 50px;margin-left: 30%;" id="qq-state">未绑定</label>

@@ -62,7 +62,7 @@
 						askStr=askStr+"<div class='item'><div class='userhead'>"
 						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
 					+"<div class='content'><a><span class='u_name'>"+data[i].userName+"</span></a><span class='u_date'>"+data[i].insertDate+"</span>"
-						+"<div class='bodys'><a>"+data[i].askBodys+"</a></div><span class='type'>0人回答</span></div></div>"
+						+"<div class='bodys'><a style='color:#8D8D8D;'>"+data[i].askBodys+"</a></div><span class='type'>0人回答</span></div></div>"
 					}
 					askList.innerHTML=askStr;
 				},
@@ -146,9 +146,6 @@
 					<div class="logo1">
 						<span>名家问答</span>
 					</div>
-					<div class="sousuo1">
-						<a><img src="image/index.png" /></a>
-					</div>
 				</div>
 			</header>
 			<!------------居中部分---------->
@@ -164,7 +161,7 @@
 				<!--------名家问答结束---------->
 			</div>
 			<div class="linkmore">
-				<a id="ask_gengduo">更多>></a>
+				<a id="ask_gengduo" style="color: #8D8D8D;;">更多>></a>
 			</div>
 			<div class="nullList">
 				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>

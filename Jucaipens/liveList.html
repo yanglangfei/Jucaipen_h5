@@ -13,7 +13,8 @@
       	mui.plusReady(function(){
       		var videoList="http://121.40.227.121:8080/AccumulateWealth/accumulate/teachVideo";
       		var video=document.getElementById("data-live");
-      		<!--获取直播列表信息-->
+      		var pageTop1_show_login_link=document.getElementById("pageTop1_show_login_link");
+      		//获取直播列表信息
       	    var liveInfo="";
      	mui.ajax(videoList,{
      		dataType:"json",
@@ -44,6 +45,23 @@
      			
      		}
      	})
+     	
+     	
+     	//进入登录界面
+     	pageTop1_show_login_link.addEventListener("tap",function(){
+     		var uId=plus.storage.getItem("userId");
+     		if(uId<=0){
+     			mui.openWindow({
+     				url:"login.html",
+     				id:"login"
+     			})
+     		}else{
+     			mui.openWindow({
+     				url:"vipcenter.html",
+     				id:"vipcenter"
+     			})
+     		}
+     	})
       		
       		
       		
@@ -54,8 +72,7 @@
     <!--头部-->
      <header class="header">
         <div class="head">
-           <div class="fanhui">返回</div>
-           <div id="pageTop1_show_login_link" class="denglu"> <a href=""><i><img src="image/unlogin.png" /></i><em></em></a></div>
+           <div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em></em></a></div>
            <div class="logo">
               <a><img src="image/jucai.png" /></a>
            </div>

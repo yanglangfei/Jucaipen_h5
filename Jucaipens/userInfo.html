@@ -11,6 +11,7 @@
     <title></title>
     <script src="js/mui.min.js"></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css" />
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
       	mui.plusReady(function(){
@@ -25,6 +26,7 @@
       		if(uId<=0){
       			return ;
       		}
+      	//获取个人信息
       		mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo",{
       			data:{
       				id:uId
@@ -46,6 +48,52 @@
       				
       			}
       		});
+      		//更换头像
+      		userLogo.addEventListener("tap",function(){
+      			var btnArray=[{title:"打开相册"},{title:"打开相机"}];
+      			plus.nativeUI.actionSheet({
+      				title:"选择头像",
+      				cancel:"取消",
+      				buttons:btnArray
+      			},function(e){
+      				if(e.index==0){
+      					//取消
+      				}else if(e.index==1){
+      					//打开相册
+      					getGrial();
+      				}else if(e.index==2){
+      					//打开相机
+      					getCame();
+      				}
+      			})
+      		})
+      		
+      		
+      		//打开相册
+      		function getGrial(){
+      			plus.gallery.pick(function(data){
+      				userLogo.src=data;
+      			},function(e){
+      				console.log("err");
+      			})
+      			
+      		}
+      		
+      		//获取拍照图片
+      		function getCame(){
+      			var camera=plus.camera.getCamera();
+      			var form=camera.supportedImageFormats[0];
+      			var res=camera.supportedImageResolutions[0];
+      			camera.captureImage(function(data){
+      				console.log(data);
+      				userLogo.src=data;
+      			},function(e){
+      				console.log("error");
+      			})
+      		}
+      		
+      		
+      		
       	});
     </script>
     <style type="text/css">
@@ -68,7 +116,7 @@
 </head>
 <body>
 <header class="mui-bar mui-bar-nav" >
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
     <h1 class="mui-title"><font color="white">个人资料</font></h1>
     <div style="text-align: right;">
     	<button class="mui-btn" style="text-align: center;">编辑</button>
@@ -78,7 +126,7 @@
 
 <div class="mui-content">
 	<div >
-		     <img src="image/logo.jpg" height="50px" width="50px" class="mui-icon-image" id="userLogo" style="border-radius: 50px;"/><br />
+		     <img src="" height="50px" width="50px" class="mui-icon-image" id="userLogo" style="border-radius: 50px;"/><br />
 	</div>
 	<div  style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
 		     <nobr>

@@ -11,6 +11,8 @@
     <title></title>
     <script src="js/mui.min.js"></script>
     <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/tuch.css" />
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
       mui.plusReady(function(){
@@ -23,36 +25,43 @@
       	 mui(".mui-table-view").on("tap",".mui-table-view-cell",function(){
       	   var attr=this.getAttribute("id");
       	   if(attr=="user"){
+      	   	//用户个人信息
       	   	mui.openWindow({
       	   		url:"userInfo.html",
       	   		id:"user"
       	   	});
       	   }else if(attr=="updatePwd"){
       	   	mui.openWindow({
+      	   		//修改密码
       	   		url:"updatePwd.html",
       	   		id:"updatePwd"
       	   	});
       	   }else if(attr=="bind"){
       	   	mui.openWindow({
+      	   		//绑定账号
       	   		url:"bindAccount.html",
       	   		id:"bindAccount"
       	   	});
       	   }else if(attr=="vip-service"){
-      	   	mui.openWindow({
+      	   	//会员服务
+      	   	/*mui.openWindow({
       	   		url:"vipService.html",
       	   		id:"vipService"
-      	   	});
+      	   	});*/
       	   }else if(attr=="collect-remark"){
+      	   	//我的收藏和评论
       	   	mui.openWindow({
       	   		  	url:"CollectAndComment.html",
       	          	id:"collect-comment"
       	   	});
       	   }else if(attr=="order"){
+      	   	//我的预约
       	   	mui.openWindow({
       	   		url:"myOrder.html",
       	   		id:"myOrder"
       	   	});
       	   }else if(attr=="infoCenter"){
+      	   	//消息中心
       	   	mui.openWindow({
       	   		url:"infoCenter.html",
       	   		id:"infoCenter"
@@ -82,7 +91,7 @@
 </head>
 <body>
 <header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
     <h1 class="mui-title" style="color: white;">会员中心</h1>
     
 </header>
@@ -91,40 +100,59 @@
              <ul class="mui-table-view">
                  <li class="mui-table-view-cell" id="user">
                  	<nobr>
+                 	<img src="image/personpush.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           个人资料
                      </a>
                      </nobr>
                  </li>
                  <li class="mui-table-view-cell" id="updatePwd">
+                 	<nobr>
+                 	 <img src="image/pwd.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           修改密码
                      </a>
+                     </nobr>
                  </li>
                  <li class="mui-table-view-cell" id="bind">
+                 	<nobr>
+                 	 <img src="image/binds.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           账号绑定
                      </a>
+                     </nobr>
                  </li>
                  <li class="mui-table-view-cell" id="vip-service">
+                 	<nobr>
+                 	 <img src="image/vips.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           会员服务
                      </a>
+                     </nobr>
                  </li>
                  <li class="mui-table-view-cell" id="collect-remark">
+                 	<nobr>
+                 	<img src="image/remarks.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           我的收藏／评论
                      </a>
+                    </nobr>
                  </li>
                  <li class="mui-table-view-cell" id="order">
+                 	<nobr>
+                 	<img src="image/myorder.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           我的预约
                      </a>
+                     </nobr>
                  </li>
                  <li class="mui-table-view-cell" id="infoCenter">
+                 	<nobr>
+                 	 <img src="image/infos.png"  style="height: 20px;"/>
                      <a class="mui-navigate-right">
                           消息中心
                      </a>
+                     </nobr>
                  </li>
              </ul>
      </form>

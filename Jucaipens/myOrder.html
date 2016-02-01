@@ -1,60 +1,103 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      	mui.plusReady(function(){
-      		var order=document.getElementById("data-order");
-      		var id=plus.storage.getItem("userId");
-      		if(id<=0){
-      			plus.ui.toast("请先登录");
-      			return ;
-      		}
-      		var orderStr="";
-      		mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/myOrder",{
-      			data:{
-      				userId:id,
-      				pager:1
-      			},
-      			type:"get",
-      			dataType:"json",
-      			timeout:10000,
-      			success: function(data){
-      				for(var i=0;i<data.length;i++){
-      					orderStr=orderStr+"<li class='mui-table-view-cell'>"
-                    +"<label>"+data[i].equityName+"</label><br />"
-                   +" <label>"+data[i].trueName+"</label><br>"
-                    	 +"<label> 联系方式:"+data[i].mobileNum+"</label><br />"
-                    +"<label> 投资金额:"+data[i].touziMoney+"</label><br />"
-                    +"<label>备注说明:"+data[i].remark+"</label><br />"
-                    +"<label>预约时间:"+data[i].insertDate+"</label><br /></li>"
-      				}
-      				order.innerHTML=orderStr;
-      			},
-      			error: function(e){
-      				
-      			}
-      		})
-      	})
-    </script>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: white;">我的预约</h1>
-</header>
-<div class="mui-content">
-    <div class="mui-card">
-        <ul class="mui-table-view" id="data-order">     
-           
-        </ul>
-    </div>
-</div>
-	
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+
+		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<script src="js/mingjia.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var orderPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myOrder";
+				var uid=plus.storage.getItem("userId");
+				var myyuyue=document.getElementById("yuyueLay");
+				var more=document.getElementById("more_three");
+				var currentPage=1;
+				var totlePager;
+				if(uid<=0){
+					return ;
+				}
+				getOrders(currentPage);
+				
+				//加载更多
+			    more.addEventListener("tap",function(){
+			    	if(currentPage<totlePager){
+			    		getOrders(++currentPage);
+			    	}
+			    })
+				
+				
+				//获取预约信息
+				function getOrders(p){
+					var orderStr=myyuyue.innerText;
+					mui.ajax(orderPath,{
+						data:{
+							userId:uid,
+							pager:p
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							for(var i=0;i<data.length;i++){
+								totlePager=data[i].totlePager;
+								orderStr=orderStr+"<li><h3><a>"+data[i].equityName+"</a></h3>"
+							+"<span class='names'><i>您的称呼：</i>"+data[i].trueName+"</span>"
+							+"<span><i>手机号码：</i>"+data[i].mobileNum+"</span><span><i>投资额金：</i>"+data[i].touziMoney+"</span>"
+							+"<span><i>备注说明：</i>"+data[i].remark+"</span><span><i>预约时间：</i>"+data[i].insertDate+"</span></li>";
+							}
+							myyuyue.innerHTML=orderStr;
+							if(totlePager==currentPage){
+								more.style.display='none';
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				
+			})
+		</script>
+	</head>
+
+	<body class="user_bodybg">
+			<div class="wrapper">
+				<!------------头部--------------->
+
+				<header class="header">
+					<div class="head">
+						<div class="denglu1 mui-action-back">
+							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+						</div>
+						<div class="logo1">
+							<span>我的预约</span>
+						</div>
+					</div>
+				</header>
+				<!------------账户资料------------->
+				<div class="userbody">
+
+					<ul class="myyuyue" id="yuyueLay">
+
+					</ul>
+
+				</div>
+				
+				<div class="linkmore" >
+					<a id="more_three" style="color: #8D8D8D;">更多>></a>
+				</div>
+				<!------------底部定位层---------->
+
+			</div>
+	</body>
+
 </html>

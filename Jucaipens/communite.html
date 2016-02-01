@@ -17,10 +17,13 @@
 			mui.init();
 			mui.plusReady(function() {
 			var commPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
+			var addExchangePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/addExChange";
 			var commLay=document.getElementById("commLay");
 			var today=document.getElementById("today");
 			var communit=document.getElementById("communit"); 
 			var commTitle=document.getElementById("commTitle");
+			var buttons=document.getElementById("button");
+			var textareas=document.getElementById("textarea");
 			var web=plus.webview.currentWebview();
 			var title=web.title;
 			var liveId=web.liveId;
@@ -65,11 +68,54 @@
 					id:"communite"
 				})
 			})
+			
+			//提交评论信息
+			buttons.addEventListener("tap",function(){
+				var userId=plus.storage.getItem("userId");
+				if(userId<=0){
+					mui.openWindow({
+						url:"login.html",
+						id:"login"
+					})
+					return ;
+				}
+				var textareas_val=textareas.value;
+				if(textareas_val.length<=0){
+					plus.nativeUI.toast("交流信息不能为空");
+					return ;
+				}
+				addExchangeFN(userId,textareas_val);
+			})
+			
 			function isNull(str){
 				if(str.length<=0){
 					str="image/head.png"
 				}
 				return str;
+			}
+			
+			//甜添加交流信息
+			function addExchangeFN(uId,body){
+				mui.ajax(addExchangePath,{
+					data:{
+						userId:uId,
+					    liveId:liveId,
+					    bodys:body
+					},
+					dataType:"json",
+					type:"get",
+					timeout:10000,
+					success: function(data){
+						if(data.ret_code==0){
+							plus.nativeUI.toast("提交交流信息成功");
+						}else{
+							plus.nativeUI.toast("提交交流信息失败");
+						}
+					},
+					error: function(e){
+						
+					}
+				})
 			}
 			
 			
@@ -99,9 +145,6 @@
 					<div class="logo1">
 						<span id="commTitle"></span>
 					</div>
-					<div class="sousuo1">
-						<a><img src="image/index.png" /></a>
-					</div>
 				</div>
 			</header>
 
@@ -123,7 +166,7 @@
 			<!--------名家问答结束---------->
 
 			<div class="linkmore">
-				<a class="inter_gengduo" href="javascript:void(0)">更多>></a>
+				<a class="inter_gengduo" style="color: #8D8D8D;">更多>></a>
 			</div>
 
 			<div class="livetakl_fload_top">&nbsp;</div>

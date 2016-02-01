@@ -14,6 +14,7 @@
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
 				var liveId = web.liveId;
+				var chatLay=document.getElementById("chatLay");
 				var live = document.getElementById("live");
 				//获取视频资源
 				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource", {
@@ -31,16 +32,22 @@
 					error: function(e) {}
 				})
 				
+				
+				
+				//通知服务器 进入直播室
+				
+				
 				//监听推送消息
 				plus.push.addEventListener("receive",function(msg){
-					 console.log("消息接受");
-					if(msg.aps){
-						console.log("apple aps 在线消息");
-					}else{
-						console.log("离线消息:"+msg);
-					}
-					
+					//{"content","payload","title","_UUID_"}
+					var content=chatLay.innerHTML;
+					content =content+"<li><span id='chat-time'>11:22</span><span id='sp_head'>"
+							+"<img src='image/guan.png' id='iv_head'/>"
+								+"</span><span id='chat-name'>张三</span>"
+								+"<span id='chat-content'>"+msg.content+"</span></li>";
+					chatLay.innerHTML=content;
 				})
+				
 			})
 		</script>
 
@@ -109,17 +116,7 @@
 			<div class="pagebody">
 				<div class="pagebody_mid">
 					<div class="chat_div_btn">
-						<ul>
-							<li>
-								<span id="chat-time">11:22</span>
-								<span id="sp_head">
-									<img src="image/guan.png" id="iv_head"/>
-								</span>
-								<span id="chat-name">张三</span>
-								<span id="chat-content">好的</span>
-
-							</li>
-							
+						<ul id="chatLay">
 						</ul>
 					</div>
 				</div>

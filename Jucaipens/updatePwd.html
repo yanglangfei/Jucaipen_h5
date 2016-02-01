@@ -1,103 +1,129 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      	mui.plusReady(function(){
-      		var oldPwd=document.getElementById("oldPwd");
-      		var newPwd=document.getElementById("newPwd");
-      		var surePwd=document.getElementById("surePwd");
-      		var update=document.getElementById("update");
-      		var uId=plus.storage.getItem("userId");
-      		var url="http://192.168.1.60:8080/AccumulateWealth/jucaipen/updatePwd";
-      		
-      		update.addEventListener("tap",function(){
-      			
-      			if(uId<=0){
-      			plus.nativeUI.toast("请先登录");
-      			return ;
-      	      	}
-      		   if(newPwd.value.length<6||surePwd.value.length<6){
-      			plus.nativeUI.toast("密码长度必须是6-23位");
-      			return ;
-      		   }   
-      		   if(newPwd.value!=surePwd.value){
-      		     	plus.nativeUI.toast("两次密码必须一致");
-      			  return ;
-      		    }
-      			mui.ajax(url,{
-      				data:{
-      					userId:uId,
-      					oldPwd:oldPwd.value,
-      					newPwd:newPwd.value,
-      					repPwd:surePwd.value
-      				},
-      				dataType:"json",
-      				type:"post",
-      				timeout:10000,
-      				success: function(data){
-      					if(data.ret_code==0){
-      						plus.nativeUI.toast("密码修改成功");
-      						mui.back();
-      					}else{
-      						plus.nativeUI.toast(data.err_msg);
-      					}
-      				},
-      				error: function(e){
-      					
-      				}
-      			});
-      		});
-      		
-      	})
-    </script>
-    <style type="text/css">
-    	 #head{
-    	 	background: #CF2D28;
-    	 }
-    </style>
-    <style type="text/css">
-    	.mui-content{
-    		margin: 12px;
-    	}
-    	#update{
-    		background: #CF2D28;
-    		color: white;
-    		margin-top: 12px; 
-    	}
-    
-    	#update:active{
-    		background: #DD524D; 
-    	}
-    </style>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" id="head">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: white;">修改密码</h1>
-</header>
-<div class="mui-content">
-    <form class="mui-input-group">
-    <div class="mui-input-row">
-    	<label>旧密码</label>
-     <input type="password" class="mui-input-clear" id="oldPwd"/>
-    </div>
-    <div class="mui-input-row">
-    	<label>新密码</label>
-     <input type="password" class="mui-input-clear" id="newPwd"/>
-    </div>
-    <div class="mui-input-row">
-    	<label>确认密码</label>
-     <input type="password" class="mui-input-clear" id="surePwd"/>
-    </div>
-    </form>
-    <button type="button" class="mui-btn-block" id="update">确认</button>
-</div>
-	
-</body>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var txb_oldpwd=document.getElementById("txb_oldpwd");
+				var txb_newpwd=document.getElementById("txb_newpwd");
+				var txb_surepwd=document.getElementById("txb_surepwd");
+				var btn_changeuserpwd=document.getElementById("btn_changeuserpwd");
+				var pwdPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
+				
+				// 修改密码
+				btn_changeuserpwd.addEventListener("tap",function(){
+					var uId=plus.storage.getItem("userId");
+					if(uId<=0){
+						mui.openWindow({
+							url:"login.html",
+							id:"login"
+						})
+						return ;
+					}
+					if(txb_oldpwd.value.length<=0||txb_newpwd.value.length<=0||txb_surepwd.value.length<=0){
+						plus.nativeUI.toast("密码不能为空");
+						return ;
+					}
+					if(txb_newpwd!=txb_surepwd){
+						plus.nativeUI.toast(" 两次密码不一致");
+						return ;
+					}
+				
+				})
+				
+				
+				function updatePawd(uId,oldPwd,newPwd,repPwd){
+					mui.ajax(pwdPath,{
+						data:{
+							userId:uId,
+							oldPwd:oldPwd,
+							newPwd:newPwd,
+							repPwd:repPwd
+						},
+						type:"post",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								plus.nativeUI.toast("密码修改成功");
+							}else{
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				
+				
+			})
+		</script>
+		<title></title>
+		<style type="text/css">
+			.btn_yes{
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+			<div class="wrapper">
+				<!------------头部--------------->
+
+				<header class="header">
+					<div class="head">
+						<div class="denglu1 mui-action-back">
+							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+						</div>
+						<div class="logo1">
+							<span>修改密码</span>
+						</div>
+					</div>
+				</header>
+				<!------------账户资料------------->
+				<div class="userbody">
+
+					<table border="1" class="user_info_table">
+						<tr>
+							<th>原密码</th>
+							<td>
+								<input name="txb_oldpwd" type="password" id="txb_oldpwd" class="txt" placeholder="请输入原始密码" />
+							</td>
+						</tr>
+						<tr>
+							<th>新密码</th>
+							<td>
+								<input name="txb_newpwd" type="password" id="txb_newpwd" class="txt" placeholder="请输入新密码" />
+							</td>
+						</tr>
+						<tr>
+							<th>确认密码</th>
+							<td>
+								<input name="txb_surepwd" type="password" id="txb_surepwd" class="txt" placeholder="请输入确认新密码" />
+							</td>
+						</tr>
+
+						<tr>
+							<th>&nbsp;</th>
+							<td>
+								<input type="button" id="btn_changeuserpwd" value="确认保存" class="btn_yes" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!------------底部定位层---------->
+
+			</div>
+		</form>
+	</body>
+
 </html>

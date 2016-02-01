@@ -10,43 +10,113 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-			<!--标准mui.css-->
-	<link rel="stylesheet" href="css/mui.min.css">
-     	
-    <script src="js/mui.min.js"></script>
-    <script type="text/javascript" charset="UTF-8">
-    mui.init();
-    mui.plusReady(function(){
-    	var buy_live=document.getElementById("buy_live");
-    	var sign_tearcher=document.getElementById("sign_tearcher");
-    	var tearchername=document.getElementById("tearchername");
-    	var title=document.getElementById("title");
-    	var price=document.getElementById("price");
-    	var xianjia=document.getElementById("xianjia");
-    	var yuanjia=document.getElementById("yuanjia");
-    	var tearchimg=document.getElementById("tearchimg");
-    	var web=plus.webview.currentWebview(); 
-    	var nickName=web.nickName;
-    	var logo=web.logo;
-    	var title_value=web.title;
-    	console.log("n:"+nickName+"l:"+logo+"t:"+title);
-    	title.innerHTML=title_value;
-    	tearchername.innerHTML=nickName;
-    	tearchimg.src=logo;
-    	
-    	
-    	//购买直播
-    	buy_live.addEventListener("tap",function(){
-    		
-    	})
-    	
-    	//签约
-    	sign_tearcher.addEventListener("tap",function(){
-    		
-    	})
-    })
-    
-    </script>
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var buy_live = document.getElementById("buy_live");
+				var sign_tearcher = document.getElementById("sign_tearcher");
+				var tearchername = document.getElementById("tearchername");
+				var title = document.getElementById("title");
+				var price = document.getElementById("price");
+				var xianjia = document.getElementById("xianjia");
+				var yuanjia = document.getElementById("yuanjia");
+				var tearchimg = document.getElementById("tearchimg");
+				var year = document.getElementById("year");
+				var moth = document.getElementById("moth");
+				var quart = document.getElementById("quart");
+				var queryPrice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/txtLivePayInfo";
+				var web = plus.webview.currentWebview();
+				var weekStr;
+				var nickName = web.nickName;
+				var logo = web.logo;
+				var teacherId = web.teacherId;
+				var liveId = web.liveId;
+				var title_value = web.title;
+				var xianjiaMoth;
+				var yuanjiaMoth;
+				var xianjiaQuart;
+				var yuanjiaQuart;
+				var xianjiaYear;
+				var yuanjiaYear;
+				title.innerHTML = title_value;
+				tearchername.innerHTML = nickName;
+				tearchimg.src = logo;
+				queryTxtLivePrice();
+				//购买直播
+				buy_live.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "orderInfo.html",
+						id: "orderInfo",
+						extras: {
+							money: price.innerText,
+							title:title_value,
+							week:"",
+							perPrice:price.innerText
+						}
+					})
+				})
+				//签约
+				sign_tearcher.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "orderInfo.html",
+						id: "orderInfo",
+						extras: {
+							money: xianjia.innerText,
+							perPrice:yuanjia.innerText,
+							week:weekStr,
+							title:title_value
+						}
+					})
+				})
+				//签约  －－月
+				moth.onclick = function() {
+					xianjia.innerText = xianjiaMoth;
+					yuanjia.innerText = yuanjiaMoth;
+					weekStr="1个月";
+				}
+				//签约    －－季度
+				quart.onclick = function() {
+					xianjia.innerText = xianjiaQuart;
+					yuanjia.innerText = yuanjiaQuart;
+					weekStr="1个季度";
+				}
+				//签约   ---年
+				year.onclick = function() {
+					xianjia.innerText = xianjiaYear;
+					yuanjia.innerText = yuanjiaYear;
+					weekStr="1年";
+				}
+
+				function queryTxtLivePrice() {
+					mui.ajax(queryPrice, {
+						data: {
+							liveId: liveId,
+							teacherId: teacherId
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							//{"txtPrice":10,"title":"CCTV智远老师实盘教学直播1.14","yearPrice":2520,"mothPrice":270,"quarterPrice":960,"dayPrice":10}
+							yuanjiaMoth = "¥" + data.dayPrice * 30;
+							xianjiaMoth = "¥" + data.mothPrice;
+							yuanjiaQuart = "¥" + data.dayPrice * 30 * 3;
+							xianjiaQuart = "¥" + data.quarterPrice;
+							yuanjiaYear = "¥" + data.dayPrice * 30 * 12;
+							xianjiaYear = "¥" + data.yearPrice;
+							price.innerText = "¥" + data.txtPrice;
+							year.click();
+						},
+						error: function(e) {
+						}
+					})
+				}
+			})
+		</script>
 		<style type="text/css">
 			.signBybuy div.buy table tr td img {
 				display: inline-block;
@@ -104,6 +174,7 @@
 			.signBybuy div.buy table tr th {
 				width: 20%;
 				text-align: right;
+				font-size: 15px;
 			}
 			
 			.signBybuy div.buy table tr td em#title {
@@ -209,14 +280,16 @@
 				border: 1px solid #F2AF5D;
 				font-weight: 700;
 			}
-			#plain{
+			
+			#plain {
 				color: #F00;
 				margin-top: 80px;
 				font-size: 16px;
 				text-align: center;
 			}
-			#sign_tearcher{
-				background: #F00 ;
+			
+			#sign_tearcher {
+				background: #F00;
 				color: white;
 			}
 		</style>
@@ -235,9 +308,6 @@
 					<div class="logo1">
 						<span>购买直播或签约</span>
 					</div>
-					<div class="sousuo1">
-						<a><img src="image/index.png" /></a>
-					</div>
 				</div>
 			</header>
 			<!------------居中部分---------->
@@ -253,7 +323,7 @@
 								<th>直播老师：</th>
 								<td class="t_t"><em id="tearchername"></em></td>
 								<td rowspan="3" class="t_img">
-									<img  id="tearchimg" /></td>
+									<img id="tearchimg" /></td>
 							</tr>
 							<tr>
 								<th>直播主题：</th>
@@ -266,7 +336,7 @@
 							<tr>
 								<th>&nbsp;</th>
 								<td colspan="2">
-									<input type="button"  value="购买" id="buy_live" />
+									<input type="button" value="购买" id="buy_live" />
 								</td>
 							</tr>
 						</table>
@@ -275,12 +345,11 @@
 				<div class="sign_b">
 					<img id="si" src="image/sign.png" />
 					<div class="sign">
-						<p id="Price_html" class="p"> <a href="javascript:;" data-pay="DAC360872CBCD127" data-price="270.00" data-y_price="300.00">一个月</a> <a href="javascript:;" data-pay="E507AB585E2353C7" data-price="960.00" data-y_price="900.00">一季度</a><a href="javascript:;" data-pay="72B2AD0443FEBF8E"
-							data-price="2520.00" data-y_price="3650.00" class="def">一年</a></p>
+						<p id="Price_html" class="p"> <a id="moth">一个月</a> <a id="quart">一季度</a><a class="def" id="year">一年</a></p>
 						<div class="sign_price">
 							<p><span>现价:<em id="xianjia" class="xianjia"></em></span><span>原价：<em id="yuanjia" class="yuanjia"></em></span></p>
 							<p class="inp">
-								<input type="button"  value="签约" id="sign_tearcher"/><i>&nbsp;</i>
+								<input type="button" value="签约" id="sign_tearcher" /><i>&nbsp;</i>
 							</p>
 						</div>
 

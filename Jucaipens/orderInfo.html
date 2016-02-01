@@ -12,13 +12,11 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 
 		<script src="js/mui.min.js"></script>
-		<script  src="js/jquery-1.11.0.js"></script>
-		<script>
-			$(".pay_order_detail").css("disply","block");
-		</script>
+        <script src="js/castapp.js"></script>		
 		
 		<script type="text/javascript" charset="UTF-8">
 		mui.init();
+		castapp.init(null,"con");
 		mui.plusReady(function(){
 		 var pay_btn=document.getElementById("pay_btn");	
 		 var newTab=document.getElementById("newTab");
@@ -27,18 +25,92 @@
 		  var pay_money_zb=document.getElementById("pay_money_zb");
 		  var perPrice=document.getElementById("perPrice");
 		  var nowPrice=document.getElementById("nowPrice");
+		  var orderDetail=document.getElementById("orderDetail");
+		  var orderCodePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/getOrderCode";
+		  var submitPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/payOrder";
+		  var title=document.getElementById("title");
 		  var week=document.getElementById("week");
+		  var web=plus.webview.currentWebview();
+		  var xianjia=web.money;
+		  var title_vel=web.title;
+		  pay_money_zb.innerText=xianjia;
+		  title.innerText=title_vel;
+		  var yuanjia=web.perPrice;
+		  var weekStr=web.week;
+		  getOrderCode();
+		  week.innerText=weekStr;
+		  perPrice.innerHTML=yuanjia;
+		  nowPrice.innerHTML=xianjia;
 		  
 		 
 		 //展示订单详细表
 		 newTab.addEventListener("tap",function(){
-		 	
-		 })
+		 	if(orderDetail.style.display=="none"){
+		 		orderDetail.style.display="block";
+		 	}else{
+		 		orderDetail.style.display="none";
+		 	}
+		 }) 
 		 
 		 //支付订单
 		 pay_btn.addEventListener("tap",function(){
-		 	
+		 	pay();
 		 })
+		 
+		 
+		 //支付
+		 function pay(){
+		 	castapp.pay({
+		 		name:title_vel,
+		 		appid:"2016012910445842877",
+		 		appkey:"feyijh0uxnmobvclqdps",
+		 		type:"alipay",
+		 		money:xianjia.replace("¥",""),
+		 		succFn:function(){
+		 			//订单支付成功处理
+		 			submitService();
+		 		}
+		 	})
+		 }
+		 //获取订单号
+		 function getOrderCode(){
+		 	mui.ajax(orderCodePath,{
+		 		type:"post",
+		 		dataType:"json",
+		 		timeout:10000,
+		 		success: function(data){
+		 			if(data.ret_code==0){
+		 				pay_order_zb.innerText=data.err_msg;
+		 			}
+		 		},
+		 		error: function(e){
+		 			
+		 		}
+		 	}
+		 )}
+		 
+		 
+		 
+		 
+		 //提交订单到服务器
+		 function submitService(){
+		 	var userId=plus.storage.getItem("userId");
+		 	mui.ajax(submitPath,{
+		 		data:{
+		 			orderCode:pay_order_zb.innerText,
+		 			userId:userId
+		 		},
+		 		type:"post",
+		 		dataType:"json",
+		 		timeout:10000,
+		 		success: function(data){
+		 			
+		 		},
+		 		error: function(e){
+		 			
+		 		}
+		 	})
+		 }
 			
 			
 		})
@@ -116,7 +188,7 @@
 			
 			.pay_order_detail table tr {
 				background: #FFF none repeat scroll 0% 0%;
-				padding: 20px;
+				padding: 10px;
 			}
 			
 			.pay_order_detail table th {
@@ -169,7 +241,7 @@
 			}
 			
 			#pay_btn {
-				margin-left: 40%;
+				margin-left: 10%;
 				margin-bottom: 10px;
 			}
 			
@@ -178,41 +250,49 @@
 				width: 90%;
 				margin: 0px auto;
 			}
+			#title{
+				font-size: 12px;
+			}
+			.pay li img{
+				width: 50px;
+				height: 50px;
+			}
+			.pay li{
+				list-style: none;
+				float: left;
+				margin: 10px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="header">
 			<div class="head">
-				<div class="fanhui">返回</div>
 				<div class="denglu1 mui-action-back">
 					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
 				<div class="logo1">
 					<span>购买直播或签约</span>
 				</div>
-				<div class="sousuo1">
-					<a><img src="image/index.png" /></a>
-				</div>
 			</div>
 		</header>
 
 		<div class="paybody">
 			<div id="pay_main" class="content">
-				<h3>订单支付</h3>
+				<h3>订单信息</h3>
 				<div id="pay_order" class="pay_order">
 					<p><span>当前订单号为：<em id="pay_order_zb"></em><a id="newTab" class="order_detail">详情</a></span><span>金额：<em id="pay_money_zb"></em></span></p>
-					<div class="pay_order_detail">
+					<div class="pay_order_detail" id="orderDetail">
 						<table>
 							<tr>
 								<th>产品名称</th>
-								<th>单价</th>
+								<th>原价</th>
 								<th>优惠价</th>
 								<th>周期</th>
 							</tr>
 
 							<tr>
-								<td>CCTV智远老师实盘教学直播1.14</td>
+								<td id="title"></td>
 								<td id="perPrice"></td>
 								<td id="nowPrice"></td>
 								<td id="week"></td>
@@ -224,9 +304,9 @@
 				</div>
 				<h3>支付方式</h3>
 				<div class="pay">
-					<h5>支付宝支付</h5>
-					<a class="alipay def">&nbsp;</a>
+					<li><img src="image/zfb.png" /></li>
 				</div>
+				<br/><br/><br/>
 				<div class="pay_button">
 					<input type="button" id="pay_btn"  value="立即支付">
 				</div>

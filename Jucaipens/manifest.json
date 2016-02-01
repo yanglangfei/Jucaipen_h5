@@ -100,9 +100,13 @@
 		"NativeObj": {
 			"description": "原生对象"
 		},
+		"Payment": {
+			"description": "访问支付插件"
+		},
 		"OAuth": {},
 		"Push": {},
-		"Share": {}
+		"Share": {},
+		"Payment": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -113,6 +117,12 @@
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
 			"plugins": {
+				"payment": {
+					"alipay": {
+						"description": "阿里支付",
+						"scheme": ""
+					}
+				},
 				"share": {
 					"qq": {
 						"appid": "100226886",
@@ -346,13 +356,13 @@
 					"image/indexpress.png",
 					"image/jucai.png",
 					"css/style.css",
-					"image/licainorma.png"
+					"image/licainorma.png",
+					"famousDish.html"
 				],
 				"refer": [
 					"trhreeBoard.html",
 					"login.html",
 					"intrvlIdea.html",
-					"famousDish.html",
 					"index.html",
 					"attention.html",
 					"newsDetail.html",
@@ -412,16 +422,20 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf"
 				],
-				"priority": 13
+				"priority": 13,
+				"refer": []
 			},
 			"liveList.html": {
 				"href": "liveList.html",
 				"priority": 7,
 				"resources": [
 					"image/licainorma.png",
-					"image/livepress.png"
+					"image/livepress.png",
+					"image/indexnormal.png"
 				],
-				"refer": []
+				"refer": [
+					"liveRoom.html"
+				]
 			},
 			"completeInfo.html": {
 				"href": "completeInfo.html",
@@ -609,6 +623,13 @@
 				],
 				"priority": 8,
 				"refer": []
+			},
+			"userInfo.html": {
+				"resources": [
+					"image/logo.jpg"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -617,7 +638,6 @@
 				"css/layer.css",
 				"image/logo_sinaweibo.png",
 				"image/sex_men.png",
-				"userInfo.html",
 				"image/logo_wechatmoments.png",
 				"image/skyblue_editpage_image_remove.png",
 				"news/news_sub.html",
@@ -655,7 +675,6 @@
 				"js/layer.ext.js",
 				"image/btn_back_nor.9.png",
 				"image/logo_qzone.png",
-				"image/logo.jpg",
 				"image/jianpan.png",
 				"image/touzi.png",
 				"image/unpress_stars.png",

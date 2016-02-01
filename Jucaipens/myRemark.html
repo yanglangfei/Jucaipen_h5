@@ -1,68 +1,103 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      	mui.plusReady(function(){
-      		var remark=document.getElementById("data-remark");
-      		var id=plus.storage.getItem("userId");
-      		var myRemark="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
-      		if(id<=0){
-      			plus.ui.toast("请先登录");
-      			return ;
-      		}
-      		
-      		var remarkStr="";
-      		mui.ajax(myRemark,{
-      			data:{
-      				pager:1,
-      				userId:id
-      			},
-      			dataType:"json",
-      			type:"post",
-      			timeout:10000,
-      			success: function(data){
-      				for(var i=0;i<data.length;i++){
-      					remarkStr=remarkStr+ "<li class='mui-table-view-cell mui-media'id="+data[i].newsId+">"
-                         +"<a href='javascript:;'>"
-                          +"<div class='mui-media-body'>"+data[i].newsTitle
-                         +"<p class='mui-ellipsis'>"+data[i].body+"</p></div> </a></li>";
-      				}
-      				remark.innerHTML=remarkStr;
-      				mui("#data-remark").on("tap","li",function(){
-      					var nId=this.getAttribute("id");
-      					mui.openWindow({
-      						url:"newsDetail.html",
-      						id:"newsDetail",
-      							extras:{
-     					     newsId:nId
-     				       }
-      					})
-      				})
-      			},
-      			error: function(e){
-      			}
-      		})
-      	
-      		
-      	})
-    </script>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" style="color: white;">我的评论</h1>
-</header>
- <div class="mui-content">
-     <ul class="mui-table-view" id="data-remark">
-        
-     </ul>
- </div>
-	
-</body>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var remarkLay=document.getElementById("remarkLay");
+				var remarkPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
+				var currentPage=1;
+				var totlePager;
+				var uId=plus.storage.getItem("userId");
+				var linkmore_p=document.getElementById("linkmore_p");
+				if(uId<=0){
+					return ;
+				}
+				getRemarkInfo(currentPage);
+				//加载更多
+				linkmore_p.addEventListener("tap",function(){
+					if(currentPage<totlePager){
+						getRemarkInfo(++currentPage);
+					}
+				})
+				
+				//获取我的评论信息
+				function getRemarkInfo(p){
+					var remarkStr=remarkLay.innerHTML;
+					mui.ajax(remarkPath,{
+						data:{
+							userId:uId,
+							pager:p
+						},
+						type:"post",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							for(var i=0;i<data.length;i++){
+							totlePager=data[i].totlePager;
+							remarkStr=remarkStr+"<li id="+data[i].newsId+"><h3>原文：<a>"+data[i].newsTitle+"</a></h3>"
+							+"<span>1月29日</span><span class='content'>"+data[i].body+"</span></li>";
+							}
+							remarkLay.innerHTML=remarkStr;
+							mui("#remarkLay").on("tap","li",function(){
+								var id=this.getAttribute("id");
+								mui.openWindow({
+									url:"newsDetail.html",
+									id:"newsDetail",
+									extras:{
+										newsId:id
+									}
+								})
+							})
+							if(totlePager==currentPage){
+								linkmore_p.style.display='none';
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+			})
+		</script>
+		<title>
+
+		</title>
+	</head>
+
+	<body class="user_bodybg">
+			<div class="wrapper">
+				<!------------头部--------------->
+
+				<header class="header">
+					<div class="head">
+						<div class="denglu1 mui-action-back">
+							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+						</div>
+						<div class="logo1">
+							<span>我的评论</span>
+						</div>
+					</div>
+				</header>
+				<!------------账户资料------------->
+				<div class="userbody">
+
+					<ul class="mymessge" id="remarkLay">
+
+					</ul>
+					<p id="linkmore_p" class="more"><a  class="linkmore">查看更多>></a></p>
+
+				</div>
+				<!------------底部定位层---------->
+
+			</div>
+	</body>
+
 </html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script>
+			mui.init();
+			mui.plusReady(function(){
+				
+			})
+		</script>
+		<title></title>
+	</head>
+
+	<body>
+		<!------------头部--------------->
+
+		<header class="header">
+			<div class="head">
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1">
+					<span>修改手机</span>
+				</div>
+			</div>
+		</header>
+		<!------------账户资料------------->
+		<div class="userbody">
+
+			<table border="1" class="user_info_table">
+				<tr>
+					<th>系统验证码</th>
+					<td> <span style="width:100%;display:inline-block;">
+                                <input name="txb_code" type="text" id="txb_code" placeholder="请输入系统验证码" style="float:left;width:45.5%;border:1px solid #E0E0E0;height:30px;border-radius:5px;" />
+                             </span>
+					</td>
+				</tr>
+				<tr>
+					<th>手机号</th>
+					<td>
+						<input name="txb_mobile" type="text" id="txb_mobile" class="txt" placeholder="请输入手机号码" />
+					</td>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<td>
+						<input type="button" value="获取验证码" id="reg_getcheckcode" class="code" />
+					</td>
+				</tr>
+				<tr>
+					<th>验证码</th>
+					<td>
+						<input name="txb_checkcode" type="text" id="txb_checkcode" class="txt" placeholder="请输入验证码" />
+					</td>
+				</tr>
+
+				<tr>
+					<th>&nbsp;</th>
+					<td>
+						<input type="button" id="btn_changmobile" name="btn_changmobile" value="确认保存" class="btn_yes" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!------------底部定位层---------->
+	</body>
+
+</html>

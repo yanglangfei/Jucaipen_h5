@@ -21,10 +21,11 @@
 				var board = document.getElementById("bopard");
 				var more_three = document.getElementById("more_three");
 				var pageTop1_show_login_link=document.getElementById("pageTop1_show_login_link");
+				var load=document.getElementById("load");
 				var currentPage=1;
 				var totlePage;
 				findThreeBoard(currentPage);
-				
+				load.style.display='block';
 				//获取更多信息
 				more_three.addEventListener("tap",function(){
 					if(currentPage<totlePage){
@@ -44,11 +45,17 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							load.style.display='none';
 							for (var i = 0; i < data.length; i++) {
 								totlePage=data[i].totlePager;
 								boardStr = boardStr + "<li id=" + data[i].id + " class='noimg'> <div>" + " <h3><a>" + data[i].title + "</a></h3>" + " <p style='height: 40px;overflow: hidden;'>" + data[i].descripte + "</p></div>  </li>";
 							}
 							board.innerHTML = boardStr;
+							if(currentPage<totlePage){
+								more_three.style.display='block';
+							}else{
+								more_three.style.display='none';
+							}
 							mui("#bopard").on("tap", "li", function() {
 								var nId = this.getAttribute("id");
 								mui.openWindow({
@@ -111,18 +118,16 @@
 				</div>
 				
 				<div class="linkmore">
-					<a id="more_three" style="color: #8D8D8D;">更多>></a>
+					<a id="more_three" style="color: #8D8D8D;display: none;">更多>></a>
 				</div>
-				
-				
-				
-				
 
 			</div>
-			
-
 			<!--------------------->
 
+		</div>
+		
+		<div style="width: 100%;text-align: center;margin-top: 50%;display: none;" id="load">
+			<img src="image/loading-0.gif" />
 		</div>
 		
 
@@ -133,7 +138,7 @@
 				<div class="footcenter">
 					<ul>
 						<li><a href="index.html"><span><img src="image/indexnormal.png"  style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="trhreeBoard.html"><span><img src="image/licaipress.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a><span><img src="image/licaipress.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 							<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 							<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>

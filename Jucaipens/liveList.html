@@ -14,13 +14,16 @@
       		var videoList="http://121.40.227.121:8080/AccumulateWealth/accumulate/teachVideo";
       		var video=document.getElementById("data-live");
       		var pageTop1_show_login_link=document.getElementById("pageTop1_show_login_link");
+      		var load=document.getElementById("load");
       		//获取直播列表信息
+      		load.style.display='block';
       	    var liveInfo="";
-     	mui.ajax(videoList,{
+     	    mui.ajax(videoList,{
      		dataType:"json",
      		type:"get",
      		timeout:10000,
      		success: function(data){
+     			load.style.display='none';
      			for(var i=0;i<data.length;i++){
      				var liveUrl=data[i].liveUrl;
      				if(liveUrl!=null){
@@ -31,13 +34,23 @@
      			video.innerHTML=liveInfo;
      			mui("#data-live").on("tap","li",function(){
      				var lId=this.getAttribute("id");
-     				mui.openWindow({
+     				var uId=plus.storage.getItem("userId");
+     				if(uId<=0){
+     					//跳转到登录
+     					mui.openWindow({
+     						url:"login.html",
+     						id:"login"
+     					})
+     				}else{
+     					//进入直播间
+     					mui.openWindow({
      					url:"liveRoom.html",
      					id:"liveRoom",
      					extras:{
      						liveId:lId
      					}
      				})
+     				}
      	      });
      			
      		},
@@ -82,10 +95,13 @@
      <div style="margin: 50px 10px 0 10px;">
      	 <div class="zhibohuigu_mian">
                    <ul style="list-style: none;" id="data-live">
-                   	
                    </ul>
                 </div>
      	
+     </div>
+     
+     <div style="width: 100%;text-align: center;margin-top: 50%;display: none;" id="load">
+     	<img src="image/loading-0.gif" />
      </div>
      
       <footer class="footer">
@@ -94,7 +110,7 @@
               <ul>
                   <li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;" /></span></a></li>
                   <li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
-                  <li><a href="liveList.html"><span><img src="image/livepress.png" style="width: 50px;height: 50px;"/></span></a></li>
+                  <li><a><span><img src="image/livepress.png" style="width: 50px;height: 50px;"/></span></a></li>
                   <li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
                   <li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
               </ul>

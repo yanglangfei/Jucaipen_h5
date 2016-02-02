@@ -263,486 +263,620 @@
 		}
 	},
 	"dependencies": {
-		"pages": {
-			"trhreeBoard.html": {
-				"href": "trhreeBoard.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/unlogin.png",
-					"image/indexnormal.png",
-					"image/livenormal.png",
-					"image/jucai.png",
-					"image/fincenormal.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/classnormal.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/licaipress.png"
-				],
-				"refer": [
-					"trhreeBoard.html",
-					"famousDish.html",
-					"newsDetail.html",
-					"index.html",
-					"attention.html",
-					"liveList.html"
-				],
-				"priority": 0
-			},
-			"login.html": {
-				"href": "login.html",
-				"priority": 1
-			},
-			"regin.html": {
-				"href": "regin.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 2
-			},
-			"ideaDetail.html": {
-				"href": "ideaDetail.html",
-				"priority": 9,
-				"resources": [
-					"image/index.png",
-					"image/v1.png",
-					"image/into_back.png",
-					"image/good.png"
-				],
-				"refer": []
-			},
-			"intrvlIdea.html": {
-				"href": "intrvlIdea.html",
-				"priority": 2
-			},
-			"famousDish.html": {
-				"href": "famousDish.html",
-				"priority": 3,
-				"resources": [
-					"image/seeimage.png",
-					"image/lookimage.png",
-					"image/answerimage.png",
-					"image/findimage.png",
-					"image/classpress.png",
-					"css/mingjia.css",
-					"image/indexnormal.png",
-					"css/tuch.css"
-				],
-				"refer": [
-					"ideaDetail.html"
-				]
-			},
-			"index.html": {
-				"href": "index.html",
-				"resources": [
-					"image/unlogin.png",
-					"image/class_index.png",
-					"image/fince_index.png",
-					"image/fincenormal.png",
-					"js/mui.min.js",
-					"image/live_index.png",
-					"image/classnormal.png",
-					"image/licai_index.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/livenormal.png",
-					"image/indexpress.png",
-					"image/jucai.png",
-					"css/style.css",
-					"image/licainorma.png",
-					"famousDish.html"
-				],
-				"refer": [
-					"trhreeBoard.html",
-					"login.html",
-					"intrvlIdea.html",
-					"index.html",
-					"attention.html",
-					"newsDetail.html",
-					"liveList.html",
-					"historyLive.html",
-					"ideaDetail.html"
-				],
-				"priority": 0
-			},
-			"newsDetail.html": {
-				"href": "newsDetail.html",
-				"priority": 6,
-				"resources": [
-					"image/head.png",
-					"image/share_press.png",
-					"image/share_normal.png",
-					"image/collect_c.png",
-					"image/into_back.png",
-					"image/comm_icon1.png",
-					"image/good.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css"
-				],
-				"refer": []
-			},
-			"news/moreNews.html": {
-				"href": "news/moreNews.html",
-				"resources": [
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/style.css",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/tuch.css"
-				],
-				"refer": [
-					"newsDetail.html"
-				],
-				"priority": 7
-			},
-			"attention.html": {
-				"href": "attention.html",
-				"priority": 5,
-				"resources": [
-					"image/fincepress.png"
-				],
-				"refer": []
-			},
-			"liveRoom.html": {
-				"href": "liveRoom.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/guan.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"priority": 13,
-				"refer": []
-			},
-			"liveList.html": {
-				"href": "liveList.html",
-				"priority": 7,
-				"resources": [
-					"image/licainorma.png",
-					"image/livepress.png",
-					"image/indexnormal.png"
-				],
-				"refer": [
-					"liveRoom.html"
-				]
-			},
-			"completeInfo.html": {
-				"href": "completeInfo.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 7
-			},
-			"choseQuace.html": {
-				"href": "choseQuace.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"image/guquanlogo.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/xin.png"
-				],
-				"refer": [
-					"completeInfo.html"
-				],
-				"priority": 7
-			},
-			"fansList.html": {
-				"href": "fansList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/head.png",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"priority": 9
-			},
-			"txtLive.html": {
-				"href": "txtLive.html",
-				"priority": 11
-			},
-			"communite.html": {
-				"href": "communite.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/head.png",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"communite.html",
-					"txtLive.html"
-				],
-				"priority": 11
-			},
-			"askList.html": {
-				"href": "askList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"image/jucaipen.png",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"askList.html",
-					"answerList.html"
-				],
-				"priority": 11
-			},
-			"answerList.html": {
-				"href": "answerList.html",
-				"priority": 8
-			},
-			"teacherIntroduce.html": {
-				"href": "teacherIntroduce.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"css/style.css",
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/tuch.css"
-				],
-				"priority": 12
-			},
-			"askQuestion.html": {
-				"href": "askQuestion.html",
-				"priority": 9
-			},
-			"teacherDetail.html": {
-				"href": "teacherDetail.html",
-				"priority": 11
-			},
-			"teacherList.html": {
-				"href": "teacherList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"teacherDetail.html"
-				],
-				"priority": 7
-			},
-			"purchAndSign.html": {
-				"href": "purchAndSign.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/sign.png",
-					"image/index.png",
-					"image/buy.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/into_back.png"
-				],
-				"priority": 10
-			},
-			"dishList.html": {
-				"href": "dishList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"purchAndSign.html",
-					"txtLive.html"
-				],
-				"priority": 10
-			},
-			"historyLive.html": {
-				"href": "historyLive.html",
-				"resources": [
-					"image/kaishi.png",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/style.css",
-					"image/head.png",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/comm_icon1.png",
-					"image/good.png"
-				],
-				"priority": 8,
-				"refer": []
-			},
-			"userInfo.html": {
-				"resources": [
-					"image/logo.jpg"
-				],
-				"refer": [],
-				"priority": 0
-			}
-		},
-		"idle": {
-			"resources": [
-				"image/no_network.png",
-				"css/layer.css",
-				"image/logo_sinaweibo.png",
-				"image/sex_men.png",
-				"image/logo_wechatmoments.png",
-				"image/skyblue_editpage_image_remove.png",
-				"news/news_sub.html",
-				"image/thumb.png",
-				"image/into_next.png",
-				"image/dur.png",
-				"image/logo_wechatfavorite.png",
-				"image/remarks.png",
-				"image/skyblue_actionbar_back_btn.png",
-				"js/layer.js",
-				"image/hits.png",
-				"js/mui.js",
-				"image/delect.png",
-				"image/guanzhu.png",
-				"image/dup.png",
-				"myCollect.html",
-				"image/ktq.png",
-				"image/zfb.png",
-				"image/skyblue_editpage_image_bg.9.png",
-				"image/zan_unpress.png",
-				"image/ktn.png",
-				"image/shares_panel_to_qq.png",
-				"image/load_video.png",
-				"image/vips.png",
-				"image/noattention.png",
-				"image/tb_gz.png",
-				"image/myorder.png",
-				"bindAccount.html",
-				"orderInfo.html",
-				"image/logo_email.png",
-				"updatePwd.html",
-				"image/thubm_state.png",
-				"image/weixin_press.png",
-				"image/skyblue_actionbar_ok_btn.png",
-				"js/layer.ext.js",
-				"image/btn_back_nor.9.png",
-				"image/logo_qzone.png",
-				"image/jianpan.png",
-				"image/touzi.png",
-				"image/unpress_stars.png",
-				"image/pic.png",
-				"image/zixun.png",
-				"image/loginqq_press.png",
-				"image/logo_shortmessage.png",
-				"image/skyblue_platform_checked.png",
-				"CollectAndComment.html",
-				"image/licainormal.png",
-				"image/play_center.png",
-				"image/delete.png",
-				"image/loginsina_press.png",
-				"image/ic_launcher.png",
-				"myRemark.html",
-				"image/full_normal.png",
-				"vipService.html",
-				"startPage.html",
-				"image/skyblue_editpage_bg.9.png",
-				"image/v.png",
-				"image/qq.png",
-				"image/exit.png",
-				"image/yx.png",
-				"image/find.png",
-				"vipcenter.html",
-				"image/zhuanjia.9.png",
-				"image/personpush.png",
-				"image/askinfo.png",
-				"image/jiahao.png",
-				"image/loginsina_unpress.png",
-				"image/tb_manyi.png",
-				"image/orders.png",
-				"css/mui.css",
-				"image/zhuanjias.png",
-				"css/lay.ext.css",
-				"image/collect_s.png",
-				"image/logo_qq.png",
-				"image/loginqq_unpress.png",
-				"image/reply_normal.png",
-				"image/return_last.png",
-				"image/weixin.png",
-				"image/pay_bg.png",
-				"image/skyblue_editpage_close.png",
-				"image/response.png",
-				"image/skyblue_platform_checked_disabled.png",
-				"image/zan_press.png",
-				"image/xlistview_arrow.png",
-				"image/loading-0.gif",
-				"js/jquery-1.11.0.js",
-				"image/shijian.jpg",
-				"image/logo_tencentweibo.png",
-				"image/sex_women.png",
-				"image/loginweixins.png",
-				"image/huanyings.png",
-				"myOrder.html",
-				"image/infos.png",
-				"image/jucaipens.png",
-				"css/lay.css",
-				"image/binds.png",
-				"image/press_stars.png",
-				"image/skyblue_editpage_divider.9.png",
-				"infoCenter.html",
-				"image/main.gif",
-				"image/pwd.png",
-				"image/logo_twitter.png",
-				"image/pause.png",
-				"image/small.png"
-			]
-		}
+	  "pages": {
+	    "trhreeBoard.html": {
+	      "href": "trhreeBoard.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/unlogin.png",
+	        "image/indexnormal.png",
+	        "image/livenormal.png",
+	        "image/jucai.png",
+	        "image/fincenormal.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/classnormal.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/licaipress.png"
+	      ],
+	      "refer": [
+	        "trhreeBoard.html",
+	        "famousDish.html",
+	        "newsDetail.html",
+	        "index.html",
+	        "attention.html",
+	        "liveList.html",
+	        "login.html",
+	        "vipcenter.html"
+	      ],
+	      "priority": 0
+	    },
+	    "login.html": {
+	      "href": "login.html",
+	      "priority": 1,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "regin.html": {
+	      "href": "regin.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 2
+	    },
+	    "ideaDetail.html": {
+	      "href": "ideaDetail.html",
+	      "priority": 9,
+	      "resources": [
+	        "image/index.png",
+	        "image/v1.png",
+	        "image/into_back.png",
+	        "image/good.png"
+	      ],
+	      "refer": []
+	    },
+	    "intrvlIdea.html": {
+	      "href": "intrvlIdea.html",
+	      "priority": 2,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "famousDish.html": {
+	      "href": "famousDish.html",
+	      "priority": 3,
+	      "resources": [
+	        "image/seeimage.png",
+	        "image/lookimage.png",
+	        "image/answerimage.png",
+	        "image/findimage.png",
+	        "image/classpress.png",
+	        "css/mingjia.css",
+	        "image/indexnormal.png",
+	        "css/tuch.css"
+	      ],
+	      "refer": [
+	        "ideaDetail.html"
+	      ]
+	    },
+	    "index.html": {
+	      "href": "index.html",
+	      "resources": [
+	        "image/unlogin.png",
+	        "image/class_index.png",
+	        "image/fince_index.png",
+	        "image/fincenormal.png",
+	        "js/mui.min.js",
+	        "image/live_index.png",
+	        "image/classnormal.png",
+	        "image/licai_index.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/livenormal.png",
+	        "image/indexpress.png",
+	        "image/jucai.png",
+	        "css/style.css",
+	        "image/licainorma.png",
+	        "famousDish.html"
+	      ],
+	      "refer": [
+	        "trhreeBoard.html",
+	        "login.html",
+	        "intrvlIdea.html",
+	        "index.html",
+	        "attention.html",
+	        "newsDetail.html",
+	        "liveList.html",
+	        "historyLive.html",
+	        "ideaDetail.html"
+	      ],
+	      "priority": 0
+	    },
+	    "newsDetail.html": {
+	      "href": "newsDetail.html",
+	      "priority": 6,
+	      "resources": [
+	        "image/head.png",
+	        "image/share_press.png",
+	        "image/share_normal.png",
+	        "image/collect_c.png",
+	        "image/into_back.png",
+	        "image/comm_icon1.png",
+	        "image/good.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css"
+	      ],
+	      "refer": []
+	    },
+	    "news/moreNews.html": {
+	      "href": "news/moreNews.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/style.css",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/tuch.css"
+	      ],
+	      "refer": [
+	        "newsDetail.html"
+	      ],
+	      "priority": 7
+	    },
+	    "attention.html": {
+	      "href": "attention.html",
+	      "priority": 5,
+	      "resources": [
+	        "image/fincepress.png"
+	      ],
+	      "refer": []
+	    },
+	    "liveRoom.html": {
+	      "href": "liveRoom.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/guan.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "priority": 13,
+	      "refer": []
+	    },
+	    "liveList.html": {
+	      "href": "liveList.html",
+	      "priority": 7,
+	      "resources": [
+	        "image/licainorma.png",
+	        "image/livepress.png",
+	        "image/indexnormal.png"
+	      ],
+	      "refer": [
+	        "liveRoom.html"
+	      ]
+	    },
+	    "completeInfo.html": {
+	      "href": "completeInfo.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 7
+	    },
+	    "choseQuace.html": {
+	      "href": "choseQuace.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "image/guquanlogo.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/xin.png"
+	      ],
+	      "refer": [
+	        "completeInfo.html"
+	      ],
+	      "priority": 7
+	    },
+	    "fansList.html": {
+	      "href": "fansList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/head.png",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "priority": 9,
+	      "refer": []
+	    },
+	    "txtLive.html": {
+	      "href": "txtLive.html",
+	      "priority": 11,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "communite.html": {
+	      "href": "communite.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/head.png",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "communite.html",
+	        "txtLive.html",
+	        "login.html"
+	      ],
+	      "priority": 11
+	    },
+	    "askList.html": {
+	      "href": "askList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "image/jucaipen.png",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "askList.html",
+	        "answerList.html"
+	      ],
+	      "priority": 11
+	    },
+	    "answerList.html": {
+	      "href": "answerList.html",
+	      "priority": 8,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "teacherIntroduce.html": {
+	      "href": "teacherIntroduce.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/tuch.css"
+	      ],
+	      "priority": 12,
+	      "refer": []
+	    },
+	    "askQuestion.html": {
+	      "href": "askQuestion.html",
+	      "priority": 9,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "teacherDetail.html": {
+	      "href": "teacherDetail.html",
+	      "priority": 11,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "teacherList.html": {
+	      "href": "teacherList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "teacherDetail.html"
+	      ],
+	      "priority": 7
+	    },
+	    "purchAndSign.html": {
+	      "href": "purchAndSign.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/sign.png",
+	        "image/index.png",
+	        "image/buy.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/into_back.png"
+	      ],
+	      "priority": 10,
+	      "refer": [
+	        "orderInfo.html"
+	      ]
+	    },
+	    "dishList.html": {
+	      "href": "dishList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/app.css"
+	      ],
+	      "refer": [
+	        "purchAndSign.html",
+	        "txtLive.html",
+	        "login.html"
+	      ],
+	      "priority": 10
+	    },
+	    "historyLive.html": {
+	      "href": "historyLive.html",
+	      "resources": [
+	        "image/kaishi.png",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/head.png",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/comm_icon1.png",
+	        "image/good.png"
+	      ],
+	      "priority": 8,
+	      "refer": []
+	    },
+	    "userInfo.html": {
+	      "resources": [
+	        "image/logo.jpg",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    },
+	    "bindAccount.html": {
+	      "href": "bindAccount.html",
+	      "resources": [
+	        "image/logo_sinaweibo.png",
+	        "image/weixin.png",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/qq.png"
+	      ],
+	      "priority": 3,
+	      "refer": []
+	    },
+	    "updatePwd.html": {
+	      "href": "updatePwd.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 4
+	    },
+	    "myOrder.html": {
+	      "href": "myOrder.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "priority": 5,
+	      "refer": []
+	    },
+	    "myCollect.html": {
+	      "href": "myCollect.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "newsDetail.html"
+	      ],
+	      "priority": 6
+	    },
+	    "myRemark.html": {
+	      "href": "myRemark.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "newsDetail.html"
+	      ],
+	      "priority": 7
+	    },
+	    "CollectAndComment.html": {
+	      "href": "CollectAndComment.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "myCollect.html",
+	        "myRemark.html"
+	      ],
+	      "priority": 6
+	    },
+	    "infoCenter.html": {
+	      "href": "infoCenter.html",
+	      "resources": [
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "priority": 7,
+	      "refer": []
+	    },
+	    "vipcenter.html": {
+	      "href": "vipcenter.html",
+	      "priority": 19,
+	      "resources": [],
+	      "refer": []
+	    },
+	    "orderInfo.html": {
+	      "href": "orderInfo.html",
+	      "resources": [
+	        "js/castapp.js",
+	        "image/zfb.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "priority": 13,
+	      "refer": []
+	    }
+	  },
+	  "idle": {
+	    "resources": [
+	      "css/layer.css",
+	      "image/no_network.png",
+	      "image/sex_men.png",
+	      "image/yx.png",
+	      "image/exit.png",
+	      "image/logo_wechatmoments.png",
+	      "news/news_sub.html",
+	      "image/skyblue_editpage_image_remove.png",
+	      "image/thumb.png",
+	      "image/find.png",
+	      "image/more.png",
+	      "image/dur.png",
+	      "image/into_next.png",
+	      "image/logo_wechatfavorite.png",
+	      "image/zhuanjia.9.png",
+	      "image/personpush.png",
+	      "image/remarks.png",
+	      "image/askinfo.png",
+	      "image/skyblue_actionbar_back_btn.png",
+	      "js/layer.js",
+	      "image/hits.png",
+	      "js/mui.js",
+	      "image/jiahao.png",
+	      "image/delect.png",
+	      "image/guanzhu.png",
+	      "image/dup.png",
+	      "image/loginsina_unpress.png",
+	      "image/ktq.png",
+	      "image/tb_manyi.png",
+	      "image/orders.png",
+	      "css/mui.css",
+	      "image/skyblue_editpage_image_bg.9.png",
+	      "image/zhuanjias.png",
+	      "image/zan_unpress.png",
+	      "css/lay.ext.css",
+	      "image/ktn.png",
+	      "image/shares_panel_to_qq.png",
+	      "image/collect_s.png",
+	      "image/logo_qq.png",
+	      "image/loginqq_unpress.png",
+	      "image/load_video.png",
+	      "image/vips.png",
+	      "image/reply_normal.png",
+	      "image/noattention.png",
+	      "image/tb_gz.png",
+	      "image/return_last.png",
+	      "image/myorder.png",
+	      "image/pay_bg.png",
+	      "image/skyblue_editpage_close.png",
+	      "image/response.png",
+	      "image/logo_email.png",
+	      "image/skyblue_platform_checked_disabled.png",
+	      "image/weixin_press.png",
+	      "image/thubm_state.png",
+	      "image/btn_back_nor.9.png",
+	      "js/layer.ext.js",
+	      "image/skyblue_actionbar_ok_btn.png",
+	      "image/zan_press.png",
+	      "image/logo_qzone.png",
+	      "image/jianpan.png",
+	      "image/unpress_stars.png",
+	      "image/touzi.png",
+	      "image/pic.png",
+	      "image/xlistview_arrow.png",
+	      "image/loading-0.gif",
+	      "js/jquery-1.11.0.js",
+	      "image/shijian.jpg",
+	      "image/logo_tencentweibo.png",
+	      "image/sex_women.png",
+	      "image/zixun.png",
+	      "image/loginqq_press.png",
+	      "image/loginweixins.png",
+	      "image/huanyings.png",
+	      "image/infos.png",
+	      "image/logo_shortmessage.png",
+	      "image/skyblue_platform_checked.png",
+	      "image/licainormal.png",
+	      "image/play_center.png",
+	      "image/jucaipens.png",
+	      "css/lay.css",
+	      "image/delete.png",
+	      "image/loginsina_press.png",
+	      "image/binds.png",
+	      "image/ic_launcher.png",
+	      "image/press_stars.png",
+	      "image/skyblue_editpage_divider.9.png",
+	      "image/main.gif",
+	      "image/pwd.png",
+	      "image/full_normal.png",
+	      "vipService.html",
+	      "startPage.html",
+	      "image/skyblue_editpage_bg.9.png",
+	      "image/v.png",
+	      "image/logo_twitter.png",
+	      "image/pause.png",
+	      "image/small.png"
+	    ]
+	  }
 	}
 }

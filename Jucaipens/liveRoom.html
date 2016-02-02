@@ -13,11 +13,19 @@
 			mui.init();
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
-				var liveId = web.liveId;
 				var chatLay=document.getElementById("chatLay");
 				var live = document.getElementById("live");
+				var liveResourcePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
+				var chatPath="http://192.168.1.61:8080/AccumulateWealth/jucaipen/chatMessage";
+				var uId=plus.storage.getItem("userId");
+				var liveId = web.liveId;
+				var msgType=0;
+				var isManager=plus.storage.getItem("isManager");
+				var isServer=plus.storage.getItem("isServer");
+				var userNmae=plus.storage.getItem("userName");
+
 				//获取视频资源
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource", {
+				mui.ajax(liveResourcePath, {
 					data: {
 						id: liveId,
 						typeId: 0
@@ -32,9 +40,35 @@
 					error: function(e) {}
 				})
 				
+				intoRoom(msgType,uId,liveId,isManager,isServer,userNmae,0,"",0);
+				
 				
 				
 				//通知服务器 进入直播室
+				function intoRoom(msgType,fromUser,roomId,isManager,isServer,userName,chatType,message,toUser){
+					//msgType  
+					//fromUser
+					//roomId
+					//isManager
+					//isServer
+					//userName
+					mui.ajax(chatPath,{
+						data:{  
+							messageObject:"{msgType:"+msgType+",fromUser:"+uId+",roomId:"+roomId+",isManager:"+isManager+",isServer:"+isServer+",userName:"+userName+"}"
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							console.log(JSON.stringify(data));
+						},
+						error: function(e){
+							
+						}
+					})
+					
+					
+				}
 				
 				
 				//监听推送消息

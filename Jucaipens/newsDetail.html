@@ -70,7 +70,7 @@
 					timeout: 10000,
 					success: function(data) {
 						title.innerHTML = data.title;
-						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + data.publishDate;
+						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + data.publishDate.replace(".0","");
 						content.innerHTML = data.Bodys;
 					},
 					error: function(e) {}
@@ -626,7 +626,7 @@
 							</ul>
 						</div>
 
-						<div class="show_videoinfo_pl showvideoinfo_Div" id="showvideoinfo_3" style="background: #ECECEC;">
+						<div class="show_videoinfo_pl showvideoinfo_Div" id="showvideoinfo_3" style="background: #efeff4;">
 							<h3><em>评论</em><i id="show_Video_CommCount">共0条</i></h3>
 							<ul>
 								<li>

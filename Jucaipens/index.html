@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<title></title>
-
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
@@ -32,16 +29,41 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " /></a></div>";
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
 						for (var i = 0; i < data.length; i++) {
 							var imageUrl = data[i].imageUrl;
-							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " /></a></div>";
+							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id=" + data[i].id + " /></a></div>";
 						}
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " /></a></div>";
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id=" + data[0].id + " /></a></div>";
 						page.innerHTML = url;
+						mui("#pager").on("tap", "img", function() {
+								var id = this.getAttribute("id");
+								if (id == 1) {
+									//股权投资
+								} else if (id == 2) {
+									//证券教学
+									mui.openWindow({
+										url: "liveRoom.html",
+										id: "liveRoom",
+										extras: {
+											liveId: 1
+										}
+									})
+								} else if (id == 3) {
+									//新三板
+									mui.openWindow({
+										url: "trhreeBoard.html",
+										id: "trhreeBoard"
+									})
+								}
+							})
+							//设置广告自动轮询
+						var gallery = mui(".mui-slider");
+						gallery.slider({
+							interval: 2000
+						});
 					},
-					error: function(e) {
-					}
+					error: function(e) {}
 				});
 				var liveUrl = '';
 				//直播回顾
@@ -65,8 +87,7 @@
 							})
 						})
 					},
-					error: function(e) {
-					}
+					error: function(e) {}
 				});
 				var three_board = '';
 				//新三板
@@ -133,7 +154,7 @@
 						timeout: 10000,
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
-								var body=data[i].bodys.replace(/<[^>]+>/g,"");
+								var body = data[i].bodys.replace(/<[^>]+>/g, "");
 								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  style='width:80px;height:80px;'/></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
 							}
 							hotIdea.innerHTML = hotUrl;
@@ -168,11 +189,16 @@
 			})
 		</script>
 
+		<style type="text/css">
+			.mui-slider {
+				margin-top: 40px;
+			}
+			
 		</style>
 
 	</head>
 
-	<body>
+	<body  scroll="no" style="overflow-y: hidden;">
 		<form method="post" action="" id="form1">
 			<div class="aspNetHidden">
 			</div>
@@ -189,18 +215,9 @@
 					</div>
 				</header>
 				<!------------首页轮播图---------->
-				<div class="banner">
-					<div id="focus" class="focus region" style=" float:left">
-						<div class="hd">
-							<ul></ul>
-						</div>
-						<div class="bd">
-							<div class="mui-slider">
-								<div class="mui-slider-group mui-slider-loop" id="pager">
-									<!--广告-->
-								</div>
-							</div>
-						</div>
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop" id="pager">
+						<!--广告-->
 					</div>
 				</div>
 				<!------------导航---------->
@@ -217,11 +234,11 @@
 				<!------------居中部分---------->
 				<div class="middle">
 					<div class="middlecenter">
-                       <!----新三板------->
+						<!----新三板------->
 						<div class="zhishi">
 							<div class="licai_top">
 								<h3>新三板</h3>
-								<a  href="trhreeBoard.html">更多</a>
+								<a href="trhreeBoard.html">更多</a>
 							</div>
 							<div class="yaowen_b">
 								<ul id="data-threeboard">
@@ -269,11 +286,11 @@
 					<div class="foot">
 						<div class="footcenter">
 							<ul>
-								<li><a href="index.html"><span><img src="image/indexpress.png" style="width: 50px;height: 50px;"/></span></a></li>
+								<li><a><span><img src="image/indexpress.png" style="width: 50px;height: 50px;"/></span></a></li>
 								<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
 								<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;" /></span></a></li>
-									<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-									<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+								<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+								<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 							</ul>
 						</div>
 					</div>

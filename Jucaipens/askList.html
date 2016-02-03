@@ -14,122 +14,119 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-		mui.init();
-		mui.plusReady(function(){
-			var askListPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
-			var askList=document.getElementById("askList");
-			var retAnswer=document.getElementById("retAnswer");
-			var web=plus.webview.currentWebview();
-			var retAsk=document.getElementById("retAsk");
-			var ask_gengduo=document.getElementById("ask_gengduo");
-			var teacherId=web.teacherId;
-			var totlePage;
-			var currentPage=1;
-			if(teacherId>0){
+			mui.init();
+			mui.plusReady(function() {
+				var askListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
+				var askList = document.getElementById("askList");
+				var retAnswer = document.getElementById("retAnswer");
+				var web = plus.webview.currentWebview();
+				var retAsk = document.getElementById("retAsk");
+				var ask_gengduo = document.getElementById("ask_gengduo");
+				var teacherId = web.teacherId;
+				var totlePage;
+				var currentPage = 1;
+				if (teacherId > 0) {
+					//根据讲师ID获取提问列表
+					findByTeacherId(currentPage);
+				} else {
+					//获取全部的提问信息
+					findAll(currentPage);
+				}
+				//加载更多数据
+				ask_gengduo.addEventListener("tap", function() {
+					if (currentPage < totlePage) {
+						if (teacherId > 0) {
+							findByTeacherId(++currentPage);
+						} else {
+							findAll(++currentPage);
+						}
+					}
+				})
+				//获取全部提问列表
+				function findAll(p) {
+					var askStr = askList.innerHTML;;
+					mui.ajax(askListPath, {
+						data: {
+							isAll: 0,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							totlePage = data[0].totlePage;
+							for (var i = 0; i < data.length; i++) {
+								var logoStr = data[i].headFace;
+								if (logoStr.indexOf("121.40.227.121") > 0) {
+									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
+								}
+								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + data[i].insertDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+							}
+							askList.innerHTML = askStr;
+							if (currentPage < totlePage) {
+								ask_gengduo.style.display = 'block';
+							} else {
+								ask_gengduo.style.display = 'none';
+							}
+						},
+						error: function(e) {}
+					})
+				}
 				//根据讲师ID获取提问列表
-				findByTeacherId(currentPage);
-				
-			}else{
-				//获取全部的提问信息
-				findAll(currentPage);
-			}
-			
-			//加载更多数据
-			ask_gengduo.addEventListener("tap",function(){
-				if(currentPage<totlePage){
-					if(teacherId>0){
-						findByTeacherId(++currentPage);
-					}else{
-						findAll(++currentPage);
-					}
+				function findByTeacherId(p) {
+					var askStr = askList.innerHTML;
+					mui.ajax(askListPath, {
+						data: {
+							isAll: 1,
+							teacherId: teacherId,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								var logoStr = data[i].headFace;
+								if (logoStr.indexOf("121.40.227.121") > 0) {
+									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
+								}
+								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + data[i].insertDate + "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+							}
+							askList.innerHTML = askStr;
+							if (currentPage < totlePage) {
+								ask_gengduo.style.display = 'block';
+							} else {
+								ask_gengduo.style.display = 'none';
+							}
+						},
+						error: function(e) {}
+					})
 				}
-			})
-			
-			//获取全部提问列表
-			function findAll(p){
-			var askStr=askList.innerHTML;;
-			mui.ajax(askListPath,{
-				data:{
-					isAll:0,
-					page:p
-				},
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-					totlePage=data[0].totlePage;
-					for(var i=0;i<data.length;i++){
-						askStr=askStr+"<div class='item'><div class='userhead'>"
-						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
-					+"<div class='content'><a><span class='u_name'>"+data[i].userName+"</span></a><span class='u_date'>"+data[i].insertDate+"</span>"
-						+"<div class='bodys'><a style='color:#8D8D8D;'>"+data[i].askBodys+"</a></div><span class='type'>0人回答</span></div></div>"
-					}
-					askList.innerHTML=askStr;
-				},
-				error: function(e){
-				}
-			})
-			}
-			
-			
-			//根据讲师ID获取提问列表
-			function findByTeacherId(p){
-			var askStr=askList.innerHTML;
-			mui.ajax(askListPath,{
-				data:{
-					isAll:1,
-					teacherId:teacherId,
-					page:p
-				},
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-					totlePage=data[0].totlePage;
-					for(var i=0;i<data.length;i++){
-						askStr=askStr+"<div class='item'><div class='userhead'>"
-						+"<a><img src="+isNull(data[i].headFace)+"></a></div>"
-					+"<div class='content'><a><span class='u_name'>"+data[i].userName+"</span></a><span class='u_date'>"+data[i].insertDate+"</span>"
-						+"<div class='bodys'><a>"+data[i].askBodys+"</a></div><span class='type'>0人回答</span></div></div>"
-					}
-					askList.innerHTML=askStr;
-				},
-				error: function(e){
-				}
-			})
-			}
-			
-			
-			retAnswer.addEventListener("tap",function(){
-				//跳转最新回答
-				mui.openWindow({
-					url:"answerList.html",
-					id:"answerList",
-					extras:{
-						teacherId:teacherId
-					}
+				retAnswer.addEventListener("tap", function() {
+					//跳转最新回答
+					mui.openWindow({
+						url: "answerList.html",
+						id: "answerList",
+						extras: {
+							teacherId: teacherId
+						}
+					})
 				})
-			})
-			
-			retAsk.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"askList.html",
-				    id:"askList"
+				retAsk.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "askList.html",
+						id: "askList"
+					})
 				})
-			})
-			
-			
-			
-			function isNull(images){
-				if(images.length<=0){
-					images='image/jucaipen.png';
+
+				function isNull(images) {
+					if (images.length <= 0) {
+						images = 'image/jucaipen.png';
+					}
+					return images;
 				}
-				return images;
-			}
-			
-			
-		})
-		
+			})
 		</script>
 	</head>
 
@@ -156,12 +153,10 @@
 			<!--------名家问答开始---------->
 			<div class="mingjiaask_wen_list " style="margin-top: 4.5rem" data-tid="0" id="askList">
 
-			
-
 				<!--------名家问答结束---------->
 			</div>
 			<div class="linkmore">
-				<a id="ask_gengduo" style="color: #8D8D8D;;">更多>></a>
+				<a id="ask_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
 			</div>
 			<div class="nullList">
 				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>

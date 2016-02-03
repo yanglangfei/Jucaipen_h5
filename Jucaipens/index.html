@@ -155,7 +155,7 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  style='width:80px;height:80px;'/></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
 							}
 							hotIdea.innerHTML = hotUrl;
 							mui("#data-hotidea").on("tap", "li", function() {
@@ -199,9 +199,6 @@
 	</head>
 
 	<body  scroll="no" style="overflow-y: hidden;">
-		<form method="post" action="" id="form1">
-			<div class="aspNetHidden">
-			</div>
 
 			<div class="wrapper">
 				<!------------头部--------------->
@@ -210,7 +207,7 @@
 					<div class="head">
 						<div id="pageTop1_show_login_link" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em></em></a></div>
 						<div class="logo">
-							<a href=""><img src="image/jucai.png" /></a>
+							<a><img src="image/jucai.png" /></a>
 						</div>
 					</div>
 				</header>
@@ -296,7 +293,6 @@
 					</div>
 				</footer>
 			</div>
-		</form>
 	</body>
 
 </html>

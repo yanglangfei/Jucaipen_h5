@@ -54,7 +54,9 @@
 							+"<span><i>备注说明：</i>"+data[i].remark+"</span><span><i>预约时间：</i>"+data[i].insertDate+"</span></li>";
 							}
 							myyuyue.innerHTML=orderStr;
-							if(totlePager==currentPage){
+							if(currentPage<totlePager){
+								more.style.display='block';
+							}else{
 								more.style.display='none';
 							}
 						},
@@ -78,8 +80,8 @@
 						<div class="denglu1 mui-action-back">
 							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 						</div>
-						<div class="logo1">
-							<span>我的预约</span>
+						<div class="logo1" >
+							<span style="margin-top:0.2rem;">我的预约</span>
 						</div>
 					</div>
 				</header>
@@ -93,7 +95,7 @@
 				</div>
 				
 				<div class="linkmore" >
-					<a id="more_three" style="color: #8D8D8D;">更多>></a>
+					<a id="more_three" style="color: #8D8D8D;display: none;">更多>></a>
 				</div>
 				<!------------底部定位层---------->
 

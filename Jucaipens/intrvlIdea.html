@@ -66,6 +66,11 @@
                         +"<div class='img_read'> <span><i><img src='image/hits.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
+					if(currentPage<totlePage){
+						gengduo.style.display='block';
+					}else{
+						gengduo.style.display='none';
+					}
 					mui("#intrivlIdea").on("tap",".item",function(){
 						var id=this.getAttribute("id");
 						mui.openWindow({
@@ -105,6 +110,11 @@
                         +"<div class='img_read'> <span><i><img src='image/hits.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
 					}
 					intrivlIdea.innerHTML=ideaStr;
+					if(currentPage<totlePage){
+						gengduo.style.display='block';
+					}else{
+						gengduo.style.display='none';
+					}
 					mui("#intrivlIdea").on("tap",".item",function(){
 						var id=this.getAttribute("id");
 						mui.openWindow({
@@ -159,7 +169,7 @@
 
 				</div>
 				<div class="linkmore">
-					<a id="gengduo" style="color: #8D8D8D;">更多>></a>
+					<a id="gengduo" style="color: #8D8D8D;display: none;">更多>></a>
 				</div>
 				<!--------热门观点结束---------->
 

@@ -5,164 +5,163 @@
 	描述：会员中心
 -->
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/tuch.css" />
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      mui.plusReady(function(){
-      	var abord=document.getElementById("abord");
-      	abord.addEventListener("tap",function(){
-      		plus.storage.setItem("userId",-1+"");
-      		mui.back();
-      	});
-      	
-      	 mui(".mui-table-view").on("tap",".mui-table-view-cell",function(){
-      	   var attr=this.getAttribute("id");
-      	   if(attr=="user"){
-      	   	//用户个人信息
-      	   	mui.openWindow({
-      	   		url:"userInfo.html",
-      	   		id:"user"
-      	   	});
-      	   }else if(attr=="updatePwd"){
-      	   	mui.openWindow({
-      	   		//修改密码
-      	   		url:"updatePwd.html",
-      	   		id:"updatePwd"
-      	   	});
-      	   }else if(attr=="bind"){
-      	   	mui.openWindow({
-      	   		//绑定账号
-      	   		url:"bindAccount.html",
-      	   		id:"bindAccount"
-      	   	});
-      	   }else if(attr=="vip-service"){
-      	   	//会员服务
-      	   	/*mui.openWindow({
-      	   		url:"vipService.html",
-      	   		id:"vipService"
-      	   	});*/
-      	   }else if(attr=="collect-remark"){
-      	   	//我的收藏和评论
-      	   	mui.openWindow({
-      	   		  	url:"CollectAndComment.html",
-      	          	id:"collect-comment"
-      	   	});
-      	   }else if(attr=="order"){
-      	   	//我的预约
-      	   	mui.openWindow({
-      	   		url:"myOrder.html",
-      	   		id:"myOrder"
-      	   	});
-      	   }else if(attr=="infoCenter"){
-      	   	//消息中心
-      	   	mui.openWindow({
-      	   		url:"infoCenter.html",
-      	   		id:"infoCenter"
-      	   	});
-      	   }
-      });
-      
-      
-      });
-     
-      	
-    </script>
-    <style type="text/css">
-    .mui-content{
-     margin: 12px 10px 0 10px;
-    }
-    #abord{
-    	margin-top: 15px;
-    	background: #CF2D28;
-    	color: white;
-    }
-    #abord:active{
-    	background: #DD524D;
-    }
-  
-    </style>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-	<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
-    <h1 class="mui-title" style="color: white;">会员中心</h1>
-    
-</header>
- <div class="mui-content">
-     <form class="mui-input-group">
-             <ul class="mui-table-view">
-                 <li class="mui-table-view-cell" id="user">
-                 	<nobr>
-                 	<img src="image/personpush.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/tuch.css" />
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var abord = document.getElementById("abord");
+				abord.addEventListener("tap", function() {
+					plus.storage.setItem("userId", -1 + "");
+					mui.back();
+				});
+				mui(".mui-table-view").on("tap", ".mui-table-view-cell", function() {
+					var attr = this.getAttribute("id");
+					if (attr == "user") {
+						//用户个人信息
+						mui.openWindow({
+							url: "userInfo.html",
+							id: "user"
+						});
+					} else if (attr == "updatePwd") {
+						mui.openWindow({
+							//修改密码
+							url: "updatePwd.html",
+							id: "updatePwd"
+						});
+					} else if (attr == "bind") {
+						mui.openWindow({
+							//绑定账号
+							url: "bindAccount.html",
+							id: "bindAccount"
+						});
+					} else if (attr == "vip-service") {
+						//会员服务
+						/*mui.openWindow({
+							url:"vipService.html",
+							id:"vipService"
+						});*/
+					} else if (attr == "collect-remark") {
+						//我的收藏和评论
+						mui.openWindow({
+							url: "myRemark.html",
+							id: "myRemark"
+						});
+					} else if (attr == "order") {
+						//我的预约
+						mui.openWindow({
+							url: "myOrder.html",
+							id: "myOrder"
+						});
+					} else if (attr == "infoCenter") {
+						//消息中心
+						mui.openWindow({
+							url: "infoCenter.html",
+							id: "infoCenter"
+						});
+					}
+				});
+			});
+		</script>
+		<style type="text/css">
+			.mui-content {
+				margin: 60px 10px 0 10px;
+			}
+			
+			#abord {
+				margin-top: 15px;
+				background: #CF2D28;
+				color: white;
+			}
+			
+			#abord:active {
+				background: #DD524D;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="head">
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1">
+					<span style="margin-top:0.5px;">会员中心</span>
+				</div>
+			</div>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" id="user">
+						<nobr>
+							<img src="image/personpush.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
                           个人资料
                      </a>
-                     </nobr>
-                 </li>
-                 <li class="mui-table-view-cell" id="updatePwd">
-                 	<nobr>
-                 	 <img src="image/pwd.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
+						</nobr>
+					</li>
+					<li class="mui-table-view-cell" id="updatePwd">
+						<nobr>
+							<img src="image/pwd.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
                           修改密码
                      </a>
-                     </nobr>
-                 </li>
-                 <li class="mui-table-view-cell" id="bind">
-                 	<nobr>
-                 	 <img src="image/binds.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
+						</nobr>
+					</li>
+					<li class="mui-table-view-cell" id="bind">
+						<nobr>
+							<img src="image/binds.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
                           账号绑定
                      </a>
-                     </nobr>
-                 </li>
-                 <li class="mui-table-view-cell" id="vip-service">
-                 	<nobr>
-                 	 <img src="image/vips.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
+						</nobr>
+					</li>
+					<li class="mui-table-view-cell" id="vip-service">
+						<nobr>
+							<img src="image/vips.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
                           会员服务
                      </a>
-                     </nobr>
-                 </li>
-                 <li class="mui-table-view-cell" id="collect-remark">
-                 	<nobr>
-                 	<img src="image/remarks.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
-                          我的收藏／评论
+						</nobr>
+					</li>
+					<li class="mui-table-view-cell" id="collect-remark">
+						<nobr>
+							<img src="image/remarks.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
+                          我的评论
                      </a>
-                    </nobr>
-                 </li>
-                 <li class="mui-table-view-cell" id="order">
-                 	<nobr>
-                 	<img src="image/myorder.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
+						</nobr>
+					</li>
+					<li class="mui-table-view-cell" id="order">
+						<nobr>
+							<img src="image/myorder.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
                           我的预约
                      </a>
-                     </nobr>
-                 </li>
-                 <li class="mui-table-view-cell" id="infoCenter">
-                 	<nobr>
-                 	 <img src="image/infos.png"  style="height: 20px;"/>
-                     <a class="mui-navigate-right">
+						</nobr>
+					</li>
+					<li class="mui-table-view-cell" id="infoCenter">
+						<nobr>
+							<img src="image/infos.png" style="height: 20px;" />
+							<a class="mui-navigate-right">
                           消息中心
                      </a>
-                     </nobr>
-                 </li>
-             </ul>
-     </form>
-     <button type="button" class="mui-btn mui-btn-block"  id="abord">退出当前账号</button>
- </div>
- 
-  
-  
-   
-	
-</body>
-      
+						</nobr>
+					</li>
+				</ul>
+			</form>
+			<button type="button" class="mui-btn mui-btn-block" id="abord">退出当前账号</button>
+		</div>
+
+	</body>
+
 </html>

@@ -60,6 +60,7 @@
 		      				timeout:10000,
 		      				success: function(data){
 		      					if(data.ret_code==0){
+		      						plus.nativeUI.toast("登录成功");
 		      						//用户ID 
 		      						plus.storage.setItem("userId",data.userId+"");
 		      						//购买产品ID
@@ -87,35 +88,49 @@
 		      		   //qq登录
 		      		 	qq.addEventListener("tap",function() {
 		      		 		//获取openID
-			                var id=authLogin(0);
-			                otherLogin(0,id);
+			                authLogin(0);
 			             } )
 		      		 	
 		      		 	//微信登录
 		      		 	weixin.addEventListener("tap",function(){
 		      		 		//获取openID
-		      		 		var id=authLogin(2);
-		      		 		otherLogin(1,id);
+		      		 		authLogin(2);
 		      		 	})
 		      		 	
 		      		 	//新浪登录
 		      		 	sina.addEventListener("tap",function(){
 		      		 		//获取openID
-		      		 		var id=authLogin(1);
-		      		 		otherLogin(2,id);
+		      		 		 authLogin(1);
 		      		 	})
 		      		 	
 		      		 	function otherLogin(t,id){
-		      		 		  mui.ajax(otherLoginPath,{
+		      		 		mui.ajax(otherLoginPath,{
 			                	data:{
 			                		accountType:t,
-			                		id:id
+			                		accountId:id
 			                	},
 			                	type:'get',
 			                	dataType:"json",
 			                	timeout:10000,
 			                	success: function(data){
-			                		console.log(JSON.stringify(data));
+			                		if(data.ret_code==0){
+			                			plus.nativeUI.toast("登录成功");
+			                			//用户ID 
+		      						plus.storage.setItem("userId",data.userId+"");
+		      						//购买产品ID
+		      						plus.storage.setItem("buyProductId",data.buyProductId+"");
+		      						//是否是客服   0    不是    
+		      						plus.storage.setItem("isServer",data.isServer+"");
+		      						//是否是管理员   0  不是
+		      						plus.storage.setItem("isManager",data.isManager+"");
+		      						//注册时间
+		      						plus.storage.setItem("reginDate",data.reginDate);
+		      						//用户名
+		      						plus.storage.setItem('userName',data.userName);
+		      						mui.back();
+			                		}else{
+			                			plus.nativeUI.toast(data.err_msg);
+			                		}
 			                	},
 			                	error: function(e){
 			                		console.log(JSON.stringify(data));
@@ -129,13 +144,14 @@
 			             var s = authos[i];
 			            if (!s.authResult) {
 			          	s.login(function(e) {
-			          		console.log(e.target.authResult.openid);
-				         	alert("登录成功");
+			          		var openId= e.target.authResult.openid;
+				         	otherLogin(i,openId);
 				       }, function(e) {
-					       alert("登录失败！");
+					       plus.nativeUI.alert("登录失败");
 				    });
 			     } else {
-				      alert("已经登录！");
+				      var openId=s.authResult.openid;
+				       otherLogin(i,openId);
 			   }
 		    }
 		      		 	
@@ -186,6 +202,7 @@
 		    #login-qq:active{
 		    	src: url(image/loginqq_press.png);
 		    }
+		    
 		</style>
 	</head>
 
@@ -206,7 +223,7 @@
 					<input type="password" id="password" class="mui-input mui-input-clear" placeholder="输入6-23位密码" />
 				</div>
 			</form>
-			<div style="margin: 10px 10px 0 10px;">
+			<div style="margin: 10px 10px 0 10px;" id="loginLogo">
 				<img src="image/loginqq_unpress.png" class="mui-pull-left" style="width: 50px; height: 50px;" id="login-qq" />
 				<img src="image/loginweixins.png" style="width: 50px;height: 50px;margin-left: 30%;" id="login-weixin" />
 				<img src="image/loginsina_unpress.png" class="mui-pull-right" style="width: 50px; height: 50px;margin: 0 auto ;" id="login-sina" />

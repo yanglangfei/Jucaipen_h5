@@ -91,7 +91,7 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  style='width:80px;height:80px;'/></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
 							}
 							hotIdeas.innerHTML = hotUrl;
 							mui("#data-hotIdeas").on("tap", "li", function() {
@@ -135,7 +135,7 @@
 						},
 						error: function(e) {}
 					})
-					<!--名师问答-->
+				//名师问答
 				var questionStr = "";
 				mui.ajax(teacherQuestion, {
 						data: {

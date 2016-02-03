@@ -17,7 +17,6 @@
 				var ideaDetail = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaDetaile";
 				var commListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/ideaCommList";
 				var addGoodPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaGoods";
-				
 				var teacherName = document.getElementById("teacherName");
 				var leader = document.getElementById("leader");
 				var times = document.getElementById("time");
@@ -59,7 +58,15 @@
 				queryComments();
 				//点赞
 				sa_zan.addEventListener("tap", function() {
-					
+					var uId=plus.storage.getItem("userId");
+					if(uId<=0){
+						mui.openWindow({
+							url:"login.html",
+							id:"login"
+						})
+						return ;
+					}
+					addGoods(uId);
 				})
 					//提交评论信息
 				btn_commen.addEventListener("tap", function() {})
@@ -77,7 +84,6 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) { 
 							    var imageLogo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo"+"?filename="+data.faceImage;
-								console.log(imageLogo);
 								commStr = commStr + "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'><img src=" + imageLogo+ " style='float: left;margin-right: 10%;text-align: right;width: 1.2rem;'></span>" + "<h4 style='display: block;float: left;font-size: 1rem;font-weight: normal;width: 40%;'>" + data[i].userName + "</h4><em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img src='image/response.png' style='loat: left;margin-right: 2%;text-align: right;width: 1.2rem;' ></em>" + "<p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;'>" + data[i].insertDate + "</p>" + "<div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;'>" + data[i].commBody + "</div></div>";
 							}
 							log_commen_list.innerHTML = commStr;
@@ -293,6 +299,7 @@
 			.tit {
 				margin-top: 50px;
 			}
+			
 		</style>
 
 	</head>

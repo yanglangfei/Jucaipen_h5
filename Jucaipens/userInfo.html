@@ -5,193 +5,243 @@
 	描述：用户中心
 -->
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/style.css" />
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      	mui.plusReady(function(){
-      		var uId=plus.storage.getItem("userId");
-      		var name=document.getElementById("name");
-      		var tel=document.getElementById("tel");
-      		var birth=document.getElementById("birth");
-      		var email=document.getElementById("email");
-      		var userLogo=document.getElementById("userLogo");
-      		var address=document.getElementById("address");
-      		var introduce=document.getElementById("introduce");
-      		if(uId<=0){
-      			return ;
-      		}
-      	//获取个人信息
-      		mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo",{
-      			data:{
-      				id:uId
-      			},
-      			dataType:"json",
-      			type:"post",
-      			timeout:10000,
-      			success: function(data){
-      				name.value=data.userName;
-      				tel.value=data.telPhone;
-      				birth.value=data.birthday;
-      				email.value=data.email;
-      				address.value=data.localProvince+data.localCity+data.localArea;
-      				introduce.value=data.descript;
-      				var image="http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo"+"?filename="+data.faceImage;
-      				userLogo.src=image;
-      			},
-      			error: function(e){
-      				
-      			}
-      		});
-      		//更换头像
-      		userLogo.addEventListener("tap",function(){
-      			var btnArray=[{title:"打开相册"},{title:"打开相机"}];
-      			plus.nativeUI.actionSheet({
-      				title:"选择头像",
-      				cancel:"取消",
-      				buttons:btnArray
-      			},function(e){
-      				if(e.index==0){
-      					//取消
-      				}else if(e.index==1){
-      					//打开相册
-      					getGrial();
-      				}else if(e.index==2){
-      					//打开相机
-      					getCame();
-      				}
-      			})
-      		})
-      		
-      		
-      		//打开相册
-      		function getGrial(){
-      			plus.gallery.pick(function(data){
-      				userLogo.src=data;
-      			},function(e){
-      				console.log("err");
-      			})
-      			
-      		}
-      		
-      		//获取拍照图片
-      		function getCame(){
-      			var camera=plus.camera.getCamera();
-      			var form=camera.supportedImageFormats[0];
-      			var res=camera.supportedImageResolutions[0];
-      			camera.captureImage(function(data){
-      				console.log(data);
-      				userLogo.src=data;
-      			},function(e){
-      				console.log("error");
-      			})
-      		}
-      		
-      		
-      		
-      	});
-    </script>
-    <style type="text/css">
-    .mui-btn{
-    	margin-top: 5px;
-    	color: white;
-    	background-color: #CF2D28;
-    	border: 0px;
-    }
-    	.mui-bar-nav{
-    		background-color: #CF2D28;
-    	}
-    	.mui-icon-image{
-    		text-align: center;
-    		margin-top: 40px;
-    		margin-left: 50%;
-    		margin: 0,auto;
-    	}
-    </style>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" >
-	<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
-    <h1 class="mui-title"><font color="white">个人资料</font></h1>
-    <div style="text-align: right;">
-    	<button class="mui-btn" style="text-align: center;">编辑</button>
-    </div>    
-</header>
 
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<script type="text/javascript" src="js/city.data-3.js"></script>
+		<script type="text/javascript" src="js/city.data.js"></script>
+		<link rel="stylesheet" href="css/mui.poppicker.css" />
+		<script type="text/javascript" src="js/mui.picker.js"></script>
+		<script type="text/javascript" src="js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var uId = plus.storage.getItem("userId");
+				var name = document.getElementById("name");
+				var tel = document.getElementById("tel");
+				var birth = document.getElementById("birth");
+				var email = document.getElementById("email");
+				var userLogo = document.getElementById("userLogo");
+				var address = document.getElementById("address");
+				var introduce = document.getElementById("introduce");
+				var editInfo = document.getElementById("editInfo");
+				var sex=document.getElementById("sex");
+				var images;
+				if (uId <= 0) {
+					return;
+				}
+				//获取个人信息
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo", {
+					data: {
+						id: uId
+					},
+					dataType: "json",
+					type: "post",
+					timeout: 10000,
+					success: function(data) {
+						name.value = data.userName;
+						tel.value = data.telPhone;
+						birth.value = data.birthday;
+						email.value = data.email;
+						address.value = data.localProvince + data.localCity + data.localArea;
+						introduce.value = data.descript;
+						if (data.faceImage.length > 0) {
+							images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
+						} else {
+							images = 'image/head.png';
+						}
+						userLogo.src = images;
+					},
+					error: function(e) {}
+				});
+				//更换头像
+				userLogo.addEventListener("tap", function() {
+						var btnArray = [{
+							title: "打开相册"
+						}, {
+							title: "打开相机"
+						}];
+						plus.nativeUI.actionSheet({
+							title: "选择头像",
+							cancel: "取消",
+							buttons: btnArray
+						}, function(e) {
+							if (e.index == 0) {
+								//取消
+							} else if (e.index == 1) {
+								//打开相册
+								getGrial();
+							} else if (e.index == 2) {
+								//打开相机
+								getCame();
+							}
+						})
+					})
+					//打开相册
+				function getGrial() {
+					plus.gallery.pick(function(data) {
+						userLogo.src = data;
+					}, function(e) {
+						console.log("err");
+					})
+				}
+				//获取拍照图片
+				function getCame() {
+					var camera = plus.camera.getCamera();
+					var form = camera.supportedImageFormats[0];
+					var res = camera.supportedImageResolutions[0];
+					camera.captureImage(function(data) {
+						console.log(data);
+						userLogo.src = data;
+					}, function(e) {
+						console.log("error");
+					})
+				}
+				//编辑资料按钮
+				editInfo.addEventListener("tap", function() {});
+				(
+					function($, doc) {
+						$.init();
+						$.ready(function() {
+							var cityPicker = new $.PopPicker({
+								layer: 3
+							});
+							cityPicker.setData(cityData3);
+							//选择城市
+							address.addEventListener("tap", function(e) {
+								console.log("click");
+								cityPicker.show(function(items) {
+									//cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+									//返回 false 可以阻止选择框的关闭
+									//return false;
+								});
+							});
+						})
+					}
+				)
+				
+				//选择性别
+				var btnsAry=["男","女"];
+				sex.addEventListener("tap",function(){
+					plus.nativeUI.actionSheet({
+						buttons:btnsAry,
+						title:"选择性别",
+						cancel:"取消"
+					},function(e){
+						
+					})
+				})
+				
+				
+				
+			});
+		</script>
+		<style type="text/css">
+			.mui-btn {
+				margin-top: 5px;
+				color: white;
+				background-color: #CF2D28;
+				border: 0px;
+			}
+			
+			.mui-bar-nav {
+				background-color: #CF2D28;
+			}
+			
+			.mui-icon-image {
+				text-align: center;
+				margin-top: 60px;
+				margin-left: 50%;
+				margin: 0, auto;
+			}
+		</style>
+	</head>
 
-<div class="mui-content">
-	<div >
-		     <img src="" height="50px" width="50px" class="mui-icon-image" id="userLogo" style="border-radius: 50px;"/><br />
-	</div>
-	<div  style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
-		     <nobr>
-		     	<span > 昵称：</span>
-		       <input type="text"  style="width: 300px;margin-left: 5px;" id="name"/>
-		     </nobr> 
-	</div>
-	<div style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
-		<nobr>
-			<span> 性别：</span>
-		        男
-		        <input type="radio"  name="sex" value="man"/>   
-		       女
-		        <input type="radio"  name="sex" value="woman"/>
-		</nobr>
-		
-	</div>
-	<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-		<nobr>
-			<span >生日:</span>
-		<input type="date" value="2010-12-22" style="width: 300px;margin-left: 10px;" id="birth"/>
-		</nobr>
-	</div>
-	
-	<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-		<nobr>
-			<span>电话：</span>
-		<input type="tel"style="width: 300px;margin-left: 5px;" id="tel" />
-		</nobr>
-		
-	</div>
-	
-	<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-		<nobr>
-			<span>Email：</span>
-		<input type="email"style="width: 300px;margin-left: 5px;" id="email" />
-		</nobr>
-		
-	</div>
-	
-	
-	<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-		<nobr>
-			<span>地址：</span>
-		<input type="text"style="width: 300px;margin-left: 10px;" id="address" />
-		</nobr>
-		
-	</div>
-	
-	
-	<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-		<span>简介：</span>
-		<input type="text"style="width: 300px;height: 100px;margin-left: 10px;" id="introduce"/>
-		
-	</div>
-	
-	<!--
+	<body>
+		<header class="header">
+			<div class="head">
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1">
+					<span style="margin-top:0.2rem;">个人信息</span>
+				</div>
+				<label id="editInfo" class="mui-pull-right" style="margin-top:0.8rem;color: white;margin-right: 20px;font-size: 20px;">完成</label>
+			</div>
+		</header>
+
+		<div class="mui-content">
+			<div>
+				<img height="50px" width="50px" class="mui-icon-image" id="userLogo" style="border-radius: 50px;" />
+				<br />
+			</div>
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
+				<nobr>
+					<span> 昵称：</span>
+					<input type="text" style="width: 300px;margin-left: 5px;" id="name" />
+				</nobr>
+			</div>
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
+				<nobr>
+					<span> 性别：</span> 
+					<button id='sex' type='button' style="display: inline;width: 300px;margin-left: 5px;padding: 10px;">选择性别</button>
+
+				</nobr>
+
+			</div>
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
+				<nobr>
+					<span>生日:</span>
+					<input type="date" value="2010-12-22" style="width: 300px;margin-left: 10px;" id="birth" />
+				</nobr>
+			</div>
+
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
+				<nobr>
+					<span>电话：</span>
+					<input type="tel" style="width: 300px;margin-left: 5px;" id="tel" />
+				</nobr>
+
+			</div>
+
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
+				<nobr>
+					<span>Email：</span>
+					<input type="email" style="width: 300px;margin-left: 5px;" id="email" />
+				</nobr>
+
+			</div>
+
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
+				<nobr>
+					<span>地址：</span>
+					<button id='address' type='button' style="display: inline;width: 300px;margin-left: 5px;padding: 10px;">选择城市</button>
+				
+
+				</nobr>
+
+			</div>
+
+			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
+				<span>简介：</span>
+				<input type="text" style="width: 300px;height: 100px;margin-left: 10px;" id="introduce" />
+
+			</div>
+
+			<!--
     	作者：185601452@qq.com
     	时间：2016-01-11
     	描述：电话   邮箱     地址    简介
     -->
 
-</div>
+		</div>
 
+	</body>
 
-	
-</body>
 </html>

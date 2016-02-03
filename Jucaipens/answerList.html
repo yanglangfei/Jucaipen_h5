@@ -23,6 +23,9 @@
 			var byTeacherPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/answerForTeacher";
 			var intoAnswer=document.getElementById("intoAnswer");
 			var intoAsk=document.getElementById("intoAsk");
+			var getMore=document.getElementById("da_gengduo");
+			var totlePage;
+			var currentPage=1;
 			if(teacherId>0){
 				//根据讲师ID获取回答列表
 				findByTeacherId();
@@ -33,7 +36,7 @@
 			
 			
 			function findAll(){
-			<!--获取所有的最新回答信息-->
+			//获取所有的最新回答信息
 			var questionStr="";
 			mui.ajax(allQuestionPath,{
 				data:{
@@ -45,7 +48,8 @@
 				timeout:10000,
 				success: function(data){
 				  for(var i=0;i<data.length;i++){
-				  	questionStr=questionStr+"<div class='item'><div class='huida'><a><span>"
+				  	totlePage=data[i].totlePage;
+				  	questionStr=questionStr+"<div class='item' style='width:100%;'><div class='huida'><a><span>"
                             +"<img src="+data[i].headFace+"></span></a><div class='name'>"
 						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='image/V1.png'></i></h4>"
 						+"</a><em>"+data[i].level+"</em></div><a class='ask'>咨询</a></div><div class='wen'>"
@@ -54,7 +58,11 @@
 				+"<div class='huida_body'>"+data[i].answerBody+"</div></div>"
 				  }
 				  answerList.innerHTML=questionStr;
-				
+				    if(currentPage<totlePage){
+				  	getMore.style.display='block';
+				  }else{
+				  	getMore.style.display='none';
+				  }
 				},
 				error: function(e){
 					
@@ -62,8 +70,20 @@
 			})
 			}
 			
+			//获取更多
+			getMore.addEventListener("tap",function(){
+				if(currentPage<totlePage){
+					if(teacherId>0){
+						findByTeacherId(++currentPage);
+					}else{
+						findAll(++currentPage);
+					}
+					
+				}
+			})
+			
 			function findByTeacherId(){
-			<!--获取所有的最新回答信息-->
+			//获取所有的最新回答信息
 			var questionStr="";
 			mui.ajax(byTeacherPath,{
 				data:{
@@ -74,6 +94,7 @@
 				timeout:10000,
 				success: function(data){
 				  for(var i=0;i<data.length;i++){
+				  	totlePage=data[i].totlePage;
 				  	questionStr=questionStr+"<div class='item'><div class='huida'><a><span>"
                             +"<img src="+data[i].headFace+"></span></a><div class='name'>"
 						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
@@ -83,6 +104,11 @@
 				+"<div class='huida_body'>"+data[i].answerBody+"</div></div>"
 				  }
 				  answerList.innerHTML=questionStr;
+				  if(currentPage<totlePage){
+				  	getMore.style.display='block';
+				  }else{
+				  	getMore.style.display='none';
+				  }
 				
 				},
 				error: function(e){
@@ -151,7 +177,7 @@
 					<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>
 				</div>
 				<div class="linkmore">
-					<a id="da_gengduo" style="color: #8D8D8D;;">更多>></a>
+					<a id="da_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
 				</div>
 
 				<!------------底部定位层---------->

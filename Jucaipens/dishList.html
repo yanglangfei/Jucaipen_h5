@@ -45,6 +45,11 @@
 							for (var i = 0; i < data.length; i++) {
 								dishStr = dishStr + "<div  tId=" + data[i].teacherId + "  title=" + data[i].title + " logo=" + data[i].headFace + " type=" + data[i].liveType + " name=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[" + data[i].startDate + "]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
 							}
+							if(currentPage<totlePage){
+								txtlive_gd.style.display='block';
+							}else{
+								txtlive_gd.style.display='none';
+							}
 							dishList.innerHTML = dishStr;
 							mui("#dishList").on("tap", ".item", function() {
 								var liveId = this.getAttribute("id");
@@ -152,7 +157,7 @@
 				<!------------------------->
 			</div>
 			<div class="linkmore">
-				<a id="txtlive_gd" style="color: #8D8D8D;">更多>></a>
+				<a id="txtlive_gd" style="color: #8D8D8D;display: none;">更多>></a>
 			</div>
 			<!--------热门观点结束---------->
 

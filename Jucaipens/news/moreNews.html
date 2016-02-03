@@ -25,8 +25,6 @@
             more.addEventListener("tap",function(){
             	if(currentPage<totlePage){
             		findNews(++currentPage);
-            	}else{
-            		more.innerHTML="暂无更多数据";
             	}
             })
 
@@ -48,9 +46,14 @@
 				success: function(data){
 					for(var i=0;i<data.length;i++){
 						totlePage=data[i].totlePager;
-						layStr=layStr+"<li id="+data[i].id+">•<a>"+data[i].title+"</a></li>"; 
+						layStr=layStr+"<li id="+data[i].id+"><a>"+data[i].title+"</a></li>"; 
 					}
 					newsLay.innerHTML=layStr;
+					if(currentPage<totlePage){
+						more.style.display='block';
+					}else{
+						more.style.display='none';
+					}
 					mui("#newsLay").on("tap","li",function(){
 						var id=this.getAttribute("id");
 						mui.openWindow({
@@ -101,10 +104,10 @@
 						<div class="yaowen">
 
 							<div class="zhishi_b">
-								<ul id="newsLay">
+								<ul id="newsLay" >
 
 								</ul>
-								<p><a class="linkmore" id="moreNews">查看更多>></a></p>
+								<p><a class="linkmore" id="moreNews" style="display: none;">查看更多>></a></p>
 							</div>
 						</div>
 						<!------------------------私募股权知识------------------------->

@@ -23,6 +23,7 @@
 			var communit=document.getElementById("communit"); 
 			var commTitle=document.getElementById("commTitle");
 			var buttons=document.getElementById("button");
+			var getMore=document.getElementById("getMore-comm");
 			var textareas=document.getElementById("textarea");
 			var web=plus.webview.currentWebview();
 			var title=web.title;
@@ -40,7 +41,7 @@
 				timeout:10000,
 				success: function(data){
 					for(var i=0;i<data.length;i++){
-						commStr=commStr+"<div class='item'>"
+						commStr=commStr+"<div class='item' style='margin-left:8px;'>"
 					+"<div class='userhead'><img src="+isNull(data[i].userLogo)+"></div>"
 					+"<div class='content'><div class='u_name_face'><span class='u_name'>"+data[i].userName+"</span><span class='u_date'>"+data[i].insertDate+"</span></div>"
 					+"<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>"
@@ -127,6 +128,7 @@
 			#textarea{
 				height: 2rem;
 			}
+			
 		</style>
 		
 		
@@ -155,7 +157,7 @@
 				<a id="communit" class="def">交流区</a>
 			</div>
 			<!--------名家问答开始---------->
-			<div class="livetalk_list" id="commLay">
+			<div class="livetalk_list" id="commLay"  >
 
 				
 				
@@ -166,7 +168,7 @@
 			<!--------名家问答结束---------->
 
 			<div class="linkmore">
-				<a class="inter_gengduo" style="color: #8D8D8D;">更多>></a>
+				<a class="inter_gengduo" id="getMore-comm" style="color: #8D8D8D;display: none;">更多>></a>
 			</div>
 
 			<div class="livetakl_fload_top">&nbsp;</div>

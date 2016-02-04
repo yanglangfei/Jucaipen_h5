@@ -15,10 +15,12 @@
 				var currentPage=1;
 				var totlePager;
 				var uId=plus.storage.getItem("userId");
+				var loadRemark=document.getElementById("loadRemark");
 				var linkmore_p=document.getElementById("linkmore_p");
 				if(uId<=0){
 					return ;
 				}
+				loadRemark.style.display='block';
 				getRemarkInfo(currentPage);
 				//加载更多
 				linkmore_p.addEventListener("tap",function(){
@@ -39,6 +41,7 @@
 						dataType:"json",
 						timeout:10000,
 						success: function(data){
+							loadRemark.style.display='none';
 							for(var i=0;i<data.length;i++){
 							totlePager=data[i].totlePager;
 							remarkStr=remarkStr+"<li style='margin-left:10px;' id="+data[i].newsId+"><h3>原文：<a>"+data[i].newsTitle+"</a></h3>"
@@ -94,11 +97,14 @@
 					<ul class="mymessge" id="remarkLay" >
 
 					</ul>
-					<p id="linkmore_p" class="more"><a  class="linkmore" style="display: none;">查看更多>></a></p>
+					<p  class="more"><a id="linkmore_p" class="linkmore" style="display: none;">查看更多>></a></p>
 
 				</div>
 				<!------------底部定位层---------->
 
+			</div>
+			<div style="text-align: center;margin-top: 60%;display: none;" id="loadRemark" >
+				<img  src="image/loading-0.gif"/>
 			</div>
 	</body>
 

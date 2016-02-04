@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+	<!--
+    	作者：185601452@qq.com
+    	时间：2016-02-04
+    	描述：我的预约
+    -->
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,12 +23,14 @@
 				var orderPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myOrder";
 				var uid=plus.storage.getItem("userId");
 				var myyuyue=document.getElementById("yuyueLay");
+				var loadOrders=document.getElementById("loadOrders");
 				var more=document.getElementById("more_three");
 				var currentPage=1;
 				var totlePager;
 				if(uid<=0){
 					return ;
 				}
+				loadOrders.style.display='block';
 				getOrders(currentPage);
 				
 				//加载更多
@@ -46,9 +53,10 @@
 						dataType:"json",
 						timeout:10000,
 						success: function(data){
+							loadOrders.style.display='none';
 							for(var i=0;i<data.length;i++){
 								totlePager=data[i].totlePager;
-								orderStr=orderStr+"<li><h3><a>"+data[i].equityName+"</a></h3>"
+								orderStr=orderStr+"<li style='margin-left:10px;'><h3><a>"+data[i].equityName+"</a></h3>"
 							+"<span class='names'><i>您的称呼：</i>"+data[i].trueName+"</span>"
 							+"<span><i>手机号码：</i>"+data[i].mobileNum+"</span><span><i>投资额金：</i>"+data[i].touziMoney+"</span>"
 							+"<span><i>备注说明：</i>"+data[i].remark+"</span><span><i>预约时间：</i>"+data[i].insertDate+"</span></li>";
@@ -100,6 +108,10 @@
 				<!------------底部定位层---------->
 
 			</div>
+			<div style="text-align: center;margin-top: 60%;display: none;" id="loadOrders">
+				<img src="image/loading-0.gif" />
+			</div>
+			
 	</body>
 
 </html>

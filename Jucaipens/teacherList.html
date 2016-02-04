@@ -19,9 +19,11 @@
 		  mui.plusReady(function(){
 		  	var teacherinfo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
 		  	var teacherLay=document.getElementById("teacherLay");
+		  	var loadTeacher=document.getElementById("loadTeacher");
 		  	var currentPage=1;
 		  	var totlePage;
 		  	var find_gengduo=document.getElementById("find_gengduo");
+		  	loadTeacher.style.display='block';
 		  	findAllTeacher(currentPage);
 		  	
 		  	//加载更多数据
@@ -44,6 +46,7 @@
 		  		dataType:"json",
 		  		timeout:10000,
 		  		success: function(data){
+		  			loadTeacher.style.display='none';
 		  			totlePage=data[0].totlePage;
 		  			for(var i=0;i<data.length;i++){
 		  				var intro= data[i].introduce.replace(/<[^>]+>/g,"");  		  				
@@ -55,6 +58,11 @@
 					+"</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
 		  			}
 		  			teacherLay.innerHTML=teacherStr;
+		  			if(currentPage<totlePage){
+		  				find_gengduo.style.display='block';
+		  			}else{
+		  				find_gengduo.style.display='none';
+		  			}
 		  			//进入讲师详细界面
 		  			mui("#teacherLay").on("tap",".item",function(){
 		  				var tId=this.getAttribute("id");
@@ -92,7 +100,7 @@
 					<div class="denglu1 mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-					<div class="logo1">
+					<div class="logo1" style="margin-top:0.2rem;">
 						<span>找名家</span>
 					</div>
 				</div>
@@ -101,11 +109,13 @@
 			<!------------居中部分---------->
 			<!------------名师列表开始---------->
 			<div class="tearchlist nei_top" id="teacherLay">
-			
-
 			</div>
 			<div class="linkmore">
-				<a id="find_gengduo" style="color: #8D8D8D;">更多>></a>
+				<a id="find_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+			</div>
+			
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loadTeacher">
+				<img src="image/loading-0.gif" />
 			</div>
 			<!--------名师列表结束---------->
 

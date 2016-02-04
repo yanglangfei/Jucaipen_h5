@@ -30,6 +30,7 @@
 				var ideaCount = document.getElementById("ideaCount");
 				var fans = document.getElementById("fans");
 				var dish = document.getElementById("dish");
+				var isAsk;
 				var intoAsk = document.getElementById("intoAsk");
 				var intrial = document.getElementById("intrialIdea");
 				var findTeacher = document.getElementById("findTeacher");
@@ -43,35 +44,35 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id="+data[data.length-1].id+" /></a></div>";
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
 						for (var i = 0; i < data.length; i++) {
 							var imageUrl = data[i].imageUrl;
-							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id="+data[i].id+" /></a></div>";
+							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id=" + data[i].id + " /></a></div>";
 						}
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id="+data[0].id+" /></a></div>";
+						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id=" + data[0].id + " /></a></div>";
 						page.innerHTML = url;
-						mui("#pager").on("tap","img",function(){
-							var id=this.getAttribute("id");
-							if(id==1){
-								//股权投资
-							}else if(id==2){
-								//证券教学
-								mui.openWindow({
-									url:"liveRoom.html",
-									id:"liveRoom",
-									extras:{
-										liveId:1
-									}
-								})
-							}else if(id==3){
-								//新三板
-								mui.openWindow({
-									url:"trhreeBoard.html",
-									id:"trhreeBoard"
-								})
-							}
-						})
-						//获得slider插件对象
+						mui("#pager").on("tap", "img", function() {
+								var id = this.getAttribute("id");
+								if (id == 1) {
+									//股权投资
+								} else if (id == 2) {
+									//证券教学
+									mui.openWindow({
+										url: "liveRoom.html",
+										id: "liveRoom",
+										extras: {
+											liveId: 1
+										}
+									})
+								} else if (id == 3) {
+									//新三板
+									mui.openWindow({
+										url: "trhreeBoard.html",
+										id: "trhreeBoard"
+									})
+								}
+							})
+							//获得slider插件对象
 						var gallery = mui('.mui-slider');
 						gallery.slider({
 							interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
@@ -135,7 +136,7 @@
 						},
 						error: function(e) {}
 					})
-				//名师问答
+					//名师问答
 				var questionStr = "";
 				mui.ajax(teacherQuestion, {
 						data: {
@@ -150,25 +151,37 @@
 							}
 							question.innerHTML = questionStr;
 							mui("#data-question").on("tap", ".ask", function() {
+								isAsk = true;
 								var tId = this.getAttribute("t");
-								mui.openWindow({
-									url: "askQuestion.html",
-									id: "askQuestion",
-									extras: {
-										teacherId: tId
-									}
-								})
-								return;
+								if (isAsk) {
+									console.log("l");
+									mui.openWindow({
+										url: "askQuestion.html",
+										id: "askQuestion",
+										extras: {
+											teacherId: tId
+										}
+									})
+								} 
 							})
 							mui("#data-question").on("tap", ".item", function() {
 								var tId = this.getAttribute("id");
-								mui.openWindow({
-									url: "teacherDetail.html",
-									id: "teacherDetail",
-									extras: {
-										teacherId: tId
-									}
-								})
+								var isQues;
+								if(!isAsk){
+									isQues=true;
+								}else{
+									isQues=false;
+								}
+								if (isQues) {
+									console.log('t');
+									mui.openWindow({
+										url: "teacherDetail.html",
+										id: "teacherDetail",
+										extras: {
+											teacherId: tId
+										}
+									})
+								}
 							})
 						},
 						error: function(e) {}

@@ -5,173 +5,185 @@
 	描述：注册
 -->
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/tuch.css" />
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-      	mui.plusReady(function(){
-      		var getCode=document.getElementById("btn_getcode");
-      		var telPhone=document.getElementById("tel");
-      		var login=document.getElementById("into-login");
-      		var regin=document.getElementById("regin");
-      		var userName=document.getElementById("userName");
-      		var pws=document.getElementById("pwd");
-      		var rept_pwd=document.getElementById("rept_pwd");
-      		var varial=document.getElementById("varear");
-      		var t=60;
-      		getCode.addEventListener("tap",function(){
-      			  setInterval(restTime(t),1000);
-      			if(telPhone.value.length<=0){
-      				plus.ui.toast("手机号不能为空");
-      				return ;
-      			}
-      			mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode",{
-      				data:{
-      					telPhone:telPhone.value
-      				},
-      				dataType:"json",
-      				type:"post",
-      				timeout:10000,
-      				success: function(data){
-      					console.log("code:"+data.err_msg);
-      				},
-      				error: function(e){
-      					
-      				}
-      			});
-      			
-      		});
-      		
-      		login.addEventListener("tap",function(){
-      			mui.openWindow({
-      				url:"login.html",
-      				id:"login"
-      			});
-      		});
-      		
-      		
-      		regin.addEventListener("tap",function(){
-      			if(userName.value.length<=0){
-      				plus.ui.toast("用户名不能为空");
-      				return ;
-      			}
-      			if(telPhone.value.length<=0){
-      				plus.ui.toast("密码不能为空");
-      				return ;
-      			}
-      			if(varial.value.length<=0){
-      				plus.ui.toast("验证码不能为空");
-      				return ;
-      			}
-      			if(pws.value.length<=0){
-      				plus.ui.toast("密码不能为空");
-      				return ;
-      			}
-      			if(rept_pwd.value.length<=0){
-      				plus.ui.toast("确认密码不能为空");
-      				return ;
-      			}
-      			if(pws.value!=rept_pwd.value){
-      				plus.ui.toast("两次密码不一致");
-      				return ;
-      			}
-      			mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/regin",{
-      				data:{
-      					userName:userName.value,
-      					password:pws.value,
-      					telPhone:telPhone.value,
-      					actionCode:varial.value,
-      					retPwd:rept_pwd.value
-      				},
-      				type:"post",
-      				dataType:"json",
-      				timeout:10000,
-      				success: function(data){
-      					console.log(JSON.stringify(data));
-      					var isLogin=data.IsLogin;
-      					var actionId=data.ActionId;
-      					var msg=data.Msg;
-      					if(isLogin==true){
-      						mui.openWindow({
-      							url:"login.html",
-      							id:"login"
-      						});
-      					}else{
-      						plus.ui.toast(msg);
-      					}
-      				},
-      				error: function(e){
-      					
-      				}
-      			});
-      			
-      		});
-      		
-      		
-      	function restTime(t){
-      		if(t>0){
-      		getCode.innerHTML=(--t)+"秒后重新发送";
-      		}else{
-      			getCode.innerHTML="获取验证码";
-      		}
-      	}
-      		
-      	});
-      	
-      	
-    </script>
-    <style type="text/css">
-   
-    	.mui-content{
-    		margin: 12px;
-    	}
 
-    	#regin{
-    		margin-top: 12px;
-    	}
-    </style>
-</head>
-<body>
-<header class="mui-bar mui-bar-nav" style="background: #CF2D28;">
-	<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
-    <h1 class="mui-title" style="color: white;">注册</h1>
-    <button type="button" id="into-login" style="background: #CF2D28;border: 0px;" class="mui-btn mui-btn-red mui-pull-right">登录</button>
-</header>
-<div class="mui-content">
-    <form class="mui-input-group">
-    	<div class="mui-input-row">
-    		<label for="">用户名</label>
-    		<input type="text" class="mui-input mui-input-clear" id="userName" />
-    	</div>
-    	<div class="mui-input-row">
-    		<label for="">手机号</label>
-    		<input type="tel" class="mui-input mui-input-clear"  id="tel"/>
-    	</div>
-    	
-    		<div class="mui-input-rows" style="border: 1px solid #C2C2C2;">
-    		<input type="number"   class="mui-input mui-input-clear" id="varear" style="display: inline;width: 288px;" />
-         <button type="button" id="btn_getcode" class="mui-btn mui-btn-red mui-pull-right"
-         	>获取验证码</button>
-    		</div>
-    	<div class="mui-input-row">
-    		<label for="">密码</label>
-    		<input type="password" class="mui-input mui-input-clear" placeholder="输入6-23位密码" id="pwd" />
-    	</div>
-    	<div class="mui-input-row">
-    		<label for="">确认密码</label>
-    		<input type="password" class="mui-input mui-input-clear" id="rept_pwd" />
-    	</div>
-    </form>
-    <button type="button" class="mui-btn-block mui-btn-red" id="regin">注册</button>
-</div>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/tuch.css" />
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var getCode = document.getElementById("btn_getcode");
+				var telPhone = document.getElementById("tel");
+				var login = document.getElementById("into-login");
+				var regin = document.getElementById("regin");
+				var userName = document.getElementById("userName");
+				var pws = document.getElementById("pwd");
+				var rept_pwd = document.getElementById("rept_pwd");
+				var varial = document.getElementById("varear");
+				var t = 60;
+				getCode.addEventListener("tap", function() {
+					if (telPhone.value.length <= 0) {
+						plus.ui.toast("手机号不能为空");
+						return;
+					}
+					setInterval(function() {
+						if (t > 1) {
+							getCode.innerHTML = (--t) + "秒后重新发送";
+						} else {
+							getCode.innerHTML = "获取验证码";
+						}
+					}, 1000);
+					mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode",{
+						data:{
+							telPhone:telPhone.value
+						},
+						dataType:"json",
+						type:"post",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code!=0){
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							
+						}
+					});
+				});
+				login.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "login.html",
+						id: "login"
+					});
+				});
+				regin.addEventListener("tap", function() {
+					if (userName.value.length <= 0) {
+						plus.ui.toast("用户名不能为空");
+						return;
+					}
+					if (telPhone.value.length <= 0) {
+						plus.ui.toast("密码不能为空");
+						return;
+					}
+					if (varial.value.length <= 0) {
+						plus.ui.toast("验证码不能为空");
+						return;
+					}
+					if (pws.value.length <= 0) {
+						plus.ui.toast("密码不能为空");
+						return;
+					}
+					if (rept_pwd.value.length <= 0) {
+						plus.ui.toast("确认密码不能为空");
+						return;
+					}
+					if (pws.value != rept_pwd.value) {
+						plus.ui.toast("两次密码不一致");
+						return;
+					}
+					mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/regin", {
+						data: {
+							userName: userName.value,
+							password: pws.value,
+							telPhone: telPhone.value,
+							actionCode: varial.value,
+							retPwd: rept_pwd.value
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							console.log(JSON.stringify(data));
+							var isLogin = data.IsLogin;
+							var actionId = data.ActionId;
+							var msg = data.Msg;
+							if (isLogin == true) {
+								mui.openWindow({
+									url: "login.html",
+									id: "login"
+								});
+							} else {
+								plus.ui.toast(msg);
+							}
+						},
+						error: function(e) {
+						}
+					});
+				});
+			})
+		</script>
+		<style type="text/css">
+			.mui-content {
+				margin: 12px;
+			}
+			
+			#regin {
+				margin-top: 12px;
+				background: #bd0b19;
+				height: 50px;
+				width: 100%;
+				color: white;
+				font-size: 18px;
+			}
+			
+			.mui-input-rows {
+				position: relative;
+			}
+			
+			#btn_getcode {
+				background: #bd0b19;
+				height: 40px;
+				position: absolute;
+				right: 0px;
+				color: white;
+			}
+			
+			#varear {
+				position: absolute;
+				width: 300px;
+				left: 20px;
+			}
+		</style>
+	</head>
 
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #bd0b19;">
+			<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
+			<h1 class="mui-title" style="color: white;">注册</h1>
+			<button type="button" id="into-login" style="background: #bd0b19;border: 0px;font-size: 15px;" class="mui-btn mui-btn-red mui-pull-right">登录</button>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label for="">用户名</label>
+					<input type="text" class="mui-input mui-input-clear" id="userName" />
+				</div>
+				<div class="mui-input-row">
+					<label for="">手机号</label>
+					<input type="tel" class="mui-input mui-input-clear" id="tel" />
+				</div>
 
-	
-</body>
+				<div class="mui-input-rows" style="height: 40px;">
+					<input type='number' class="mui-input mui-input-clear" id="varear" />
+					<button type="button" id="btn_getcode">获取验证码</button>
+				</div>
+				<div class="mui-input-row">
+					<label for="">密码</label>
+					<input type="password" class="mui-input mui-input-clear" placeholder="输入6-23位密码" id="pwd" />
+				</div>
+				<div class="mui-input-row">
+					<label for="">确认密码</label>
+					<input type="password" class="mui-input mui-input-clear" id="rept_pwd" />
+				</div>
+			</form>
+			<button type="button" id="regin">注册</button>
+		</div>
+
+	</body>
+
 </html>

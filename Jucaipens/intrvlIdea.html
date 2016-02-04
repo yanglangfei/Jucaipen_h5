@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+	<!--
+    	作者：185601452@qq.com
+    	时间：2016-02-04
+    	描述：投资观点
+    -->
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -21,11 +26,12 @@
 			var byTeacherPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
 			var intrivlIdea=document.getElementById("intrivlIdea");
 			var web=plus.webview.currentWebview();
+			var loadIdea=document.getElementById("loadIdea");
 			var gengduo=document.getElementById("gengduo");
 			var teacherId=web.teacherId;
 			var currentPage=1;
 			var totlePage;
-			
+			loadIdea.style.display='block';
 			if(teacherId>0){
 				findByTesacherId(currentPage);
 			}else{
@@ -56,6 +62,7 @@
 				dataType:"json",
 				timeout:10000,
 				success: function(data){
+					loadIdea.style.display='none';
 					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
 						var body=data[i].bodys.replace(/<[^>]+>/g,"");
@@ -101,6 +108,7 @@
 				timeout:10000,
 				success: function(data){
 					totlePage=data[0].totlePage;
+					 loadIdea.style.display='none';
 					for(var i=0;i<data.length;i++){
 					  var body=data[i].bodys.replace(/<[^>]+>/g,"");
 					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
@@ -148,7 +156,7 @@
 						<div class="denglu1 mui-action-back">
 							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 						</div>
-						<div class="logo1">
+						<div class="logo1" style="margin-top:0.2rem;">
 							<span>投资观点</span>
 						</div>
 					</div>
@@ -158,19 +166,22 @@
 				<!------------热门观点开始---------->
 				<div class="tzgdlist nei_top" data-tid="0" id="intrivlIdea">
 					<!------------------------->
-                    
-                    
-                
-				
 
 					</div>
-
 					<!------------------------->
-
 				</div>
+				
+				
 				<div class="linkmore">
 					<a id="gengduo" style="color: #8D8D8D;display: none;">更多>></a>
 				</div>
+				
+				
+				<div style="text-align: center;margin-top: 80%;display: none;" id="loadIdea">
+					<img src="image/loading-0.gif" />
+				</div>
+				
+				
 				<!--------热门观点结束---------->
 
 				<!------------底部定位层---------->

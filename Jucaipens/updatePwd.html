@@ -7,122 +7,113 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/style.css" />
-		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			mui.plusReady(function(){
-				var txb_oldpwd=document.getElementById("txb_oldpwd");
-				var txb_newpwd=document.getElementById("txb_newpwd");
-				var txb_surepwd=document.getElementById("txb_surepwd");
-				var btn_changeuserpwd=document.getElementById("btn_changeuserpwd");
-				var pwdPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
-				
+			mui.plusReady(function() {
+				var txb_oldpwd = document.getElementById("txb_oldpwd");
+				var txb_newpwd = document.getElementById("txb_newpwd");
+				var txb_surepwd = document.getElementById("txb_surepwd");
+				var btn_changeuserpwd = document.getElementById("btn_changeuserpwd");
+				var pwdPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
 				// 修改密码
-				btn_changeuserpwd.addEventListener("tap",function(){
-					var uId=plus.storage.getItem("userId");
-					if(uId<=0){
+				btn_changeuserpwd.addEventListener("tap", function() {
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
 						mui.openWindow({
-							url:"login.html",
-							id:"login"
+							url: "login.html",
+							id: "login"
 						})
-						return ;
+						return;
 					}
-					if(txb_oldpwd.value.length<=0||txb_newpwd.value.length<=0||txb_surepwd.value.length<=0){
+					if (txb_oldpwd.value.length <= 0 || txb_newpwd.value.length <= 0 || txb_surepwd.value.length <= 0) {
 						plus.nativeUI.toast("密码不能为空");
-						return ;
+						return;
 					}
-					if(txb_newpwd!=txb_surepwd){
+					if (txb_newpwd != txb_surepwd) {
 						plus.nativeUI.toast(" 两次密码不一致");
-						return ;
+						return;
 					}
-				
 				})
-				
-				
-				function updatePawd(uId,oldPwd,newPwd,repPwd){
-					mui.ajax(pwdPath,{
-						data:{
-							userId:uId,
-							oldPwd:oldPwd,
-							newPwd:newPwd,
-							repPwd:repPwd
+
+				function updatePawd(uId, oldPwd, newPwd, repPwd) {
+					mui.ajax(pwdPath, {
+						data: {
+							userId: uId,
+							oldPwd: oldPwd,
+							newPwd: newPwd,
+							repPwd: repPwd
 						},
-						type:"post",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							if(data.ret_code==0){
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
 								plus.nativeUI.toast("密码修改成功");
-							}else{
+							} else {
 								plus.nativeUI.toast(data.err_msg);
 							}
 						},
-						error: function(e){
-							
+						error: function(e) {
 						}
 					})
 				}
-				
-				
-				
 			})
 		</script>
 		<title></title>
 		<style type="text/css">
-			.btn_yes{
-				margin-top: 20px;
+			.mui-content {
+				margin: 60px 15px 0 15px;
+			}
+			
+			.mui-input-group .mui-input-row input {
+				border: 1px solid #E0E0E0;
+				font-size: 1rem;
+				border-radius: 0.25rem;
+				width: 80%;
+				padding: 0.25rem 0rem;
+				text-indent: 0.25rem;
+			}
+			
+			.mui-input-group .mui-input-row label {
+				text-align: right;
+				font-size: 1rem;
+				font-weight: normal;
 			}
 		</style>
 	</head>
 
-	<body>
-			<div class="wrapper">
-				<!------------头部--------------->
+	<body background="#efeff4">
+		<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1">
-							<span>修改密码</span>
-						</div>
-					</div>
-				</header>
-				<!------------账户资料------------->
-				<div class="userbody">
-
-					<table border="1" class="user_info_table">
-						<tr>
-							<th>原密码</th>
-							<td>
-								<input name="txb_oldpwd" type="password" id="txb_oldpwd" class="txt" placeholder="请输入原始密码" />
-							</td>
-						</tr>
-						<tr>
-							<th>新密码</th>
-							<td>
-								<input name="txb_newpwd" type="password" id="txb_newpwd" class="txt" placeholder="请输入新密码" />
-							</td>
-						</tr>
-						<tr>
-							<th>确认密码</th>
-							<td>
-								<input name="txb_surepwd" type="password" id="txb_surepwd" class="txt" placeholder="请输入确认新密码" />
-							</td>
-						</tr>
-
-						<tr>
-							<th>&nbsp;</th>
-							<td>
-								<input type="button" id="btn_changeuserpwd" value="确认保存" class="btn_yes" />
-							</td>
-						</tr>
-					</table>
+		<header class="header">
+			<div class="head">
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
-				<!------------底部定位层---------->
-
+				<div class="logo1">
+					<span>修改密码</span>
+				</div>
 			</div>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>原&nbsp;密&nbsp;码&nbsp;</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入原始密码" id="txb_oldpwd">
+				</div>
+				<div class="mui-input-row" style="margin-top: 10px;">
+					<label>新&nbsp;密&nbsp;码&nbsp;</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入新密码" id="txb_newpwd">
+				</div>
+				<div class="mui-input-row" style="margin-top: 10px;">
+					<label>确认密码</label>
+					<input type="text" class="mui-input-clear" placeholder="请输入确认密码" id="txb_surepwd">
+				</div>
+				<button style="width: 100%;height: 40px;background: #bb1121;color:white ;font-size: 15px;margin-top: 20px;" id="btn_changeuserpwd">修改密码</button>
+			</form>
+		</div>
+
 	</body>
 
 </html>

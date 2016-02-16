@@ -20,171 +20,155 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-		mui.init();
-		mui.plusReady(function(){
-			var allIdeaPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList";
-			var byTeacherPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
-			var intrivlIdea=document.getElementById("intrivlIdea");
-			var web=plus.webview.currentWebview();
-			var loadIdea=document.getElementById("loadIdea");
-			var gengduo=document.getElementById("gengduo");
-			var teacherId=web.teacherId;
-			var currentPage=1;
-			var totlePage;
-			loadIdea.style.display='block';
-			if(teacherId>0){
-				findByTesacherId(currentPage);
-			}else{
-				findAll(currentPage);
-			}
-			
-			//加载更多
-			gengduo.addEventListener("tap",function(){
-				if(currentPage<totlePage){
-					if(teacherId>0){
-						findByTesacherId(++currentPage);
-					}else{
-						findAll(++currentPage);
-					}
+			mui.init();
+			mui.plusReady(function() {
+				var allIdeaPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList";
+				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
+				var intrivlIdea = document.getElementById("intrivlIdea");
+				var web = plus.webview.currentWebview();
+				var loadIdea = document.getElementById("loadIdea");
+				var gengduo = document.getElementById("gengduo");
+				var teacherId = web.teacherId;
+				var currentPage = 1;
+				var totlePage;
+				loadIdea.style.display = 'block';
+				if (teacherId > 0) {
+					findByTesacherId(currentPage);
+				} else {
+					findAll(currentPage);
 				}
-			})
-			
-			
-			//获取全部的投资观点
-		   function findAll(p){
-		   	var ideaStr=intrivlIdea.innerHTML;
-			mui.ajax(allIdeaPath,{
-				data:{
-					whichPage:1,
-					page:p
-				}, 
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-					loadIdea.style.display='none';
-					totlePage=data[0].totlePage;
-					for(var i=0;i<data.length;i++){
-						var body=data[i].bodys.replace(/<[^>]+>/g,"");
-					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
-                           +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
-                           +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
-                           +"<a><p style='height: 40px;overflow: hidden;'>"+body+"</p></a></div>"
-                        +"<div class='img_read'> <span><i><img src='image/hits.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
+				//加载更多
+				gengduo.addEventListener("tap", function() {
+					if (currentPage < totlePage) {
+						if (teacherId > 0) {
+							findByTesacherId(++currentPage);
+						} else {
+							findAll(++currentPage);
+						}
 					}
-					intrivlIdea.innerHTML=ideaStr;
-					if(currentPage<totlePage){
-						gengduo.style.display='block';
-					}else{
-						gengduo.style.display='none';
-					}
-					mui("#intrivlIdea").on("tap",".item",function(){
-						var id=this.getAttribute("id");
-						mui.openWindow({
-							url:"ideaDetail.html",
-							id:"ideaDetail",
-							extras:{
-								ideaId:id
+				})
+				//获取全部的投资观点
+				function findAll(p) {
+					var ideaStr = intrivlIdea.innerHTML;
+					mui.ajax(allIdeaPath, {
+						data: {
+							whichPage: 1,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loadIdea.style.display = 'none';
+							totlePage = data[0].totlePage;
+							for (var i = 0; i < data.length; i++) {
+								var body = data[i].bodys.replace(/<[^>]+>/g, "");
+								ideaStr = ideaStr + "<div id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + data[i].insertDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
 							}
-						})
-					})
-					
-				},
-				error: function(e){
-				}
-			})
-		   }
-		   
-		   //根据讲师ID获取投资观点
-		   function findByTesacherId(p){
-		   	 var ideaStr=intrivlIdea.innerHTML;
-			mui.ajax(byTeacherPath,{
-				data:{
-					teacherId:teacherId,
-					page:p 
-				},       
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-					totlePage=data[0].totlePage;
-					 loadIdea.style.display='none';
-					for(var i=0;i<data.length;i++){
-					  var body=data[i].bodys.replace(/<[^>]+>/g,"");
-					  ideaStr=ideaStr+"<div id="+data[i].id+" class='item'> <div class='tit'><a><span><img src="+data[i].headFace+"></span></a>"
-                           +" <a  style='color:#333'><h4>"+data[i].nickName+"&nbsp;<i><img src='image/v1.png'></i></h4><em>"+data[i].insertDate+"</em>"
-                           +"</a> <p>"+data[i].level+"</p></div> <div class='newstit'> <h3><a>"+data[i].title+"</a></h3>"
-                           +"<a><p style='height: 40px;overflow: hidden;'>"+body+"</p></a></div>"
-                        +"<div class='img_read'> <span><i><img src='image/hits.png'></i><em>"+data[i].hits+"</em></span> </div></div>";
-					}
-					intrivlIdea.innerHTML=ideaStr;
-					if(currentPage<totlePage){
-						gengduo.style.display='block';
-					}else{
-						gengduo.style.display='none';
-					}
-					mui("#intrivlIdea").on("tap",".item",function(){
-						var id=this.getAttribute("id");
-						mui.openWindow({
-							url:"ideaDetail.html",
-							id:"ideaDetail",
-							extras:{
-								ideaId:id
+							intrivlIdea.innerHTML = ideaStr;
+							if (currentPage < totlePage) {
+								gengduo.style.display = 'block';
+							} else {
+								gengduo.style.display = 'none';
 							}
-						})
+							mui("#intrivlIdea").on("tap", ".item", function() {
+								var id = this.getAttribute("id");
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: id
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+						},
+						error: function(e) {}
 					})
-				},
-				error: function(e){
+				}
+				//根据讲师ID获取投资观点
+				function findByTesacherId(p) {
+					var ideaStr = intrivlIdea.innerHTML;
+					mui.ajax(byTeacherPath, {
+						data: {
+							teacherId: teacherId,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							totlePage = data[0].totlePage;
+							loadIdea.style.display = 'none';
+							for (var i = 0; i < data.length; i++) {
+								var body = data[i].bodys.replace(/<[^>]+>/g, "");
+								ideaStr = ideaStr + "<div id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + data[i].insertDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+							}
+							intrivlIdea.innerHTML = ideaStr;
+							if (currentPage < totlePage) {
+								gengduo.style.display = 'block';
+							} else {
+								gengduo.style.display = 'none';
+							}
+							mui("#intrivlIdea").on("tap", ".item", function() {
+								var id = this.getAttribute("id");
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: id
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+						},
+						error: function(e) {}
+					})
 				}
 			})
-		   }
-			
-			
-		})
-		
 		</script>
-		
-		
+
 	</head>
 
 	<body>
-			<div class="wrapper">
-				<!------------头部--------------->
+		<div class="wrapper">
+			<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1" style="margin-top:0.2rem;">
-							<span>投资观点</span>
-						</div>
+			<header class="header">
+				<div class="head">
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-				</header>
-
-				<!------------居中部分---------->
-				<!------------热门观点开始---------->
-				<div class="tzgdlist nei_top" data-tid="0" id="intrivlIdea">
-					<!------------------------->
-
+					<div class="logo1" style="margin-top:0.2rem;">
+						<span>投资观点</span>
 					</div>
-					<!------------------------->
 				</div>
-				
-				
-				<div class="linkmore">
-					<a id="gengduo" style="color: #8D8D8D;display: none;">更多>></a>
-				</div>
-				
-				
-				<div style="text-align: center;margin-top: 80%;display: none;" id="loadIdea">
-					<img src="image/loading-0.gif" />
-				</div>
-				
-				
-				<!--------热门观点结束---------->
+			</header>
 
-				<!------------底部定位层---------->
+			<!------------居中部分---------->
+			<!------------热门观点开始---------->
+			<div class="tzgdlist nei_top" data-tid="0" id="intrivlIdea">
+				<!------------------------->
+
+			</div>
+			<!------------------------->
+		</div>
+
+		<div class="linkmore">
+			<a id="gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+		</div>
+
+		<div style="text-align: center;margin-top: 80%;display: none;" id="loadIdea">
+			<img src="image/loading-0.gif" />
+		</div>
+
+		<!--------热门观点结束---------->
+
+		<!------------底部定位层---------->
 
 	</body>
 

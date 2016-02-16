@@ -16,122 +16,117 @@
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
-			var commPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
-			var addExchangePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/addExChange";
-			var commLay=document.getElementById("commLay");
-			var today=document.getElementById("today");
-			var communit=document.getElementById("communit"); 
-			var commTitle=document.getElementById("commTitle");
-			var buttons=document.getElementById("button");
-			var getMore=document.getElementById("getMore-comm");
-			var textareas=document.getElementById("textarea");
-			var web=plus.webview.currentWebview();
-			var title=web.title;
-			var liveId=web.liveId;
-			commTitle.innerHTML=title+"直播室";
-			//获取评论列表
-			var commStr="";
-			mui.ajax(commPath,{
-				data:{
-					liveId:liveId,
-					page:1
-				},
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-					for(var i=0;i<data.length;i++){
-						commStr=commStr+"<div class='item' style='margin-left:8px;'>"
-					+"<div class='userhead'><img src="+isNull(data[i].userLogo)+"></div>"
-					+"<div class='content'><div class='u_name_face'><span class='u_name'>"+data[i].userName+"</span><span class='u_date'>"+data[i].insertDate+"</span></div>"
-					+"<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>"
-					+"</div><div class='bodys'>"+data[i].bodys+"</div><div class='huifu_185'></div></div></div>";
-					}
-					commLay.innerHTML=commStr;
-					
-				},
-				error: function(e){
-				}
-			})
-			today.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"txtLive.html",
-					id:"txtLive",
-					extras:{
-						liveId:liveId,
-						title:title
-					}
-				})
-			})
-			communit.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"communite.html",
-					id:"communite"
-				})
-			})
-			
-			//提交评论信息
-			buttons.addEventListener("tap",function(){
-				var userId=plus.storage.getItem("userId");
-				if(userId<=0){
-					mui.openWindow({
-						url:"login.html",
-						id:"login"
-					})
-					return ;
-				}
-				var textareas_val=textareas.value;
-				if(textareas_val.length<=0){
-					plus.nativeUI.toast("交流信息不能为空");
-					return ;
-				}
-				addExchangeFN(userId,textareas_val);
-			})
-			
-			function isNull(str){
-				if(str.length<=0){
-					str="image/head.png"
-				}
-				return str;
-			}
-			
-			//甜添加交流信息
-			function addExchangeFN(uId,body){
-				mui.ajax(addExchangePath,{
-					data:{
-						userId:uId,
-					    liveId:liveId,
-					    bodys:body
+				var commPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
+				var addExchangePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addExChange";
+				var commLay = document.getElementById("commLay");
+				var today = document.getElementById("today");
+				var communit = document.getElementById("communit");
+				var commTitle = document.getElementById("commTitle");
+				var buttons = document.getElementById("button");
+				var getMore = document.getElementById("getMore-comm");
+				var textareas = document.getElementById("textarea");
+				var web = plus.webview.currentWebview();
+				var title = web.title;
+				var liveId = web.liveId;
+				commTitle.innerHTML = title + "直播室";
+				//获取评论列表
+				var commStr = "";
+				mui.ajax(commPath, {
+					data: {
+						liveId: liveId,
+						page: 1
 					},
-					dataType:"json",
-					type:"get",
-					timeout:10000,
-					success: function(data){
-						if(data.ret_code==0){
-							plus.nativeUI.toast("提交交流信息成功");
-						}else{
-							plus.nativeUI.toast("提交交流信息失败");
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						for (var i = 0; i < data.length; i++) {
+							commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img src=" + isNull(data[i].userLogo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name'>" + data[i].userName + "</span><span class='u_date'>" + data[i].insertDate + "</span></div>" + "<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>" + "</div><div class='bodys'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
 						}
+						commLay.innerHTML = commStr;
 					},
-					error: function(e){
-						
-					}
+					error: function(e) {}
 				})
-			}
-			
-			
-				
+				today.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "txtLive.html",
+						id: "txtLive",
+						extras: {
+							liveId: liveId,
+							title: title
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
+				communit.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "communite.html",
+						id: "communite",
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
+				//提交评论信息
+				buttons.addEventListener("tap", function() {
+					var userId = plus.storage.getItem("userId");
+					if (userId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
+						})
+						return;
+					}
+					var textareas_val = textareas.value;
+					if (textareas_val.length <= 0) {
+						plus.nativeUI.toast("交流信息不能为空");
+						return;
+					}
+					addExchangeFN(userId, textareas_val);
+				})
+
+				function isNull(str) {
+					if (str.length <= 0) {
+						str = "image/head.png"
+					}
+					return str;
+				}
+				//甜添加交流信息
+				function addExchangeFN(uId, body) {
+					mui.ajax(addExchangePath, {
+						data: {
+							userId: uId,
+							liveId: liveId,
+							bodys: body
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								plus.nativeUI.toast("提交交流信息成功");
+							} else {
+								plus.nativeUI.toast("提交交流信息失败");
+							}
+						},
+						error: function(e) {
+						}
+					})
+				}
 			})
 		</script>
-		
+
 		<style type="text/css">
-			#textarea{
+			#textarea {
 				height: 2rem;
 			}
-			
 		</style>
-		
-		
+
 	</head>
 
 	<body>
@@ -157,10 +152,7 @@
 				<a id="communit" class="def">交流区</a>
 			</div>
 			<!--------名家问答开始---------->
-			<div class="livetalk_list" id="commLay"  >
-
-				
-				
+			<div class="livetalk_list" id="commLay">
 
 				<!-------------->
 

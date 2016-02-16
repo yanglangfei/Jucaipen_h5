@@ -64,9 +64,7 @@
 		"Push": {
 			"description": "管理推送消息插件"
 		},
-		"Storage": {
-			"description": "管理应用本地数据"
-		},
+		"Storage": {},
 
 		"Uploader": {
 			"description": "管理文件上传任务"
@@ -193,10 +191,7 @@
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
 			},
-			"orientation": [
-				"portrait-primary",
-				"portrait-secondary"
-			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": ["portrait-primary","portrait-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -259,7 +254,7 @@
 					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
 					"xxhdpi": ""
 				}
-			}
+			},"debug":false
 		}
 	},
 	"dependencies": {
@@ -279,15 +274,16 @@
 					"image/classnormal.png",
 					"css/mui.min.css",
 					"fonts/mui.ttf",
-					"image/licaipress.png"
+					"image/licaipress.png",
+					"image/loading-0.gif",
+					"index.html",
+					"liveList.html",
+					"famousDish.html"
 				],
 				"refer": [
 					"trhreeBoard.html",
-					"famousDish.html",
 					"newsDetail.html",
-					"index.html",
 					"attention.html",
-					"liveList.html",
 					"login.html",
 					"vipcenter.html"
 				],
@@ -296,7 +292,17 @@
 			"login.html": {
 				"href": "login.html",
 				"priority": 1,
-				"resources": [],
+				"resources": [
+					"image/loginsina_unpress.png",
+					"image/loginweixins.png",
+					"image/loginqq_unpress.png",
+					"image/into_back.png",
+					"css/tuch.css",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css",
+					"fonts/mui.ttf"
+				],
 				"refer": []
 			},
 			"regin.html": {
@@ -321,15 +327,32 @@
 					"image/index.png",
 					"image/v1.png",
 					"image/into_back.png",
-					"image/good.png"
+					"image/good.png",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css"
 				],
-				"refer": []
+				"refer": [
+					"login.html"
+				]
 			},
 			"intrvlIdea.html": {
 				"href": "intrvlIdea.html",
 				"priority": 2,
-				"resources": [],
-				"refer": []
+				"resources": [
+					"image/v1.png",
+					"image/into_back.png",
+					"image/hits.png",
+					"css/mingjia.css",
+					"image/loading-0.gif",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css",
+					"css/tuch.css"
+				],
+				"refer": [
+					"ideaDetail.html"
+				]
 			},
 			"famousDish.html": {
 				"href": "famousDish.html",
@@ -352,12 +375,20 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"index.html",
-					null
+					null,
+					"attention.html",
+					"intrvlIdea.html"
 				],
 				"refer": [
 					"ideaDetail.html",
 					"dishList.html",
-					"answerList.html"
+					"answerList.html",
+					"liveRoom.html",
+					"trhreeBoard.html",
+					"teacherList.html",
+					"teacherDetail.html",
+					"askQuestion.html",
+					"login.html"
 				]
 			},
 			"index.html": {
@@ -378,18 +409,19 @@
 					"image/jucai.png",
 					"css/style.css",
 					"image/licainorma.png",
-					"famousDish.html"
+					"famousDish.html",
+					"trhreeBoard.html",
+					"liveList.html"
 				],
 				"refer": [
-					"trhreeBoard.html",
 					"login.html",
 					"intrvlIdea.html",
 					"index.html",
 					"attention.html",
 					"newsDetail.html",
-					"liveList.html",
 					"historyLive.html",
-					"ideaDetail.html"
+					"ideaDetail.html",
+					"liveRoom.html"
 				],
 				"priority": 0
 			},
@@ -422,7 +454,8 @@
 					"css/style.css",
 					"css/mui.min.css",
 					"fonts/mui.ttf",
-					"css/tuch.css"
+					"css/tuch.css",
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"newsDetail.html"
@@ -435,10 +468,23 @@
 				"resources": [
 					"image/fincepress.png",
 					"image/loading-0.gif",
-					"image/classnormal.png"
+					"image/classnormal.png",
+					"image/licainorma.png",
+					"image/unlogin.png",
+					"image/livenormal.png",
+					"image/jucai.png",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css",
+					"image/indexnormal.png",
+					"css/tuch.css",
+					"famousDish.html",
+					"liveList.html"
 				],
 				"refer": [
-					"famousDish.html"
+					"newsDetail.html",
+					"login.html",
+					"news/moreNews.html"
 				]
 			},
 			"liveRoom.html": {
@@ -449,7 +495,8 @@
 					"css/style.css",
 					"image/guan.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/into_back.png"
 				],
 				"priority": 13,
 				"refer": []
@@ -461,10 +508,22 @@
 					"image/licainorma.png",
 					"image/livepress.png",
 					"image/indexnormal.png",
-					"image/loading-0.gif"
+					"image/loading-0.gif",
+					"image/classnormal.png",
+					"image/unlogin.png",
+					"image/jucai.png",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"image/fincenormal.png",
+					"css/style.css",
+					"attention.html",
+					"trhreeBoard.html",
+					"index.html"
 				],
 				"refer": [
-					"liveRoom.html"
+					"liveRoom.html",
+					"login.html",
+					"vipcenter.html"
 				]
 			},
 			"completeInfo.html": {
@@ -609,14 +668,46 @@
 			"askQuestion.html": {
 				"href": "askQuestion.html",
 				"priority": 9,
-				"resources": [],
-				"refer": []
+				"resources": [
+					"css/mingjia.css",
+					"js/mui.min.js",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"css/style.css",
+					"css/tuch.css"
+				],
+				"refer": [
+					"login.html"
+				]
 			},
 			"teacherDetail.html": {
 				"href": "teacherDetail.html",
 				"priority": 11,
-				"resources": [],
-				"refer": []
+				"resources": [
+					"css/mingjia.css",
+					"image/tb_gz.png",
+					"css/style.css",
+					"image/tb_manyi.png",
+					"image/into_next.png",
+					"image/remarks.png",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"image/into_back.png",
+					"image/v1.png",
+					"image/good.png",
+					"image/zixun.png",
+					"css/tuch.css",
+					"image/guanzhu.png"
+				],
+				"refer": [
+					"fansList.html",
+					"intrvlIdea.html",
+					"teacherIntroduce.html",
+					"answerList.html",
+					"txtLive.html",
+					"askQuestion.html",
+					"choseQuace.html"
+				]
 			},
 			"teacherList.html": {
 				"href": "teacherList.html",
@@ -628,7 +719,12 @@
 					"css/style.css",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/tb_gz.png",
+					"image/touzi.png",
+					"image/tb_manyi.png",
+					"image/guanzhu.png",
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"teacherDetail.html"
@@ -666,7 +762,8 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"css/app.css",
-					"image/v1.png"
+					"image/v1.png",
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"purchAndSign.html",
@@ -699,7 +796,13 @@
 					"css/style.css",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"js/city.data.js",
+					"css/mui.picker.css",
+					"js/city.data-3.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -739,7 +842,8 @@
 					"css/style.css",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/loading-0.gif"
 				],
 				"priority": 5,
 				"refer": []
@@ -765,7 +869,8 @@
 					"css/style.css",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"newsDetail.html"
@@ -802,8 +907,24 @@
 			"vipcenter.html": {
 				"href": "vipcenter.html",
 				"priority": 19,
-				"resources": [],
-				"refer": []
+				"resources": [
+					"image/binds.png",
+					"image/myorder.png",
+					"image/personpush.png",
+					"image/remarks.png",
+					"js/mui.min.js",
+					"image/infos.png",
+					"image/pwd.png",
+					"fonts/mui.ttf",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"css/style.css",
+					"image/vips.png",
+					"css/tuch.css"
+				],
+				"refer": [
+					"userInfo.html"
+				]
 			},
 			"orderInfo.html": {
 				"href": "orderInfo.html",
@@ -833,23 +954,16 @@
 				"image/thumb.png",
 				"image/find.png",
 				"image/dur.png",
-				"image/into_next.png",
 				"image/logo_wechatfavorite.png",
 				"image/zhuanjia.9.png",
-				"image/personpush.png",
-				"image/remarks.png",
 				"image/askinfo.png",
 				"image/skyblue_actionbar_back_btn.png",
 				"js/layer.js",
-				"image/hits.png",
 				"js/mui.js",
 				"image/jiahao.png",
 				"image/delect.png",
-				"image/guanzhu.png",
 				"image/dup.png",
-				"image/loginsina_unpress.png",
 				"image/ktq.png",
-				"image/tb_manyi.png",
 				"image/orders.png",
 				"css/mui.css",
 				"image/skyblue_editpage_image_bg.9.png",
@@ -859,14 +973,10 @@
 				"image/ktn.png",
 				"image/shares_panel_to_qq.png",
 				"image/logo_qq.png",
-				"image/loginqq_unpress.png",
 				"image/load_video.png",
-				"image/vips.png",
 				"image/reply_normal.png",
 				"image/noattention.png",
-				"image/tb_gz.png",
 				"image/return_last.png",
-				"image/myorder.png",
 				"image/pay_bg.png",
 				"image/skyblue_editpage_close.png",
 				"image/response.png",
@@ -881,18 +991,14 @@
 				"image/logo_qzone.png",
 				"image/jianpan.png",
 				"image/unpress_stars.png",
-				"image/touzi.png",
 				"image/pic.png",
 				"image/xlistview_arrow.png",
 				"js/jquery-1.11.0.js",
 				"image/shijian.jpg",
 				"image/logo_tencentweibo.png",
 				"image/sex_women.png",
-				"image/zixun.png",
 				"image/loginqq_press.png",
-				"image/loginweixins.png",
 				"image/huanyings.png",
-				"image/infos.png",
 				"image/logo_shortmessage.png",
 				"image/skyblue_platform_checked.png",
 				"image/licainormal.png",
@@ -901,12 +1007,10 @@
 				"css/lay.css",
 				"image/delete.png",
 				"image/loginsina_press.png",
-				"image/binds.png",
 				"image/ic_launcher.png",
 				"image/press_stars.png",
 				"image/skyblue_editpage_divider.9.png",
 				"image/main.gif",
-				"image/pwd.png",
 				"image/full_normal.png",
 				"vipService.html",
 				"startPage.html",

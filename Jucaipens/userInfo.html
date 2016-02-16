@@ -104,12 +104,14 @@
 					})
 				}
 				//编辑资料按钮
-				editInfo.addEventListener("tap", function() {});
-				(
-					function($, doc) {
+				editInfo.addEventListener("tap", function() {
+					
+					
+				});
+				(function($, doc) {
 						$.init();
 						$.ready(function() {
-							var cityPicker = new $.PopPicker({
+							var cityPicker3 = new $.PopPicker({
 								layer: 3
 							});
 							cityPicker.setData(cityData3);
@@ -123,7 +125,7 @@
 								});
 							});
 						})
-					}
+				}  
 				)
 				
 				//选择性别
@@ -134,7 +136,13 @@
 						title:"选择性别",
 						cancel:"取消"
 					},function(e){
-						
+						if(e.index==1){
+							//男
+							sex.innerText='男';
+						}else if(e.index==2){
+							//女
+							sex.innerText='女';
+						}
 					})
 				})
 				
@@ -155,10 +163,14 @@
 			}
 			
 			.mui-icon-image {
-				text-align: center;
 				margin-top: 60px;
-				margin-left: 50%;
-				margin: 0, auto;
+				margin-left: 40%;
+				border-radius: 50px;
+			}
+			.mui-content .items{
+				margin-left: 10px;
+				margin-right: 10px;
+				margin-top: 10px;
 			}
 		</style>
 	</head>
@@ -178,60 +190,41 @@
 
 		<div class="mui-content">
 			<div>
-				<img height="50px" width="50px" class="mui-icon-image" id="userLogo" style="border-radius: 50px;" />
+				<img height="50px" width="50px" class="mui-icon-image" id="userLogo" src="image/head.png" />
 				<br />
 			</div>
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
-				<nobr>
-					<span> 昵称：</span>
-					<input type="text" style="width: 300px;margin-left: 5px;" id="name" />
-				</nobr>
+			<div class="items">
+					<span style="line-height: 50px;"> 昵&nbsp;称：</span>
+					<input type="text" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="name" />
 			</div>
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 10px;">
-				<nobr>
-					<span> 性别：</span> 
-					<button id='sex' type='button' style="display: inline;width: 300px;margin-left: 5px;padding: 10px;">选择性别</button>
-
-				</nobr>
+			<div  class="items">
+					<span style="line-height: 50px;"> 性&nbsp;别：</span> 
+					<button id='sex'  style="display: inline;width: 80%;padding: 10px;border: solid #E0E0E0 1px;border-radius: 5px;">选择性别</button>
 
 			</div>
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-				<nobr>
-					<span>生日:</span>
-					<input type="date" value="2010-12-22" style="width: 300px;margin-left: 10px;" id="birth" />
-				</nobr>
+			<div  class="items">
+					<span style="line-height: 50px;"> 生&nbsp;日：</span> 
+					<input type="date"  style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="birth" />
 			</div>
 
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-				<nobr>
-					<span>电话：</span>
-					<input type="tel" style="width: 300px;margin-left: 5px;" id="tel" />
-				</nobr>
-
+			<div  class="items">
+					<span style="line-height: 50px;"> 电&nbsp;话：</span> 
+					<input type="tel" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="tel" />
 			</div>
 
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-				<nobr>
-					<span>Email：</span>
-					<input type="email" style="width: 300px;margin-left: 5px;" id="email" />
-				</nobr>
-
+			<div  class="items">
+					<span> Email：</span> 
+					<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="email" />
 			</div>
 
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-				<nobr>
-					<span>地址：</span>
-					<button id='address' type='button' style="display: inline;width: 300px;margin-left: 5px;padding: 10px;">选择城市</button>
-				
-
-				</nobr>
-
+			<div  class="items">
+					<span style="line-height: 50px;">地&nbsp;址：</span>
+					<button id='address' type='button' style="display: inline;width: 80%;padding: 10px;border: solid #E0E0E0 1px;border-radius: 5px;">选择城市</button>
 			</div>
 
-			<div style="margin-left: 15px;margin-right: 15px;margin-top: 20px;">
-				<span>简介：</span>
-				<input type="text" style="width: 300px;height: 100px;margin-left: 10px;" id="introduce" />
-
+			<div  class="items">
+				<span style="float: left;line-height: 100px;">简&nbsp;介：&nbsp;</span>
+				<textarea  style="width: 80%;min-height: 100px;border: solid #E0E0E0 1px;border-radius: 5px;" id="introduce" ></textarea>
 			</div>
 
 			<!--

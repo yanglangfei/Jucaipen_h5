@@ -10,179 +10,159 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-			<!--标准mui.css-->
+		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-		mui.init();
-		mui.plusReady(function(){
-			var web=plus.webview.currentWebview();
-			var teacherId=web.teacherId;
-			var answerList=document.getElementById("answerList");
-			var allQuestionPath='http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion';
-			var byTeacherPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/answerForTeacher";
-			var intoAnswer=document.getElementById("intoAnswer");
-			var intoAsk=document.getElementById("intoAsk");
-			var getMore=document.getElementById("da_gengduo");
-			var totlePage;
-			var currentPage=1;
-			if(teacherId>0){
-				//根据讲师ID获取回答列表
-				findByTeacherId();
-			}else{
-				//获取所有的回答列表
-				findAll();
-			}
-			
-			
-			function findAll(){
-			//获取所有的最新回答信息
-			var questionStr="";
-			mui.ajax(allQuestionPath,{
-				data:{
-					whichPage:1 ,
-					page:1
-				},
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-				  for(var i=0;i<data.length;i++){
-				  	totlePage=data[i].totlePage;
-				  	questionStr=questionStr+"<div class='item' style='width:100%;'><div class='huida'><a><span>"
-                            +"<img src="+data[i].headFace+"></span></a><div class='name'>"
-						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='image/V1.png'></i></h4>"
-						+"</a><em>"+data[i].level+"</em></div><a class='ask'>咨询</a></div><div class='wen'>"
-					+"<span> <img src='image/askInfo.png'></span><p><a>"+data[i].askName+":</a>"
-						+"<a style='color: #666'>"+data[i].askBody+"</a></p><em>已回答</em></div>"
-				+"<div class='huida_body'>"+data[i].answerBody+"</div></div>"
-				  }
-				  answerList.innerHTML=questionStr;
-				    if(currentPage<totlePage){
-				  	getMore.style.display='block';
-				  }else{
-				  	getMore.style.display='none';
-				  }
-				},
-				error: function(e){
-					
+			mui.init();
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var teacherId = web.teacherId;
+				var answerList = document.getElementById("answerList");
+				var allQuestionPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion';
+				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/answerForTeacher";
+				var intoAnswer = document.getElementById("intoAnswer");
+				var intoAsk = document.getElementById("intoAsk");
+				var getMore = document.getElementById("da_gengduo");
+				var totlePage;
+				var currentPage = 1;
+				if (teacherId > 0) {
+					//根据讲师ID获取回答列表
+					findByTeacherId();
+				} else {
+					//获取所有的回答列表
+					findAll();
 				}
-			})
-			}
-			
-			//获取更多
-			getMore.addEventListener("tap",function(){
-				if(currentPage<totlePage){
-					if(teacherId>0){
-						findByTeacherId(++currentPage);
-					}else{
-						findAll(++currentPage);
-					}
-					
+
+				function findAll() {
+					//获取所有的最新回答信息
+					var questionStr = "";
+					mui.ajax(allQuestionPath, {
+						data: {
+							whichPage: 1,
+							page: 1
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								questionStr = questionStr + "<div class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/V1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask'>咨询</a></div><div class='wen'>" + "<span> <img src='image/askInfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+							}
+							answerList.innerHTML = questionStr;
+							if (currentPage < totlePage) {
+								getMore.style.display = 'block';
+							} else {
+								getMore.style.display = 'none';
+							}
+						},
+						error: function(e) {
+						}
+					})
 				}
-			})
-			
-			function findByTeacherId(){
-			//获取所有的最新回答信息
-			var questionStr="";
-			mui.ajax(byTeacherPath,{
-				data:{
-					teacherId:teacherId ,
-				},
-				type:"get",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-				  for(var i=0;i<data.length;i++){
-				  	totlePage=data[i].totlePage;
-				  	questionStr=questionStr+"<div class='item'><div class='huida'><a><span>"
-                            +"<img src="+data[i].headFace+"></span></a><div class='name'>"
-						+"<a><h4>"+data[i].nickName+"&nbsp;<i><img src='images/v.png'></i></h4>"
-						+"</a><em>"+data[i].level+"</em></div><a class='ask'>咨询</a></div><div class='wen'>"
-					+"<span> <img src='image/askInfo.png'></span><p><a>"+data[i].askName+":</a>"
-						+"<a style='color: #666'>"+data[i].askBody+"</a></p><em>已回答</em></div>"
-				+"<div class='huida_body'>"+data[i].answerBody+"</div></div>"
-				  }
-				  answerList.innerHTML=questionStr;
-				  if(currentPage<totlePage){
-				  	getMore.style.display='block';
-				  }else{
-				  	getMore.style.display='none';
-				  }
-				
-				},
-				error: function(e){
-					console.log("err");
-				}
-			})
-			}
-			
-			intoAnswer.addEventListener("tap",function(){
-				console.log("me");
-				mui.openWindow({
-					url:"answerList.html",
-					id:"answerList"
-				})
-			})
-			
-			intoAsk.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"askList.html",
-					id:"askList",
-					extras:{
-						teacherId:teacherId
+				//获取更多
+				getMore.addEventListener("tap", function() {
+					if (currentPage < totlePage) {
+						if (teacherId > 0) {
+							findByTeacherId(++currentPage);
+						} else {
+							findAll(++currentPage);
+						}
 					}
 				})
+
+				function findByTeacherId() {
+					//获取所有的最新回答信息
+					var questionStr = "";
+					mui.ajax(byTeacherPath, {
+						data: {
+							teacherId: teacherId,
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								questionStr = questionStr + "<div class='item'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='images/v.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask'>咨询</a></div><div class='wen'>" + "<span> <img src='image/askInfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+							}
+							answerList.innerHTML = questionStr;
+							if (currentPage < totlePage) {
+								getMore.style.display = 'block';
+							} else {
+								getMore.style.display = 'none';
+							}
+						},
+						error: function(e) {
+							console.log("err");
+						}
+					})
+				}
+				intoAnswer.addEventListener("tap", function() {
+					console.log("me");
+					mui.openWindow({
+						url: "answerList.html",
+						id: "answerList",
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
+				intoAsk.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "askList.html",
+						id: "askList",
+						extras: {
+							teacherId: teacherId
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
 			})
-			
-			
-			
-			
-		
-			
-		})
-		
 		</script>
-		
+
 	</head>
 
 	<body>
 
-			<div class="wrapper">
-				<!------------头部--------------->
+		<div class="wrapper">
+			<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1" style="margin-top:0.2rem;">
-							<span>名家问答</span>
-						</div>
+			<header class="header">
+				<div class="head">
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-				</header>
+					<div class="logo1" style="margin-top:0.2rem;">
+						<span>名家问答</span>
+					</div>
+				</div>
+			</header>
 
-				<!------------居中部分---------->
-				<div class="ask_type">
-					<a id="intoAnswer" class="def">最新回答</a>
-					<a id="intoAsk">最新提问</a>
-				</div>
-				<!--------名家问答开始---------->
-				<div class="mingjiaask_list " data-tid="0" id="answerList">
-					
-				</div>
-				<!--------名家问答结束---------->
-
-				<div class="nullList">
-					<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>
-				</div>
-				<div class="linkmore">
-					<a id="da_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
-				</div>
-
-				<!------------底部定位层---------->
+			<!------------居中部分---------->
+			<div class="ask_type">
+				<a id="intoAnswer" class="def">最新回答</a>
+				<a id="intoAsk">最新提问</a>
+			</div>
+			<!--------名家问答开始---------->
+			<div class="mingjiaask_list " data-tid="0" id="answerList">
 
 			</div>
+			<!--------名家问答结束---------->
+
+			<div class="nullList">
+				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>
+			</div>
+			<div class="linkmore">
+				<a id="da_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+			</div>
+
+			<!------------底部定位层---------->
+
+		</div>
 
 	</body>
 

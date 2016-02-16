@@ -15,80 +15,74 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-		  mui.init();
-		  mui.plusReady(function(){
-		  	var teacherinfo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
-		  	var teacherLay=document.getElementById("teacherLay");
-		  	var loadTeacher=document.getElementById("loadTeacher");
-		  	var currentPage=1;
-		  	var totlePage;
-		  	var find_gengduo=document.getElementById("find_gengduo");
-		  	loadTeacher.style.display='block';
-		  	findAllTeacher(currentPage);
-		  	
-		  	//加载更多数据
-		  	find_gengduo.addEventListener("tap",function(){
-		  		if(currentPage<totlePage){
-		  			findAllTeacher(++currentPage);
-		  		}
-		  	})
-		  	
-		  	
-		  	//获取讲师列表信息
-		  	function findAllTeacher(p){
-		  	var teacherStr=teacherLay.innerHTML;
-		  	mui.ajax(teacherinfo,{
-		  		data:{
-		  			whichPage:1,
-		  			page:p
-		  		},
-		  		type:"get",
-		  		dataType:"json",
-		  		timeout:10000,
-		  		success: function(data){
-		  			loadTeacher.style.display='none';
-		  			totlePage=data[0].totlePage;
-		  			for(var i=0;i<data.length;i++){
-		  				var intro= data[i].introduce.replace(/<[^>]+>/g,"");  		  				
-		  				teacherStr=teacherStr+"<div class='item' id="+data[i].id+">"
-					+"<div class='t_head'><a><span><img src="+data[i].headFace+"></span></a>"
-					+"	<h4><a id='zx'>咨询</a></h4></div><div class='t_name'><h3><a>"+data[i].nickName+"</a><i></i></h3>"
-					+"<h4>"+data[i].level+"</h4><a><p style='height: 40px;overflow: hidden;'>"+intro+"</p>"
-						+"</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;1</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;24</em></span></p>"
-					+"</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
-		  			}
-		  			teacherLay.innerHTML=teacherStr;
-		  			if(currentPage<totlePage){
-		  				find_gengduo.style.display='block';
-		  			}else{
-		  				find_gengduo.style.display='none';
-		  			}
-		  			//进入讲师详细界面
-		  			mui("#teacherLay").on("tap",".item",function(){
-		  				var tId=this.getAttribute("id");
-		  				mui.openWindow({
-		  					url:"teacherDetail.html",
-		  					id:"teacherDetail",
-		  					extras:{
-		  						teacherId:tId
-		  					}
-		  				})
-		  			})
-		  			if(data.length>0){
-		  				var zx=document.getElementById("zx");
-		  				zx.addEventListener("tap",function(){
-		  					var id=this.getAttribute("id");
-		  					console.log(id+"");
-		  				})
-		  			}
-		  		},
-		  		error: function(e){
-		  		}})}
-		  	
-		  })
+			mui.init();
+			mui.plusReady(function() {
+				var teacherinfo = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
+				var teacherLay = document.getElementById("teacherLay");
+				var loadTeacher = document.getElementById("loadTeacher");
+				var currentPage = 1;
+				var totlePage;
+				var find_gengduo = document.getElementById("find_gengduo");
+				loadTeacher.style.display = 'block';
+				findAllTeacher(currentPage);
+				//加载更多数据
+				find_gengduo.addEventListener("tap", function() {
+					if (currentPage < totlePage) {
+						findAllTeacher(++currentPage);
+					}
+				})
+				//获取讲师列表信息
+				function findAllTeacher(p) {
+					var teacherStr = teacherLay.innerHTML;
+					mui.ajax(teacherinfo, {
+						data: {
+							whichPage: 1,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loadTeacher.style.display = 'none';
+							totlePage = data[0].totlePage;
+							for (var i = 0; i < data.length; i++) {
+								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
+								teacherStr = teacherStr + "<div class='item' id=" + data[i].id + ">" + "<div class='t_head'><a><span><img src=" + data[i].headFace + "></span></a>" + "	<h4><a id='zx'>咨询</a></h4></div><div class='t_name'><h3><a>" + data[i].nickName + "</a><i></i></h3>" + "<h4>" + data[i].level + "</h4><a><p style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;1</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;24</em></span></p>" + "</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
+							}
+							teacherLay.innerHTML = teacherStr;
+							if (currentPage < totlePage) {
+								find_gengduo.style.display = 'block';
+							} else {
+								find_gengduo.style.display = 'none';
+							}
+							//进入讲师详细界面
+							mui("#teacherLay").on("tap", ".item", function() {
+								var tId = this.getAttribute("id");
+								mui.openWindow({
+									url: "teacherDetail.html",
+									id: "teacherDetail",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+							if (data.length > 0) {
+								var zx = document.getElementById("zx");
+								zx.addEventListener("tap", function() {
+									var id = this.getAttribute("id");
+									console.log(id + "");
+								})
+							}
+						},
+						error: function(e) {}
+					})
+				}
+			})
 		</script>
-		
-		
+
 	</head>
 
 	<body>
@@ -113,7 +107,7 @@
 			<div class="linkmore">
 				<a id="find_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
 			</div>
-			
+
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loadTeacher">
 				<img src="image/loading-0.gif" />
 			</div>

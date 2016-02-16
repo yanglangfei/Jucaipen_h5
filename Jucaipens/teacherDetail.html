@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -13,209 +14,221 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-		mui.init();
-		mui.plusReady(function(){
-			var web=plus.webview.currentWebview();
-			var id=web.teacherId;
-			var teacherDetails="http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherDetaile";
-			var title=document.getElementById("title");
-			var teacherPic=document.getElementById("teacherPic");
-			var team=document.getElementById("team");
-			var grade=document.getElementById("grade");
-			var fanSum=document.getElementById("fanSum");
-			var goods=document.getElementById("goods");
-			var joinDate=document.getElementById("joinDate");
-			var hoby=document.getElementById("hody");
-			var introduce=document.getElementById("introduce");
-			var fansList=document.getElementById("fansList");
-			var intoLive=document.getElementById("intoLive");
-			var touziIdea=document.getElementById("touziIdea");
-			var intoAsk=document.getElementById("intoAsk");
-			var intoIntroduce=document.getElementById("intoIntroduce");
-			var ask=document.getElementById("ask");
-			var attention=document.getElementById("attention");
-			var sign=document.getElementById("sign");
-			
-			<!--获取讲师详细信息-->
-			mui.ajax(teacherDetails,{
-				data:{
-					teacherId:id
-				},
-				dataType:"json",
-				type:"get",
-				timeout:10000,
-				success: function(data){
-					title.innerText=data.nickName+"主页";
-					teacherPic.src=data.headFace;
-					team.innerText=data.nickName;
-					grade.innerText=data.level;
-					fanSum.innerText=data.fans;
-					goods.innerText=data.goods;
-					joinDate.innerText=data.joinDate;
-					hoby.innerText=data.hoby;
-					introduce.innerHTML=data.introduce;
-				},
-				error: function(e){
-				}
-			})
-			
-			//进入粉丝列表
-			fansList.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"fansList.html",
-					id:"fansList",
-					extras:{
-						teacherId:id
-					}
+			mui.init();
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var id = web.teacherId;
+				var teacherDetails = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherDetaile";
+				var title = document.getElementById("title");
+				var teacherPic = document.getElementById("teacherPic");
+				var team = document.getElementById("team");
+				var grade = document.getElementById("grade");
+				var fanSum = document.getElementById("fanSum");
+				var goods = document.getElementById("goods");
+				var joinDate = document.getElementById("joinDate");
+				var hoby = document.getElementById("hody");
+				var introduce = document.getElementById("introduce");
+				var fansList = document.getElementById("fansList");
+				var intoLive = document.getElementById("intoLive");
+				var touziIdea = document.getElementById("touziIdea");
+				var intoAsk = document.getElementById("intoAsk");
+				var intoIntroduce = document.getElementById("intoIntroduce");
+				var ask = document.getElementById("ask");
+				var attention = document.getElementById("attention");
+				var sign = document.getElementById("sign");
+				<!--获取讲师详细信息-->
+				mui.ajax(teacherDetails, {
+						data: {
+							teacherId: id
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							title.innerText = data.nickName + "主页";
+							teacherPic.src = data.headFace;
+							team.innerText = data.nickName;
+							grade.innerText = data.level;
+							fanSum.innerText = data.fans;
+							goods.innerText = data.goods;
+							joinDate.innerText = data.joinDate;
+							hoby.innerText = data.hoby;
+							introduce.innerHTML = data.introduce;
+						},
+						error: function(e) {}
+					})
+					//进入粉丝列表
+				fansList.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "fansList.html",
+							id: "fansList",
+							extras: {
+								teacherId: id
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					})
+					//进入看盘直播
+				intoLive.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "txtLive.html",
+							id: "txtLive",
+							extras: {
+								querryType: 1,
+								teacherId: id,
+								title: team.innerText
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					})
+					//进入投资观点
+				touziIdea.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "intrvlIdea.html",
+							id: "intrvlIdea",
+							extras: {
+								teacherId: id
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					})
+					//进入最新提问
+				intoAsk.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "answerList.html",
+							id: "answerList",
+							extras: {
+								teacherId: id
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					})
+					//进入讲师简介
+				intoIntroduce.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "teacherIntroduce.html",
+							id: "teacherIntroduce",
+							extras: {
+								introduce: introduce.innerText
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					})
+					//关注讲师
+				attention.addEventListener("tap", function() {
+					})
+					//咨询名师
+				ask.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "askQuestion.html",
+							id: "askQuestion",
+							extras: {
+								teacherId: id
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					})
+					//签约
+				sign.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "choseQuace.html",
+						id: "choseQuace",
+						extras: {
+							teacherId: id
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
 				})
 			})
-			//进入看盘直播
-			intoLive.addEventListener("tap",function(){
-				mui.openWindow({
-				url:"txtLive.html",
-				id:"txtLive",
-				extras:{
-					querryType:1,
-					teacherId:id,
-					title:team.innerText
-				}
-				})
-			})
-			//进入投资观点
-			touziIdea.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"intrvlIdea.html",
-					id:"intrvlIdea",
-					extras:{
-						teacherId:id
-					}
-				})
-			}) 
-			//进入最新提问
-			intoAsk.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"answerList.html",
-					id:"answerList",
-					extras:{
-						teacherId:id
-					}
-				})
-			})
-			//进入讲师简介
-			intoIntroduce.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"teacherIntroduce.html",
-					id:"teacherIntroduce",
-					extras:{
-						introduce:introduce.innerText
-					}
-				})
-			})
-			
-			//关注讲师
-			attention.addEventListener("tap",function(){
-				
-				
-			})
-			//咨询名师
-			ask.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"askQuestion.html",
-					id:"askQuestion",
-					extras:{
-						teacherId:id
-					}
-				})
-			})
-			//签约
-			sign.addEventListener("tap",function(){
-				mui.openWindow({
-					url:"choseQuace.html",
-					id:"choseQuace",
-					extras:{
-						teacherId:id
-					}
-				})
-			})
-			
-			
-		})
-		
 		</script>
 	</head>
 
 	<body>
 
-			<div class="wrapper">
-				<!------------头部--------------->
+		<div class="wrapper">
+			<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1" style="margin-top:0.2rem;">
-							<span id="title"></span>
-						</div>
+			<header class="header">
+				<div class="head">
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-				</header>
-				<!------------居中部分---------->
-				<!------------热门观点开始---------->
-				<div class="tearchershow ">
-					<div class="s_head">
-
-						<span><img id="teacherPic"></span>
-						<h3 id="team">&nbsp;<i><img src="image/v1.png" /></i></h3>
-						<h4 id="grade"></h4>
+					<div class="logo1" style="margin-top:0.2rem;">
+						<span id="title"></span>
 					</div>
-					<div class="s_pingjia">
-						<ul>
-							<li style="border-right: 2px solid #efeff4">
-								<h3><i><img src="image/tb_manyi.png" /></i><em>满意度</em></h3><span>100%</span></li>
-							<li style="border-right: 2px solid #efeff4;"><a id="fansList"><h3><i><img src="image/tb_gz.png" /></i><em>粉丝</em></h3><span id="fanSum"></span></a></li>
-							<li>
-								<h3><i><img src="image/good.png" /></i><em>获赞</em></h3><span id="goods"></span></li>
-						</ul>
-
-					</div>
-					<div class="s_info"  > 
-						<ul>
-							<li>
-								<h3>加入时间</h3><span><em id="joinDate"></em></span></li>
-							<li>
-								<h3>擅长领域</h3><span><em id="hody" style="white-space: nowrap;text-overflow: ellipsis;"> </em></span></li>
-							<li class="noborder" id="intoIntroduce">
-								<h3>名师简介</h3><span><a><b id="introduce" style="height: 30px;white-space: nowrap;text-overflow: ellipsis;"></b><i><img src="image/into_next.png" /></i></a></span></li>
-						</ul>
-
-					</div>
-
-					<div class="s_fuwu">
-						<ul>
-							<li id="touziIdea">
-								<h3>投资观点</h3><span><a><b>82</b><i><img src="image/into_next.png" /></i></a></span></li>
-							<li id="intoAsk">
-								<h3>回答记录</h3><span><a><b>0</b><i><img src="image/into_next.png" /></i></a></span></li>
-							<li class="noborder" id="intoLive">
-								<h3>看盘直播</h3><span><a><b class="live">[正在直播]</b><i><img src="image/into_next.png" /></i></a></span></li>
-						</ul>
-
-					</div>
-
 				</div>
+			</header>
+			<!------------居中部分---------->
+			<!------------热门观点开始---------->
+			<div class="tearchershow ">
+				<div class="s_head">
 
-				<!--------热门观点结束---------->
-
-				<div class="tearch_footer">
+					<span><img id="teacherPic"></span>
+					<h3 id="team">&nbsp;<i><img src="image/v1.png" /></i></h3>
+					<h4 id="grade"></h4>
+				</div>
+				<div class="s_pingjia">
 					<ul>
-						<li id="ask" style="border-right: 2px solid #efeff4;"><a><i><img src="image/zixun.png" /></i><em>咨询</em></a></li>
-						<li id="sign" style="border-right: 2px solid #efeff4;"><a><i><img src="image/remarks.png" /></i><em>签约</em></a></li>
-						<li id="attention"><a><i id="img_guanzhu"><img src="image/guanzhu.png" /></i><em>关注</em></a></li>
+						<li style="border-right: 2px solid #efeff4;width: 33%;">
+							<h3><i><img src="image/tb_manyi.png" /></i><em>满意度</em></h3><span>100%</span></li>
+						<li style="border-right: 2px solid #efeff4;width: 33%;"><a id="fansList"><h3><i><img src="image/tb_gz.png" /></i><em>粉丝</em></h3><span id="fanSum"></span></a></li>
+						<li style="width: 33%;">
+							<h3><i><img src="image/good.png" /></i><em>获赞</em></h3><span id="goods"></span></li>
 					</ul>
+
 				</div>
-				<!------------底部定位层---------->
+				<div class="s_info">
+					<ul>
+						<li>
+							<h3>加入时间</h3><span><em id="joinDate"></em></span></li>
+						<li>
+							<h3>擅长领域</h3><span><em id="hody" style="white-space: nowrap;text-overflow: ellipsis;"> </em></span></li>
+						<li class="noborder" id="intoIntroduce">
+							<h3>名师简介</h3><span><a><b id="introduce" style="height: 30px;white-space: nowrap;text-overflow: ellipsis;"></b><i><img src="image/into_next.png" /></i></a></span></li>
+					</ul>
+
+				</div>
+
+				<div class="s_fuwu">
+					<ul>
+						<li id="touziIdea">
+							<h3>投资观点</h3><span><a><b>82</b><i><img src="image/into_next.png" /></i></a></span></li>
+						<li id="intoAsk">
+							<h3>回答记录</h3><span><a><b>0</b><i><img src="image/into_next.png" /></i></a></span></li>
+						<li class="noborder" id="intoLive">
+							<h3>看盘直播</h3><span><a><b class="live">[正在直播]</b><i><img src="image/into_next.png" /></i></a></span></li>
+					</ul>
+
+				</div>
 
 			</div>
+
+			<!--------热门观点结束---------->
+
+			<div class="tearch_footer">
+				<ul>
+					<li id="ask" style="border-right: 2px solid #efeff4;"><a><i><img src="image/zixun.png" /></i><em>咨询</em></a></li>
+					<li id="sign" style="border-right: 2px solid #efeff4;"><a><i><img src="image/remarks.png" /></i><em>签约</em></a></li>
+					<li id="attention"><a><i id="img_guanzhu"><img src="image/guanzhu.png" /></i><em>关注</em></a></li>
+				</ul>
+			</div>
+			<!------------底部定位层---------->
+
+		</div>
 
 	</body>
 

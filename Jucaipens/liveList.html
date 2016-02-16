@@ -33,46 +33,88 @@
 							for (var i = 0; i < data.length; i++) {
 								var liveUrl = data[i].liveUrl;
 								if (liveUrl != null) {
-									liveInfo = liveInfo + "<li style='float: left;width: 46%;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].RoomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
+									liveInfo = liveInfo + "<li style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + data[i].RoomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
 								}
 							}
 							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
+								// 是否免费试听  0   是     1   否
+								var visit = this.getAttribute("isVisit");
+								//试听天数
+								var visitDay = this.getAttribute("visitDay");
+								//试听用户等级
+								var visitLeal = this.getAttribute("visitLeal");
 								var uId = plus.storage.getItem("userId");
+								if (visit == 0) {
+									intoLiveRoom(lId);
+									return;
+								}
 								if (uId <= 0) {
 									//跳转到登录
-									mui.openWindow({
-										url: "login.html",
-										id: "login"
-									})
+									plus.nativeUI.confirm("您还没有登录，此房间不允许游客登录!", function(e) {
+										intoLogin();
+									}, "", ['确定']);
 								} else {
 									//进入直播间
-									mui.openWindow({
-										url: "liveRoom.html",
-										id: "liveRoom",
-										extras: {
-											liveId: lId
+									var isServer = plus.storage.getItem("isServer");
+									var isManager = plus.storage.getItem("isManager");
+									var buyProductId = plus.storage.getItem("buyProductId");
+									if (visit == 1) {
+										if (isServer == 0 || isManager == 0) {
+											//管理员客服可以进入
+											intoLiveRoom(lId);
+											return;
 										}
-									})
+										plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {
+										}, "", "确定");
+									}
+									//intoLiveRoom(lId);
 								}
 							});
 						},
-						error: function(e) {
+						error: function(e) {}
+					})
+					//进入直播室
+				function intoLiveRoom(liveId) {
+					mui.openWindow({
+						url: "liveRoom.html",
+						id: "liveRoom",
+						extras: {
+							liveId: liveId
+						},
+						waiting: {
+							autoShow: false
 						}
-					}) //进入登录界面
+					})
+				}
+				//进入登录界面
+				function intoLogin() {
+					mui.openWindow({
+						url: "login.html",
+						id: "login",
+						waiting: {
+							autoShow: false
+						}
+					})
+				}
+				//进入会员中心
+				function intoCenter() {
+					mui.openWindow({
+						url: "vipcenter.html",
+						id: "vipcenter",
+						waiting: {
+							autoShow: false
+						}
+					})
+				}
+				//进入登录界面
 				pageTop1_show_login_link.addEventListener("tap", function() {
 					var uId = plus.storage.getItem("userId");
 					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login"
-						})
+						intoLogin();
 					} else {
-						mui.openWindow({
-							url: "vipcenter.html",
-							id: "vipcenter"
-						})
+						intoCenter();
 					}
 				})
 			})

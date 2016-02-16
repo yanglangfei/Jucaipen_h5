@@ -49,8 +49,8 @@
 				type:"get",
 				timeout:10000,
 				success: function(data){
-					totlePage=data[0].totlePage;
 					for(var i=0;i<data.length;i++){
+					totlePage=data[0].totlePage;
 					fansStr=fansStr+"<div class='item'><span><img src="+isNull(data[i].headFace)+" /></span>"
 					+"<em>"+data[i].userName+"</em></div>";	
 					}

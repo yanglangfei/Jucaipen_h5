@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -47,13 +48,19 @@
 										id: "liveRoom",
 										extras: {
 											liveId: 1
+										},
+										waiting: {
+											autoShow: false
 										}
 									})
 								} else if (id == 3) {
 									//新三板
 									mui.openWindow({
 										url: "trhreeBoard.html",
-										id: "trhreeBoard"
+										id: "trhreeBoard",
+										waiting: {
+											autoShow: false
+										}
 									})
 								}
 							})
@@ -83,6 +90,9 @@
 								id: "historyLive",
 								extras: {
 									liveId: liveId
+								},
+								waiting: {
+									autoShow: false
 								}
 							})
 						})
@@ -102,6 +112,7 @@
 						for (var i = 0; i < data.length; i++) {
 							three_board = three_board + "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
 						}
+						board.innerHTML = three_board;
 						mui("#data-threeboard").on("tap", "li", function() {
 							var nId = this.getAttribute("id");
 							mui.openWindow({
@@ -109,10 +120,12 @@
 								id: "newsDetail",
 								extras: {
 									newsId: nId
+								},
+								waiting: {
+									autoShow: false
 								}
 							})
 						})
-						board.innerHTML = three_board;
 					},
 					error: function(e) {}
 				});
@@ -137,6 +150,9 @@
 								id: "newsDetail",
 								extras: {
 									newsId: nId
+								},
+								waiting: {
+									autoShow: false
 								}
 							})
 						})
@@ -165,6 +181,9 @@
 									id: "ideaDetail",
 									extras: {
 										ideaId: nId
+									},
+									waiting: {
+										autoShow: false
 									}
 								})
 							})
@@ -177,12 +196,18 @@
 					if (uId > 0) {
 						mui.openWindow({
 							url: "vipCenter.html",
-							id: "vipCenter"
+							id: "vipCenter",
+							waiting: {
+								autoShow: false
+							}
 						})
 					} else {
 						mui.openWindow({
 							url: "login.html",
-							id: "login"
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
 						})
 					}
 				})
@@ -193,106 +218,105 @@
 			.mui-slider {
 				margin-top: 40px;
 			}
-			
 		</style>
 
 	</head>
 
-	<body  scroll="no" style="overflow-y: hidden;">
+	<body scroll="no" style="overflow-y: hidden;">
 
-			<div class="wrapper">
-				<!------------头部--------------->
+		<div class="wrapper">
+			<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div id="pageTop1_show_login_link" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em></em></a></div>
-						<div class="logo">
-							<a><img src="image/jucai.png" /></a>
-						</div>
-					</div>
-				</header>
-				<!------------首页轮播图---------->
-				<div class="mui-slider">
-					<div class="mui-slider-group mui-slider-loop" id="pager">
-						<!--广告-->
+			<header class="header">
+				<div class="head">
+					<div id="pageTop1_show_login_link" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em></em></a></div>
+					<div class="logo">
+						<a><img src="image/jucai.png" /></a>
 					</div>
 				</div>
-				<!------------导航---------->
-				<nav class="nav">
-					<div class="page_menu">
-						<ul>
-							<li><a href="liveList.html"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
-							<li><a href="famousDish.html"><span><img src="image/class_index.png"></span><h4>名家看市</h4></a></li>
-							<li><a href="trhreeBoard.html"><span><img src="image/licai_index.png"></span><h4>热门投资</h4></a></li>
-							<li><a href="attention.html"><span><img src="image/fince_index.png"></span><h4>特别关注</h4></a></li>
-						</ul>
-					</div>
-				</nav>
-				<!------------居中部分---------->
-				<div class="middle">
-					<div class="middlecenter">
-						<!----新三板------->
-						<div class="zhishi">
-							<div class="licai_top">
-								<h3>新三板</h3>
-								<a href="trhreeBoard.html">更多</a>
-							</div>
-							<div class="yaowen_b">
-								<ul id="data-threeboard">
-								</ul>
-							</div>
-						</div>
-						<!------------直播回顾---------->
-						<div class="zhibohuigu">
-							<div class="zhibohuigu_top">
-								<h3>直播回顾</h3>
-
-							</div>
-							<div class="zhibohuigu_mian">
-								<ul style="list-style: none;" id="data-live">
-								</ul>
-							</div>
-						</div>
-						<!------------财经栏目---------->
-						<div class="caijing">
-							<div class="licai_top">
-								<h3>特别关注</h3>
-								<a href="attention.html">更多</a>
-							</div>
-							<div class="caijing_mian">
-								<ul id="data-attention">
-								</ul>
-							</div>
-						</div>
-						<!------------热门观点---------->
-						<div class="remengd" style="background:none">
-							<div class="licai_top" style="margin-bottom:0.4rem;">
-								<h3>热门观点</h3>
-								<a href="intrvlIdea.html">更多</a>
-							</div>
-							<div class="yaowen_b">
-								<ul id="data-hotidea">
-								</ul>
-							</div>
-						</div>
-					</div>
+			</header>
+			<!------------首页轮播图---------->
+			<div class="mui-slider" >
+				<div class="mui-slider-group mui-slider-loop" id="pager" >
+					<!--广告-->
 				</div>
-				<!------------底部定位层---------->
-
-				<footer class="footer">
-					<div class="foot">
-						<div class="footcenter">
-							<ul>
-								<li><a><span><img src="image/indexpress.png" style="width: 50px;height: 50px;"/></span></a></li>
-								<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
-								<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;" /></span></a></li>
-								<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-								<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+			</div>
+			<!------------导航---------->
+			<nav class="nav">
+				<div class="page_menu">
+					<ul>
+						<li><a href="liveList.html"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
+						<li><a href="famousDish.html"><span><img src="image/class_index.png"></span><h4>名家看市</h4></a></li>
+						<li><a href="trhreeBoard.html"><span><img src="image/licai_index.png"></span><h4>热门投资</h4></a></li>
+						<li><a href="attention.html"><span><img src="image/fince_index.png"></span><h4>特别关注</h4></a></li>
+					</ul>
+				</div>
+			</nav>
+			<!------------居中部分---------->
+			<div class="middle">
+				<div class="middlecenter">
+					<!----新三板------->
+					<div class="zhishi">
+						<div class="licai_top">
+							<h3>新三板</h3>
+							<a href="trhreeBoard.html">更多</a>
+						</div>
+						<div class="yaowen_b">
+							<ul id="data-threeboard">
 							</ul>
 						</div>
 					</div>
-				</footer>
+					<!------------直播回顾---------->
+					<div class="zhibohuigu">
+						<div class="zhibohuigu_top">
+							<h3>直播回顾</h3>
+
+						</div>
+						<div class="zhibohuigu_mian">
+							<ul style="list-style: none;" id="data-live">
+							</ul>
+						</div>
+					</div>
+					<!------------财经栏目---------->
+					<div class="caijing">
+						<div class="licai_top">
+							<h3>特别关注</h3>
+							<a href="attention.html">更多</a>
+						</div>
+						<div class="caijing_mian">
+							<ul id="data-attention">
+							</ul>
+						</div>
+					</div>
+					<!------------热门观点---------->
+					<div class="remengd" style="background:none">
+						<div class="licai_top" style="margin-bottom:0.4rem;">
+							<h3>热门观点</h3>
+							<a href="intrvlIdea.html">更多</a>
+						</div>
+						<div class="yaowen_b">
+							<ul id="data-hotidea">
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
+			<!------------底部定位层---------->
+
+			<footer class="footer">
+				<div class="foot">
+					<div class="footcenter">
+						<ul>
+							<li><a><span><img src="image/indexpress.png" style="width: 50px;height: 50px;"/></span></a></li>
+							<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
+							<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;" /></span></a></li>
+							<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+							<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+		</div>
 	</body>
 
 </html>

@@ -39,7 +39,10 @@
 				today.addEventListener("tap",function(){
 					mui.openWindow({
 						url:"txtLive.html",
-						id:"txtLive"
+						id:"txtLive",
+						waiting:{
+							autoShow:false
+						}
 					})
 					
 				})
@@ -50,6 +53,9 @@
 						extras:{
 							liveId:liveId,
 							title:title
+						},
+						waiting:{
+							autoShow:false
 						}
 					})
 					
@@ -67,9 +73,13 @@
 					success: function(data) {
 						for(var i=0;i<data.length;i++){
 							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date'>"+data[i].insertDate+"</span></li>"
-					+"</ul><div class='content'><div>"+data[i].bodys+"</div><div><br></div></div></div>";
+					+"</ul><div class='content'><div id='body'>"+data[i].bodys+"</div><div><br></div></div></div>";
 						}
 						todayLive.innerHTML=todayStr;
+						mui("#body").on("tap","img",function(){
+							var src=this.getAttribute('src');
+							console.log(src);
+						})
 					},
 					error: function(e) {
 					}

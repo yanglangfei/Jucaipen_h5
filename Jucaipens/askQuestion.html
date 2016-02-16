@@ -16,57 +16,56 @@
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
-				var button=document.getElementById("button");
-				var askQuestion="http://121.40.227.121:8080/AccumulateWealth/jucaipen/askQuestion";
-				var Ask_Class=document.getElementById("Ask_Class");
-				var textfield=document.getElementById("textfield");
-				var web=plus.webview.currentWebview();
-				var teacherId=web.teacherId;
+				var button = document.getElementById("button");
+				var askQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askQuestion";
+				var Ask_Class = document.getElementById("Ask_Class");
+				var textfield = document.getElementById("textfield");
+				var web = plus.webview.currentWebview();
+				var teacherId = web.teacherId;
 				//提交咨询数据
-				button.addEventListener("tap",function(){
-					var type=Ask_Class.value;
-					var ques=textfield.value;
-					var userId=plus.storage.getItem("userId");
-					if(userId<=0){
+				button.addEventListener("tap", function() {
+					var type = Ask_Class.value;
+					var ques = textfield.value;
+					var userId = plus.storage.getItem("userId");
+					if (userId <= 0) {
 						mui.openWindow({
-							url:"login.html",
-							id:"login"
+							url: "login.html",
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
 						})
-						return ;
+						return;
 					}
-					if(type<=0){
+					if (type <= 0) {
 						plus.nativeUI.toast("请选择提问分类");
-						return ;
+						return;
 					}
-					if(ques.length<=0){
+					if (ques.length <= 0) {
 						plus.nativeUI.toast('提问内容不能为空');
-						return ;
+						return;
 					}
-					mui.ajax(askQuestion,{
-						data:{
-							questionType:type,
-							userId:userId,
-							askBodys:ques,
-							teacherId:teacherId
+					mui.ajax(askQuestion, {
+						data: {
+							questionType: type,
+							userId: userId,
+							askBodys: ques,
+							teacherId: teacherId
 						},
-						dataType:"json",
-						type:"get",
-						timeout:10000,
-						success: function(data){
-							if(data.ret_code==0){
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
 								plus.nativeUI.toast("咨询问题提交成功");
 								plus.back();
-							}else{
+							} else {
 								plus.nativeUI.toast(data.err_msg);
 							}
 						},
-						error: function(e){
-							
+						error: function(e) {
 						}
 					})
-					
-					
-					
 				})
 			})
 		</script>
@@ -81,7 +80,7 @@
 					<div class="denglu1 mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-					<div class="logo1" style="margin-top:0.2rem;" >
+					<div class="logo1" style="margin-top:0.2rem;">
 						<span>咨询名家</span>
 					</div>
 				</div>
@@ -111,7 +110,7 @@
 					<textarea name="textfield" id="textfield" placeholder="请输入咨询内容"></textarea>
 				</div>
 				<div class="ask_btn">
-					<input id="button" type="button"value="立即咨询" />
+					<input id="button" type="button" value="立即咨询" />
 				</div>
 				<!--------名家问答结束---------->
 				<!------------底部定位层---------->

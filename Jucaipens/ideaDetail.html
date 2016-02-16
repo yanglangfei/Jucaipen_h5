@@ -21,7 +21,8 @@
 			mui.plusReady(function() {
 				var ideaDetail = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaDetaile";
 				var commListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/ideaCommList";
-				var addGoodPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaGoods";
+				var addGoodPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaGoods";
+				var addCommentPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/addIdeaComm";
 				var teacherName = document.getElementById("teacherName");
 				var leader = document.getElementById("leader");
 				var times = document.getElementById("time");
@@ -34,7 +35,9 @@
 				var btn_commen = document.getElementById("btn_commen");
 				var web = plus.webview.currentWebview();
 				var log_commen_list = document.getElementById("commList");
+				var txt_commen=document.getElementById("txt_commen");
 				var id = web.ideaId;
+				var opType;
 				//获取热门观点详细信息
 				mui.ajax(ideaDetail, {
 					data: {
@@ -63,18 +66,68 @@
 				queryComments();
 				//点赞
 				sa_zan.addEventListener("tap", function() {
-					var uId=plus.storage.getItem("userId");
-					if(uId<=0){
-						mui.openWindow({
-							url:"login.html",
-							id:"login"
-						})
+						var uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+							return;
+						}
+						addGoods(uId);
+					})
+					//提交评论信息
+					btn_commen.addEventListener('tap',function(){
+						var uId=plus.storage.getItem('userId');
+						if(uId<=0){
+							mui.openWindow({
+								url:"login.html",
+								id:"login",
+								  waiting:{
+                                    autoShow:false
+                                   }
+							})
+							return ;
+						}
+						 
+					if(txt_commen.value.length<=0){
+						mui.toast('评论内容不能为空');
 						return ;
 					}
-					addGoods(uId);
+					addIdeaComment(opType,uId,id,txt_commen.valu);
 				})
-					//提交评论信息
-				btn_commen.addEventListener("tap", function() {})
+				
+				//提交评论信息
+				function addIdeaComment(type,uId,iId,body){
+					console.log(id+" ");
+					mui.ajax(addCommentPath,{
+						data:{
+							commType:type,  //  0   评论   1  回复
+							userId:uId,
+							ideaId:iId,
+							commBodys:body,
+							commId:cId
+						},
+						dataType:"json",
+						type:'post',
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								mui.toast('添加评论成功');
+								txt_commen.value='';
+							}else{
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
 					//获取评论信息
 				function queryComments() {
 					var commStr = log_commen_list.innerText;
@@ -87,39 +140,46 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							for (var i = 0; i < data.length; i++) { 
-							    var imageLogo="http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo"+"?filename="+data.faceImage;
-								commStr = commStr + "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'><img src=" + imageLogo+ " style='float: left;margin-right: 10%;text-align: right;width: 1.2rem;'></span>" + "<h4 style='display: block;float: left;font-size: 1rem;font-weight: normal;width: 40%;'>" + data[i].userName + "</h4><em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img src='image/response.png' style='loat: left;margin-right: 2%;text-align: right;width: 1.2rem;' ></em>" + "<p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;'>" + data[i].insertDate + "</p>" + "<div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;'>" + data[i].commBody + "</div></div>";
+							for (var i = 0; i < data.length; i++) {
+								var imageLogo = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
+								commStr = commStr + "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'><img src=" + imageLogo + " style='float: left;margin-right: 10%;text-align: right;width: 1.2rem;'></span>" + "<h4 style='display: block;float: left;font-size: 1rem;font-weight: normal;width: 40%;' >" + data[i].userName + "</h4><em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img name=" + data[i].userName +" id='reply' content="+ data[i].commBody +" src='image/response.png' style='loat: left;margin-right: 2%;text-align: right;width: 1.2rem;' ></em>" + "<p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;'>" + data[i].insertDate + "</p>" + "<div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;' >" + data[i].commBody + "</div></div>";
 							}
 							log_commen_list.innerHTML = commStr;
+							mui(".log_commen_list").on("tap",'#reply',function(){
+								//回复评论
+								var name=this.getAttribute('name')
+								var body=this.getAttribute('content');
+								opType=1;
+								txt_commen.placeholder='回复'+name+":";
+							})
 						},
 						error: function(e) {}
 					})
 				}
 				
+				
 				//点赞
-				function addGoods(uId){
-					mui.ajax(addGoodPath,{
-						data:{
-						  userId:uId,
-						  ideaId:id
+				function addGoods(uId) {
+					mui.ajax(addGoodPath, {
+						data: {
+							userId: uId,
+							ideaId: id
 						},
-						type:"get",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							if(data.ret_code==0){
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
 								plus.nativeUI.toast("点赞成功");
-							}else{
+							} else {
 								plus.nativeUI.toast("点赞失败");
 							}
 						},
-						error: function(e){
+						error: function(e) {
 							plus.nativeUI.toast("连接失败");
 						}
 					})
 				}
-				
 			})
 		</script>
 
@@ -304,7 +364,6 @@
 			.tit {
 				margin-top: 50px;
 			}
-			
 		</style>
 
 	</head>

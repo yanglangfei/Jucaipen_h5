@@ -17,91 +17,89 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-		mui.init();
-		mui.plusReady(function(){
-			var newsListPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
-			var typeLay=document.getElementById("typeLay");
-			var pageTop1_show_login_link=document.getElementById("pageTop1_show_login_link");
-			var loading=document.getElementById("loaging");
-			//获取分类信息
-			var str=typeLay.innerHTML;
-			loading.style.display='block';
-			mui.ajax(newsListPath,{
-				type:"post",
-				dataType:"json",
-				timeout:10000,
-				success: function(data){
-					loading.style.display='none';
-					for(var i=0;i<data.length;i++){
-						var typeName=data[i].name;
-						var item=data[i].item;
-						str=str+"<div class='xiangmu_t'><h3>"+typeName+"</h3><a sId="+data[i].smallId+" bId="+data[i].bigId+">更多</a></div><div class='yaowen_b'><ul class='layer'>";
-						for(var j=0;j<item.length;j++){
-							var title=item[j].title;
-							var id=item[j].id;
-							var desc=item[j].desc;
-							str=str+"<li  id="+id  +" class='noimg'><div><h3><a>"+title+"</a></h3>"
-										+"<p style='height:40px;overflow: hidden;'>"+desc+"</p></div></li>";
-						}
-						str=str+"</ul></div>";
-						typeLay.innerHTML=str;
-						
-						
-						
+			mui.init();
+			mui.plusReady(function() {
+				var newsListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
+				var typeLay = document.getElementById("typeLay");
+				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
+				var loading = document.getElementById("loaging");
+				//获取分类信息
+				var str = typeLay.innerHTML;
+				loading.style.display = 'block';
+				mui.ajax(newsListPath, {
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							for (var i = 0; i < data.length; i++) {
+								var typeName = data[i].name;
+								var item = data[i].item;
+								str = str + "<div class='xiangmu_t'><h3>" + typeName + "</h3><a sId=" + data[i].smallId + " bId=" + data[i].bigId + ">更多</a></div><div class='yaowen_b'><ul class='layer'>";
+								for (var j = 0; j < item.length; j++) {
+									var title = item[j].title;
+									var id = item[j].id;
+									var desc = item[j].desc;
+									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+								}
+								str = str + "</ul></div>";
+								typeLay.innerHTML = str;
+							}
+							typeLay.innerHTML = str;
+							mui(".layer").on("tap", "li", function() {
+								var id = this.getAttribute("id");
+								mui.openWindow({
+									url: "newsDetail.html",
+									id: "newsDetail",
+									extras: {
+										newsId: id
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+							mui(".xiangmu_t").on("tap", "a", function() {
+								var sId = this.getAttribute("sId");
+								var bId = this.getAttribute("bId");
+								mui.openWindow({
+									url: "news/moreNews.html",
+									id: "moreNews",
+									extras: {
+										bigId: bId,
+										smallId: sId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+						},
+						error: function(e) {}
+					})
+					//进入登录界面
+				pageTop1_show_login_link.addEventListener("tap", function() {
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
+						})
+					} else {
+						mui.openWindow({
+							url: "vipcenter.html",
+							id: "vipcenter",
+							waiting: {
+								autoShow: false
+							}
+						})
 					}
-					typeLay.innerHTML=str;
-					
-					mui(".layer").on("tap","li",function(){
-						var id=this.getAttribute("id");
-						mui.openWindow({
-							url:"newsDetail.html",
-							id:"newsDetail",
-							extras:{
-								newsId:id
-							}
-						})
-					})
-					mui(".xiangmu_t").on("tap","a",function(){
-						var sId=this.getAttribute("sId");
-						var bId=this.getAttribute("bId");
-						mui.openWindow({
-							url:"news/moreNews.html",
-							id:"moreNews",
-							extras:{
-								bigId:bId,
-								smallId:sId
-							}
-						})
-					})
-					
-					
-				},
-				error: function(e){
-				}
+				})
 			})
-			//进入登录界面
-			pageTop1_show_login_link.addEventListener("tap",function(){
-				var uId=plus.storage.getItem("userId");
-				if(uId<=0){
-					mui.openWindow({
-						url:"login.html",
-						id:"login"
-					})
-				}else{
-					mui.openWindow({
-						url:"vipcenter.html",
-						id:"vipcenter"
-					})
-				}
-			})
-			
-		})
-		
-		
 		</script>
-		
-	
-
 
 	</head>
 
@@ -123,31 +121,29 @@
 			<div class="lcxm_list">
 				<div class="lcxmcenter">
 					<div class="zhishi" id="typeLay">
-					</div>
-             </div>
-            
-                
+					</div> 
 				</div>
-				<div style="text-align: center;margin-top: 80%;display: none;" id="loaging">
-                 	<img src="image/loading-0.gif" />
-                 </div>
 			</div>
-			 
-			<!------------底部定位层---------->
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loaging">
+				<img src="image/loading-0.gif" />
+			</div>
+		</div>
 
-			<footer class="footer">
-				<div class="foot">
-					<div class="footcenter">
-						<ul>
-							<li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a><span><img src="image/fincepress.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						</ul>
-					</div>
+		<!------------底部定位层---------->
+
+		<footer class="footer">
+			<div class="foot">
+				<div class="footcenter">
+					<ul>
+						<li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a><span><img src="image/fincepress.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+					</ul>
 				</div>
-			</footer>
+			</div>
+		</footer>
 	</body>
 
 </html>

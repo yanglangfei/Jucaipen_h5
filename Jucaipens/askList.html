@@ -110,13 +110,19 @@
 						id: "answerList",
 						extras: {
 							teacherId: teacherId
+						},
+						waiting:{
+							autoShow:false
 						}
 					})
 				})
 				retAsk.addEventListener("tap", function() {
 					mui.openWindow({
 						url: "askList.html",
-						id: "askList"
+						id: "askList",
+						waiting:{
+							autoShow:false
+						}
 					})
 				})
 

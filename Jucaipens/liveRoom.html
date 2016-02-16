@@ -9,22 +9,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
-				var chatLay=document.getElementById("chatLay");
+				var chatLay = document.getElementById("chatLay");
 				var live = document.getElementById("live");
-				var liveResourcePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
-				var chatPath="http://192.168.1.61:8080/AccumulateWealth/jucaipen/chatMessage";
-				var uId=plus.storage.getItem("userId");
+				var liveResourcePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
+				var chatPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
+				var topIdPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getTopId";
+				var getChatMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getlist";
+				var sendMsgPath="http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
+				var uId = plus.storage.getItem("userId");
 				var liveId = web.liveId;
-				var msgType=0;
-				var isManager=plus.storage.getItem("isManager");
-				var isServer=plus.storage.getItem("isServer");
-				var userNmae=plus.storage.getItem("userName");
-
+				var msgType = 0;
+				var topId;
+				var isManager = plus.storage.getItem("isManager");
+				var isServer = plus.storage.getItem("isServer");
+				var userNmae = plus.storage.getItem("userName");
 				//获取视频资源
 				mui.ajax(liveResourcePath, {
 					data: {
@@ -38,50 +41,157 @@
 						var liveUrl = "<embed width='100%' height='250px' src=" + data.videoUrl + "></embed>";
 						live.innerHTML = liveUrl;
 					},
-					error: function(e) {}
+					error: function(e) {
+						console.log("err");
+					}
 				})
+				//intoRoom(msgType,uId,liveId,isManager,isServer,userNmae,0,"",0);
+				var isManager = plus.storage.getItem("isManager");
+				var isServer = plus.storage.getItem("isServer");
+				var userId = plus.storage.getItem("userId");
+				getTopId(isManager, liveId, isServer);
 				
-				intoRoom(msgType,uId,liveId,isManager,isServer,userNmae,0,"",0);
 				
+				function getMsgForEver(){
+					setInterval(function(){
+					var content = chatLay.innerHTML;
+					mui.ajax(getChatMsgPath, {
+						data: {
+							topId: topId,
+							roomid: liveId,
+							userId: userId,
+							isServer: isServer
+						},
+						dataType: "json",
+						type: "post",
+						success: function(data) {
+							console.log(JSON.stringify(data));
+							if(data.length>0){
+							 topId=data[data.length-1].Id+1;
+							for (var i = 0; i < data.length; i++) {
+								content = content + "<li><span id='chat-time'>"+data[i].SendDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+							}
+							chatLay.innerHTML = content;
+							chatLay.scrollTop=chatLay.scrollHeight;
+							}
+						},
+						error: function(e) {
+						}
+					})
+				
+				},3000);
+				}
 				
 				
 				//通知服务器 进入直播室
-				function intoRoom(msgType,fromUser,roomId,isManager,isServer,userName,chatType,message,toUser){
+				function intoRoom(msgType, fromUser, roomId, isManager, isServer, userName, chatType, message, toUser) {
 					//msgType  
 					//fromUser
 					//roomId
 					//isManager
 					//isServer
 					//userName
-					mui.ajax(chatPath,{
-						data:{  
-							messageObject:"{msgType:"+msgType+",fromUser:"+uId+",roomId:"+roomId+",isManager:"+isManager+",isServer:"+isServer+",userName:"+userName+"}"
+					mui.ajax(chatPath, {
+						data: {
+							messageObject: "{msgType:" + msgType + ",fromUser:" + uId + ",roomId:" + roomId + ",isManager:" + isManager + ",isServer:" + isServer + ",userName:" + userName + "}"
 						},
-						type:"get",
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							//console.log(JSON.stringify(data));
+						},
+						error: function(e) {
+						}
+					})
+				}
+				//监听推送消息
+				plus.push.addEventListener("receive", function(msg) {
+					//{"content","payload","title","_UUID_"}
+					var content = chatLay.innerHTML;
+					content = content + "<li><span id='chat-time'>"+data[i].SendDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>张三</span>" + "<span id='chat-content'>" + msg.content + "</span></li>";
+					chatLay.innerHTML = content;
+				})
+				//获取最近倒数第十条消息ID
+				function getTopId(isManager, roomId, isServer) {
+					mui.ajax(topIdPath, {
+						data: {
+							userType: isManager,
+							topCount: 10,
+							roomId: roomId,
+							isServer: isServer
+						},
+						dataType: "json",
+						type: "post",
+						success: function(data) {
+							topId = JSON.stringify(data);
+							getChatMessaged();
+						},
+						error: function(e) { 
+							
+						}
+					})
+				}
+
+				function getChatMessaged() {
+					var content = chatLay.innerHTML;
+					mui.ajax(getChatMsgPath, {
+						data: {
+							topId: topId,
+							roomid: liveId,
+							userId: userId,
+							isServer: isServer
+						},
+						dataType: "json",
+						type: "post",
+						success: function(data) {
+							if(data.length>0){
+							topId=data[data.length-1].Id+1;
+							for (var i = 0; i < data.length; i++) {
+								content = content + "<li ><span id='chat-time'>"+data[i].SendDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+							}
+							chatLay.innerHTML = content;
+							}
+							getMsgForEver();
+						},
+						error: function(e) {
+						}
+					})
+				}
+				var btn_send=document.getElementById("btn-send");
+				var content=document.getElementById("msg-content");
+				var userName=plus.storage.getItem('userName');
+				btn_send.addEventListener('tap',function(){
+					if(content.value.length<=0){
+						mui.toast('发送消息不能为空');
+						return ;
+					}
+					console.log("lll");
+					sendMsg(content,userName);
+					
+				})
+				
+				//发送消息
+				function sendMsg(c,uName){
+					console.log('c'+c+"  "+uName+"  "+userId+"   "+liveId);
+					mui.ajax(sendMsgPath,{
+						data:{
+							msgcontent:c,
+							sendusername:uName,
+							SendUserId:userId,
+							roomid:liveId
+						},
+						type:"post",
 						dataType:"json",
-						timeout:10000,
 						success: function(data){
 							console.log(JSON.stringify(data));
 						},
 						error: function(e){
+							console.log("err");
 							
 						}
 					})
-					
-					
 				}
-				
-				
-				//监听推送消息
-				plus.push.addEventListener("receive",function(msg){
-					//{"content","payload","title","_UUID_"}
-					var content=chatLay.innerHTML;
-					content =content+"<li><span id='chat-time'>11:22</span><span id='sp_head'>"
-							+"<img src='image/guan.png' id='iv_head'/>"
-								+"</span><span id='chat-name'>张三</span>"
-								+"<span id='chat-content'>"+msg.content+"</span></li>";
-					chatLay.innerHTML=content;
-				})
 				
 			})
 		</script>
@@ -89,6 +199,7 @@
 		<style type="text/css">
 			.pagebody {
 				margin: 10px;
+				overflow: hidden;
 			}
 			
 			#chat-time {
@@ -131,6 +242,10 @@
 				float: left;
 				padding: 5px 0px;
 			}
+			
+			.mui-content {
+				margin-top: 40px;
+			}
 		</style>
 
 	</head>
@@ -147,11 +262,10 @@
 			</div>
 		</header>
 		<div class="mui-content">
-			<div class="mui-content" style="width: 100%;height: 250px;">
-				<div style="width: 100%;" id="live">
-					<embed width='100%' height='100%' src=" "></embed>
+			<div style="width: 100%;height: 250px;position: fixed;">
+				<div style="width: 100%;height: 250px;position: fixed;" id="live">
+					<embed width='100%' height='100%'></embed>
 				</div>
-
 			</div>
 
 			<div class="pagebody">
@@ -160,6 +274,16 @@
 						<ul id="chatLay">
 						</ul>
 					</div>
+				</div>
+			</div>
+
+			<div class="sendMsg" style="position: fixed;bottom: 0px;width: 100%;">
+				<div class="msgContent" style="float: left;width: 80%;height: 45px;">
+					<input type="text" style="width: 100%;height: 100%;border-right: solid white;" id="msg-content"/>
+				</div>
+
+				<div class="btn_send" style="float: right;width: 20%;height: 45px;">
+					<button type="button" class="mui-btn" style="background: #bb1121;width: 100%;color: white;height: 100%;font-size: 20px;" id="btn-send">发送</button>
 				</div>
 			</div>
 

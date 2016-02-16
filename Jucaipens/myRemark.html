@@ -1,111 +1,117 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			mui.plusReady(function(){
-				var remarkLay=document.getElementById("remarkLay");
-				var remarkPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
-				var currentPage=1;
+			mui.plusReady(function() {
+				var remarkLay = document.getElementById("remarkLay");
+				var remarkPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
+				var currentPage = 1;
 				var totlePager;
-				var uId=plus.storage.getItem("userId");
-				var loadRemark=document.getElementById("loadRemark");
-				var linkmore_p=document.getElementById("linkmore_p");
-				if(uId<=0){
-					return ;
+				var uId = plus.storage.getItem("userId");
+				var loadRemark = document.getElementById("loadRemark");
+				var linkmore_p = document.getElementById("linkmore_p");
+				if (uId <= 0) {
+					return;
 				}
-				loadRemark.style.display='block';
+				loadRemark.style.display = 'block';
 				getRemarkInfo(currentPage);
 				//加载更多
-				linkmore_p.addEventListener("tap",function(){
-					if(currentPage<totlePager){
+				linkmore_p.addEventListener("tap", function() {
+					if (currentPage < totlePager) {
 						getRemarkInfo(++currentPage);
 					}
 				})
-				
 				//获取我的评论信息
-				function getRemarkInfo(p){
-					var remarkStr=remarkLay.innerHTML;
-					mui.ajax(remarkPath,{
-						data:{
-							userId:uId,
-							pager:p
+				function getRemarkInfo(p) {
+					var remarkStr = remarkLay.innerHTML;
+					mui.ajax(remarkPath, {
+						data: {
+							userId: uId,
+							pager: p
 						},
-						type:"post",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							loadRemark.style.display='none';
-							for(var i=0;i<data.length;i++){
-							totlePager=data[i].totlePager;
-							remarkStr=remarkStr+"<li style='margin-left:10px;' id="+data[i].newsId+"><h3>原文：<a>"+data[i].newsTitle+"</a></h3>"
-							+"<span>1月29日</span><span class='content'>"+data[i].body+"</span></li>";
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loadRemark.style.display = 'none';
+							for (var i = 0; i < data.length; i++) {
+								totlePager = data[i].totlePager;
+								remarkStr = remarkStr + "<li style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>1月29日</span><span class='content'>" + data[i].body + "</span></li>";
 							}
-							remarkLay.innerHTML=remarkStr;
-							mui("#remarkLay").on("tap","li",function(){
-								var id=this.getAttribute("id");
+							remarkLay.innerHTML = remarkStr;
+							mui("#remarkLay").on("tap", "li", function() {
+								var id = this.getAttribute("id");
 								mui.openWindow({
-									url:"newsDetail.html",
-									id:"newsDetail",
-									extras:{
-										newsId:id
+									url: "newsDetail.html",
+									id: "newsDetail",
+									extras: {
+										newsId: id
+									},
+									waiting: {
+										autoShow: false
 									}
 								})
 							})
-							if(currentPage<totlePager){
-								linkmore_p.style.display='block';
-							}else{
-								linkmore_p.style.display='none';
+							if (currentPage < totlePager) {
+								linkmore_p.style.display = 'block';
+							} else {
+								linkmore_p.style.display = 'none';
 							}
 						},
-						error: function(e){
-							
+						error: function(e) {
 						}
 					})
 				}
-				
 			})
 		</script>
 		<title>
 
 		</title>
+
+		<style type="text/css">
+			.user_bodybg {
+				background: #efeff4;
+			}
+		</style>
 	</head>
 
 	<body class="user_bodybg">
-			<div class="wrapper">
-				<!------------头部--------------->
+		<div class="wrapper">
+			<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1">
-							<span style="margin-top:0.2rem;">我的评论</span>
-						</div>
+			<header class="header">
+				<div class="head">
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-				</header>
-				<!------------账户资料------------->
-				<div class="userbody">
-
-					<ul class="mymessge" id="remarkLay" >
-
-					</ul>
-					<p  class="more"><a id="linkmore_p" class="linkmore" style="display: none;">查看更多>></a></p>
-
+					<div class="logo1">
+						<span style="margin-top:0.2rem;">我的评论</span>
+					</div>
 				</div>
-				<!------------底部定位层---------->
+			</header>
+			<!------------账户资料------------->
+			<div class="userbody">
+
+				<ul class="mymessge" id="remarkLay">
+
+				</ul>
+				<p class="more"><a id="linkmore_p" class="linkmore" style="display: none;background: #e8e8e8;">查看更多>></a></p>
 
 			</div>
-			<div style="text-align: center;margin-top: 60%;display: none;" id="loadRemark" >
-				<img  src="image/loading-0.gif"/>
-			</div>
+			<!------------底部定位层---------->
+
+		</div>
+		<div style="text-align: center;margin-top: 60%;display: none;" id="loadRemark">
+			<img src="image/loading-0.gif" />
+		</div>
 	</body>
 
 </html>

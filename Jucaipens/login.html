@@ -16,204 +16,196 @@
 		<link rel="stylesheet" href="css/tuch.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
-		      	//获取认证列表
-		      	var authos;
-		      	var otherLoginPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountLogin";
-		      	document.addEventListener("plusready",function(){
-		      		plus.oauth.getServices(function(serice){
-		      			authos=serice;
-		      		},function(e){
-		      		})
-		      	},false);
-		      	
-		      	mui.plusReady(function(){
-		      		var regin=document.getElementById("into-regin");
-		      		var login=document.getElementById("login");
-		      		var account=document.getElementById("username");
-		      		var pwds=document.getElementById("password");
-		      		var qq=document.getElementById("login-qq");
-		      		var weixin=document.getElementById("login-weixin");
-		      		var sina=document.getElementById("login-sina");
-		      		regin.addEventListener("tap",function(){
-		      			mui.openWindow({
-		      				url:"regin.html",
-		      				id:"regin"
-		      			});
-		      		});
-		      		//自给模块登录
-		      		login.addEventListener("tap",function(){
-		      			if(account.value.length<=0){
-		      				plus.ui.toast("账号不能为空");
-		      				return ;
-		      			}
-		      			if(pwds.value.length<=0){
-		      				plus.ui.toast("密码不能为空");
-		      				return ;
-		      			}
-		      			mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login",{
-		      				data:{
-		      					userName:account.value,
-		      					password:pwds.value
-		      				},
-		      				type:"post",
-		      				dataType:"json",
-		      				timeout:10000,
-		      				success: function(data){
-		      					if(data.ret_code==0){
-		      						plus.nativeUI.toast("登录成功");
-		      						//用户ID 
-		      						plus.storage.setItem("userId",data.userId+"");
-		      						//购买产品ID
-		      						plus.storage.setItem("buyProductId",data.buyProductId+"");
-		      						//是否是客服   0    不是    
-		      						plus.storage.setItem("isServer",data.isServer+"");
-		      						//是否是管理员   0  不是
-		      						plus.storage.setItem("isManager",data.isManager+"");
-		      						//注册时间
-		      						plus.storage.setItem("reginDate",data.reginDate);
-		      						//用户名
-		      						plus.storage.setItem('userName',data.userName);
-		      						mui.back();
-		      					}else{
-		      					plus.ui.toast(data.err_msg);
-		      					}
-		      				},
-		      				error: function(e){
-		      					plus.nativeUI.toast("连接失败");
-		      				}
-		      			});
-		      		})
-		      		
-		      		  //第三方登录
-		      		   //qq登录
-		      		 	qq.addEventListener("tap",function() {
-		      		 		//获取openID
-			                authLogin(0);
-			             } )
-		      		 	
-		      		 	//微信登录
-		      		 	weixin.addEventListener("tap",function(){
-		      		 		//获取openID
-		      		 		authLogin(2);
-		      		 	})
-		      		 	
-		      		 	//新浪登录
-		      		 	sina.addEventListener("tap",function(){
-		      		 		//获取openID
-		      		 		 authLogin(1);
-		      		 	})
-		      		 	
-		      		 	function otherLogin(t,id){
-		      		 		mui.ajax(otherLoginPath,{
-			                	data:{
-			                		accountType:t,
-			                		accountId:id
-			                	},
-			                	type:'get',
-			                	dataType:"json",
-			                	timeout:10000,
-			                	success: function(data){
-			                		if(data.ret_code==0){
-			                			plus.nativeUI.toast("登录成功");
-			                			//用户ID 
-		      						plus.storage.setItem("userId",data.userId+"");
-		      						//购买产品ID
-		      						plus.storage.setItem("buyProductId",data.buyProductId+"");
-		      						//是否是客服   0    不是    
-		      						plus.storage.setItem("isServer",data.isServer+"");
-		      						//是否是管理员   0  不是
-		      						plus.storage.setItem("isManager",data.isManager+"");
-		      						//注册时间
-		      						plus.storage.setItem("reginDate",data.reginDate);
-		      						//用户名
-		      						plus.storage.setItem('userName',data.userName);
-		      						mui.back();
-			                		}else{
-			                			plus.nativeUI.toast(data.err_msg);
-			                		}
-			                	},
-			                	error: function(e){
-			                		console.log(JSON.stringify(data));
-			                	}
-			               })
-		      		 	}
-		      		 	
-		      		 	
-		      		 	
-		      		 	function authLogin(i) {
-			             var s = authos[i];
-			            if (!s.authResult) {
-			          	s.login(function(e) {
-			          		var openId= e.target.authResult.openid;
-				         	otherLogin(i,openId);
-				       }, function(e) {
-					       plus.nativeUI.alert("登录失败");
-				    });
-			     } else {
-				      var openId=s.authResult.openid;
-				       otherLogin(i,openId);
-			   }
-		    }
-		      		 	
-		      		 	
-		      	// 注销所有授权登录认证服务
-		        function authLogout(){
-			    for ( var i in authos ) {
-			     	var s = authos[i];
-				   if ( s.authResult ) {
-					s.logout(function(e){
-						alert( "注销登录认证成功！" );
-				     	}, function(e){
-						alert( "注销登录认证失败！" );
+			//获取认证列表
+			var authos;
+			var otherLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountLogin";
+			document.addEventListener("plusready", function() {
+				plus.oauth.getServices(function(serice) {
+					authos = serice;
+				}, function(e) {})
+			}, false);
+			mui.plusReady(function() {
+				var regin = document.getElementById("into-regin");
+				var login = document.getElementById("login");
+				var account = document.getElementById("username");
+				var pwds = document.getElementById("password");
+				var qq = document.getElementById("login-qq");
+				var weixin = document.getElementById("login-weixin");
+				var sina = document.getElementById("login-sina");
+				regin.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "regin.html",
+						id: "regin",
+						waiting: {
+							autoShow: false
+						}
 					});
+				});
+				//自给模块登录
+				login.addEventListener("tap", function() {
+					if (account.value.length <= 0) {
+						plus.ui.toast("账号不能为空");
+						return;
+					}
+					if (pwds.value.length <= 0) {
+						plus.ui.toast("密码不能为空");
+						return;
+					}
+					mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login", {
+						data: {
+							userName: account.value,
+							password: pwds.value
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								plus.nativeUI.toast("登录成功");
+								//用户ID 
+								plus.storage.setItem("userId", data.userId + "");
+								//购买产品ID
+								plus.storage.setItem("buyProductId", data.buyProductId + "");
+								//是否是客服   0    不是    
+								plus.storage.setItem("isServer", data.isServer + "");
+								//是否是管理员   0  不是
+								plus.storage.setItem("isManager", data.isManager + "");
+								//注册时间
+								plus.storage.setItem("reginDate", data.reginDate);
+								//用户名
+								plus.storage.setItem('userName', data.userName);
+								mui.back();
+							} else {
+								plus.ui.toast(data.err_msg);
+							}
+						},
+						error: function(e) {
+							plus.nativeUI.toast("连接失败");
+						}
+					});
+				})
+				//第三方登录
+				//qq登录
+				qq.addEventListener("tap", function() {
+					//获取openID
+					authLogin(0);
+				})
+				//微信登录
+				weixin.addEventListener("tap", function() {
+					//获取openID
+					authLogin(2);
+				})
+				//新浪登录
+				sina.addEventListener("tap", function() {
+					//获取openID
+					authLogin(1);
+				})
+
+				function otherLogin(t, id) {
+					mui.ajax(otherLoginPath, {
+						data: {
+							accountType: t,
+							accountId: id
+						},
+						type: 'get',
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								plus.nativeUI.toast("登录成功");
+								//用户ID 
+								plus.storage.setItem("userId", data.userId + "");
+								//购买产品ID
+								plus.storage.setItem("buyProductId", data.buyProductId + "");
+								//是否是客服   0    不是    
+								plus.storage.setItem("isServer", data.isServer + "");
+								//是否是管理员   0  不是
+								plus.storage.setItem("isManager", data.isManager + "");
+								//注册时间
+								plus.storage.setItem("reginDate", data.reginDate);
+								//用户名
+								plus.storage.setItem('userName', data.userName);
+								mui.back();
+							} else {
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(e) {
+							console.log(JSON.stringify(data));
+						}
+					})
 				}
-			}
-		}
-		
-		/**
-		 * @description 获取第三方用户信息
-		 * 
-		 */
-		function authUserInfo(i){
-			var s = authos[i];
-			if ( !s.authResult ) {
-				alert("未授权登录！");
-			} else {
-				s.getUserInfo( function(e){
-					alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
-				}, function(e){
-					alert( "获取用户信息失败："+e.message+" - "+e.code );
-				} );
-			}
-		}
-		      		 	
-		      		
-		      	});
+
+				function authLogin(i) {
+					var s = authos[i];
+					if (!s.authResult) {
+						s.login(function(e) {
+							var openId = e.target.authResult.openid;
+							otherLogin(i, openId);
+						}, function(e) {
+							plus.nativeUI.alert("登录失败");
+						});
+					} else {
+						var openId = s.authResult.openid;
+						otherLogin(i, openId);
+					}
+				}
+				// 注销所有授权登录认证服务
+				function authLogout() {
+					for (var i in authos) {
+						var s = authos[i];
+						if (s.authResult) {
+							s.logout(function(e) {
+								alert("注销登录认证成功！");
+							}, function(e) {
+								alert("注销登录认证失败！");
+							});
+						}
+					}
+				}
+				/**
+				 * @description 获取第三方用户信息
+				 * 
+				 */
+				function authUserInfo(i) {
+					var s = authos[i];
+					if (!s.authResult) {
+						alert("未授权登录！");
+					} else {
+						s.getUserInfo(function(e) {
+							alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
+						}, function(e) {
+							alert("获取用户信息失败：" + e.message + " - " + e.code);
+						});
+					}
+				}
+			});
 		</script>
 		<style type="text/css">
-			.mui-content{
-		    	 	margin-top: 12px;
-		    	 	margin-left: 12px;
-		    	 	margin-right: 12px;
-		    	 }
-		    	 #login{
-		    	 	margin-top: 12px;
-		    	 	background: #bd0b19;
-		    	 	height: 50px;
-		    	 	width: 100%;
-		    	 	color: white;
-		    	 	font-size: 18px;
-		    	 }
-		    #login-qq:active{
-		    	src: url(image/loginqq_press.png);
-		    }
-		    
+			.mui-content {
+				margin-top: 12px;
+				margin-left: 12px;
+				margin-right: 12px;
+			}
+			
+			#login {
+				margin-top: 12px;
+				background: #bd0b19;
+				height: 50px;
+				width: 100%;
+				color: white;
+				font-size: 18px;
+			}
+			
+			#login-qq:active {
+				src: url(image/loginqq_press.png);
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav" style="background: #bd0b19;">
-	    <div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
+			<div id="pageTop1_show_login_link" class="denglu mui-action-back"> <a><i><img src="image/into_back.png" /></i><em></em></a></div>
 			<h1 class="mui-title" style="color: white;">登录</h1>
 			<button type="button" id="into-regin" style="font-size: 15px;background: #bd0b19; border: 0px; color: white;" class="mui-btn  mui-pull-right">注册</button>
 		</header>
@@ -233,7 +225,7 @@
 				<img src="image/loginweixins.png" style="width: 50px;height: 50px;margin-left: 30%;" id="login-weixin" />
 				<img src="image/loginsina_unpress.png" class="mui-pull-right" style="width: 50px; height: 50px;margin: 0 auto ;" id="login-sina" />
 			</div>
-			<button id="login" >登录</button>
+			<button id="login">登录</button>
 		</div>
 
 	</body>

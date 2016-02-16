@@ -62,13 +62,19 @@
 										id: "liveRoom",
 										extras: {
 											liveId: 1
+										},
+										waiting: {
+											autoShow: false
 										}
 									})
 								} else if (id == 3) {
 									//新三板
 									mui.openWindow({
 										url: "trhreeBoard.html",
-										id: "trhreeBoard"
+										id: "trhreeBoard",
+										waiting: {
+											autoShow: false
+										}
 									})
 								}
 							})
@@ -102,6 +108,9 @@
 									id: "ideaDetail",
 									extras: {
 										ideaId: iId
+									},
+									waiting: {
+										autoShow: false
 									}
 								})
 							})
@@ -130,6 +139,9 @@
 									id: "teacherDetail",
 									extras: {
 										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
 									}
 								})
 							})
@@ -160,17 +172,20 @@
 										id: "askQuestion",
 										extras: {
 											teacherId: tId
+										},
+										waiting: {
+											autoShow: false
 										}
 									})
-								} 
+								}
 							})
 							mui("#data-question").on("tap", ".item", function() {
 								var tId = this.getAttribute("id");
 								var isQues;
-								if(!isAsk){
-									isQues=true;
-								}else{
-									isQues=false;
+								if (!isAsk) {
+									isQues = true;
+								} else {
+									isQues = false;
 								}
 								if (isQues) {
 									console.log('t');
@@ -179,6 +194,9 @@
 										id: "teacherDetail",
 										extras: {
 											teacherId: tId
+										},
+										waiting: {
+											autoShow: false
 										}
 									})
 								}
@@ -200,40 +218,62 @@
 					error: function(e) {}
 				})
 				dish.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "dishList.html",
-						id: "dishList"
+						mui.openWindow({
+							url: "dishList.html",
+							id: "dishList",
+							waiting: {
+								autoShow: false
+							}
+						})
 					})
-				})
+					//名师问答
 				intoAsk.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "answerList.html",
-						id: "answerList"
+						mui.openWindow({
+							url: "answerList.html",
+							id: "answerList",
+							waiting: {
+								autoShow: false
+							}
+						})
 					})
-				})
+					//热门观点
 				intrial.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "intrvlIdea.html",
-						id: "intrvlIdea"
+						mui.openWindow({
+							url: "intrvlIdea.html",
+							id: "intrvlIdea",
+							waiting: {
+								autoShow: false
+							}
+						})
 					})
-				})
+					//推荐名师
 				findTeacher.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "teacherList.html",
-						id: "teacherList"
+						mui.openWindow({
+							url: "teacherList.html",
+							id: "teacherList",
+							waiting: {
+								autoShow: false
+							}
+						})
 					})
-				})
+					//进入登录
 				intoLogin.addEventListener("tap", function() {
 					var uId = plus.storage.getItem("userId");
 					if (uId > 0) {
 						mui.openWindow({
 							url: "vipCenter.html",
-							id: "vipCenter"
+							id: "vipCenter",
+							waiting: {
+								autoShow: false
+							}
 						})
 					} else {
 						mui.openWindow({
 							url: "login.html",
-							id: "login"
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
 						})
 					}
 				})

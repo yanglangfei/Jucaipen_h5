@@ -20,11 +20,11 @@
 				var dishList = document.getElementById("dishList");
 				var dishPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousDish";
 				var txtlive_gd = document.getElementById("txtlive_gd");
-				var loadDish=document.getElementById("loadDish");
+				var loadDish = document.getElementById("loadDish");
 				var currentPage = 1;
 				var totlePage;
 				getDishList(currentPage);
-				loadDish.style.display='block';
+				loadDish.style.display = 'block';
 				//加载更多
 				txtlive_gd.addEventListener("tap", function() {
 					if (currentPage < totlePage) {
@@ -43,15 +43,15 @@
 						type: "get",
 						timeout: 10000,
 						success: function(data) {
-							loadDish.style.display='none';
+							loadDish.style.display = 'none';
 							totlePage = data[0].totlePage;
 							for (var i = 0; i < data.length; i++) {
 								dishStr = dishStr + "<div  tId=" + data[i].teacherId + "  title=" + data[i].title + " logo=" + data[i].headFace + " type=" + data[i].liveType + " name=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a>" + "</div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[" + data[i].startDate + "]</span>" + data[i].title + "	</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>" + "	</a></div></div>"
 							}
-							if(currentPage<totlePage){
-								txtlive_gd.style.display='block';
-							}else{
-								txtlive_gd.style.display='none';
+							if (currentPage < totlePage) {
+								txtlive_gd.style.display = 'block';
+							} else {
+								txtlive_gd.style.display = 'none';
 							}
 							dishList.innerHTML = dishStr;
 							mui("#dishList").on("tap", ".item", function() {
@@ -70,7 +70,10 @@
 									if (uId <= 0) {
 										mui.openWindow({
 											url: "login.html",
-											id: "login"
+											id: "login",
+											waiting: {
+												autoShow: false
+											}
 										})
 										return;
 									}
@@ -91,9 +94,7 @@
 									mui.confirm("当前直播为收费直播，请进行购买查看", "", array, function(e) {
 										if (e.index == 1) {
 											intoPayRoom(liveId, name, logo, title, teacherId);
-										} else {
-											console.log("取消");
-										}
+										} else {}
 									})
 								}
 							})
@@ -110,6 +111,9 @@
 							liveId: lId,
 							title: t,
 							querryType: 0
+						},
+						waiting: {
+							autoShow: false
 						}
 					})
 				}
@@ -124,6 +128,9 @@
 							logo: logo,
 							title: title,
 							teacherId: tId
+						},
+						waiting: {
+							autoShow: false
 						}
 					})
 				}
@@ -159,12 +166,11 @@
 
 				<!------------------------->
 			</div>
-			
-			<div  style="text-align: center;margin-top: 80%;display: none;" id="loadDish">
+
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loadDish">
 				<img src="image/loading-0.gif" />
 			</div>
-			
-			
+
 			<div class="linkmore">
 				<a id="txtlive_gd" style="color: #8D8D8D;display: none;">更多>></a>
 			</div>

@@ -28,19 +28,28 @@
 						//用户个人信息
 						mui.openWindow({
 							url: "userInfo.html",
-							id: "user"
+							id: "user",
+							waiting: {
+								autoShow: false
+							}
 						});
 					} else if (attr == "updatePwd") {
 						mui.openWindow({
 							//修改密码
 							url: "updatePwd.html",
-							id: "updatePwd"
+							id: "updatePwd",
+							waiting: {
+								autoShow: false
+							}
 						});
 					} else if (attr == "bind") {
 						mui.openWindow({
 							//绑定账号
 							url: "bindAccount.html",
-							id: "bindAccount"
+							id: "bindAccount",
+							waiting: {
+								autoShow: false
+							}
 						});
 					} else if (attr == "vip-service") {
 						//会员服务
@@ -52,19 +61,28 @@
 						//我的收藏和评论
 						mui.openWindow({
 							url: "myRemark.html",
-							id: "myRemark"
+							id: "myRemark",
+							waiting: {
+								autoShow: false
+							}
 						});
 					} else if (attr == "order") {
 						//我的预约
 						mui.openWindow({
 							url: "myOrder.html",
-							id: "myOrder"
+							id: "myOrder",
+							waiting: {
+								autoShow: false
+							}
 						});
 					} else if (attr == "infoCenter") {
 						//消息中心
 						mui.openWindow({
 							url: "infoCenter.html",
-							id: "infoCenter"
+							id: "infoCenter",
+							waiting: {
+								autoShow: false
+							}
 						});
 					}
 				});
@@ -78,6 +96,8 @@
 			#abord {
 				margin-top: 15px;
 				background: #CF2D28;
+				height: 50px;
+				line-height: 20px;
 				color: white;
 			}
 			

@@ -13,6 +13,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
@@ -41,7 +42,12 @@
 					timeout: 10000,
 					success: function(data) {
 						for (var i = 0; i < data.length; i++) {
-							commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img src=" + isNull(data[i].userLogo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name'>" + data[i].userName + "</span><span class='u_date'>" + data[i].insertDate + "</span></div>" + "<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>" + "</div><div class='bodys'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
+							var myDate=subStr(1,data[i].insertDate);
+							var logo=data[i].userLogo;
+							if(logo.indexOf('121.40.227.121')>0){
+								logo='http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename='+logo;
+							}
+							commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" + isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name'>" + data[i].userName + "</span><span class='u_date'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>" + "</div><div class='bodys'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
 						}
 						commLay.innerHTML = commStr;
 					},
@@ -92,7 +98,7 @@
 
 				function isNull(str) {
 					if (str.length <= 0) {
-						str = "image/head.png"
+						str = "image/jucaipen.png"
 					}
 					return str;
 				}

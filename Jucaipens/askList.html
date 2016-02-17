@@ -13,6 +13,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
@@ -57,10 +58,11 @@
 							totlePage = data[0].totlePage;
 							for (var i = 0; i < data.length; i++) {
 								var logoStr = data[i].headFace;
+								var myDate=subStr(2,data[i].insertDate);
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
 								}
-								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + data[i].insertDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
 							}
 							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
@@ -87,11 +89,12 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
+								var myDate=subStr(2,data[i].insertDate);
 								var logoStr = data[i].headFace;
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
 								}
-								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + data[i].insertDate + "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + myDate+ "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
 							}
 							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {

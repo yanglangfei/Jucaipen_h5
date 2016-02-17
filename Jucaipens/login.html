@@ -194,10 +194,14 @@
 				height: 50px;
 				width: 100%;
 				color: white;
-				font-size: 18px;
+				font-size: 15px;
+				border: 0px;
+			}
+			#login:active{
+				background: #CF2D28;
 			}
 			
-			#login-qq:active {
+			#login-qq:active{
 				src: url(image/loginqq_press.png);
 			}
 		</style>
@@ -225,7 +229,7 @@
 				<img src="image/loginweixins.png" style="width: 50px;height: 50px;margin-left: 30%;" id="login-weixin" />
 				<img src="image/loginsina_unpress.png" class="mui-pull-right" style="width: 50px; height: 50px;margin: 0 auto ;" id="login-sina" />
 			</div>
-			<button id="login">登录</button>
+			<button id="login" type="button" class="mui-btn mui-btn-block">登录</button>
 		</div>
 
 	</body>

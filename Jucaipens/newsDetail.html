@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<link rel="stylesheet" href="css/app.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
@@ -23,7 +24,7 @@
 				var news_detailUrl = "http://121.40.227.121:8080/AccumulateWealth/accumulate/newsDetail";
 				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
 				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
-				var querry_comm = 'http://192.168.1.52:8080/AccumulateWealth/jucaipen/querryComm';
+				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
 				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood"; 
 				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
 				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
@@ -71,7 +72,7 @@
 					timeout: 10000,
 					success: function(data) {
 						title.innerHTML = data.title;
-						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + data.publishDate.replace(".0","");
+						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + subStr(2,data.publishDate);
 						content.innerHTML = data.Bodys;
 					},
 					error: function(e) {}
@@ -126,16 +127,17 @@
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
 								var logoStr=data[i].userLogo;
+								var myDate=subStr(3,data[i].insertDate);
 								if(logoStr.indexOf("121.40.227.121")>0){
 									logoStr="http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename="+logoStr;
 								}
-								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50% ;' id='headLogo' src=" +logoStr + " />" + "	</div><div id='vItem' ><h4 ><span id='nickName'>" + data[i].userName + "</span>" +
+								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" +isNull(logoStr) + " />" + "	</div><div id='vItem' ><h4 ><span id='nickName'>" + data[i].userName + "</span>" +
 									"<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
 									"</span><span id='sp_comm' class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
 									"</span></h4><span id='comBody'>" + data[i].body + "</span><span id='commTime'>" +
-									data[i].insertDate + "</span>" + "	</div></li> "
+									myDate + "</span>" + "	</div></li> "
 							}  
-							comment.innerHTML = commUrl;
+							comment.innerHTML = commUrl; 
 							if(currentPage<totlePage){
 								getMore.style.display='block';
 							}else{
@@ -184,6 +186,16 @@
 						error: function(e) {}
 					});
 				}
+				
+				
+				//设置默认图片
+				function isNull(str){
+					if(str.length<=0||str==null){
+						return 'image/head.png';
+					}
+					return str;
+				}
+				
 				//获取收藏状况
 				function findCollectState() {
 					var uId = plus.storage.getItem("userId");

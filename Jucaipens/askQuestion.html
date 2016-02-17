@@ -18,13 +18,13 @@
 			mui.plusReady(function() {
 				var button = document.getElementById("button");
 				var askQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askQuestion";
-				var Ask_Class = document.getElementById("Ask_Class");
+				var getTypePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryAskClass";
 				var textfield = document.getElementById("textfield");
+				var choseType=document.getElementById("choseType");
 				var web = plus.webview.currentWebview();
 				var teacherId = web.teacherId;
 				//提交咨询数据
 				button.addEventListener("tap", function() {
-					var type = Ask_Class.value;
 					var ques = textfield.value;
 					var userId = plus.storage.getItem("userId");
 					if (userId <= 0) {
@@ -37,17 +37,14 @@
 						})
 						return;
 					}
-					if (type <= 0) {
-						plus.nativeUI.toast("请选择提问分类");
-						return;
-					}
+					
 					if (ques.length <= 0) {
 						plus.nativeUI.toast('提问内容不能为空');
 						return;
 					}
 					mui.ajax(askQuestion, {
 						data: {
-							questionType: type,
+							questionType: 0,
 							userId: userId,
 							askBodys: ques,
 							teacherId: teacherId
@@ -63,10 +60,30 @@
 								plus.nativeUI.toast(data.err_msg);
 							}
 						},
-						error: function(e) {
-						}
+						error: function(e) {}
 					})
 				})
+				
+				getTypeInfo();
+				
+				//获取提问分类信息
+				function getTypeInfo(){
+					mui.ajax(getTypePath,{
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							console.log(JSON.stringify(data));
+							
+							for(var i=0;i<data.length;i++){
+								
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
 			})
 		</script>
 	</head>
@@ -89,22 +106,11 @@
 			<!------------居中部分---------->
 
 			<!--------名家问答开始---------->
-			<div class="mingjiatoask nei_top" style="margin-top: 50px;">
-				<div class="ask_fenlei" style="height: 60px;">
-					<h3>分类：</h3>
-					<span>
-                        <select name="Ask_Class" id="Ask_Class">
-	                     <option value="0">请选择问题分类</option>
-	                     <option value="1">A股</option>
-	                     <option value="2">期货</option>
-                        	 <option value="3">基金</option>
-	                     <option value="4">黄金外汇</option>
-	                     <option value="5">美股</option>
-	                     <option value="6">港股</option>
-	                     <option value="7">保险</option>
-	                     <option value="8">其他理财</option>
+			<div class="mingjiatoask nei_top" style="margin-top: 70px;">
+				<div class="ask_fenleis" style="height: 40px;margin-left: 15px;">
+					<label style="font-size: 18px;line-height: 30px;float: left;">分类：</label>
+					<button style="float: left;border: 0px;width: 70%;" id="choseType">请选择问题分类</button>
 
-                     </select></span>
 				</div>
 				<div class="ask_content">
 					<textarea name="textfield" id="textfield" placeholder="请输入咨询内容"></textarea>

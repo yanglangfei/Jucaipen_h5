@@ -8,6 +8,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript">
 			mui.init();
 			mui.plusReady(function() {
@@ -43,8 +44,9 @@
 						success: function(data) {
 							loadRemark.style.display = 'none';
 							for (var i = 0; i < data.length; i++) {
+								var myDate=subStr(3,data[i].insertDate);
 								totlePager = data[i].totlePager;
-								remarkStr = remarkStr + "<li style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>1月29日</span><span class='content'>" + data[i].body + "</span></li>";
+								remarkStr = remarkStr + "<li style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>"+myDate+"</span><span class='content'>" + data[i].body + "</span></li>";
 							}
 							remarkLay.innerHTML = remarkStr;
 							mui("#remarkLay").on("tap", "li", function() {

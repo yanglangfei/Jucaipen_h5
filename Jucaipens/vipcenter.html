@@ -95,15 +95,26 @@
 			
 			#abord {
 				margin-top: 15px;
-				background: #CF2D28;
+				background: #bb1121;
 				height: 50px;
 				line-height: 20px;
 				color: white;
+				border: 0px;
 			}
 			
 			#abord:active {
-				background: #bd0b19;
+				background: #CF2D28;
 				height: 50px;
+				border: 0px;
+			}
+			
+			.vip_logo {
+				float: left;
+				line-height: 20px;
+			}
+			
+			.mui-table-view li {
+				height: 45px;
 			}
 		</style>
 	</head>
@@ -122,60 +133,93 @@
 		<div class="mui-content">
 			<form class="mui-input-group">
 				<ul class="mui-table-view">
-					<li class="mui-table-view-cell" id="user">
+					<li class="mui-table-view-cell" id="user" style="height: 45px;">
 						<nobr>
-							<img src="image/personpush.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/personpush.png" style="height: 20px;" />
+							</div>
+
 							<a class="mui-navigate-right">
-                          个人资料
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+									<label>个人资料</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 					<li class="mui-table-view-cell" id="updatePwd">
 						<nobr>
-							<img src="image/pwd.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/pwd.png" style="height: 20px;" />
+							</div>
 							<a class="mui-navigate-right">
-                          修改密码
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+									<label>修改密码</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 					<li class="mui-table-view-cell" id="bind">
 						<nobr>
-							<img src="image/binds.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/binds.png" style="height: 20px;" />
+							</div>
 							<a class="mui-navigate-right">
-                          账号绑定
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+
+									<label>账号绑定</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 					<li class="mui-table-view-cell" id="vip-service">
 						<nobr>
-							<img src="image/vips.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/vips.png" style="height: 20px;" />
+							</div>
 							<a class="mui-navigate-right">
-                          会员服务
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+
+									<label>会员服务</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 					<li class="mui-table-view-cell" id="collect-remark">
 						<nobr>
-							<img src="image/remarks.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/remarks.png" style="height: 20px;" />
+							</div>
 							<a class="mui-navigate-right">
-                          我的评论
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+
+									<label>我的评论</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 					<li class="mui-table-view-cell" id="order">
 						<nobr>
-							<img src="image/myorder.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/myorder.png" style="height: 20px;" />
+							</div>
 							<a class="mui-navigate-right">
-                          我的预约
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+
+									<label>我的预约</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 					<li class="mui-table-view-cell" id="infoCenter">
 						<nobr>
-							<img src="image/infos.png" style="height: 20px;" />
+							<div class="vip_logo">
+								<img src="image/infos.png" style="height: 20px;" />
+							</div>
 							<a class="mui-navigate-right">
-                          消息中心
-                     </a>
+								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
+									<label>消息中心</label>
+								</div>
+							</a>
 						</nobr>
 					</li>
 				</ul>

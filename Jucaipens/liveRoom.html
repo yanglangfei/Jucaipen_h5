@@ -9,6 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();
@@ -67,9 +68,10 @@
 						success: function(data) {
 							console.log(JSON.stringify(data));
 							if(data.length>0){
+							var myDate=subStr(1,data[i].SendDate);
 							 topId=data[data.length-1].Id+1;
 							for (var i = 0; i < data.length; i++) {
-								content = content + "<li><span id='chat-time'>"+data[i].SendDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+								content = content + "<li><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 							}
 							chatLay.innerHTML = content;
 							chatLay.scrollTop=chatLay.scrollHeight;
@@ -148,7 +150,8 @@
 							if(data.length>0){
 							topId=data[data.length-1].Id+1;
 							for (var i = 0; i < data.length; i++) {
-								content = content + "<li ><span id='chat-time'>"+data[i].SendDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+								var myDate=subStr(1,data[i].SendDate);
+								content = content + "<li ><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 							}
 							chatLay.innerHTML = content;
 							}

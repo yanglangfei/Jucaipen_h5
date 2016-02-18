@@ -32,13 +32,15 @@
 							load.style.display = 'none';
 							for (var i = 0; i < data.length; i++) {
 								var liveUrl = data[i].liveUrl;
+								var roomFace=data[i].RoomFace;
 								if (liveUrl != null) {
-									liveInfo = liveInfo + "<li style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + data[i].RoomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
+									liveInfo = liveInfo + "<li face="+roomFace+" style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
 								}
 							}
 							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
+								var face=this.getAttribute('face');
 								// 是否免费试听  0   是     1   否
 								var visit = this.getAttribute("isVisit");
 								//试听天数
@@ -47,7 +49,7 @@
 								var visitLeal = this.getAttribute("visitLeal");
 								var uId = plus.storage.getItem("userId");
 								if (visit == 0) {
-									intoLiveRoom(lId);
+									intoLiveRoom(lId,face);
 									return;
 								}
 								if (uId <= 0) {
@@ -63,25 +65,25 @@
 									if (visit == 1) {
 										if (isServer == 0 || isManager == 0) {
 											//管理员客服可以进入
-											intoLiveRoom(lId);
+											intoLiveRoom(lId,face);
 											return;
 										}
 										plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {
 										}, "", "确定");
 									}
-									//intoLiveRoom(lId);
 								}
 							});
 						},
 						error: function(e) {}
 					})
 					//进入直播室
-				function intoLiveRoom(liveId) {
+				function intoLiveRoom(liveId,roomFace) {
 					mui.openWindow({
 						url: "liveRoom.html",
 						id: "liveRoom",
 						extras: {
-							liveId: liveId
+							liveId: liveId,
+							face:roomFace
 						},
 						waiting: {
 							autoShow: false
@@ -147,7 +149,7 @@
 		<footer class="footer">
 			<div class="foot">
 				<div class="footcenter">
-					<ul>
+					<ul style="height: 60px;">
 						<li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;" /></span></a></li>
 						<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/livepress.png" style="width: 50px;height: 50px;"/></span></a></li>

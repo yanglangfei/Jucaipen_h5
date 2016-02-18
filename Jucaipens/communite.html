@@ -13,7 +13,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
@@ -26,33 +26,60 @@
 				var buttons = document.getElementById("button");
 				var getMore = document.getElementById("getMore-comm");
 				var textareas = document.getElementById("textarea");
+				var loading = document.getElementById("loading");
+				var loadMore = document.getElementById("loadMore");
+				var getMore = document.getElementById("getMore-comm");
 				var web = plus.webview.currentWebview();
 				var title = web.title;
 				var liveId = web.liveId;
+				var currentPage=1;
+				var totlePage;
 				commTitle.innerHTML = title + "直播室";
-				//获取评论列表
-				var commStr = "";
-				mui.ajax(commPath, {
-					data: {
-						liveId: liveId,
-						page: 1
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						for (var i = 0; i < data.length; i++) {
-							var myDate=subStr(1,data[i].insertDate);
-							var logo=data[i].userLogo;
-							if(logo.indexOf('121.40.227.121')>0){
-								logo='http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename='+logo;
-							}
-							commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" + isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name'>" + data[i].userName + "</span><span class='u_date'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>" + "</div><div class='bodys'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
-						}
-						commLay.innerHTML = commStr;
-					},
-					error: function(e) {}
+				loading.style.display = 'block';
+				getRemarkList(currentPage);
+				getMore.addEventListener("tap",function(){
+					getMore.style.display='none';
+					if(currentPage<totlePage){
+						loadMore.style.display='block';
+						getRemarkList(++currentPage);
+					}
 				})
+				
+				//获取评论列表
+				function getRemarkList(p) {
+					var commStr = commLay.innerHTML;
+					mui.ajax(commPath, {
+						data: {
+							liveId: liveId,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							if(loadMore.style.display='block'){
+								loadMore.style.display='none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage=data[0].totlePage;
+								var myDate = subStr(1, data[i].insertDate);
+								var logo = data[i].userLogo;
+								if (logo.indexOf('121.40.227.121') > 0) {
+									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
+								}
+								commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" + isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name'>" + data[i].userName + "</span><span class='u_date'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>" + "</div><div class='bodys'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
+							}
+							commLay.innerHTML = commStr;
+							if(currentPage<totlePage){
+								getMore.style.display='block';
+							}else{
+								getMore.style.display='none';
+							}
+						},
+						error: function(e) {}
+					})
+				}
 				today.addEventListener("tap", function() {
 					mui.openWindow({
 						url: "txtLive.html",
@@ -67,15 +94,15 @@
 					})
 				})
 				communit.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "communite.html",
-						id: "communite",
-						waiting: {
-							autoShow: false
-						}
+						mui.openWindow({
+							url: "communite.html",
+							id: "communite",
+							waiting: {
+								autoShow: false
+							}
+						})
 					})
-				})
-				//提交评论信息
+					//提交评论信息
 				buttons.addEventListener("tap", function() {
 					var userId = plus.storage.getItem("userId");
 					if (userId <= 0) {
@@ -102,7 +129,7 @@
 					}
 					return str;
 				}
-				//甜添加交流信息
+				//添加交流信息
 				function addExchangeFN(uId, body) {
 					mui.ajax(addExchangePath, {
 						data: {
@@ -120,8 +147,7 @@
 								plus.nativeUI.toast("提交交流信息失败");
 							}
 						},
-						error: function(e) {
-						}
+						error: function(e) {}
 					})
 				}
 			})
@@ -167,6 +193,7 @@
 
 			<div class="linkmore">
 				<a class="inter_gengduo" id="getMore-comm" style="color: #8D8D8D;display: none;">更多>></a>
+				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore" />
 			</div>
 
 			<div class="livetakl_fload_top">&nbsp;</div>
@@ -180,6 +207,10 @@
 				</div>
 			</div>
 			<!------------底部定位层---------->
+
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
+				<img src="image/loading-0.gif" />
+			</div>
 
 		</div>
 	</body>

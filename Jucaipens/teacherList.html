@@ -22,12 +22,15 @@
 				var loadTeacher = document.getElementById("loadTeacher");
 				var currentPage = 1;
 				var totlePage;
+				var loadMore=document.getElementById("loadMore");
 				var find_gengduo = document.getElementById("find_gengduo");
 				loadTeacher.style.display = 'block';
 				findAllTeacher(currentPage);
 				//加载更多数据
 				find_gengduo.addEventListener("tap", function() {
+					find_gengduo.style.display='none';
 					if (currentPage < totlePage) {
+						loadMore.style.display='block';
 						findAllTeacher(++currentPage);
 					}
 				})
@@ -44,8 +47,11 @@
 						timeout: 10000,
 						success: function(data) {
 							loadTeacher.style.display = 'none';
-							totlePage = data[0].totlePage;
+							if(loadMore.style.display='block'){
+								loadMore.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
 								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
 								teacherStr = teacherStr + "<div class='item' id=" + data[i].id + ">" + "<div class='t_head'><a><span><img src=" + data[i].headFace + "></span></a>" + "	<h4><a id='zx'>咨询</a></h4></div><div class='t_name'><h3><a>" + data[i].nickName + "</a><i></i></h3>" + "<h4>" + data[i].level + "</h4><a><p style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;1</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;24</em></span></p>" + "</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
 							}
@@ -106,12 +112,14 @@
 			</div>
 			<div class="linkmore">
 				<a id="find_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore"/>
 			</div>
 
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loadTeacher">
 				<img src="image/loading-0.gif" />
 			</div>
 			<!--------名师列表结束---------->
+			
 
 			<!------------底部定位层---------->
 

@@ -30,6 +30,7 @@
 				var loadIdea = document.getElementById("loadIdea");
 				var gengduo = document.getElementById("gengduo");
 				var teacherId = web.teacherId;
+				var loadMorfe=document.getElementById("loadMorfe");
 				var currentPage = 1;
 				var totlePage;
 				loadIdea.style.display = 'block';
@@ -40,7 +41,9 @@
 				}
 				//加载更多
 				gengduo.addEventListener("tap", function() {
+					gengduo.style.display='none';
 					if (currentPage < totlePage) {
+						loadMorfe.style.display='block';
 						if (teacherId > 0) {
 							findByTesacherId(++currentPage);
 						} else {
@@ -61,6 +64,9 @@
 						timeout: 10000,
 						success: function(data) {
 							loadIdea.style.display = 'none';
+							if(loadMorfe.style.display='block'){
+								loadMorfe.style.display='none';
+							}
 							totlePage = data[0].totlePage;
 							for (var i = 0; i < data.length; i++) {
 								var myDate=subStr(4,data[i].insertDate);
@@ -105,6 +111,9 @@
 						timeout: 10000,
 						success: function(data) {
 							loadIdea.style.display = 'none';
+							if(loadMorfe.style.display='block'){
+								loadMorfe.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[0].totlePage;
 								var myDate=subStr(4,data[i].insertDate);
@@ -167,6 +176,7 @@
 
 		<div class="linkmore">
 			<a id="gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+			<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMorfe"/>
 		</div>
 
 		<div style="text-align: center;margin-top: 80%;display: none;" id="loadIdea">

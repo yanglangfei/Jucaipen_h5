@@ -25,11 +25,13 @@
 				var todayLive=document.getElementById("todatLive");
 				var today=document.getElementById("toady");
 				var communite=document.getElementById("communite");
+				var loading=document.getElementById("loading");
 				var title = web.title;
 				var liveId;
 				liveTitle.innerText = title + "直播室";
 				//获取今日直播信息
 				var todayStr="";
+				loading.style.display='block';
 				if(typeId==0){
 					liveId=web.liveId;
 					findByLiveId();
@@ -72,6 +74,7 @@
 					dataType: "json",
 					timeout: 10000,
 					success: function(data) {
+						loading.style.display='none';
 						for(var i=0;i<data.length;i++){
 							var myDate=subStr(1,data[i].insertDate);
 							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>"+myDate+"</span></li>"
@@ -142,6 +145,10 @@
 			<div class="liveimglist" id="todatLive">
 			</div>
 			<!--------热门观点结束---------->
+			
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
+				<img src="image/loading-0.gif" />
+			</div>
 			<!------------底部定位层---------->
 		</div>
 	</body>

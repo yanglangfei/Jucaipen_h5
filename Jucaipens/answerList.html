@@ -24,8 +24,11 @@
 				var intoAnswer = document.getElementById("intoAnswer");
 				var intoAsk = document.getElementById("intoAsk");
 				var getMore = document.getElementById("da_gengduo");
+				var loading=document.getElementById("loading");
+				var loadNMore=document.getElementById("loadNMore");
 				var totlePage;
 				var currentPage = 1;
+				loading.style.display='block';
 				if (teacherId > 0) {
 					//根据讲师ID获取回答列表
 					findByTeacherId();
@@ -46,6 +49,10 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							loading.style.display='none';
+							if(loadNMore.style.display='block'){
+								loadNMore.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
 								questionStr = questionStr + "<div class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/V1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask'>咨询</a></div><div class='wen'>" + "<span> <img src='image/askInfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
@@ -63,7 +70,9 @@
 				}
 				//获取更多
 				getMore.addEventListener("tap", function() {
+					getMore.style.display='none';
 					if (currentPage < totlePage) {
+						loadNMore.style.display='block';
 						if (teacherId > 0) {
 							findByTeacherId(++currentPage);
 						} else {
@@ -83,6 +92,10 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							loading.style.display='none';
+							if(loadNMore.style.display='block'){
+								loadNMore.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
 								questionStr = questionStr + "<div class='item'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='images/v.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask'>咨询</a></div><div class='wen'>" + "<span> <img src='image/askInfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
@@ -158,9 +171,13 @@
 			</div>
 			<div class="linkmore">
 				<a id="da_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadNMore"/>
 			</div>
 
 			<!------------底部定位层---------->
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
+				<img src="image/loading-0.gif" />
+			</div>
 
 		</div>
 

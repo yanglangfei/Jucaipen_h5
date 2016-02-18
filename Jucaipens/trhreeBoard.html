@@ -23,12 +23,15 @@
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
 				var load = document.getElementById("load");
 				var currentPage = 1;
+				var areaLoad=document.getElementById("areaLoad");
 				var totlePage;
 				findThreeBoard(currentPage);
 				load.style.display = 'block';
 				//获取更多信息
 				more_three.addEventListener("tap", function() {
+					more_three.style.display='none';
 					if (currentPage < totlePage) {
+						areaLoad.style.display='block';
 						findThreeBoard(++currentPage);
 					}
 				})
@@ -45,6 +48,9 @@
 						timeout: 10000,
 						success: function(data) {
 							load.style.display = 'none';
+							if(areaLoad.style.display='block'){
+								areaLoad.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePager;
 								boardStr = boardStr + "<li id=" + data[i].id + " class='noimg'> <div>" + " <h3><a>" + data[i].title + "</a></h3>" + " <p style='height: 40px;overflow: hidden;'>" + data[i].descripte + "</p></div>  </li>";
@@ -126,6 +132,7 @@
 
 				<div class="linkmore">
 					<a id="more_three" style="color: #8D8D8D;display: none;">更多>></a>
+					<img src="image/loading-0.gif"  id="areaLoad" style="display: none;margin: auto;"/>
 				</div>
 
 			</div>
@@ -139,10 +146,10 @@
 
 		<!------------底部定位层---------->
 
-		<footer class="footer">
+		<footer class="footer" >
 			<div class="foot">
 				<div class="footcenter">
-					<ul>
+					<ul style="height: 60px;">
 						<li><a href="index.html"><span><img src="image/indexnormal.png"  style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/licaipress.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>

@@ -19,13 +19,16 @@
 				var smallId = web.smallId;
 				var bigId = web.bigId;
 				var totlePage;
+				var loadMore=document.getElementById("loadMore");
 				var currentPage = 1;
 				findNews(currentPage);
 				loadNews.style.display = 'block';
 				//获取更多新闻
 				more.addEventListener("tap", function() {
+					more.style.display='none';
 					if (currentPage < totlePage) {
 						findNews(++currentPage);
+						loadMore.style.display='block';
 					}
 				})
 				//获取所有私募动态
@@ -42,6 +45,9 @@
 						timeout: 10000,
 						success: function(data) {
 							loadNews.style.display = 'none';
+							if(loadMore.style.display='block'){
+								loadMore.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePager;
 								layStr = layStr + "<li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
@@ -102,7 +108,10 @@
 							<ul id="newsLay">
 
 							</ul>
-							<p><a class="linkmore" id="moreNews" style="display: none;">查看更多>></a></p>
+							<div>
+								<p><a class="linkmore" id="moreNews" style="display: none;">查看更多>></a></p>
+								<img src="../image/loading-0.gif" style="display:none;margin: auto;"  id="loadMore"/>
+							</div>
 						</div>
 					</div>
 					<!------------------------私募股权知识------------------------->

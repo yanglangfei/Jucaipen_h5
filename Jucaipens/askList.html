@@ -23,9 +23,12 @@
 				var web = plus.webview.currentWebview();
 				var retAsk = document.getElementById("retAsk");
 				var ask_gengduo = document.getElementById("ask_gengduo");
+				var loading=document.getElementById("loading");
 				var teacherId = web.teacherId;
+				var loadMore=document.getElementById("loadMore");
 				var totlePage;
 				var currentPage = 1;
+				loading.style.display='block';
 				if (teacherId > 0) {
 					//根据讲师ID获取提问列表
 					findByTeacherId(currentPage);
@@ -35,7 +38,9 @@
 				}
 				//加载更多数据
 				ask_gengduo.addEventListener("tap", function() {
+					ask_gengduo.style.display='none';
 					if (currentPage < totlePage) {
+						loadMore.style.display='block';
 						if (teacherId > 0) {
 							findByTeacherId(++currentPage);
 						} else {
@@ -55,14 +60,18 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							totlePage = data[0].totlePage;
+							loading.style.display='none';
+							if(loadMore.style.display='block'){
+								loadMore.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
 								var logoStr = data[i].headFace;
 								var myDate=subStr(2,data[i].insertDate);
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
 								}
-								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
 							}
 							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
@@ -87,6 +96,10 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							loading.style.display='none';
+							if(loadMore.style.display='block'){
+								loadMore.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
 								var myDate=subStr(2,data[i].insertDate);
@@ -94,7 +107,7 @@
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
 								}
-								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + myDate+ "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name'>" + data[i].userName + "</span></a><span class='u_date'>" + myDate+ "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
 							}
 							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
@@ -165,11 +178,18 @@
 			</div>
 			<div class="linkmore">
 				<a id="ask_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
+				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore"/>
 			</div>
 			<div class="nullList">
 				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>
 			</div>
+			
+			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
+				<img src="image/loading-0.gif" />
+			</div>
+			
 		</div>
+		
 		<!------------底部定位层---------->
 	</body>
 

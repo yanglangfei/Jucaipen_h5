@@ -103,30 +103,30 @@
 					//获取评论列表
 				var commUrl = "";
 				mui.ajax(querry_comm, {
-					data: {
-						typeId: 1,
-						id: id,
-						pager: 1
-					},
-					dataType: "json",
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						commCount.innerHTML = "共" + data.length + "条";
-						for (var i = 0; i < data.length; i++) {
-							var myDate = subStr(1, data[i].insertDate);
-							var logo = data[i].userLogo;
-							if (logo.indexOf('121.40.227.121') > 0) {
-								//app 头像
-								logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
+						data: {
+							typeId: 1,
+							id: id,
+							pager: 1
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							commCount.innerHTML = "共" + data.length + "条";
+							for (var i = 0; i < data.length; i++) {
+								var myDate = subStr(1, data[i].insertDate);
+								var logo = data[i].userLogo;
+								if (logo.indexOf('121.40.227.121') > 0) {
+									//app 头像
+									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
+								}
+								commUrl = commUrl + " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" + " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good'><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em>0</em></a></span>" + "  <span class='comm'><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + data[i].body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>"
 							}
-							commUrl = commUrl + " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" + " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good'><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em>0</em></a></span>" + "  <span class='comm'><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + data[i].body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>"
-						}
-						commList.innerHTML = commUrl;
-					},
-					error: function(e) {}
-				})
-				//绑定默认图片
+							commList.innerHTML = commUrl;
+						},
+						error: function(e) {}
+					})
+					//绑定默认图片
 				function isNull(str) {
 					if (str.length <= 0 || str == null) {
 						return 'image/head.png';
@@ -246,6 +246,15 @@
 							<ul id="page_commenlist">
 							</ul>
 							<a style="display: none;" class="morepinglun">更多</a>
+
+							<div class="float_comm_inputs" id="myinput" style="display: block;">
+								<div class="left">
+									<input type="text" name="HiddenFieldId" id="HiddenFieldId" />
+								</div>
+								<div class="right">
+									<input type="button" id="btn_sub_comm" name="btn_sub_comm" value="发送">
+								</div>
+							</div>
 
 						</div>
 

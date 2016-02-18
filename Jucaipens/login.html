@@ -15,7 +15,17 @@
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/tuch.css" />
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: true, //默认为false，不监听
+					release: true //默认为false，不监听
+				}
+			});
 			//获取认证列表
 			var authos;
 			var otherLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountLogin";
@@ -43,59 +53,59 @@
 				});
 				//自给模块登录
 				login.addEventListener("tap", function() {
-					if (account.value.length <= 0) {
-						plus.ui.toast("账号不能为空");
-						return;
-					}
-					if (pwds.value.length <= 0) {
-						plus.ui.toast("密码不能为空");
-						return;
-					}
-					mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login", {
-						data: {
-							userName: account.value,
-							password: pwds.value
-						},
-						type: "post",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code == 0) {
-								plus.nativeUI.toast("登录成功");
-								//用户ID 
-								plus.storage.setItem("userId", data.userId + "");
-								//购买产品ID
-								plus.storage.setItem("buyProductId", data.buyProductId + "");
-								//是否是客服   0    不是    
-								plus.storage.setItem("isServer", data.isServer + "");
-								//是否是管理员   0  不是
-								plus.storage.setItem("isManager", data.isManager + "");
-								//注册时间
-								plus.storage.setItem("reginDate", data.reginDate);
-								//用户名
-								plus.storage.setItem('userName', data.userName);
-								mui.back();
-							} else {
-								plus.ui.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							plus.nativeUI.toast("连接失败");
+						if (account.value.length <= 0) {
+							plus.ui.toast("账号不能为空");
+							return;
 						}
-					});
-				})
-				//第三方登录
-				//qq登录
+						if (pwds.value.length <= 0) {
+							plus.ui.toast("密码不能为空");
+							return;
+						}
+						mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login", {
+							data: {
+								userName: account.value,
+								password: pwds.value
+							},
+							type: "post",
+							dataType: "json",
+							timeout: 10000,
+							success: function(data) {
+								if (data.ret_code == 0) {
+									plus.nativeUI.toast("登录成功");
+									//用户ID 
+									plus.storage.setItem("userId", data.userId + "");
+									//购买产品ID
+									plus.storage.setItem("buyProductId", data.buyProductId + "");
+									//是否是客服   0    不是    
+									plus.storage.setItem("isServer", data.isServer + "");
+									//是否是管理员   0  不是
+									plus.storage.setItem("isManager", data.isManager + "");
+									//注册时间
+									plus.storage.setItem("reginDate", data.reginDate);
+									//用户名
+									plus.storage.setItem('userName', data.userName);
+									mui.back();
+								} else {
+									plus.ui.toast(data.err_msg);
+								}
+							},
+							error: function(e) {
+								plus.nativeUI.toast("连接失败");
+							}
+						});
+					})
+					//第三方登录
+					//qq登录
 				qq.addEventListener("tap", function() {
-					//获取openID
-					authLogin(0);
-				})
-				//微信登录
+						//获取openID
+						authLogin(0);
+					})
+					//微信登录
 				weixin.addEventListener("tap", function() {
-					//获取openID
-					authLogin(2);
-				})
-				//新浪登录
+						//获取openID
+						authLogin(2);
+					})
+					//新浪登录
 				sina.addEventListener("tap", function() {
 					//获取openID
 					authLogin(1);
@@ -139,11 +149,12 @@
 				function authLogin(i) {
 					var s = authos[i];
 					if (!s.authResult) {
+						console.log('ll');
 						s.login(function(e) {
 							var openId = e.target.authResult.openid;
 							otherLogin(i, openId);
 						}, function(e) {
-							plus.nativeUI.alert("登录失败");
+							plus.nativeUI.toast('登录失败');
 						});
 					} else {
 						var openId = s.authResult.openid;
@@ -179,6 +190,32 @@
 						});
 					}
 				}
+				//qq登录的按下效果
+				qq.addEventListener("hold", function() {
+					qq.src = 'image/loginqq_press.png';
+				});
+				
+				//QQ登录的释放效果
+				qq.addEventListener('release',function(){
+					qq.src='image/loginqq_unpress.png';
+				})
+				//微信登录的按下特效
+				weixin.addEventListener('hold',function(){
+					weixin.src='image/weixin_press.png';
+				})
+				//微信登录的释放特效
+				weixin.addEventListener('release',function(){
+					weixin.src='image/loginweixins.png';
+				})
+				//新浪登录释放特效
+				sina.addEventListener('hold',function(){
+					sina.src='image/loginsina_press.png';
+				})
+				
+				//新浪登录释放的特效
+				sina.addEventListener('release',function(){
+					sina.src='image/loginsina_unpress.png';
+				})
 			});
 		</script>
 		<style type="text/css">
@@ -197,12 +234,16 @@
 				font-size: 15px;
 				border: 0px;
 			}
-			#login:active{
-				background: #CF2D28;
+			
+			#login:active {
+				background: #CC3300;
 			}
 			
-			#login-qq:active{
+			#login-qq:active {
 				src: url(image/loginqq_press.png);
+			}
+			#into-regin:active{
+				color: #BBBBBB;
 			}
 		</style>
 	</head>
@@ -216,12 +257,12 @@
 		<div class="mui-content">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
-					<label for="">账号</label>
-					<input type="text" class="mui-input mui-input-clear" id="username" />
+					<label for="" style="font-size: 15px;">账号</label>
+					<input type="text" class="mui-input mui-input-clear" id="username" style="font-size: 15px;" />
 				</div>
 				<div class="mui-input-row">
-					<label for="">密码</label>
-					<input type="password" id="password" class="mui-input mui-input-clear" placeholder="输入6-23位密码" />
+					<label for="" style="font-size: 15px;">密码</label>
+					<input type="password" id="password" class="mui-input mui-input-clear" placeholder="输入6-23位密码" maxlength="23" style="font-size: 15px;" />
 				</div>
 			</form>
 			<div style="margin: 10px 10px 0 10px;" id="loginLogo">

@@ -28,11 +28,16 @@
 			var querryFans="http://121.40.227.121:8080/AccumulateWealth/jucaipen/fansList";
 			var currentPage=1;
 			var totlePage;
+			var loadMore=document.getElementById("loadMore");
 			var fans_gd=document.getElementById("fans_gd");
+			var loadFans=document.getElementById("loadFans");
+			loadFans.style.display='block';
 			findFansByTeacher(currentPage);
 			//加载更多数据
 			fans_gd.addEventListener("tap",function(){
+				fans_gd.style.display='none';
 				if(currentPage<totlePage){
+					loadMore.style.display='block';
 					findFansByTeacher(++currentPage);
 				}
 			})
@@ -49,12 +54,25 @@
 				type:"get",
 				timeout:10000,
 				success: function(data){
+					loadFans.style.display='none';
+					if(loadMore.style.display='block'){
+						loadMore.style.display='none';
+					}
 					for(var i=0;i<data.length;i++){
 					totlePage=data[0].totlePage;
-					fansStr=fansStr+"<div class='item'><span><img src="+isNull(data[i].headFace)+" /></span>"
+					var fansLogo=data[i].headFace;
+					if(fansLogo.indexOf("121.40.227.121")>0){
+						fansLogo='http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename='+fansLogo;
+					}
+					fansStr=fansStr+"<div class='item'><span><img style='width:50px;height:50px;' src="+isNull(fansLogo)+" /></span>"
 					+"<em>"+data[i].userName+"</em></div>";	
 					}
 					fansLay.innerHTML=fansStr;
+					if(currentPage<totlePage){
+						fans_gd.style.display='block';
+					}else{
+						fans_gd.style.display='none';
+					}
 				},
 				error: function(e){
 				}
@@ -92,12 +110,16 @@
 
 					</div>
 
-
 				</div>
 				<div id="gd_fand" class="linkmore">
 					<a id="fans_gd" style="color: #8D8D8D;display: none;">更多>></a>
+					<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore"/>
 				</div>
 				<!---------粉丝列表结束---------->
+				
+				<div style="text-align: center ;margin-top: 80%;display: none;" id="loadFans">
+					<img src="image/loading-0.gif" />
+				</div>
 	</body>
 
 </html>

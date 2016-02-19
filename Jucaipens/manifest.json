@@ -330,7 +330,8 @@
 					"image/good.png",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"css/style.css"
+					"css/style.css",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"login.html"
@@ -348,7 +349,8 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"css/style.css",
-					"css/tuch.css"
+					"css/tuch.css",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"ideaDetail.html"
@@ -589,7 +591,10 @@
 					"css/mui.min.css",
 					"css/style.css",
 					"css/tuch.css",
-					null
+					null,
+					"image/loading-0.gif",
+					"image/shijian.jpg",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"communite.html"
@@ -606,7 +611,9 @@
 					"image/head.png",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/jucaipen.png",
+					"image/response.png"
 				],
 				"refer": [
 					"communite.html",
@@ -626,7 +633,8 @@
 					"css/style.css",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"askList.html",
@@ -644,7 +652,8 @@
 					"css/mui.min.css",
 					"css/style.css",
 					"css/tuch.css",
-					null
+					null,
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"askList.html"
@@ -697,7 +706,10 @@
 					"image/good.png",
 					"image/zixun.png",
 					"css/tuch.css",
-					"image/guanzhu.png"
+					"image/guanzhu.png",
+					"image/attention.png",
+					"image/noattention.png",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"fansList.html",
@@ -975,11 +987,9 @@
 				"image/logo_qq.png",
 				"image/load_video.png",
 				"image/reply_normal.png",
-				"image/noattention.png",
 				"image/return_last.png",
 				"image/pay_bg.png",
 				"image/skyblue_editpage_close.png",
-				"image/response.png",
 				"image/logo_email.png",
 				"image/skyblue_platform_checked_disabled.png",
 				"image/weixin_press.png",
@@ -994,7 +1004,6 @@
 				"image/pic.png",
 				"image/xlistview_arrow.png",
 				"js/jquery-1.11.0.js",
-				"image/shijian.jpg",
 				"image/logo_tencentweibo.png",
 				"image/sex_women.png",
 				"image/loginqq_press.png",

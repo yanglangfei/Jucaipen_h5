@@ -27,13 +27,12 @@
 				var communite=document.getElementById("communite");
 				var loading=document.getElementById("loading");
 				var title = web.title;
-				var liveId;
+				var liveId=web.liveId;
 				liveTitle.innerText = title + "直播室";
 				//获取今日直播信息
 				var todayStr="";
 				loading.style.display='block';
 				if(typeId==0){
-					liveId=web.liveId;
 					findByLiveId();
 				}else{
 					findByTeacherId();
@@ -83,7 +82,7 @@
 						todayLive.innerHTML=todayStr;
 						mui("#body").on("tap","img",function(){
 							var src=this.getAttribute('src');
-							console.log(src);
+							
 						})
 					},
 					error: function(e) {
@@ -103,7 +102,6 @@
 					success: function(data) {
 						for(var i=0;i<data.length;i++){
 							var myDate=subStr(1,data[i].insertDate);
-							liveId=data[i].relete_liveId;
 							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>"+myDate+"</span></li>"
 					+"</ul><div class='content'><div>"+data[i].bodys+"</div><div><br></div></div></div>";
 						}

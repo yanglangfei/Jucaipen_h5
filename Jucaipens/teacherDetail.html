@@ -41,6 +41,7 @@
 				var sign = document.getElementById("sign");
 				var iv_attention = document.getElementById("iv-attention");
 				var isAttention;
+				var liveId;
 				var userId = plus.storage.getItem('userId');
 				//查看关注状况
 				getAtttentionState(id, userId);
@@ -53,6 +54,7 @@
 						type: "get",
 						timeout: 10000,
 						success: function(data) {
+							liveId=data.liveId;
 							title.innerText = data.nickName + "主页";
 							teacherPic.src = data.headFace;
 							team.innerText = data.nickName;
@@ -87,6 +89,7 @@
 							extras: {
 								querryType: 1,
 								teacherId: id,
+								liveId:liveId,
 								title: team.innerText
 							},
 							waiting: {

@@ -13,6 +13,17 @@
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
+				var version=plus.os.version;
+				var name=plus.os.name;
+				var hei=plus.screen.resolutionHeight;
+				var  width=plus.screen.resolutionWidth;
+				var hDpi=hei*plus.screen.scale;
+				var wDpi=width*plus.screen.scale;
+				
+				console.log("设备版本号："+version+" 设备名称:"+name+" 设备分辨率高： "+hDpi+" 设备分辨率宽： "+wDpi);
+				
+				
+				
 				var page = document.getElementById('pager');
 				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
 				var live = document.getElementById("data-live");

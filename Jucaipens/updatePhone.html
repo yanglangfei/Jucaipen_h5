@@ -11,9 +11,89 @@
 		<script>
 			mui.init();
 			mui.plusReady(function(){
+				var phone=document.getElementById("phone");
+				var vaile=document.getElementById("vaile");
+				var sendVail=document.getElementById("sendVail");
+				var savePhone=document.getElementById("savePhone");
+				var sendMobileCodePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
+				//获取手机验证码
+				sendVail.addEventListener("tap",function(){
+					if(phone.value.length<10){
+						mui.toast("输入手机号不合法");
+						return ;
+					}
+					getPhoneCheckCode(phone.value);
+				})
+				
+				//提交手机号
+				savePhone.addEventListener("tap",function(){
+					
+				})
+				
+				
+				//获取手机验证码
+				function getPhoneCheckCode(phone){
+					mui.ajax(sendMobileCodePath,{
+						data:{
+							telPhone:phone
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								mui.toast('验证码发送成功');
+							}else{
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				//验证手机号
+				function checkPhoneCode(){
+					
+				}
 				
 			})
 		</script>
+		<style type="text/css">
+			.userbodys{
+				margin-top: 80px;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			.userbodys .items{
+				height: 50px;
+			}
+			#sendVail{
+				height: 40px;
+				background: #bb1121;
+				color: white;
+				border: 0px;
+				font-size: 15px;
+				margin-left: 20px;
+				padding: 10px;
+			}
+			#sendVail:active{
+				background: #CC3300;
+			}
+			#savePhone{
+				margin-top: 10px;
+				width: 100%;
+				height: 50px;
+				background: #bb1121;
+				color: white;
+				font-size: 18px;
+				border: 0px;
+			}
+			#savePhone:active{
+				background: #CC3300;
+			}
+		</style>
 		<title></title>
 	</head>
 
@@ -26,47 +106,28 @@
 					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
 				<div class="logo1">
-					<span>修改手机</span>
+					<span style="margin-top:0.2rem;">修改手机</span>
 				</div>
 			</div>
 		</header>
 		<!------------账户资料------------->
-		<div class="userbody">
+		<div class="userbodys">
+        <div  class='items'>
+        	<label style="float: left;line-height: 40px;">手机号&nbsp;:&nbsp;</label>
+        	<div >
+        		 	<input type="tel" style="float: left;width: 80%;" placeholder="请输入手机号" id="phone"/>
+        	</div>
+        </div>
+        
+        <div  class='items' style="clear: both;">
+        	<label style="float: left;line-height: 40px;">验证码&nbsp;:&nbsp;</label>
+        	<div >
+        		 	<input type="number" style="float: left;width: 45%;" placeholder="请输入验证码" id="vaile"/>
+        	</div>
+        	<button  id="sendVail">获取验证码</button>
+        </div>
+        <button  id="savePhone">确定保存</button>
 
-			<table border="1" class="user_info_table">
-				<tr>
-					<th>系统验证码</th>
-					<td> <span style="width:100%;display:inline-block;">
-                                <input name="txb_code" type="text" id="txb_code" placeholder="请输入系统验证码" style="float:left;width:45.5%;border:1px solid #E0E0E0;height:30px;border-radius:5px;" />
-                             </span>
-					</td>
-				</tr>
-				<tr>
-					<th>手机号</th>
-					<td>
-						<input name="txb_mobile" type="text" id="txb_mobile" class="txt" placeholder="请输入手机号码" />
-					</td>
-				</tr>
-				<tr>
-					<th>&nbsp;</th>
-					<td>
-						<input type="button" value="获取验证码" id="reg_getcheckcode" class="code" />
-					</td>
-				</tr>
-				<tr>
-					<th>验证码</th>
-					<td>
-						<input name="txb_checkcode" type="text" id="txb_checkcode" class="txt" placeholder="请输入验证码" />
-					</td>
-				</tr>
-
-				<tr>
-					<th>&nbsp;</th>
-					<td>
-						<input type="button" id="btn_changmobile" name="btn_changmobile" value="确认保存" class="btn_yes" />
-					</td>
-				</tr>
-			</table>
 		</div>
 		<!------------底部定位层---------->
 	</body>

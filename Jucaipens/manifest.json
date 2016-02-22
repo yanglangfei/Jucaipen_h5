@@ -1,8 +1,7 @@
 {
 	"@platforms": [
 		"android",
-		"iPhone",
-		"iPad"
+		"iPhone"
 	],
 	"id": "H5E5BFE12",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "聚财盆",/*应用名称，程序桌面图标名称*/
@@ -154,7 +153,7 @@
 				"mobileprovision": "",/*iOS应用打包配置文件*/
 				"password": "",/*iOS应用打包个人证书导入密码*/
 				"p12": "",/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
-				"devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+				"devices": "iphone",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
 				"frameworks": []
 			},
 			"google": {
@@ -191,9 +190,23 @@
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
 			},
-			"orientation": ["portrait-primary","portrait-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": [
+				"portrait-primary"
+			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
+					"ipad": {
+						"retina": "unpackage/res/icons/144x144.png",
+						"normal": "unpackage/res/icons/72x72.png",
+						"retina7": "unpackage/res/icons/152x152.png",
+						"normal7": "unpackage/res/icons/76x76.png",
+						"settings-retina": "unpackage/res/icons/58x58.png",
+						"settings-normal": "unpackage/res/icons/29x29.png",
+						"spotlight-retina": "unpackage/res/icons/100x100.png",
+						"spotlight-normal": "unpackage/res/icons/50x50.png",
+						"spotlight-normal7": "unpackage/res/icons/40x40.png",
+						"spotlight-retina7": "unpackage/res/icons/80x80.png"
+					},
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
 					"auto": "", /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
 					"iphone": {
@@ -207,18 +220,6 @@
 						"settings-retina": "unpackage/res/icons/58x58.png",
 						"retina8": "unpackage/res/icons/180x180.png",
 						"settings-retina8": "unpackage/res/icons/87x87.png"
-					},
-					"ipad": {
-						"normal": "unpackage/res/icons/72x72.png", /*iPad普通屏幕程序图标，分辨率：72x72*/
-						"retina": "unpackage/res/icons/144x144.png", /*iPad高分屏程序图标，分辨率：144x144*/
-						"normal7": "unpackage/res/icons/76x76.png", /*iPad iOS7程序图标，分辨率：76x76*/
-						"retina7": "unpackage/res/icons/152x152.png", /*iPad iOS7高分屏程序图标，分辨率：152x152*/
-						"spotlight-normal": "unpackage/res/icons/50x50.png", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
-						"spotlight-retina": "unpackage/res/icons/100x100.png", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
-						"spotlight-normal7": "unpackage/res/icons/40x40.png",/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
-						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
-						"settings-normal": "unpackage/res/icons/29x29.png",/*iPad设置页面程序图标，分辨率：29x29*/
-						"settings-retina": "unpackage/res/icons/58x58.png"
 					}
 				},
 				"android": {
@@ -235,16 +236,6 @@
 						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
 						"retina35": "",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
 						"retina40": ""
-					},
-					"ipad": {
-						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": ""
 					}
 				},
 				"android": {
@@ -254,7 +245,8 @@
 					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
 					"xxhdpi": ""
 				}
-			},"debug":false
+			},
+			"debug": false
 		}
 	},
 	"dependencies": {
@@ -423,7 +415,8 @@
 					"newsDetail.html",
 					"historyLive.html",
 					"ideaDetail.html",
-					"liveRoom.html"
+					"liveRoom.html",
+					"vipcenter.html"
 				],
 				"priority": 0
 			},
@@ -814,7 +807,8 @@
 					"css/mui.poppicker.css",
 					"js/city.data.js",
 					"css/mui.picker.css",
-					"js/city.data-3.js"
+					"js/city.data-3.js",
+					"image/head.png"
 				],
 				"refer": [],
 				"priority": 0

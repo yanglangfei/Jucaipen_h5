@@ -91,7 +91,7 @@
 					timeout: 10000,
 					success: function(data) {
 						for (var i = 0; i < data.length; i++) {
-							liveUrl = liveUrl + "<li style='float: left;width: 150px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
+							liveUrl = liveUrl + "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
 						}
 						live.innerHTML = liveUrl;
 						mui("#data-live").on("tap", "li", function() {
@@ -204,15 +204,7 @@
 					//进入登录页面
 				intoLogin.addEventListener("tap", function() {
 					var uId = plus.storage.getItem("userId");
-					if (uId > 0) {
-						mui.openWindow({
-							url: "vipCenter.html",
-							id: "vipCenter",
-							waiting: {
-								autoShow: false
-							}
-						})
-					} else {
+					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",
 							id: "login",
@@ -220,8 +212,15 @@
 								autoShow: false
 							}
 						})
-					}
-				})
+					} else {
+						mui.openWindow({
+							url: "vipcenter.html",
+							id: "vipcenter",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}})
 			})
 		</script>
 

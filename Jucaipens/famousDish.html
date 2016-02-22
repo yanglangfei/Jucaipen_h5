@@ -256,15 +256,7 @@
 					//进入登录
 				intoLogin.addEventListener("tap", function() {
 					var uId = plus.storage.getItem("userId");
-					if (uId > 0) {
-						mui.openWindow({
-							url: "vipCenter.html",
-							id: "vipCenter",
-							waiting: {
-								autoShow: false
-							}
-						})
-					} else {
+					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",
 							id: "login",
@@ -272,8 +264,15 @@
 								autoShow: false
 							}
 						})
-					}
-				})
+					} else {
+						mui.openWindow({
+							url: "vipcenter.html",
+							id: "vipcenter",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}})
 			})
 		</script>
 

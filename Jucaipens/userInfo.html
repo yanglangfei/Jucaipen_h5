@@ -28,16 +28,22 @@
 				var birth = document.getElementById("birth");
 				var email = document.getElementById("email");
 				var userLogo = document.getElementById("userLogo");
-				var address = document.getElementById("address");
+				var provinceLay = document.getElementById("data-province");
+				var cityLay=document.getElementById("data-city");
+				var areaLay=document.getElementById("data-area");
 				var introduce = document.getElementById("introduce");
 				var editInfo = document.getElementById("editInfo");
 				var sex = document.getElementById("sex");
+				var getMyInfo="http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
+				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
+				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
+				var queryArea = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
 				var images;
 				if (uId <= 0) {
 					return;
 				}
 				//获取个人信息
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo", {
+				mui.ajax(getMyInfo, {
 					data: {
 						id: uId
 					},
@@ -49,9 +55,11 @@
 						tel.value = data.telPhone;
 						birth.value = data.birthday;
 						email.value = data.email;
-						address.value = data.localProvince + data.localCity + data.localArea;
+					    provinceLay.innerHTML="<option value="+data.localProId+">"+data.localProvince+"</option>";
+						cityLay.innerHTML="<option value="+data.localCityId+">"+data.localCity+"</option>";
+						areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>"
 						introduce.value = data.descript;
-						if (data.faceImage.length > 0) {
+						if (data.faceImage.length > 0) { 
 							images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
 						} else {
 							images = 'image/head.png';
@@ -105,34 +113,6 @@
 				}
 				//编辑资料按钮
 				editInfo.addEventListener("tap", function() {});
-				(function($, doc) {
-					$.init();
-					$.ready(function() {
-						var cityPicker3 = new $.PopPicker({
-							layer: 3
-						});
-						cityPicker.setData(cityData3);
-						//选择城市
-						address.addEventListener("tap", function(e) {
-							console.log("click");
-							cityPicker.show(function(items) {
-								//cityResult3.innerText = "你选择的城市是:" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
-								//返回 false 可以阻止选择框的关闭
-								//return false;
-							});
-						});
-					})
-				})
-				//选择城市
-				address.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "cityList.html",
-						id: "cityList",
-						waiting: {
-							autoShow: false
-						}
-					})
-				})
 				//选择性别
 				var btnsAry = [{
 					title: "男"
@@ -164,6 +144,91 @@
 						}
 					})
 				})
+				
+				provinceLay.onclick=function(){
+					getProvinceData();
+				}
+				
+				//获取省份信息
+				function getProvinceData(){
+					var provinceStr="";
+					mui.ajax(queryProvincePath,{
+						dataType:"json",
+						type:"get",
+						timeout:10000,
+						success: function(data){
+							for(var i=0;i<data.length;i++){
+								provinceStr=provinceStr+"<option value="+data[i].id+">"+data[i].name+"</option>";
+							}
+							provinceLay.innerHTML=provinceStr;
+							var id=provinceLay.options[provinceLay.options.selectedIndex].value;
+							getCityInfo(id);
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				//省市添加监听事件
+				provinceLay.onchange=function(){
+					var id=provinceLay.options[provinceLay.options.selectedIndex].value;
+					getCityInfo(id);
+				}
+				
+				cityLay.onchange=function(){
+					var id=cityLay.options[cityLay.options.selectedIndex].value;
+					getAreaInfo(id);
+				}
+				
+				
+				//获取城市信息
+				function getCityInfo(pId){
+					var cityStr="";
+					mui.ajax(queryCityPath,{
+						data:{
+							provinceId:pId
+						},
+						type:'get',
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							for(var i=0;i<data.length;i++){
+								cityStr=cityStr+"<option value="+data[i].id+">"+data[i].name+"</option>";
+							}
+							cityLay.innerHTML=cityStr;
+							var id=cityLay.options[cityLay.options.selectedIndex].value;
+				            getAreaInfo(id);
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				//获取县（区）信息
+				function getAreaInfo(cId){
+					var areaStr="";
+					mui.ajax(queryArea,{
+						data:{
+							cityId:cId
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							for(var i=0;i<data.length;i++){
+								areaStr=areaStr+"<option>"+data[i].name+"</option>";
+							}
+							areaLay.innerHTML=areaStr;
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				
 			});
 		</script>
 		<style type="text/css">
@@ -193,9 +258,8 @@
 			#btn_send {
 				line-height: 25px;
 				margin-left: 10px;
-				width: 100px;
 				color: #bb1121;
-				font-size: 15px;
+				font-size: 10px;
 				background: #efeff4;
 			}
 			
@@ -211,7 +275,7 @@
 				<div class="denglu1 mui-action-back">
 					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
-				<div class="logo1">
+				<div class="logo1 mui-action-back">
 					<span style="margin-top:0.2rem;">个人信息</span>
 				</div>
 				<label id="editInfo" class="mui-pull-right" style="margin-top:0.8rem;color: white;margin-right: 20px;font-size: 20px;">完成</label>
@@ -249,11 +313,22 @@
 			</div>
 
 			<div class="items">
-				<span style="line-height: 50px;">所在地:</span>
-				<button id='address' type='button' style="display: inline;width: 80%;padding: 10px;border: solid #E0E0E0 1px;border-radius: 5px;">选择城市</button>
+				<span style="line-height: 50px;float: left;">所在地:</span>
+				<div style="width: 20%;float: left;margin-left: 10px;">
+					<select style="border: #e0e0e0 1px solid;" id="data-province">
+					</select>
+				</div>
+				<div style="width: 20%;float: left;margin-left: 10px;">
+					<select style="border: #e0e0e0 1px solid;" id="data-city">
+					</select>
+				</div>
+				<div style="width: 20%;float: left;margin-left: 10px;">
+					<select style="border: #e0e0e0 1px solid;" id="data-area">
+					</select>
+				</div>
 			</div>
 
-			<div class="items">
+			<div class="items" style="clear: both;">
 				<span style="float: left;line-height: 100px;">简&nbsp;介: &nbsp;&nbsp;&nbsp;</span>
 				<textarea style="width: 80%;min-height: 100px;border: solid #E0E0E0 1px;border-radius: 5px;" id="introduce"></textarea>
 			</div>

@@ -137,8 +137,8 @@
 								}
 								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " />" + "	</div><div id='vItem' ><h4 ><span id='nickName'>" + data[i].userName + "</span>" +
 									"<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
-									"</span><span id='sp_comm' class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
-									"</span></h4><span id='comBody'>" + data[i].body + "</span><span id='commTime'>" +
+									"</span><span id='sp_comm'  class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
+									"</span></h4><span id='comBody' style='margin-left:10px;'>" + data[i].body + "</span><span id='commTime'>" +
 									myDate + "</span>" + "	</div></li> "
 							}
 							comment.innerHTML = commUrl;
@@ -626,7 +626,7 @@
 					<div class="denglu1 mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-					<div class="logo1">
+					<div class="logo1 mui-action-back">
 						<span style="line-height: 25px;">私募动态 </span>
 					</div>
 					<div class="sousuo1" id="more">

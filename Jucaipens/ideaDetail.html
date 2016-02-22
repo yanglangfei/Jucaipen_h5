@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<!--
     	作者：185601452@qq.com
@@ -38,6 +37,8 @@
 				var log_commen_list = document.getElementById("commList");
 				var txt_commen = document.getElementById("txt_commen");
 				var id = web.ideaId;
+				var totlePage;
+				var currentPage=1;
 				var opType;
 				//获取热门观点详细信息
 				mui.ajax(ideaDetail, {
@@ -65,7 +66,7 @@
 					},
 					error: function(e) {}
 				})
-				queryComments();
+				queryComments(currentPage);
 				//点赞
 				sa_zan.addEventListener("tap", function() {
 						var uId = plus.storage.getItem("userId");
@@ -127,18 +128,19 @@
 					})
 				}
 				//获取评论信息
-				function queryComments() {
+				function queryComments(p) {
 					var commStr = log_commen_list.innerText;
 					mui.ajax(commListPath, {
 						data: {
 							ideaId: id,
-							page: 1
+							page: p
 						},
 						type: "get",
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
+								totlePage=data[0].totlePage;
 								var myDate = subStr(1, data[i].insertDate);
 								var face = data[i].faceImage;
 								if (face.indexOf('121.40.227.121') > 0) {
@@ -385,7 +387,7 @@
 					<div class="denglu1  mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-					<div class="logo1" style="margin-top:0.2rem;">
+					<div class="logo1 mui-action-back" style="margin-top:0.2rem;">
 						<span>观点详情</span>
 					</div>
 				</div>

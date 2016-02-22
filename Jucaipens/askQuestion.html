@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 	<head id="Head1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -23,6 +22,7 @@
 				var choseType=document.getElementById("choseType");
 				var web = plus.webview.currentWebview();
 				var teacherId = web.teacherId;
+				var typeId;
 				//提交咨询数据
 				button.addEventListener("tap", function() {
 					var ques = textfield.value;
@@ -37,6 +37,11 @@
 						})
 						return;
 					}
+					typeId=choseType.options[choseType.options.selectedIndex].value;
+					if(typeId<=0){
+						mui.toast('请选择分类');
+						return ;
+					}
 					
 					if (ques.length <= 0) {
 						plus.nativeUI.toast('提问内容不能为空');
@@ -44,7 +49,7 @@
 					}
 					mui.ajax(askQuestion, {
 						data: {
-							questionType: 0,
+							questionType: typeId,
 							userId: userId,
 							askBodys: ques,
 							teacherId: teacherId
@@ -65,27 +70,35 @@
 				})
 				
 				getTypeInfo();
-				
 				//获取提问分类信息
 				function getTypeInfo(){
+					var typeStr="<option value="+(-1)+">请选择分类</option>";
 					mui.ajax(getTypePath,{
 						type:"get",
 						dataType:"json",
 						timeout:10000,
 						success: function(data){
-							console.log(JSON.stringify(data));
-							
 							for(var i=0;i<data.length;i++){
-								
+								typeStr=typeStr+"<option value="+data[i].classId+">"+data[i].askName+"</option>";
 							}
+							choseType.innerHTML=typeStr;
 						},
 						error: function(e){
 							
-						}
+						} 
 					})
 				}
 			})
 		</script>
+		
+		<style type="text/css">
+			#button{ 
+				border: 0px;
+			}
+			#button:active{
+				background: #CC3300;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -97,7 +110,7 @@
 					<div class="denglu1 mui-action-back">
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-					<div class="logo1" style="margin-top:0.2rem;">
+					<div class="logo1 mui-action-back" style="margin-top:0.2rem;">
 						<span>咨询名家</span>
 					</div>
 				</div>
@@ -109,7 +122,9 @@
 			<div class="mingjiatoask nei_top" style="margin-top: 70px;">
 				<div class="ask_fenleis" style="height: 40px;margin-left: 15px;">
 					<label style="font-size: 18px;line-height: 30px;float: left;">分类：</label>
-					<button style="float: left;border: 0px;width: 70%;" id="choseType">请选择问题分类</button>
+					<select style="float: left;border: 1px #cccccc solid;width: 70%;" id="choseType">
+						
+					</select>
 
 				</div>
 				<div class="ask_content">

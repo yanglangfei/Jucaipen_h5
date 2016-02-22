@@ -42,7 +42,8 @@
 			"liveRoom.html",
 			"trhreeBoard.html",
 			"login.html",
-			"liveList.html"
+			"liveList.html",
+			"vipcenter.html"
 		]
 	},
 	"trhreeBoard.html": {
@@ -427,7 +428,8 @@
 			"js/mui.min.js",
 			"image/into_back.png",
 			"css/mui.min.css",
-			"css/style.css"
+			"css/style.css",
+			"image/head.png"
 		],
 		"refer": []
 	},

@@ -63,7 +63,7 @@
 									var isManager = plus.storage.getItem("isManager");
 									var buyProductId = plus.storage.getItem("buyProductId");
 									if (visit == 1) {
-										if (isServer == 0 || isManager == 0) {
+										if (isServer == 1 || isManager == 1) {
 											//管理员客服可以进入
 											intoLiveRoom(lId,face);
 											return;

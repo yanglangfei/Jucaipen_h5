@@ -16,7 +16,9 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var livePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/todayIdeas";
 				var web = plus.webview.currentWebview();
@@ -100,6 +102,7 @@
 					dataType: "json",
 					timeout: 10000,
 					success: function(data) {
+						loading.style.display='none';
 						for(var i=0;i<data.length;i++){
 							var myDate=subStr(1,data[i].insertDate);
 							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>"+myDate+"</span></li>"

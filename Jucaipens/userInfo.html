@@ -16,12 +16,17 @@
 		<script type="text/javascript" src="js/city.data-3.js"></script>
 		<script type="text/javascript" src="js/city.data.js"></script>
 		<link rel="stylesheet" href="css/mui.poppicker.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/mui.picker.js"></script>
 		<script type="text/javascript" src="js/mui.poppicker.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
+				var width=plus.screen.resolutionWidth;
+				var height=plus.screen.resolutionHeight;
 				var uId = plus.storage.getItem("userId");
 				var name = document.getElementById("name");
 				var tel = document.getElementById("tel");
@@ -34,6 +39,7 @@
 				var introduce = document.getElementById("introduce");
 				var editInfo = document.getElementById("editInfo");
 				var sex = document.getElementById("sex");
+				var btn_send=document.getElementById("btn_send");
 				var getMyInfo="http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
 				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
 				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
@@ -53,8 +59,10 @@
 					success: function(data) {
 						name.value = data.userName;
 						tel.value = data.telPhone;
-						birth.value = data.birthday;
+						var time=dateForm(data.birthday);
+						birth.valueAsDate=time;
 						email.value = data.email;
+						sex.innerHTML=data.sex;
 					    provinceLay.innerHTML="<option value="+data.localProId+">"+data.localProvince+"</option>";
 						cityLay.innerHTML="<option value="+data.localCityId+">"+data.localCity+"</option>";
 						areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>"
@@ -108,7 +116,7 @@
 						console.log(data);
 						userLogo.src = data;
 					}, function(e) {
-						console.log("error");
+						console.log("error:"+e.message);
 					})
 				}
 				//编辑资料按钮
@@ -257,9 +265,9 @@
 			
 			#btn_send {
 				line-height: 25px;
-				margin-left: 10px;
+				margin-left: 0px;
 				color: #bb1121;
-				font-size: 10px;
+				font-size: 15px;
 				background: #efeff4;
 			}
 			
@@ -297,8 +305,8 @@
 
 			</div>
 			<div class="items">
-				<span style="line-height: 50px;"> 生&nbsp;日：</span>
-				<input type="date" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="birth" />
+				<span style="line-height: 50px;float: left;"> 生&nbsp;日：</span>
+				<input type="date" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="birth"/>
 			</div>
 
 			<div class="items">
@@ -308,21 +316,21 @@
 			</div>
 
 			<div class="items">
-				<span> Email：</span>
-				<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="email" />
+				<span style="line-height: 50px;float: left;"> Email：</span>
+				<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" />
 			</div>
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;">所在地:</span>
-				<div style="width: 20%;float: left;margin-left: 10px;">
+				<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-province">
 					</select>
 				</div>
-				<div style="width: 20%;float: left;margin-left: 10px;">
+				<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-city">
 					</select>
 				</div>
-				<div style="width: 20%;float: left;margin-left: 10px;">
+				<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-area">
 					</select>
 				</div>

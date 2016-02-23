@@ -12,7 +12,9 @@
 		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
 				var chatLay = document.getElementById("chatLay");
@@ -74,7 +76,7 @@
 								content = content + "<li><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 							}
 							chatLay.innerHTML = content;
-							chatLay.scrollTop=chatLay.scrollHeight;
+							mui.scrollTo(0,1000);
 							}
 						},
 						error: function(e) {

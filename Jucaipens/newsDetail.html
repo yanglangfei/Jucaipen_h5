@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="css/app.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
+				swipeBack:true ,//启用右滑关闭功能
 				gestureConfig: {
 					hold: true,
 					release: true
@@ -135,8 +136,9 @@
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + logoStr;
 								}
-								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " />" + "	</div><div id='vItem' ><h4 ><span id='nickName'>" + data[i].userName + "</span>" +
-									"<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
+								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" 
+								+ "<labe style='margin-left:10px;'>"+data[i].userName + "</lable></span>"
+								+"<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
 									"</span><span id='sp_comm'  class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
 									"</span></h4><span id='comBody' style='margin-left:10px;'>" + data[i].body + "</span><span id='commTime'>" +
 									myDate + "</span>" + "	</div></li> "

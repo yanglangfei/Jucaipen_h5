@@ -15,7 +15,9 @@
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/tuch.css" />
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var abord = document.getElementById("abord");
 				abord.addEventListener("tap", function() {

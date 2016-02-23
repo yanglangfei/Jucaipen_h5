@@ -14,7 +14,9 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
 				var teacherId = web.teacherId;
@@ -25,6 +27,7 @@
 				var info_sunmit = document.getElementById("info_sunmit");
 				var getCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
 				var checkCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/checkMobileCode";
+				var restSecond;
 				//获取验证码
 				btn_code.addEventListener("tap", function() {
 						var txt_iphone_value = txt_iphone.value;
@@ -32,6 +35,8 @@
 							plus.nativeUI.toast("手机号不正确");
 							return;
 						}
+						restSecond=60;
+					    setInterval(rest,1000);
 						mui.ajax(getCodePath, {
 							data: {
 								telPhone: txt_iphone_value
@@ -42,11 +47,26 @@
 							success: function(data) {
 								if (data.ret_code != 0) {
 									plus.nativeUI.toast(data.err_msg);
+								}else{
+									plus.nativeUI.toast(data.err_msg);
 								}
 							},
 							error: function(e) {}
 						})
 					})
+				
+				//获取手机验证码 按钮文字
+				function rest(){
+					if(restSecond>0){
+						btn_code.disabled='disabled';
+					btn_code.value=(restSecond--)+"秒后重新发送";
+					}else{
+						btn_code.disabled='';
+						btn_code.value="获取验证码";
+					}
+				}
+				
+				
 					//提交个人信息
 				info_sunmit.addEventListener("tap", function() {
 					var txt_name_value = txt_name.value;
@@ -157,16 +177,16 @@
 			<ul>
 				<li>
 					<label style="float: left;line-height: 35px;">真实姓名&nbsp;:&nbsp;</label>
-					<input style="float: left;width: 70%;" name="txt_name" type="text" id="txt_name" placeholder="请输入真实姓名" />
+					<input style="float: left;width: 70%;" name="txt_name" type="text" id="txt_name" />
 				</li>
 				<li style="clear: both;">
 					<label>手&nbsp;机&nbsp;号&nbsp;&nbsp;:&nbsp;</label>
-					<input style="width: 70%;" name="txt_iphone" type="tel" value="" id="txt_iphone" placeholder="请输入手机号码" />
+					<input style="width: 70%;" name="txt_iphone" type="tel" value="" id="txt_iphone" />
 				</li>
 				<li>
 					<label>验&nbsp;证&nbsp;码&nbsp;&nbsp;:&nbsp;</label>
-					<input style="width: 45%;" name="txt_code" type="text" id="txt_code" placeholder="请输入验证码" />
-					<input id="btn_code" type="button" value="获取验证码" style="height: 40px;" />
+					<input style="width: 35%;" name="txt_code" type="text" id="txt_code" />
+					<input id="btn_code" type="button" value="获取验证码" style="height: 40px;margin-left: 5px;" />
 				</li>
 				<li>
 					<input type="button" name="info_sunmit" value="确认提交" id="info_sunmit" />

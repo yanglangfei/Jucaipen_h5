@@ -15,7 +15,9 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
 				var id = web.teacherId;
@@ -315,7 +317,7 @@
 						<li>
 							<h3 style="line-height: 30px;">加入时间</h3><span><em id="joinDate"></em></span></li>
 						<li>
-							<h3 style="line-height: 30px;">擅长领域</h3><span><em id="hody" style="white-space: nowrap;text-overflow: ellipsis;"> </em></span></li>
+							<h3 style="line-height: 30px;">擅长领域</h3><span><em id="hody" style="height: 30px;white-space: nowrap;text-overflow: ellipsis;"> </em></span></li>
 						<li class="noborder" id="intoIntroduce">
 							<h3 style="line-height: 30px;">名师简介</h3><span><a><b id="introduce" style="height: 30px;white-space: nowrap;text-overflow: ellipsis;"></b><i><img src="image/into_next.png" /></i></a></span></li>
 					</ul>

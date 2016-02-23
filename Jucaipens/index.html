@@ -11,19 +11,22 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
-				var version=plus.os.version;
+				var version;
+				plus.runtime.getProperty(plus.runtime.appid,function(info){
+					 version=info.code;
+					 getVersion();
+				})   
 				var name=plus.os.name;
 				var hei=plus.screen.resolutionHeight;
 				var  width=plus.screen.resolutionWidth;
 				var hDpi=hei*plus.screen.scale;
 				var wDpi=width*plus.screen.scale;
-				
-				console.log("设备版本号："+version+" 设备名称:"+name+" 设备分辨率高： "+hDpi+" 设备分辨率宽： "+wDpi);
-				
-				
-				
+				var getVersionPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/updateVersion";
+				var dowLoadPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/downLoadApk";
 				var page = document.getElementById('pager');
 				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
 				var live = document.getElementById("data-live");
@@ -31,6 +34,58 @@
 				var attention = document.getElementById("data-attention");
 				var hotIdea = document.getElementById('data-hotidea');
 				var intoLogin = document.getElementById("loginState");
+				//获取版本号
+				function getVersion(){
+					mui.ajax(getVersionPath,{
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								var versionCode=data.versionCode;
+								var apkUrl=data.apkUrl;
+								console.log(version);
+								if(versionCode>version){
+									 //更新版本
+								}else{
+									//暂无最新的版本可更新
+									mui.confirm("有新版本可更新","更新提示",["确定","取消"],function(e){
+										   if(e.index==0){
+										   	  downLoadApk(apkUrl);
+										   }else{
+										     
+										   } 
+									})
+								} 
+							}
+							
+						},
+						error: function(e){
+							
+						}
+					})
+				}
+				
+				function downLoadApk(downPath){
+					console.log(dowLoadPath+"?fileName="+downPath);
+					var task=plus.downloader.createDownload(dowLoadPath+"?fileName="+downPath,{},function(d,state){
+						if(state==200){ 
+							var filePath=d.url;
+							console.log(JSON.stringify(d));
+							plus.runtime.install(filePath,{},function(d){
+								console.log(JSON.stringify(d));
+							},function(e){
+								console.log(e.message);
+							});
+						}else{
+							
+						}
+					});
+					task.start();
+				}
+				
+				
+				
 				var url = "";
 				//获取广告
 				mui.ajax(queryAdice, {

@@ -14,7 +14,9 @@
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/mui.min.js" ></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function(){
 				var getInfoPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/infoCenter";
 				

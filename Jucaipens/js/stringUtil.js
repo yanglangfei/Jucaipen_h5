@@ -57,7 +57,20 @@ var subStr = function(type, str) {
 		}
 		return year+"-"+moth+"-"+day;
 	}
+}
 
 
-
+var dateForm=function(str){
+	var year = str.substr(0, 4);
+	var index1 = str.indexOf('-');
+	var lastIndex = str.lastIndexOf('-');
+	var mins1 = parseInt(lastIndex) - (parseInt(index1) + 1);
+	var moth = str.substr(parseInt(index1) + 1, mins1);
+	var index3 = str.indexOf(' ');
+	var mins2 = index3 - lastIndex;
+	var day = str.substr(lastIndex + 1, mins2);
+	var time=new Date();
+	time.setYear(year);
+	time.setMonth(moth,day);
+	return time;
 }

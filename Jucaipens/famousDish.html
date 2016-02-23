@@ -13,7 +13,9 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var page = document.getElementById('pager');
 				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
@@ -97,7 +99,9 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>"
+								+ data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>"
+								+ body + "</lable></div> </li>";
 							}
 							hotIdeas.innerHTML = hotUrl;
 							mui("#data-hotIdeas").on("tap", "li", function() {
@@ -128,7 +132,9 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
-								teacherStr = teacherStr + "  <div id=" + data[i].id + " class='item'><a><span>" + "  <img src=" + data[i].headFace + "></span></a>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/V1.png'></i></h4>" + "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
+								teacherStr = teacherStr + "  <div id=" + data[i].id + " class='item'><a><span><img src=" + data[i].headFace + "></span></a><a><h4>"
+								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>"
+								+ "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
 							}
 							famousList.innerHTML = teacherStr;
 							mui("#famousList").on("tap", ".item", function() {
@@ -158,7 +164,11 @@
 						timeout: 10000,
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
-								questionStr = questionStr + "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/V1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askInfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+								questionStr = questionStr + "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" 
+								+ data[i].headFace + "></span></a><div class='name'><a><h4>" 
+								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" 
+								+ data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" 
+								+ "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
 							}
 							question.innerHTML = questionStr;
 							mui("#data-question").on("tap", ".ask", function() {

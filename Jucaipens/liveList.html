@@ -15,7 +15,9 @@
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var videoList = "http://121.40.227.121:8080/AccumulateWealth/accumulate/teachVideo";
 				var video = document.getElementById("data-live");

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -15,7 +14,9 @@
         <script src="js/castapp.js"></script>		
 		
 		<script type="text/javascript" charset="UTF-8">
-		mui.init();
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
 		castapp.init(null,"con");
 		mui.plusReady(function(){
 		 var pay_btn=document.getElementById("pay_btn");	
@@ -118,15 +119,15 @@
 		</script>
 		<style type="text/css">
 			.paybody {
-				margin-top: 80px;
+				margin-top: 50px;
 			}
 			
 			.paybody div.content {
 				width: 90%;
 				float: left;
-				background: #FFF none repeat scroll 0% 0%;
+				background: #efeff4 none repeat scroll 0% 0%;
 				border-radius: 5px;
-				margin: 1rem 5%;
+				margin: 1rem 8px;
 			}
 			
 			.paybody div.content h3 {
@@ -159,7 +160,7 @@
 			
 			.paybody div.content div.pay_order p span em {
 				color: #F00;
-				font-size: 16px;
+				font-size: 15px;
 				font-style: normal;
 			}
 			
@@ -217,7 +218,6 @@
 			}
 			
 			.pay_yeepay a {
-				display: inline-block;
 				width: 120px;
 				height: 40px;
 				border: 1px solid #E8E8E8;
@@ -271,7 +271,7 @@
 				<div class="denglu1 mui-action-back">
 					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
-				<div class="logo1">
+				<div class="logo1 mui-action-back" style="margin-top:0.2rem;" >
 					<span>购买直播或签约</span>
 				</div>
 			</div>

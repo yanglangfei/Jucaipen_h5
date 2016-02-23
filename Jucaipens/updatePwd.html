@@ -9,7 +9,9 @@
 		<link rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var txb_oldpwd = document.getElementById("txb_oldpwd");
 				var txb_newpwd = document.getElementById("txb_newpwd");

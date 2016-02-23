@@ -21,7 +21,9 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
 			mui.plusReady(function() {
 				var allIdeaPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList";
 				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";

@@ -60,19 +60,10 @@
 							id:"vipService"
 						});*/
 					} else if (attr == "collect-remark") {
-						//我的收藏和评论
+						//我的评论
 						mui.openWindow({
 							url: "myRemark.html",
 							id: "myRemark",
-							waiting: {
-								autoShow: false
-							}
-						});
-					} else if (attr == "order") {
-						//我的预约
-						mui.openWindow({
-							url: "myOrder.html",
-							id: "myOrder",
 							waiting: {
 								autoShow: false
 							}
@@ -195,19 +186,6 @@
 								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
 
 									<label>我的评论</label>
-								</div>
-							</a>
-						</nobr>
-					</li>
-					<li class="mui-table-view-cell" id="order">
-						<nobr>
-							<div class="vip_logo">
-								<img src="image/myorder.png" style="height: 20px;" />
-							</div>
-							<a class="mui-navigate-right">
-								<div style="float: left;line-height: 20px;margin-left: 5px;" id="vip_lable">
-
-									<label>我的预约</label>
 								</div>
 							</a>
 						</nobr>

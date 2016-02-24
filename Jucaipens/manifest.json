@@ -501,7 +501,8 @@
 					"image/guan.png",
 					"css/mui.min.css",
 					"fonts/mui.ttf",
-					"image/into_back.png"
+					"image/into_back.png",
+					"js/stringUtil.js"
 				],
 				"priority": 13,
 				"refer": []

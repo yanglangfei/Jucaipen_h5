@@ -6,7 +6,7 @@
 -->
 <html>
 
-	<head>
+	<head> 
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -29,21 +29,34 @@
 				var height=plus.screen.resolutionHeight;
 				var uId = plus.storage.getItem("userId");
 				var name = document.getElementById("name");
+				name.disabled=true;
 				var tel = document.getElementById("tel");
+				tel.disabled=true;
 				var birth = document.getElementById("birth");
+				birth.disabled=true;
 				var email = document.getElementById("email");
+				email.disabled=true;
 				var userLogo = document.getElementById("userLogo");
+				userLogo.disabled=true;
 				var provinceLay = document.getElementById("data-province");
+				provinceLay.disabled=true;
 				var cityLay=document.getElementById("data-city");
+				cityLay.disabled=true;
 				var areaLay=document.getElementById("data-area");
+				areaLay.disabled=true;
 				var introduce = document.getElementById("introduce");
+				introduce.disabled=true;
 				var editInfo = document.getElementById("editInfo");
 				var sex = document.getElementById("sex");
+				sex.disabled=true;
 				var btn_send=document.getElementById("btn_send");
+				btn_send.disabled=true;
 				var getMyInfo="http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
 				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
 				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
 				var queryArea = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
+				var uploadPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/uploadUserLogo";
+				var sendUserInfoPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/completeInfo";
 				var images;
 				if (uId <= 0) {
 					return;
@@ -62,10 +75,12 @@
 						var time=dateForm(data.birthday);
 						birth.valueAsDate=time;
 						email.value = data.email;
-						sex.innerHTML=data.sex;
+						sex.innerHTML=data.sex;  
+						if(data.localProId>0||data.localCityId>0||data.localAreaId>0){
 					    provinceLay.innerHTML="<option value="+data.localProId+">"+data.localProvince+"</option>";
 						cityLay.innerHTML="<option value="+data.localCityId+">"+data.localCity+"</option>";
-						areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>"
+						areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>";
+						}
 						introduce.value = data.descript;
 						if (data.faceImage.length > 0) { 
 							images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
@@ -103,9 +118,11 @@
 				function getGrial() {
 					plus.gallery.pick(function(data) {
 						userLogo.src = data;
+						console.log(JSON.stringify(data));
+						uploadLogo(data);
 					}, function(e) {
 						console.log("err");
-					})
+					}) 
 				}
 				//获取拍照图片
 				function getCame() {
@@ -113,19 +130,128 @@
 					var form = camera.supportedImageFormats[0];
 					var res = camera.supportedImageResolutions[0];
 					camera.captureImage(function(data) {
-						console.log(data);
+						console.log(JSON.stringify(data));
 						userLogo.src = data;
+						uploadLogo(data);
 					}, function(e) {
 						console.log("error:"+e.message);
 					})
 				}
 				//编辑资料按钮
-				editInfo.addEventListener("tap", function() {});
+				editInfo.addEventListener("tap", function() {
+					if(editInfo.innerHTML=="编辑"){
+						editInfo.innerHTML="完成";
+						userLogo.disabled=false;
+						name.disabled=false;
+						sex.disabled=false;
+						birth.disabled=false;
+						btn_send.disabled=false;
+						email.disabled=false;
+						provinceLay.disabled=false;
+						cityLay.disabled=false;
+						areaLay.disabled=false;
+						//getProvinceData(); 
+						introduce.disabled=false;
+					}else{
+						editInfo.innerHTML="编辑";
+						userLogo.disabled=true;
+						name.disabled=true;
+						sex.disabled=true;
+						birth.disabled=true;
+						btn_send.disabled=true;
+						email.disabled=true;
+						provinceLay.disabled=true;
+						cityLay.disabled=true;
+						areaLay.disabled=true;
+						introduce.disabled=true;
+						//提交数据
+					}
+				});
+				
+				
+				//上传文件
+				function uploadLogo(filePath){
+					var wt=plus.nativeUI.showWaiting();
+					var task=plus.uploader.createUpload(uploadPath,{
+						method:"POST" 
+					},function(t,s){
+						wt.close();
+						if(s==200){
+							mui.alert("文件上传成功:"+t.responseText);
+						}else{
+							mui.alert("文件上传失败:"+s+"  "+t.responseText);
+						}
+					}) 
+					task.addFile(filePath,{key:"filename"});
+					task.addData("userId",uId);
+					task.start();
+					sendUserInfo();
+				}
+				
+				
+				//提交非文件信息
+				function sendUserInfo(){
+					if(name.value.length<=0){
+						mui.toast(" 昵称不能为空");
+						return ;
+					}
+					if(sex.innerHTML.length<=0){
+						mui.toast("性别不能为空");
+						return ;
+					}
+					if(birth.value.length<=0){
+						mui.toast("生日不能为空");
+						return ;
+					}
+					if(tel.value.length<=0){
+						mui.toast("手机号不能为空");
+						return ;
+					}
+					if(email.value.length<=0){
+						mui.toast("Email不能为空");
+						return ;
+					}
+					if(provinceLay.value.length<=0||cityLay.value.length<=0||areaLay.value.length<=0){
+						mui.toast("请正确选择所在地");
+						return ;
+					}
+					mui.ajax(sendUserInfoPath,{
+						data:{
+							nikeName:name.value,
+							telPhone:tel.value,
+							sex:sex.value,
+							email:email.value,
+							bodys:introduce.value,
+							birthday:birth.value,
+							localProvince:provinceLay.value,
+							localCity:cityLay.value,
+							localArea:areaLay.value
+						},
+						type:"post",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								mui.toast("个人资料提交成功");
+								mui.back();
+							}else{
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							mui.toast("连接服务失败");
+						}
+					})
+				}
+				  
+
 				//选择性别
 				var btnsAry = [{
 					title: "男"
 				}, {
 					title: "女"
+				}, {
+					title: "保密"
 				}];
 				sex.addEventListener("tap", function() {
 						plus.nativeUI.actionSheet({
@@ -139,6 +265,9 @@
 							} else if (e.index == 2) {
 								//女
 								sex.innerText = '女';
+							}else if(e.index==3){
+								//保密
+								sex.innerText='保密';
 							}
 						})
 					})
@@ -286,7 +415,7 @@
 				<div class="logo1 mui-action-back">
 					<span style="margin-top:0.2rem;">个人信息</span>
 				</div>
-				<label id="editInfo" class="mui-pull-right" style="margin-top:0.8rem;color: white;margin-right: 20px;font-size: 20px;">完成</label>
+				<label id="editInfo" class="mui-pull-right" style="margin-top:0.8rem;color: white;margin-right: 20px;font-size: 20px;">编辑</label>
 			</div>
 		</header>
 
@@ -297,12 +426,11 @@
 			</div>
 			<div class="items">
 				<span style="line-height: 50px;"> 昵&nbsp;称：</span>
-				<input type="text" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="name" />
+				<input type="text" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;" id="name" placeholder="输入昵称" />
 			</div>
 			<div class="items">
 				<span style="line-height: 50px;"> 性&nbsp;别：</span>
 				<button id='sex' style="display: inline;width: 80%;padding: 10px;border: solid #E0E0E0 1px;border-radius: 5px;">选择性别</button>
-
 			</div>
 			<div class="items">
 				<span style="line-height: 50px;float: left;"> 生&nbsp;日：</span>
@@ -311,34 +439,37 @@
 
 			<div class="items">
 				<span style="line-height: 50px;">手机号:</span>
-				<input type="tel" style="width: 45%;border: solid #E0E0E0 1px;border-radius: 5px;" id="tel" />
+				<input type="tel" style="width: 45%;border: solid #E0E0E0 1px;border-radius: 5px;" id="tel" placeholder="输入手机号"/>
 				<button type="button" class="mui-btn" id="btn_send">修改手机号</button>
 			</div>
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;"> Email：</span>
-				<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" />
+				<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" placeholder="输入邮箱" />
 			</div>
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;">所在地:</span>
 				<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-province">
+						<option>请选择省份</option>
 					</select>
 				</div>
 				<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-city">
+						<option>请选择城市</option>
 					</select>
 				</div>
 				<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-area">
+						<option>请选择县／区</option>
 					</select>
 				</div>
 			</div>
 
 			<div class="items" style="clear: both;">
 				<span style="float: left;line-height: 100px;">简&nbsp;介: &nbsp;&nbsp;&nbsp;</span>
-				<textarea style="width: 80%;min-height: 100px;border: solid #E0E0E0 1px;border-radius: 5px;" id="introduce"></textarea>
+				<textarea style="width: 80%;min-height: 100px;border: solid #E0E0E0 1px;border-radius: 5px;" id="introduce" placeholder="个人简介"></textarea>
 			</div>
 
 			<!--

@@ -15,11 +15,17 @@
 				swipeBack:true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				plus.geolocation.getCurrentPosition(function(p){
+					alert("纬度："+p.coords.latitude+"经度："+p.coords.longitude+"海拔（米）:"+p.coords.altitude
+					+"地址:"+p.coords.address);
+				},function(e){ 
+					alert(e.message);
+				})
 				var version;
-				plus.runtime.getProperty(plus.runtime.appid,function(info){
+				/*plus.runtime.getProperty(plus.runtime.appid,function(info){
 					 version=info.code;
-					 getVersion();
-				})   
+					// getVersion(); 
+				})   */
 				var name=plus.os.name;
 				var hei=plus.screen.resolutionHeight;
 				var  width=plus.screen.resolutionWidth;

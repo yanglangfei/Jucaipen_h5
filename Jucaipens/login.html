@@ -142,7 +142,7 @@
 							}
 						},
 						error: function(e) {
-							console.log(JSON.stringify(data));
+							mui.toast('连接异常');
 						}
 					})
 				}
@@ -150,16 +150,19 @@
 				function authLogin(i) {
 					var s = authos[i];
 					if (!s.authResult) {
-						console.log('ll');
+						console.log('oo');
 						s.login(function(e) {
+							console.log('nn');
 							var openId = e.target.authResult.openid;
 							otherLogin(i, openId);
 						}, function(e) {
+							console.log('nnbb');
 							plus.nativeUI.toast('登录失败');
 						});
 					} else {
 						var openId = s.authResult.openid;
 						otherLogin(i, openId);
+						console.log('mm');
 					}
 				}
 				// 注销所有授权登录认证服务

@@ -58,8 +58,6 @@
 			"description": "使用Native.js能力"
 		},
 
-
-
 		"Push": {
 			"description": "管理推送消息插件"
 		},

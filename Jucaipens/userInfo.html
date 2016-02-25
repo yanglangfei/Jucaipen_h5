@@ -51,11 +51,12 @@
 				sex.disabled=true;
 				var btn_send=document.getElementById("btn_send");
 				btn_send.disabled=true;
+				var updateImagePath="http://192.168.1.94:8080/AccumulateWealth/jucaipen/imageUpload";
 				var getMyInfo="http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
 				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
 				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
 				var queryArea = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
-				var uploadPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/uploadUserLogo";
+				var uploadPath="http://user.jucaipen.com/ashx/AndroidUser.ashx?action=ImageUpload";
 				var sendUserInfoPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/completeInfo";
 				var images;
 				if (uId <= 0) {
@@ -82,10 +83,12 @@
 						areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>";
 						}
 						introduce.value = data.descript;
-						if (data.faceImage.length > 0) { 
+						if (data.faceImage.length > 0&&data.faceImage.indexOf("121.40.227.121")>0) { 
 							images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
-						} else {
+						} else if(data.faceImage.length<=0){
 							images = 'image/head.png';
+						}else{
+							images=data.faceImage;
 						}
 						userLogo.src = images;
 					},
@@ -165,6 +168,7 @@
 						areaLay.disabled=true;
 						introduce.disabled=true;
 						//提交数据
+						sendUserInfo();
 					}
 				});
 				
@@ -177,15 +181,40 @@
 					},function(t,s){
 						wt.close();
 						if(s==200){
-							mui.alert("文件上传成功:"+t.responseText);
+							mui.alert("文件上传失败:"+s+"  "+t.responseText);
+							var data="({"+t.responseText+"})";
+							var jsonObj=eval(data);
+							updateImage(jsonObj.ImageUrl);
 						}else{
 							mui.alert("文件上传失败:"+s+"  "+t.responseText);
 						}
 					}) 
-					task.addFile(filePath,{key:"filename"});
-					task.addData("userId",uId);
+					task.addFile(filePath,{key:"imgFile"});
 					task.start();
-					sendUserInfo();
+				}
+				 
+				
+				//更新图片
+				function updateImage(imageUrl){
+					mui.ajax(updateImagePath,{
+						data:{
+							userId:uId,
+							imgFile:imageUrl
+						},
+						type:"POST",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							if(data.ret_code==0){
+								mui.toast("文件更新成功");
+							}else{
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(e){
+							mui.toast("连接服务器失败");
+						}
+					})
 				}
 				
 				
@@ -254,7 +283,7 @@
 					title: "保密"
 				}];
 				sex.addEventListener("tap", function() {
-						plus.nativeUI.actionSheet({
+						plus.nativeUI.actionSheet({  
 							buttons: btnsAry,
 							title: "选择性别",
 							cancel: "取消"

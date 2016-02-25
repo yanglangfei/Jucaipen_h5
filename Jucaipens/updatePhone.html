@@ -18,6 +18,8 @@
 				var sendVail=document.getElementById("sendVail");
 				var savePhone=document.getElementById("savePhone");
 				var restSecond;
+				var uId=plus.storage.getItem("userId");
+				var updatePhonePath="http://192.168.1.94:8080/AccumulateWealth/jucaipen/updatePhone";
 				var sendMobileCodePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
 				//获取手机验证码
 				sendVail.addEventListener("tap",function(){
@@ -59,7 +61,22 @@
 				}
 				
 				//验证手机号
-				function checkPhoneCode(){
+				function checkPhoneCode(tel){
+					mui.ajax(updatePhonePath,{
+						data:{
+							userId:uId,
+							telPhone:tel
+						},
+						dataType:"json",
+						type:"POST",
+						timeout:10000,
+						success: function(data){
+							
+						},
+						error: function(e){
+							
+						}
+					})
 					
 				}
 				

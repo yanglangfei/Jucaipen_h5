@@ -6,7 +6,7 @@
 -->
 <html>
 
-	<head> 
+	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -16,49 +16,60 @@
 		<script type="text/javascript" src="js/city.data-3.js"></script>
 		<script type="text/javascript" src="js/city.data.js"></script>
 		<link rel="stylesheet" href="css/mui.poppicker.css" />
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" src="js/mui.picker.js"></script>
 		<script type="text/javascript" src="js/mui.poppicker.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var width=plus.screen.resolutionWidth;
-				var height=plus.screen.resolutionHeight;
+				var width = plus.screen.resolutionWidth;
+				var height = plus.screen.resolutionHeight;
 				var uId = plus.storage.getItem("userId");
 				var name = document.getElementById("name");
-				name.disabled=true;
+				name.disabled = true;
 				var tel = document.getElementById("tel");
-				tel.disabled=true;
+				tel.disabled = true;
 				var birth = document.getElementById("birth");
-				birth.disabled=true;
+				birth.disabled = true;
 				var email = document.getElementById("email");
-				email.disabled=true;
+				email.disabled = true;
 				var userLogo = document.getElementById("userLogo");
-				userLogo.disabled=true;
-				var provinceLay = document.getElementById("data-province");
-				provinceLay.disabled=true;
-				var cityLay=document.getElementById("data-city");
-				cityLay.disabled=true;
-				var areaLay=document.getElementById("data-area");
-				areaLay.disabled=true;
+				userLogo.disabled = true;
+				//var provinceLay = document.getElementById("data-province");
+				//provinceLay.disabled=true;
+				//var cityLay=document.getElementById("data-city");
+				//cityLay.disabled=true;
+				//var areaLay=document.getElementById("data-area");
+				//areaLay.disabled=true;
+				var address = document.getElementById("address");
 				var introduce = document.getElementById("introduce");
-				introduce.disabled=true;
+				introduce.disabled = true;
 				var editInfo = document.getElementById("editInfo");
 				var sex = document.getElementById("sex");
-				sex.disabled=true;
-				var btn_send=document.getElementById("btn_send");
-				btn_send.disabled=true;
-				var updateImagePath="http://192.168.1.94:8080/AccumulateWealth/jucaipen/imageUpload";
-				var getMyInfo="http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
+				sex.disabled = true;
+				var btn_send = document.getElementById("btn_send");
+				btn_send.disabled = true;
+				var updateImagePath = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/imageUpload";
+				var getMyInfo = "http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
 				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
 				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
 				var queryArea = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
-				var uploadPath="http://user.jucaipen.com/ashx/AndroidUser.ashx?action=ImageUpload";
-				var sendUserInfoPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/completeInfo";
+				var uploadPath = "http://user.jucaipen.com/ashx/AndroidUser.ashx?action=ImageUpload";
+				var sendUserInfoPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/completeInfo";
 				var images;
+				var values = location.search;
+				if (values != null&&values.length>0) {
+					var array = values.split("&");
+					if (array != null && array.length > 0) {
+						var pId = array[0].replace("?", "");
+						var cId = array[1];
+						var aId = array[2];
+						console.log(pId + "   " + cId + "   " + aId);
+					}
+				}
 				if (uId <= 0) {
 					return;
 				}
@@ -73,22 +84,23 @@
 					success: function(data) {
 						name.value = data.userName;
 						tel.value = data.telPhone;
-						var time=dateForm(data.birthday);
-						birth.valueAsDate=time;
+						var time = dateForm(data.birthday);
+						birth.valueAsDate = time;
 						email.value = data.email;
-						sex.innerHTML=data.sex;  
-						if(data.localProId>0||data.localCityId>0||data.localAreaId>0){
-					    provinceLay.innerHTML="<option value="+data.localProId+">"+data.localProvince+"</option>";
-						cityLay.innerHTML="<option value="+data.localCityId+">"+data.localCity+"</option>";
-						areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>";
+						sex.innerHTML = data.sex;
+						if (data.localProId > 0 || data.localCityId > 0 || data.localAreaId > 0) {
+							address.innerHTML = data.localProvince + "-" + data.localCity + "-" + data.localArea;
+							// provinceLay.innerHTML="<option value="+data.localProId+">"+data.localProvince+"</option>";
+							//cityLay.innerHTML="<option value="+data.localCityId+">"+data.localCity+"</option>";
+							//areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>";
 						}
 						introduce.value = data.descript;
-						if (data.faceImage.length > 0&&data.faceImage.indexOf("121.40.227.121")>0) { 
+						if (data.faceImage.length > 0 && data.faceImage.indexOf("121.40.227.121") > 0) {
 							images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
-						} else if(data.faceImage.length<=0){
+						} else if (data.faceImage.length <= 0) {
 							images = 'image/head.png';
-						}else{
-							images=data.faceImage;
+						} else {
+							images = data.faceImage;
 						}
 						userLogo.src = images;
 					},
@@ -125,7 +137,7 @@
 						uploadLogo(data);
 					}, function(e) {
 						console.log("err");
-					}) 
+					})
 				}
 				//获取拍照图片
 				function getCame() {
@@ -137,143 +149,147 @@
 						userLogo.src = data;
 						uploadLogo(data);
 					}, function(e) {
-						console.log("error:"+e.message);
+						console.log("error:" + e.message);
 					})
 				}
 				//编辑资料按钮
 				editInfo.addEventListener("tap", function() {
-					if(editInfo.innerHTML=="编辑"){
-						editInfo.innerHTML="完成";
-						userLogo.disabled=false;
-						name.disabled=false;
-						sex.disabled=false;
-						birth.disabled=false;
-						btn_send.disabled=false;
-						email.disabled=false;
-						provinceLay.disabled=false;
-						cityLay.disabled=false;
-						areaLay.disabled=false;
+					if (editInfo.innerHTML == "编辑") {
+						editInfo.innerHTML = "完成";
+						userLogo.disabled = false;
+						name.disabled = false;
+						sex.disabled = false;
+						birth.disabled = false;
+						btn_send.disabled = false;
+						email.disabled = false;
+						//provinceLay.disabled=false;
+						//cityLay.disabled=false;
+						//areaLay.disabled=false;
 						//getProvinceData(); 
-						introduce.disabled=false;
-					}else{
-						editInfo.innerHTML="编辑";
-						userLogo.disabled=true;
-						name.disabled=true;
-						sex.disabled=true;
-						birth.disabled=true;
-						btn_send.disabled=true;
-						email.disabled=true;
-						provinceLay.disabled=true;
-						cityLay.disabled=true;
-						areaLay.disabled=true;
-						introduce.disabled=true;
+						address.disabled = false;
+						introduce.disabled = false;
+					} else {
+						editInfo.innerHTML = "编辑";
+						userLogo.disabled = true;
+						name.disabled = true;
+						sex.disabled = true;
+						birth.disabled = true;
+						btn_send.disabled = true;
+						email.disabled = true;
+						//provinceLay.disabled=true;
+						//cityLay.disabled=true;
+						//areaLay.disabled=true;
+						address.disabled = true;
+						introduce.disabled = true;
 						//提交数据
 						sendUserInfo();
 					}
 				});
-				
-				
 				//上传文件
-				function uploadLogo(filePath){
-					var wt=plus.nativeUI.showWaiting();
-					var task=plus.uploader.createUpload(uploadPath,{
-						method:"POST" 
-					},function(t,s){
+				function uploadLogo(filePath) {
+					var wt = plus.nativeUI.showWaiting();
+					var task = plus.uploader.createUpload(uploadPath, {
+						method: "POST"
+					}, function(t, s) {
 						wt.close();
-						if(s==200){
-							mui.alert("文件上传失败:"+s+"  "+t.responseText);
-							var data="({"+t.responseText+"})";
-							var jsonObj=eval(data);
+						if (s == 200) {
+							var data = "(" + t.responseText + ")";
+							var jsonObj = eval(data);
 							updateImage(jsonObj.ImageUrl);
-						}else{
-							mui.alert("文件上传失败:"+s+"  "+t.responseText);
+						} else {
+							mui.alert("文件上传失败:" + s + "  " + t.responseText);
 						}
-					}) 
-					task.addFile(filePath,{key:"imgFile"});
+					})
+					task.addFile(filePath, {
+						key: "imgFile"
+					});
 					task.start();
 				}
-				 
-				
 				//更新图片
-				function updateImage(imageUrl){
-					mui.ajax(updateImagePath,{
-						data:{
-							userId:uId,
-							imgFile:imageUrl
+				function updateImage(imageUrl) {
+					mui.ajax(updateImagePath, {
+						data: {
+							userId: uId,
+							imgFile: imageUrl
 						},
-						type:"POST",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							if(data.ret_code==0){
+						type: "POST",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
 								mui.toast("文件更新成功");
-							}else{
+							} else {
 								mui.toast(data.err_msg);
 							}
 						},
-						error: function(e){
+						error: function(e) {
 							mui.toast("连接服务器失败");
 						}
 					})
 				}
-				
-				
+				address.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "choseCity.html",
+						id: "choseCity",
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
 				//提交非文件信息
-				function sendUserInfo(){
-					if(name.value.length<=0){
+				function sendUserInfo() {
+					if (name.value.length <= 0) {
 						mui.toast(" 昵称不能为空");
-						return ;
+						return;
 					}
-					if(sex.innerHTML.length<=0){
+					if (sex.innerHTML.length <= 0) {
 						mui.toast("性别不能为空");
-						return ;
+						return;
 					}
-					if(birth.value.length<=0){
+					if (birth.value.length <= 0) {
 						mui.toast("生日不能为空");
-						return ;
+						return;
 					}
-					if(tel.value.length<=0){
+					if (tel.value.length <= 0) {
 						mui.toast("手机号不能为空");
-						return ;
+						return;
 					}
-					if(email.value.length<=0){
+					if (email.value.length <= 0) {
 						mui.toast("Email不能为空");
-						return ;
+						return;
 					}
-					if(provinceLay.value.length<=0||cityLay.value.length<=0||areaLay.value.length<=0){
+					/*if(provinceLay.value.length<=0||cityLay.value.length<=0||areaLay.value.length<=0){
 						mui.toast("请正确选择所在地");
 						return ;
-					}
-					mui.ajax(sendUserInfoPath,{
-						data:{
-							nikeName:name.value,
-							telPhone:tel.value,
-							sex:sex.value,
-							email:email.value,
-							bodys:introduce.value,
-							birthday:birth.value,
-							localProvince:provinceLay.value,
-							localCity:cityLay.value,
-							localArea:areaLay.value
+					}*/
+					mui.ajax(sendUserInfoPath, {
+						data: {
+							nikeName: name.value,
+							telPhone: tel.value,
+							sex: sex.value,
+							email: email.value,
+							bodys: introduce.value,
+							birthday: birth.value,
+							localProvince: provinceLay.id,
+							localCity: cityLay.id,
+							localArea: areaLay.id
 						},
-						type:"post",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							if(data.ret_code==0){
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
 								mui.toast("个人资料提交成功");
 								mui.back();
-							}else{
+							} else {
 								mui.toast(data.err_msg);
 							}
 						},
-						error: function(e){
+						error: function(e) {
 							mui.toast("连接服务失败");
 						}
 					})
 				}
-				  
-
 				//选择性别
 				var btnsAry = [{
 					title: "男"
@@ -283,7 +299,7 @@
 					title: "保密"
 				}];
 				sex.addEventListener("tap", function() {
-						plus.nativeUI.actionSheet({  
+						plus.nativeUI.actionSheet({
 							buttons: btnsAry,
 							title: "选择性别",
 							cancel: "取消"
@@ -294,9 +310,9 @@
 							} else if (e.index == 2) {
 								//女
 								sex.innerText = '女';
-							}else if(e.index==3){
+							} else if (e.index == 3) {
 								//保密
-								sex.innerText='保密';
+								sex.innerText = '保密';
 							}
 						})
 					})
@@ -310,91 +326,80 @@
 						}
 					})
 				})
-				
-				provinceLay.onclick=function(){
+				/*provinceLay.onclick=function(){
 					getProvinceData();
-				}
-				
+				}*/
 				//获取省份信息
-				function getProvinceData(){
-					var provinceStr="";
-					mui.ajax(queryProvincePath,{
-						dataType:"json",
-						type:"get",
-						timeout:10000,
-						success: function(data){
-							for(var i=0;i<data.length;i++){
-								provinceStr=provinceStr+"<option value="+data[i].id+">"+data[i].name+"</option>";
+				function getProvinceData() {
+					var provinceStr = "";
+					mui.ajax(queryProvincePath, {
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								provinceStr = provinceStr + "<option value=" + data[i].id + ">" + data[i].name + "</option>";
 							}
-							provinceLay.innerHTML=provinceStr;
-							var id=provinceLay.options[provinceLay.options.selectedIndex].value;
+							//provinceLay.innerHTML=provinceStr;
+							var id = provinceLay.options[provinceLay.options.selectedIndex].value;
 							getCityInfo(id);
 						},
-						error: function(e){
-							
+						error: function(e) {
 						}
 					})
 				}
-				
-				//省市添加监听事件
-				provinceLay.onchange=function(){
-					var id=provinceLay.options[provinceLay.options.selectedIndex].value;
-					getCityInfo(id);
-				}
-				
-				cityLay.onchange=function(){
+				/*				//省市添加监听事件
+								provinceLay.onchange=function(){
+									var id=provinceLay.options[provinceLay.options.selectedIndex].value;
+									getCityInfo(id);
+								}
+				*/
+				/*cityLay.onchange=function(){
 					var id=cityLay.options[cityLay.options.selectedIndex].value;
 					getAreaInfo(id);
-				}
-				
-				
+				}*/
 				//获取城市信息
-				function getCityInfo(pId){
-					var cityStr="";
-					mui.ajax(queryCityPath,{
-						data:{
-							provinceId:pId
+				function getCityInfo(pId) {
+					var cityStr = "";
+					mui.ajax(queryCityPath, {
+						data: {
+							provinceId: pId
 						},
-						type:'get',
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							for(var i=0;i<data.length;i++){
-								cityStr=cityStr+"<option value="+data[i].id+">"+data[i].name+"</option>";
+						type: 'get',
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								cityStr = cityStr + "<option value=" + data[i].id + ">" + data[i].name + "</option>";
 							}
-							cityLay.innerHTML=cityStr;
-							var id=cityLay.options[cityLay.options.selectedIndex].value;
-				            getAreaInfo(id);
+							//cityLay.innerHTML=cityStr;
+							var id = cityLay.options[cityLay.options.selectedIndex].value;
+							getAreaInfo(id);
 						},
-						error: function(e){
-							
+						error: function(e) {
 						}
 					})
 				}
-				
 				//获取县（区）信息
-				function getAreaInfo(cId){
-					var areaStr="";
-					mui.ajax(queryArea,{
-						data:{
-							cityId:cId
+				function getAreaInfo(cId) {
+					var areaStr = "";
+					mui.ajax(queryArea, {
+						data: {
+							cityId: cId
 						},
-						type:"get",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							for(var i=0;i<data.length;i++){
-								areaStr=areaStr+"<option>"+data[i].name+"</option>";
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								areaStr = areaStr + "<option>" + data[i].name + "</option>";
 							}
-							areaLay.innerHTML=areaStr;
+							//	areaLay.innerHTML=areaStr;
 						},
-						error: function(e){
-							
+						error: function(e) {
 						}
 					})
 				}
-				
-				
 			});
 		</script>
 		<style type="text/css">
@@ -463,12 +468,12 @@
 			</div>
 			<div class="items">
 				<span style="line-height: 50px;float: left;"> 生&nbsp;日：</span>
-				<input type="date" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="birth"/>
+				<input type="date" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="birth" />
 			</div>
 
 			<div class="items">
 				<span style="line-height: 50px;">手机号:</span>
-				<input type="tel" style="width: 45%;border: solid #E0E0E0 1px;border-radius: 5px;" id="tel" placeholder="输入手机号"/>
+				<input type="tel" style="width: 45%;border: solid #E0E0E0 1px;border-radius: 5px;" id="tel" placeholder="输入手机号" />
 				<button type="button" class="mui-btn" id="btn_send">修改手机号</button>
 			</div>
 
@@ -479,7 +484,7 @@
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;">所在地:</span>
-				<div style="width: 25%;float: left;margin-left: 5px;">
+				<!--<div style="width: 25%;float: left;margin-left: 5px;">
 					<select style="border: #e0e0e0 1px solid;" id="data-province">
 						<option>请选择省份</option>
 					</select>
@@ -493,7 +498,8 @@
 					<select style="border: #e0e0e0 1px solid;" id="data-area">
 						<option>请选择县／区</option>
 					</select>
-				</div>
+				</div>-->
+				<button id='address' style="display: inline;width: 80%;padding: 10px;border: solid #E0E0E0 1px;border-radius: 5px;">选择城市</button>
 			</div>
 
 			<div class="items" style="clear: both;">

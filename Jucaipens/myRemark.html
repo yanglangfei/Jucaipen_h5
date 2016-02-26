@@ -20,6 +20,7 @@
 				var totlePager;
 				var uId = plus.storage.getItem("userId");
 				var loadRemark = document.getElementById("loadRemark");
+				var nodataLay=document.getElementById("layer-nodata");
 				var linkmore_p = document.getElementById("linkmore_p");
 				if (uId <= 0) {
 					return;
@@ -45,6 +46,11 @@
 						timeout: 10000,
 						success: function(data) {
 							loadRemark.style.display = 'none';
+							if(data.length<=0){
+								nodataLay.style.display='block';
+							}else{
+								nodataLay.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								var myDate=subStr(3,data[i].insertDate);
 								totlePager = data[i].totlePager;
@@ -113,6 +119,11 @@
 			<!------------底部定位层---------->
 
 		</div>
+		
+		<div style="text-align: center;margin-top: 60%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+				</div>
+		
 		<div style="text-align: center;margin-top: 60%;display: none;" id="loadRemark">
 			<img src="image/loading-0.gif" />
 		</div>

@@ -1,5 +1,8 @@
 //时间格式化
 var subStr = function(type, str) {
+	if(str==null||str.length<=0){
+		return "";
+	}
 	var year = str.substr(0, 4);
 	var index1 = str.indexOf('-');
 	var lastIndex = str.lastIndexOf('-');

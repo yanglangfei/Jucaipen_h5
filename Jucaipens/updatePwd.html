@@ -32,9 +32,10 @@
 						plus.nativeUI.toast("密码不能为空");
 						return;
 					}
-					if (txb_newpwd != txb_surepwd) {
+					if (txb_newpwd.value == txb_surepwd.value) {
+						updatePawd(uId,txb_oldpwd.value,txb_newpwd.value,txb_surepwd.value);
+					}else{
 						plus.nativeUI.toast(" 两次密码不一致");
-						return;
 					}
 				})
 
@@ -52,6 +53,7 @@
 						success: function(data) {
 							if (data.ret_code == 0) {
 								plus.nativeUI.toast("密码修改成功");
+								mui.back();
 							} else {
 								plus.nativeUI.toast(data.err_msg);
 							}
@@ -120,15 +122,15 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>原&nbsp;密&nbsp;码&nbsp;</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入原始密码" id="txb_oldpwd">
+					<input type="password" class="mui-input-clear" placeholder="请输入原始密码" id="txb_oldpwd">
 				</div>
 				<div class="mui-input-row" style="margin-top: 10px;">
 					<label>新&nbsp;密&nbsp;码&nbsp;</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入新密码" id="txb_newpwd">
+					<input type="password" class="mui-input-clear" placeholder="请输入新密码" id="txb_newpwd">
 				</div>
 				<div class="mui-input-row" style="margin-top: 10px;">
 					<label>确认密码</label>
-					<input type="text" class="mui-input-clear" placeholder="请输入确认密码" id="txb_surepwd">
+					<input type="password" class="mui-input-clear" placeholder="请输入确认密码" id="txb_surepwd">
 				</div>
 				<button  id="btn_changeuserpwd" class="mui-btn mui-btn-block" type="button">修改密码</button>
 			</form>

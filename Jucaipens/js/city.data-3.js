@@ -1,5 +1,5 @@
 var cityData3 = [{
-	value: '110000',
+	value: '1',
 	text: '北京市',
 	children: [{
 		value: "110101",
@@ -64,7 +64,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '120000',
+	value: '2',
 	text: '天津市',
 	children: [{
 		value: "120100",
@@ -132,7 +132,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '130000',
+	value: '3',
 	text: '河北省',
 	children: [{
 		value: "130100",
@@ -741,7 +741,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '140000',
+	value: '4',
 	text: '山西省',
 	children: [{
 		value: "140100",
@@ -1182,7 +1182,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '150000',
+	value: '5',
 	text: '内蒙古',
 	children: [{
 		value: "150100",
@@ -1573,7 +1573,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '210000',
+	value: '6',
 	text: '辽宁省',
 	children: [{
 		value: "210100",
@@ -1993,7 +1993,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '220000',
+	value: '7',
 	text: '吉林省',
 	children: [{
 		value: "220100",
@@ -2252,7 +2252,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '230000',
+	value: '8',
 	text: '黑龙江省',
 	children: [{
 		value: "230100",
@@ -2743,7 +2743,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '310000',
+	value: '9',
 	text: '上海市',
 	children: [{
 		value: '310000',
@@ -2814,7 +2814,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '320000',
+	value: '10',
 	text: '江苏省',
 	children: [{
 		value: "320100",
@@ -3245,7 +3245,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '330000',
+	value: '11',
 	text: '浙江省',
 	children: [{
 		value: "330100",
@@ -3596,7 +3596,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '340000',
+	value: '12',
 	text: '安徽省',
 	children: [{
 		value: "340100",
@@ -4036,7 +4036,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '350000',
+	value: '13',
 	text: '福建省',
 	children: [{
 		value: "350100",
@@ -4358,7 +4358,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '360000',
+	value: '14',
 	text: '江西省',
 	children: [{
 		value: "360100",
@@ -4748,7 +4748,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '370000',
+	value: '15',
 	text: '山东省',
 	children: [{
 		value: "370100",
@@ -5306,7 +5306,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '410000',
+	value: '16',
 	text: '河南省',
 	children: [{
 		value: "410100",
@@ -5900,7 +5900,7 @@ var cityData3 = [{
 		}]
 	}]
 }, {
-	value: '420000',
+	value: '17',
 	text: '湖北省',
 	children: [{
 		value: "420100",
@@ -6316,7 +6316,7 @@ var cityData3 = [{
 		text: "神农架林区"
 	}]
 }, {
-	value: '430000',
+	value: '18',
 	text: '湖南省',
 	children: [{
 		value: "430100",

@@ -19,8 +19,32 @@
 			});
 			mui.plusReady(function(){
 				var getInfoPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/infoCenter";
-				
+				var uId=plus.storage.getItem('userId');
+				var noDataLay=document.getElementById("layer-nodata");
+				var currentPage=1;
+				getInfo(currentPage);
 				//获取个人消息
+				function getInfo(p){
+					mui.ajax(getInfoPath,{
+						data:{
+							userId:uId,
+							pager:p
+						},
+						dataType:"json",
+						type:"post",
+						timeout:10000,
+						success: function(data){
+							if(data.length>0){
+								
+							}else{
+								noDataLay.style.display='block';
+							}
+						},
+						error: function(e){
+							
+						}
+					})
+				}
 				
 				
 			})
@@ -55,6 +79,9 @@
 					<p class="more"><a  class="linkmore" id="moreInfo" style="display: none;background: #e8e8e8;">查看更多>></a></p>
 				</div>
 				<!------------底部定位层---------->
+				<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+				</div>
 
 			</div>
 	</body>

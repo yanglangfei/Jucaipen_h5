@@ -28,6 +28,7 @@
 				var getMore = document.getElementById("da_gengduo");
 				var loading=document.getElementById("loading");
 				var loadNMore=document.getElementById("loadNMore");
+				var nodataLay=document.getElementById("layer-nodata");
 				var totlePage;
 				var currentPage = 1;
 				loading.style.display='block';
@@ -54,6 +55,11 @@
 							loading.style.display='none';
 							if(loadNMore.style.display='block'){
 								loadNMore.style.display='none';
+							}
+							if(data.length<=0){
+								nodataLay.style.display='block';
+							}else{
+								nodataLay.style.display='none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
@@ -99,6 +105,11 @@
 							loading.style.display='none';
 							if(loadNMore.style.display='block'){
 								loadNMore.style.display='none';
+							}
+							if(data.length<=0){
+								nodataLay.style.display='block';
+							}else{
+								nodataLay.style.display='none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
@@ -182,6 +193,11 @@
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<img src="image/loading-0.gif" />
 			</div>
+			
+			
+		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+				</div>
 
 		</div>
 

@@ -445,7 +445,8 @@
 					"css/app.css",
 					"image/more.png",
 					null,
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"image/loading-0.gif"
 				],
 				"refer": []
 			},
@@ -578,7 +579,8 @@
 					"image/head.png",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/loading-0.gif"
 				],
 				"priority": 9,
 				"refer": []
@@ -826,7 +828,8 @@
 					"js/stringUtil.js"
 				],
 				"refer": [
-					"updatePhone.html"
+					"updatePhone.html",
+					"choseCity.html"
 				],
 				"priority": 0
 			},
@@ -971,6 +974,31 @@
 				],
 				"priority": 13,
 				"refer": []
+			},
+			"choseCity.html": {
+				"resources": [
+					"image/into_next.png",
+					"js/mui.picker.js",
+					"js/mui.min.js",
+					"js/mui.poppicker.js",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"js/city.data-3.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"updatePhone.html": {
+				"resources": [
+					"js/mui.min.js",
+					"image/into_back.png",
+					"css/mui.min.css",
+					"css/style.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {

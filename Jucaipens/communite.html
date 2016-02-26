@@ -31,6 +31,7 @@
 				var loading = document.getElementById("loading");
 				var loadMore = document.getElementById("loadMore");
 				var getMore = document.getElementById("getMore-comm");
+				var nodataLay=document.getElementById("layer-nodata");
 				var web = plus.webview.currentWebview();
 				var title = web.title;
 				var liveId = web.liveId;
@@ -62,6 +63,11 @@
 							loading.style.display = 'none';
 							if(loadMore.style.display='block'){
 								loadMore.style.display='none';
+							}
+							if(data.length<=0){
+								nodataLay.style.display='block';
+							}else{
+								nodataLay.style.display='none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage=data[0].totlePage;
@@ -209,6 +215,11 @@
 				</div>
 			</div>
 			<!------------底部定位层---------->
+			
+		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+				</div>
+			
 
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<img src="image/loading-0.gif" />

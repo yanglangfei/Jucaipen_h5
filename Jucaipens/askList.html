@@ -27,6 +27,7 @@
 				var ask_gengduo = document.getElementById("ask_gengduo");
 				var loading=document.getElementById("loading");
 				var teacherId = web.teacherId;
+				var nodataLay=document.getElementById("layer-nodata");
 				var loadMore=document.getElementById("loadMore");
 				var totlePage;
 				var currentPage = 1;
@@ -66,6 +67,11 @@
 							if(loadMore.style.display='block'){
 								loadMore.style.display='none';
 							}
+							if(data.length<=0){
+								nodataLay.style.display='block';
+							}else{
+								nodataLay.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[0].totlePage;
 								var logoStr = data[i].headFace;
@@ -101,6 +107,11 @@
 							loading.style.display='none';
 							if(loadMore.style.display='block'){
 								loadMore.style.display='none';
+							}
+							if(data.length<=0){
+								nodataLay.style.display='block';
+							}else{
+								nodataLay.style.display='none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
@@ -189,6 +200,11 @@
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<img src="image/loading-0.gif" />
 			</div>
+			
+			
+		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+				</div>
 			
 		</div>
 		

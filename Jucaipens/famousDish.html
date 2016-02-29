@@ -217,7 +217,7 @@
 					dataType: "json",
 					timeout: 10000,
 					success: function(data) {
-						renqi.innerText = "人气：" + data.renQi + "人";
+						renqi.innerText = "人气：" +(data.renQi/10000).toFixed(2)+ "万人";
 						answerCount.innerText = "回答:" + data.answerCount + "个";
 						ideaCount.innerText = "观点：" + data.ideas + "篇";
 						fans.innerText = "粉丝：" + data.fans + "人";

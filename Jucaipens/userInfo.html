@@ -38,12 +38,6 @@
 				email.disabled = true;
 				var userLogo = document.getElementById("userLogo");
 				userLogo.disabled = true;
-				//var provinceLay = document.getElementById("data-province");
-				//provinceLay.disabled=true;
-				//var cityLay=document.getElementById("data-city");
-				//cityLay.disabled=true;
-				//var areaLay=document.getElementById("data-area");
-				//areaLay.disabled=true;
 				var address = document.getElementById("address");
 				var introduce = document.getElementById("introduce");
 				introduce.disabled = true;
@@ -100,9 +94,6 @@
 							sex.innerHTML = data.sex;
 							if (data.localProId > 0 || data.localCityId > 0 || data.localAreaId > 0) {
 								address.innerHTML = data.localProvince + "-" + data.localCity + "-" + data.localArea;
-								// provinceLay.innerHTML="<option value="+data.localProId+">"+data.localProvince+"</option>";
-								//cityLay.innerHTML="<option value="+data.localCityId+">"+data.localCity+"</option>";
-								//areaLay.innerHTML="<option value="+data.localAreaId+">"+data.localArea+"</option>";
 							}
 							introduce.value = data.descript;
 							if (data.faceImage.length > 0 && data.faceImage.indexOf("121.40.227.121") > 0) {
@@ -173,10 +164,6 @@
 						birth.disabled = false;
 						btn_send.disabled = false;
 						email.disabled = false;
-						//provinceLay.disabled=false;
-						//cityLay.disabled=false;
-						//areaLay.disabled=false;
-						//getProvinceData(); 
 						address.disabled = false;
 						introduce.disabled = false;
 					} else {
@@ -187,9 +174,6 @@
 						birth.disabled = true;
 						btn_send.disabled = true;
 						email.disabled = true;
-						//provinceLay.disabled=true;
-						//cityLay.disabled=true;
-						//areaLay.disabled=true;
 						address.disabled = true;
 						introduce.disabled = true;
 						//提交数据
@@ -208,7 +192,7 @@
 							var jsonObj = eval(data);
 							updateImage(jsonObj.ImageUrl);
 						} else {
-							mui.alert("文件上传失败:" + s + "  " + t.responseText);
+							mui.toast("文件上传失败");
 						}
 					})
 					task.addFile(filePath, {
@@ -337,10 +321,7 @@
 							}
 						})
 					})
-					/*provinceLay.onclick=function(){
-						getProvinceData();
-					}*/
-					//获取省份信息
+				//获取省份信息
 				function getProvinceData() {
 					var provinceStr = "";
 					mui.ajax(queryProvincePath, {
@@ -351,23 +332,13 @@
 							for (var i = 0; i < data.length; i++) {
 								provinceStr = provinceStr + "<option value=" + data[i].id + ">" + data[i].name + "</option>";
 							}
-							//provinceLay.innerHTML=provinceStr;
+							provinceLay.innerHTML=provinceStr;
 							var id = provinceLay.options[provinceLay.options.selectedIndex].value;
 							getCityInfo(id);
 						},
 						error: function(e) {}
 					})
 				}
-				/*				//省市添加监听事件
-								provinceLay.onchange=function(){
-									var id=provinceLay.options[provinceLay.options.selectedIndex].value;
-									getCityInfo(id);
-								}
-				*/
-				/*cityLay.onchange=function(){
-					var id=cityLay.options[cityLay.options.selectedIndex].value;
-					getAreaInfo(id);
-				}*/
 				//获取城市信息
 				function getCityInfo(pId) {
 					var cityStr = "";

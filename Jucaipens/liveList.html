@@ -13,10 +13,11 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
 				var videoList = "http://121.40.227.121:8080/AccumulateWealth/accumulate/teachVideo";
@@ -32,17 +33,20 @@
 						timeout: 10000,
 						success: function(data) {
 							load.style.display = 'none';
+							var reginDate = plus.storage.getItem("reginDate");
+							var buyProductId = plus.storage.getItem("buyProductId");
 							for (var i = 0; i < data.length; i++) {
 								var liveUrl = data[i].liveUrl;
-								var roomFace=data[i].RoomFace;
+								var roomFace = data[i].RoomFace;
+								var UserLevel = data[i].UserLevel;
 								if (liveUrl != null) {
-									liveInfo = liveInfo + "<li face="+roomFace+" style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
+									liveInfo = liveInfo + "<li face=" + roomFace + " style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
 								}
 							}
 							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
-								var face=this.getAttribute('face');
+								var face = this.getAttribute('face');
 								// 是否免费试听  0   是     1   否
 								var visit = this.getAttribute("isVisit");
 								//试听天数
@@ -51,7 +55,8 @@
 								var visitLeal = this.getAttribute("visitLeal");
 								var uId = plus.storage.getItem("userId");
 								if (visit == 0) {
-									intoLiveRoom(lId,face);
+									//免费
+									intoLiveRoom(lId, face);
 									return;
 								}
 								if (uId <= 0) {
@@ -60,18 +65,16 @@
 										intoLogin();
 									}, "", ['确定']);
 								} else {
-									//进入直播间
 									var isServer = plus.storage.getItem("isServer");
 									var isManager = plus.storage.getItem("isManager");
 									var buyProductId = plus.storage.getItem("buyProductId");
 									if (visit == 1) {
-										if (isServer == 1 || isManager == 1) {
-											//管理员客服可以进入
-											intoLiveRoom(lId,face);
+										if (isServer == 1 || isManager == 1 || UserLevel == visitLeal) {
+											//管理员客服,已购买用户可以进入
+											intoLiveRoom(lId, face);
 											return;
 										}
-										plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {
-										}, "", "确定");
+										plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {}, "", "确定");
 									}
 								}
 							});
@@ -79,13 +82,13 @@
 						error: function(e) {}
 					})
 					//进入直播室
-				function intoLiveRoom(liveId,roomFace) {
+				function intoLiveRoom(liveId, roomFace) {
 					mui.openWindow({
 						url: "liveRoom.html",
 						id: "liveRoom",
 						extras: {
 							liveId: liveId,
-							face:roomFace
+							face: roomFace
 						},
 						waiting: {
 							autoShow: false

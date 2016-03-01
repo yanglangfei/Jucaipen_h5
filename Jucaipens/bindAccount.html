@@ -9,10 +9,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/mui.min.js" ></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			var auths;
 			//获取服务列表
@@ -29,8 +29,8 @@
 				var qqState = document.getElementById("qq-state");
 				var weixinState = document.getElementById("weixin-state");
 				var sinaState = document.getElementById("sina-state");
-				var bindList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountList";
-				var bindAccount = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updateOtherAccount";
+				var bindList = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/otherAccountList";
+				var bindAccount = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/updateOtherAccount";
 				var uId = plus.storage.getItem("userId");
 				var isQQBind;
 				var isWeixinBind;
@@ -82,20 +82,21 @@
 						error: function(e) {}
 					})
 				}
-				//绑定账号  0
+				//绑定账号  1
 				bindQQ.addEventListener("tap", function() {
-					var type = 0;
-					login(0, type);
-				})
-				//新浪   1
+						var type = 0;
+						console.log('qq');
+						login(1, type);
+					})
+					//新浪   2
 				bindSina.addEventListener("tap", function() {
-					var type = 2;
-					var id = login(1, type);
-				})
-				//微信   2
+						var type = 2;
+						var id = login(2, type);
+					})
+					//微信   0
 				bindWeixin.addEventListener("tap", function() {
 					var type = 1;
-					var id = login(2, type);
+					var id = login(0, type);
 				})
 
 				function bindAccounts(t, id) {
@@ -109,51 +110,51 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							if (id.length > 0) {
+							if (id!=null&&id.length > 0) {
 								//绑定账号
 								if (data.ret_code == 0) {
 									plus.nativeUI.toast("账号绑定成功");
-									console.log(t+"  "+id);
-									if(t==0){
-										isQQBind=true;
-										qqState.value="已绑定";
-										bindQQ.value='解除绑定';
-									}else if(t==1){
-										isWeixinBind=true;
-										weixinState.value='已绑定';
-										bindWeixin.value='解除绑定';
-									}else if(t==2){
-										isSinaBind=true;
-										sinaState.value='已绑定';
-										bindWeixin.value='解除绑定';
+									console.log(t + "  " + id);
+									if (t == 0) {
+										isQQBind = true;
+										qqState.value = "已绑定";
+										bindQQ.value = '解除绑定';
+									} else if (t == 1) {
+										isWeixinBind = true;
+										weixinState.value = '已绑定';
+										bindWeixin.value = '解除绑定';
+									} else if (t == 2) {
+										isSinaBind = true;
+										sinaState.value = '已绑定';
+										bindWeixin.value = '解除绑定';
 									}
 								} else {
 									plus.nativeUI.toast(data.err_msg);
+									console.log(data.err_msg);
 								}
 							} else {
 								//解除账号
 								if (data.ret_code == 0) {
 									plus.nativeUI.toast("账号解除成功");
-									if(t==0){
-										isQQBind=false;
-										qqState.value="未绑定";
-										bindQQ.value='快速绑定';
-									}else if(t==1){
-										isb=false;
-										weixinState.value='未绑定';
-										bindWeixin.value='快速绑定';
-									}else if(t==2){
-										isSinaBind=false;
-										sinaState.value='未绑定';
-										bindWeixin.value='快速绑定';
+									if (t == 0) {
+										isQQBind = false;
+										qqState.value = "未绑定";
+										bindQQ.value = '快速绑定';
+									} else if (t == 1) {
+										isb = false;
+										weixinState.value = '未绑定';
+										bindWeixin.value = '快速绑定';
+									} else if (t == 2) {
+										isSinaBind = false;
+										sinaState.value = '未绑定';
+										bindWeixin.value = '快速绑定';
 									}
 								} else {
 									plus.nativeUI.toast(data.err_msg);
 								}
 							}
 						},
-						error: function(e) {
-						}
+						error: function(e) {}
 					})
 				}
 				//获取账号openid
@@ -163,22 +164,20 @@
 					if (!a.authResult) {
 						a.login(function(s) {
 							openId = s.target.authResult.openid;
-							if (type == 0 && isQQBind) {
-								openId = "";
-							} else if (type == 1 && isWeixinBind) {
-								openId = "";
-							} else if (type == 2 && isSinaBind) {
-								openId="";
-							}
-							bindAccounts(type, openId);
-						}, function(e) {
-						})
+						}, function(e) {})
 					} else {
 						//已经登录
 						openId = a.authResult.openid;
 					}
+					if (type == 0 && isQQBind) {
+						openId = "";
+					} else if (type == 1 && isWeixinBind) {
+						openId = "";
+					} else if (type == 2 && isSinaBind) {
+						openId = "";
+					}
 					console.log(openId);
-					return openId;
+					bindAccounts(type, openId);
 				}
 			})
 		</script>
@@ -195,15 +194,15 @@
 
 	<body>
 		<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1 mui-action-back" >
-							<span style="margin-top:0.2rem;">账号绑定</span>
-						</div>
-					</div>
-				</header>
+			<div class="head">
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1 mui-action-back">
+					<span style="margin-top:0.2rem;">账号绑定</span>
+				</div>
+			</div>
+		</header>
 		<div class="mui-content">
 
 			<div class="item1" style="margin-top: 100px;">

@@ -42,6 +42,9 @@
 				var totlePage;
 				var currentPage = 1;
 				var opType;
+				var commId;
+				var lastBody;
+				var name;
 				//获取热门观点详细信息
 				mui.ajax(ideaDetail, {
 					data: {
@@ -87,6 +90,7 @@
 					//提交评论信息
 				btn_commen.addEventListener('tap', function() {
 						var uId = plus.storage.getItem('userId');
+						var body=txt_commen.value;
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
@@ -97,14 +101,20 @@
 							})
 							return;
 						}
-						if (txt_commen.value.length <= 0) {
+						if (body.length <= 0) {
 							mui.toast('评论内容不能为空');
 							return;
 						}
-						addIdeaComment(opType, uId, id, txt_commen.valu);
+						if(opType!=1){
+							opType=0;
+								addIdeaComment(opType, uId, id, body,0);
+						}else{
+							body=body+"//@"+name+":"+lastBody;
+							addIdeaComment(opType, uId, id, body,commId);
+						}
 					})
 					//提交评论信息
-				function addIdeaComment(type, uId, iId, body) {
+				function addIdeaComment(type, uId, iId, body,cId) {
 					console.log(id + " ");
 					mui.ajax(addCommentPath, {
 						data: {
@@ -160,14 +170,15 @@
 								commStr = commStr + "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'>" + "<img src=" 
 								+ isNull(face) + " style='float: left;margin-right: 10%;text-align: right;width:50px;height:50px;border-radius: 50px;'></span>" + "<h4 style='display: block;float: left;font-size: 1rem;font-weight:normal;width: 40%;margin-left:10px;' >" 
 								+ data[i].userName + "</h4>" + "<em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img name=" + data[i].userName
-								+ " id='reply' content=" + body + " src='image/response.png' style='float:left;margin-right:10px;text-align:right;width:1.2rem;' >" + "</em><p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;margin-left:10px;'>" 
+								+ " id='reply' content=" + body + "  p="+data[i].commId+" src='image/response.png' style='float:left;margin-right:10px;text-align:right;width:1.2rem;' >" + "</em><p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;margin-left:10px;'>" 
 								+ myDate + "</p><div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;' >" + data[i].commBody + "</div></div>";
 							}
 							log_commen_list.innerHTML = commStr;
 							mui(".log_commen_list").on("tap", '#reply', function() {
-								//回复评论
-								var name = this.getAttribute('name')
-								var body = this.getAttribute('content');
+								//回复评论 
+								name = this.getAttribute('name')
+								lastBody = this.getAttribute('content');
+								commId=this.getAttribute("p");
 								opType = 1;
 								txt_commen.placeholder = '回复' + name + ":";
 							})

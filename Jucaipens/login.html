@@ -64,7 +64,7 @@
 						}
 						mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login", {
 							data: {
-								userName: account.value,
+								userName: account.value,     
 								password: pwds.value
 							},
 							type: "post",
@@ -99,18 +99,18 @@
 					//qq登录
 				qq.addEventListener("tap", function() {
 						//获取openID
-						authLogin(0);
+						authLogin(1);
 					})
 					//微信登录
 				weixin.addEventListener("tap", function() {
 						//获取openID
-						authLogin(2);
+						authLogin(0);
 					})
 					//新浪登录
 				sina.addEventListener("tap", function() {
 					//获取openID
-					authLogin(1);
-				})
+					authLogin(2);
+				}) 
 
 				function otherLogin(t, id) {
 					mui.ajax(otherLoginPath, {
@@ -150,15 +150,14 @@
 				function authLogin(i) {
 					var s = authos[i];
 					if (!s.authResult) {
-						console.log('oo');
+						console.log('oo:');
 						s.login(function(e) {
-							console.log('nn');
 							var openId = e.target.authResult.openid;
 							otherLogin(i, openId);
 						}, function(e) {
-							console.log('nnbb');
+							console.log(JSON.stringify(e));
 							plus.nativeUI.toast('登录失败');
-						});
+						}); 
 					} else {
 						var openId = s.authResult.openid;
 						otherLogin(i, openId);

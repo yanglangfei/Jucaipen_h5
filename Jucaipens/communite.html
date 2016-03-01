@@ -20,7 +20,7 @@
 			});
 			mui.plusReady(function() {
 				var commPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
-				var addExchangePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addExChange";
+				var addExchangePath = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/addExChange";
 				var commLay = document.getElementById("commLay");
 				var today = document.getElementById("today");
 				var communit = document.getElementById("communit");
@@ -139,11 +139,12 @@
 				}
 				//添加交流信息
 				function addExchangeFN(uId, body) {
+					console.log(body);
 					mui.ajax(addExchangePath, {
 						data: {
 							userId: uId,
 							liveId: liveId,
-							bodys: body
+							bodys: encodeURI(body)
 						},
 						dataType: "json",
 						type: "get",

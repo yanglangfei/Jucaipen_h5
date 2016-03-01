@@ -291,7 +291,10 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"css/style.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/loginqq_press.png",
+					"image/weixin_press.png",
+					"image/loginsina_press.png"
 				],
 				"refer": [
 					"regin.html"
@@ -378,12 +381,12 @@
 					"image/askinfo.png",
 					"image/v1.png",
 					"liveList.html",
-					"trhreeBoard.html"
+					"trhreeBoard.html",
+					"answerList.html"
 				],
 				"refer": [
 					"ideaDetail.html",
 					"dishList.html",
-					"answerList.html",
 					"liveRoom.html",
 					"teacherList.html",
 					"teacherDetail.html",
@@ -412,7 +415,8 @@
 					"image/licainorma.png",
 					"famousDish.html",
 					"trhreeBoard.html",
-					"liveList.html"
+					"liveList.html",
+					"js/netUtils.js"
 				],
 				"refer": [
 					"login.html",
@@ -488,7 +492,8 @@
 				"refer": [
 					"newsDetail.html",
 					"login.html",
-					"news/moreNews.html"
+					"news/moreNews.html",
+					"vipcenter.html"
 				]
 			},
 			"liveRoom.html": {
@@ -524,7 +529,8 @@
 					"attention.html",
 					"trhreeBoard.html",
 					"index.html",
-					"famousDish.html"
+					"famousDish.html",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"liveRoom.html",
@@ -618,7 +624,9 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"image/jucaipen.png",
-					"image/response.png"
+					"image/response.png",
+					"image/loading-0.gif",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"communite.html",
@@ -660,7 +668,8 @@
 					null,
 					"image/loading-0.gif",
 					"image/askinfo.png",
-					"image/v1.png"
+					"image/v1.png",
+					"famousDish.html"
 				],
 				"refer": [
 					"askList.html"
@@ -1037,7 +1046,6 @@
 				"image/skyblue_editpage_close.png",
 				"image/logo_email.png",
 				"image/skyblue_platform_checked_disabled.png",
-				"image/weixin_press.png",
 				"image/thubm_state.png",
 				"image/btn_back_nor.9.png",
 				"js/layer.ext.js",
@@ -1051,7 +1059,6 @@
 				"js/jquery-1.11.0.js",
 				"image/logo_tencentweibo.png",
 				"image/sex_women.png",
-				"image/loginqq_press.png",
 				"image/huanyings.png",
 				"image/logo_shortmessage.png",
 				"image/skyblue_platform_checked.png",
@@ -1060,7 +1067,6 @@
 				"image/jucaipens.png",
 				"css/lay.css",
 				"image/delete.png",
-				"image/loginsina_press.png",
 				"image/ic_launcher.png",
 				"image/press_stars.png",
 				"image/skyblue_editpage_divider.9.png",

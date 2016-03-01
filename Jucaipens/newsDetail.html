@@ -26,10 +26,10 @@
 				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
 				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
 				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
-				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
+				var add_goods = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/addGood";
 				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
 				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
-				var list = document.getElementById("lv-share");
+				var list = document.getElementById("lv-share"); 
 				var web = plus.webview.currentWebview();
 				var title = document.getElementById("show_newstit");
 				var repoter = document.getElementById("show_newsinfo");
@@ -48,6 +48,7 @@
 				var li_collect = document.getElementById("li-collect");
 				var more = document.getElementById("more");
 				var li_more = document.getElementById("li-more");
+				var coll_lab=document.getElementById("coll_lab");
 				var moreLoad=document.getElementById("moreLoad");
 				var bhref = false;
 				var isCollected;
@@ -154,7 +155,7 @@
 								mui("#newscommlist").on("tap", "#sp_good", function() {
 									uId = plus.storage.getItem("userId");
 									var commId = this.getAttribute("class");
-									if (uId <= 0) {
+                                       if (uId <= 0) {
 										mui.openWindow({
 											url: "login.html",
 											id: "login"
@@ -217,9 +218,11 @@
 							if (data.ret_code == 0) {
 								iv_collect.src = "image/collect_s.png";
 								isCollected = true;
+								coll_lab.innerHTML='取消收藏';
 							} else {
 								iv_collect.src = "image/collect_c.png";
 								isCollected = false;
+								coll_lab.innerHTML='收藏';
 							}
 						},
 						error: function(e) {}
@@ -237,18 +240,27 @@
 						type: "get",
 						timeout: 10000,
 						success: function(data) {
+							//收藏
 							if (t == 0) {
 								if (data.ret_code == 0) {
 									isCollected = true;
+									mui.toast("收藏成功");
+									coll_lab.innerHTML='取消收藏';
 									iv_collect.src = "image/collect_s.png";
 								} else {
+									coll_lab.innerHTML='收藏';
+									mui.toast("收藏失败");
 									isCollected = false;
 								}
 							} else {
 								if (data.ret_code == 0) {
 									isCollected = false;
+									coll_lab.innerHTML='收藏';
+									mui.toast("取消收藏成功");
 									iv_collect.src = "image/collect_c.png";
 								} else {
+									coll_lab.innerHTML='收藏';
+									mui.toast("取消收藏失败");
 									isCollected = true;
 								}
 							}
@@ -326,6 +338,8 @@
 							if (data.ret_code) {
 								plus.nativeUI.toast("评论发表成功");
 								HiddenFieldId.value = "";
+								currentPage=1;
+								findCommList(currentPage);
 							} else {
 								plus.nativeUI.toast(data.err_msg);
 							}
@@ -600,9 +614,9 @@
 			
 			#topPopover {
 				position: absolute;
-				top: 16px;
+				top: 20px;
 				right: 10px;
-				width: 100px;
+				width: 40%;
 				background: #000000;
 			}
 			
@@ -632,7 +646,7 @@
 						<span style="line-height: 25px;">私募动态 </span>
 					</div>
 					<div class="sousuo1" id="more">
-						<a href="#topPopover" class="mui-action-menu"><img src="image/more.png" /></a>
+						<a href="#topPopover" class="mui-action-menu" style="width: 45px;height: 100%;text-align: center;"><img src="image/more.png" /></a>
 					</div>
 				</div>
 			</header>
@@ -693,18 +707,18 @@
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell" style="height: 50px;text-align: center;" id="li-collect">
 						<span>
-								<img   style="width: 30px; height: 30px;line-height: 50px;" id="iv-collect"/>
-							<a style="line-height: 50px;">收藏</a></span>
+							<img   style="width: 15px; height: 15px;" id="iv-collect" src="image/collect_c.png"/>
+							<a style="line-height: 30px;font-size: 15px;" id="coll_lab">收藏</a></span>
 					</li>
-					<li class="mui-table-view-cell" id="li-share">
+					<li class="mui-table-view-cell" id="li-share" style="height: 50px;text-align: center;">
 						<span>
-								<img   style="width: 30px; height: 30px;" id="iv-share"/>
-							<a style="line-height: 30px;">分享</a></span>
+								<img   style="width: 15px; height: 15px;" id="iv-share" src="image/share_normal.png"/>
+							<a style="line-height: 30px;font-size: 15px;">分享</a></span>
 					</li>
-					<li class="mui-table-view-cell" id="li-more">
+					<li class="mui-table-view-cell" id="li-more" style="height: 50px;text-align: center;">
 						<span>
-								<img  style="width: 30px; height: 30px;" id="iv-more"/>
-							<a style="line-height: 30px;">更多</a></span>
+								<img  style="width: 15px; height: 15px;" id="iv-more" src="image/more.png"/>
+							<a style="line-height: 30px;font-size: 15px;">更多</a></span>
 					</li>
 				</ul>
 			</div>

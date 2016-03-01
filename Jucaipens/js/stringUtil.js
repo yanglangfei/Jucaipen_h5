@@ -77,3 +77,22 @@ var dateForm=function(str){
 	time.setMonth(moth,day);
 	return time;
 }
+
+//计算指定时间与今天的时间差
+var dateDistance=function(str){
+	var year = str.substr(0, 4);
+	var index1 = str.indexOf('-');
+	var lastIndex = str.lastIndexOf('-');
+	var mins1 = parseInt(lastIndex) - (parseInt(index1) + 1);
+	var moth = str.substr(parseInt(index1) + 1, mins1);
+	var index3 = str.indexOf(' ');
+	var mins2 = index3 - lastIndex;
+	var day = str.substr(lastIndex + 1, mins2);
+	var today=new Date();
+	var currentYear=today.getFullYear();
+	var currentMoth=today.getMonth()+1;
+	var currentDay=today.getDate();
+	var currentD=currentYear*365+currentMoth*30+currentDay;
+	var D=year*365+moth*30+day;
+	return parseInt(currentD)-parseInt(D);
+}

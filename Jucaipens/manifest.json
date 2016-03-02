@@ -452,7 +452,9 @@
 					"js/stringUtil.js",
 					"image/loading-0.gif"
 				],
-				"refer": []
+				"refer": [
+					"login.html"
+				]
 			},
 			"news/moreNews.html": {
 				"href": "news/moreNews.html",
@@ -647,7 +649,8 @@
 					"image/into_back.png",
 					"css/mui.min.css",
 					"fonts/mui.ttf",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"askList.html",

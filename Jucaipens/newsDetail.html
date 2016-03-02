@@ -26,7 +26,7 @@
 				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
 				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
 				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
-				var add_goods = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/addGood";
+				var add_goods = "http://121.40.227:8080/AccumulateWealth/jucaipen/addGood";
 				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
 				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
 				var list = document.getElementById("lv-share"); 
@@ -58,6 +58,8 @@
 				var share;
 				var appenStr = "";
 				var classId;
+				var linkUrl;
+				var descript;
 				var typeId = 0;
 				var uId;
 				if (id <= 0) {
@@ -74,6 +76,8 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
+						descript=data.descript;
+						linkUrl="http://jucaipen.com/"+data.htmlPath;
 						title.innerHTML = data.title;
 						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + subStr(2, data.publishDate);
 						content.innerHTML = data.Bodys;
@@ -367,48 +371,27 @@
 					//分享
 				li_share.addEventListener("tap", function() {
 						updateSerivces();
-						console.log(JSON.stringify(share));
-						shareShow(share);
 					})
 					// 打开分享
 				function shareShow(s) {
 					bhref = false;
-					var ids = [{
-							id: "weixin",
-							ex: "WXSceneSession"
-						}, {
-							id: "weixin",
-							ex: "WXSceneTimeline"
-						}, {
-							id: "sinaweibo"
-						}, {
-							id: "tencentweibo"
-						}],
 						bts = [{
-							title: "发送给微信好友"
-						}, {
-							title: "分享到微信朋友圈"
-						}, {
 							title: "分享到新浪微博"
 						}, {
 							title: "分享到腾讯微博"
-						}];
-					if (plus.os.name == "iOS") {
-						ids.push({
-							id: "qq"
-						});
-						bts.push({
+						}, {
 							title: "分享到QQ"
-						});
-					}
+						}, {
+							title: "分享到微信"
+						}];
 					plus.nativeUI.actionSheet({
-							cancel: "取消",
+							cancel: "取消", 
 							buttons: bts
 						},
 						function(e) {
 							var i = e.index;
 							if (i > 0) {
-								shareAction(s);
+								shareAction(s,i-1);
 							}
 						}
 					);
@@ -419,26 +402,22 @@
 				function updateSerivces() {
 					plus.share.getServices(function(s) {
 						share = s;
+						shareShow(share);
 					}, function(e) {
-						console.log("获取分享服务列表失败：" + e.message);
+						mui.toast('获取分享列表失败');
 					});
 				}
 
-				function shareAction(s) {
-					console.log("action:" + JSON.stringify(s));
-					if (!s) {
-						console.log("null");
-						return;
-					}
-					if (s.authenticated) {
-						console.log("正在认证");
-						shareMessage(s);
-					} else {
-						console.log(JSON.stringify(s));
-						shareMessage(s);
-						/*s.authorize(shareMessage, function(e) {
-							alert("未进行认证");
-						})*/
+				function shareAction(s,index) {
+					var sa=s[index];
+					if(!sa.authenticated){
+						sa.authorize(function(){
+							shareMessage(sa);
+						},function(){
+							mui.toast('分享认证失败');
+						})
+					}else{
+						shareMessage(sa);
 					}
 				}
 				/**
@@ -446,12 +425,17 @@
 				 * @param
 				 */
 				function shareMessage(s) {
-					share[0].send({
-						content: "Hello"
-					}, function() {
-						console.log("成功");
+					s.send({
+						content:descript,
+						href:linkUrl,
+						title:title.innerHTML,
+						
+					}, function() {  
+						alert('成功');
+						console.log('s'); 
 					}, function(e) {
-						console.log("失败");
+						alert('失败:'+JSON.stringify(e)); 
+						console.log('e');
 					});
 				}
 				li_more.addEventListener("tap", function() {

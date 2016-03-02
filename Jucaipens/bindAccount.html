@@ -29,8 +29,8 @@
 				var qqState = document.getElementById("qq-state");
 				var weixinState = document.getElementById("weixin-state");
 				var sinaState = document.getElementById("sina-state");
-				var bindList = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/otherAccountList";
-				var bindAccount = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/updateOtherAccount";
+				var bindList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountList";
+				var bindAccount = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updateOtherAccount";
 				var uId = plus.storage.getItem("userId");
 				var isQQBind;
 				var isWeixinBind;
@@ -85,7 +85,6 @@
 				//绑定账号  1
 				bindQQ.addEventListener("tap", function() {
 						var type = 0;
-						console.log('qq');
 						login(1, type);
 					})
 					//新浪   2
@@ -110,44 +109,46 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							if (id!=null&&id.length > 0) {
+							if (id!=null&&id.replace(/(^\s*)|(\s*$)/g,"").length > 0) {
 								//绑定账号
 								if (data.ret_code == 0) {
-									plus.nativeUI.toast("账号绑定成功");
-									console.log(t + "  " + id);
-									if (t == 0) {
+									if (t == 0&&!isQQBind) {
 										isQQBind = true;
-										qqState.value = "已绑定";
-										bindQQ.value = '解除绑定';
-									} else if (t == 1) {
+										qqState.innerHTML = "已绑定";
+										bindQQ.innerHTML = '解除绑定';
+										plus.nativeUI.toast("QQ绑定成功");
+									} else if (t == 1&&!isWeixinBind) {
 										isWeixinBind = true;
-										weixinState.value = '已绑定';
-										bindWeixin.value = '解除绑定';
-									} else if (t == 2) {
+										weixinState.innerHTML = '已绑定';
+										bindWeixin.innerHTML = '解除绑定';
+										plus.nativeUI.toast("微信绑定成功");
+									} else if (t == 2&&!isSinaBind) {
 										isSinaBind = true;
-										sinaState.value = '已绑定';
-										bindWeixin.value = '解除绑定';
+										sinaState.innerHTML = '已绑定';
+										bindWeixin.innerHTML = '解除绑定';
+										plus.nativeUI.toast("新浪绑定成功");
 									}
 								} else {
 									plus.nativeUI.toast(data.err_msg);
-									console.log(data.err_msg);
 								}
 							} else {
 								//解除账号
 								if (data.ret_code == 0) {
-									plus.nativeUI.toast("账号解除成功");
 									if (t == 0) {
 										isQQBind = false;
-										qqState.value = "未绑定";
-										bindQQ.value = '快速绑定';
+										qqState.innerHTML = "未绑定";
+										bindQQ.innerHTML = '快速绑定';
+										plus.nativeUI.toast("QQ解除成功");
 									} else if (t == 1) {
-										isb = false;
-										weixinState.value = '未绑定';
-										bindWeixin.value = '快速绑定';
+										isWeixinBind = false;
+										weixinState.innerHTML = '未绑定';
+										bindWeixin.innerHTML = '快速绑定';
+										plus.nativeUI.toast("微信解除成功");
 									} else if (t == 2) {
 										isSinaBind = false;
-										sinaState.value = '未绑定';
-										bindWeixin.value = '快速绑定';
+										sinaState.innerHTML = '未绑定';
+										bindWeixin.innerHTML = '快速绑定';
+										plus.nativeUI.toast("新浪解除成功");
 									}
 								} else {
 									plus.nativeUI.toast(data.err_msg);
@@ -164,20 +165,26 @@
 					if (!a.authResult) {
 						a.login(function(s) {
 							openId = s.target.authResult.openid;
-						}, function(e) {})
+					         bindAccounts(type, openId);
+						}, function(e) {
+						mui.toast('获取QQ授权失败:'+JSON.stringify(e));
+						})
 					} else {
 						//已经登录
 						openId = a.authResult.openid;
+					    bindAccounts(type, openId);
 					}
 					if (type == 0 && isQQBind) {
 						openId = "";
+					     bindAccounts(type, openId);
 					} else if (type == 1 && isWeixinBind) {
 						openId = "";
+					     bindAccounts(type, openId);
 					} else if (type == 2 && isSinaBind) {
 						openId = "";
+					     bindAccounts(type, openId);
 					}
-					console.log(openId);
-					bindAccounts(type, openId);
+					
 				}
 			})
 		</script>

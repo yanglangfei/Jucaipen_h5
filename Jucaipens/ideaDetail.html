@@ -55,13 +55,22 @@
 					timeout: 10000,
 					success: function(data) {
 						var myDate = subStr(4, data.insertDate);
+						var body=data.bodys;
+					//	var bs=body.getElementsByTagName('img');
+					  console.log(body);
 						teacherName.innerText = data.nickName;
 						leader.innerText = data.level;
 						times.innerText = myDate;
 						titles.innerText = data.title;
-						ideaBody.innerHTML = data.bodys;
+						ideaBody.innerHTML = body;
 						goodsAdd.innerText = data.goods;
 						teacherLogo.src = data.headFace;
+						if(body!=null&&body.length>0){
+							var bs=document.getElementsByTagName('img');
+							for(var i=0;i<bs.length;i++){
+								console.log(bs[i].src);
+							}
+						} 
 						var isV = data.isV;
 						if (isV == 0) {
 							vLogo.src = "image/v1.png";

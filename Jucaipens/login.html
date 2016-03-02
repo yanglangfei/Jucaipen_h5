@@ -30,6 +30,7 @@
 			//获取认证列表
 			var authos;
 			var otherLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountLogin";
+			var oriLoginPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/login";
 			document.addEventListener("plusready", function() {
 				plus.oauth.getServices(function(serice) {
 					authos = serice;
@@ -62,7 +63,7 @@
 							plus.ui.toast("密码不能为空");
 							return;
 						}
-						mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/login", {
+						mui.ajax(oriLoginPath, {
 							data: {
 								userName: account.value,     
 								password: pwds.value
@@ -99,17 +100,17 @@
 					//qq登录
 				qq.addEventListener("tap", function() {
 						//获取openID
-						authLogin(1);
+						authLogin(0,1);
 					})
 					//微信登录
 				weixin.addEventListener("tap", function() {
 						//获取openID
-						authLogin(0);
+						authLogin(1,0);
 					})
 					//新浪登录
 				sina.addEventListener("tap", function() {
 					//获取openID
-					authLogin(2);
+					authLogin(2,2);
 				}) 
 
 				function otherLogin(t, id) {
@@ -147,21 +148,18 @@
 					})
 				}
 
-				function authLogin(i) {
+				function authLogin(t,i) {
 					var s = authos[i];
 					if (!s.authResult) {
-						console.log('oo:');
 						s.login(function(e) {
 							var openId = e.target.authResult.openid;
-							otherLogin(i, openId);
+							otherLogin(t, openId);
 						}, function(e) {
-							console.log(JSON.stringify(e));
 							plus.nativeUI.toast('登录失败');
 						}); 
 					} else {
 						var openId = s.authResult.openid;
-						otherLogin(i, openId);
-						console.log('mm');
+						otherLogin(t, openId);
 					}
 				}
 				// 注销所有授权登录认证服务

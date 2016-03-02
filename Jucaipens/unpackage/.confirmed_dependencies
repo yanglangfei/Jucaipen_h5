@@ -14,9 +14,12 @@
 			"js/stringUtil.js",
 			"image/loading-0.gif",
 			"image/comm_icon1.png",
-			"image/good.png"
+			"image/good.png",
+			"image/share_press.png"
 		],
-		"refer": []
+		"refer": [
+			"login.html"
+		]
 	},
 	"index.html": {
 		"resources": [
@@ -308,7 +311,14 @@
 	"askList.html": {
 		"resources": [
 			"image/jucaipen.png",
-			"js/stringUtil.js"
+			"js/stringUtil.js",
+			"css/mingjia.css",
+			"image/loading-0.gif",
+			"js/mui.min.js",
+			"image/into_back.png",
+			"css/mui.min.css",
+			"css/style.css",
+			"css/tuch.css"
 		],
 		"refer": []
 	},

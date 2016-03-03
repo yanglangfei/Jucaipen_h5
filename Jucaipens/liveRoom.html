@@ -48,9 +48,14 @@
 					dataType: "json",
 					timeout: 10000,
 					success: function(data) {
-						var videoUrl="<embed width='100%' height='100%' id='live' src="+data.videoUrl+"></embed>";
-					    bd.innerHTML=videoUrl;
-					},
+						var videoUrl;
+						if(data.videoUrl.indexOf('yyscene')>0){
+							bd.style.background='#AAAAAA';
+						}else{
+							videoUrl="<embed width='100%' height='100%' id='live' src="+data.videoUrl+"></embed>";
+							 bd.innerHTML=videoUrl;
+						}
+					}, 
 					error: function(e) {
 						mui.toast('资源加载失败');
 					}
@@ -62,7 +67,7 @@
 				
 				
 				function getMsgForEver(){
-					setInterval(function(){
+					setInterval(function(){               
 					var content = chatLay.innerHTML;
 					mui.ajax(getChatMsgPath, {
 						data: {
@@ -75,21 +80,46 @@
 						type: "post",
 						success: function(data) {
 							if(data.length>0){
-							var myDate=subStr(1,data[i].SendDate);
 							 topId=data[data.length-1].Id+1;
 							for (var i = 0; i < data.length; i++) {
-								content = content + "<li><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
-							    console.log(content);  
+								var myDate=subChatStr(1,data[i].SendDate);
+								if(data[i].SendManager==1){
+									//管理员
+									headLogo='image/guan.png';
+								}else{
+									//普通用户
+									headLogo='image/normalUser.png';
+								}
+								if(data[i].SendServiceId==1){
+									//客服
+								}else{
+									//非客服
+								}
+								content = content + "<li><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src="+headLogo+" id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 							}
 							chatLay.innerHTML = content;
-							mui.scrollTo(0,1000);
+							if(content!=null){
+								var imgs=document.getElementsByTagName("img");
+								for(var i=0;i<imgs.length;i++){
+									if(imgs[i].src.indexOf('gif')>0){
+										imgs[i].style.width='25px';
+										imgs[i].style.height='25px';
+										continue ;
+										
+									}
+									if(imgs[i].src.indexOf('img.jucaipen.com')>0){
+										imgs[i].style.width='50%';
+									} 
+								}
 							}
+							mui.scrollTo(document.body.scrollHeight,100);
+							} 
 						},
 						error: function(e) {
-						}
+						} 
 					})
 				
-				},3000);
+				},5000);
 				}
 				getTopId(isManager,liveId,isServer);
 				
@@ -127,14 +157,40 @@
 						dataType: "json",
 						type: "post", 
 						success: function(data) {
-							console.log(JSON.stringify(data)+"  "+topId);
 							if(data.length>0){
 							topId=data[data.length-1].Id+1;
 							for (var i = 0; i < data.length; i++) {
-								var myDate=subStr(1,data[i].SendDate);
-								content = content + "<li ><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src='image/guan.png' id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+								var myDate=subChatStr(1,data[i].SendDate);
+								var headLogo;
+								if(data[i].SendManager==1){
+									//管理员
+									headLogo='image/guan.png';
+								}else{
+									//普通用户
+									headLogo='image/normalUser.png';
+								}
+								if(data[i].SendServiceId==1){
+									//客服
+								}else{
+									//非客服
+								}
+								content = content + "<li ><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src="+headLogo+" id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 							}
 							chatLay.innerHTML = content;
+							if(content!=null){
+								var imgs=document.getElementsByTagName("img");
+								for(var i=0;i<imgs.length;i++){
+									if(imgs[i].src.indexOf('gif')>0){
+										imgs[i].style.width='25px';
+										imgs[i].style.height='25px';
+										continue ;
+									}
+									if(imgs[i].src.indexOf('img.jucaipen.com')>0){
+										imgs[i].style.width='50%';
+									} 
+								}
+							}
+							mui.scrollTo(document.body.scrollHeight,100);
 							}
 							getMsgForEver();
 						},
@@ -189,6 +245,10 @@
 			.pagebody {
 				margin: 10px;
 				overflow: hidden;
+				position: absolute;
+				top: 280px;
+				z-index: -1;
+				padding-bottom: 40px;
 			}
 			
 			#chat-time {
@@ -235,9 +295,7 @@
 			.mui-content {
 				margin-top: 40px;
 			}
-			#bd{
-				background-size: 100% 100%;
-			}
+			
 		</style>
 
 	</head>

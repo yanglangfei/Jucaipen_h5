@@ -57,7 +57,6 @@
 						var myDate = subStr(4, data.insertDate);
 						var body=data.bodys;
 					//	var bs=body.getElementsByTagName('img');
-					  console.log(body);
 						teacherName.innerText = data.nickName;
 						leader.innerText = data.level;
 						times.innerText = myDate;
@@ -68,7 +67,17 @@
 						if(body!=null&&body.length>0){
 							var bs=document.getElementsByTagName('img');
 							for(var i=0;i<bs.length;i++){
-								console.log(bs[i].src);
+								if(bs[i].src.indexOf("attached")>0){
+									var u=bs[i].src.replace('file://',"http://live.jucaipen.com");
+									bs[i].src=u;
+								    bs[i].style.width='100%';
+								    bs[i].onclick=function(){
+								    	document.getElementById("imgFrame").style.display = "block";
+                                     document.getElementById("imgbox").innerHTML = "<img src='" + this.getAttribute("src") + "' />";
+								   document.getElementById("imgbox").style.width='100%';
+								    document.getElementById("imgbox").style.height='100%';
+								    }
+								}
 							}
 						} 
 						var isV = data.isV;
@@ -81,6 +90,10 @@
 					error: function(e) {}
 				})
 				queryComments(currentPage);
+				
+				
+				
+				
 				//点赞
 				sa_zan.addEventListener("tap", function() {
 						var uId = plus.storage.getItem("userId");
@@ -122,6 +135,10 @@
 							addIdeaComment(opType, uId, id, body,commId);
 						}
 					})
+				
+				document.getElementById("close").onclick=function(){
+					document.getElementById("imgFrame").style.display='none';
+				}
 					//提交评论信息
 				function addIdeaComment(type, uId, iId, body,cId) {
 					console.log(id + " ");
@@ -408,6 +425,12 @@
 			.tit {
 				margin-top: 50px;
 			}
+			#imgFrame{
+				position:absolute; 
+				top: 50px;
+				 z-index:1000; 
+				 display:none;
+			} 
 		</style>
 
 	</head>
@@ -445,6 +468,16 @@
 				</div>
 				<div class="showarticlebody" id="ideaBody">
 				</div>
+				
+				
+				<div id="imgFrame">
+        <div><a id="close">关闭</a></div>
+        <div id="imgbox"></div>
+    </div>
+				
+				
+				
+				
 				<div class="showarticle_good">
 
 					<p id="big"></p>

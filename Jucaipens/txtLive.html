@@ -23,6 +23,7 @@
 				var livePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/todayIdeas";
 				var web = plus.webview.currentWebview();
 				var typeId=web.querryType;
+				var nodata=document.getElementById("layer-nodata");
 				var liveTitle = document.getElementById("liveTitle");
 				var todayLive=document.getElementById("todatLive");
 				var today=document.getElementById("toady");
@@ -76,6 +77,11 @@
 					timeout: 10000,
 					success: function(data) {
 						loading.style.display='none';
+						if(data.length<=0){
+							nodata.style.display='block';
+						}else{
+							nodata.style.display='none';
+						}
 						for(var i=0;i<data.length;i++){
 							var myDate=subStr(1,data[i].insertDate);
 							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>"+myDate+"</span></li>"
@@ -150,6 +156,11 @@
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<img src="image/loading-0.gif" />
 			</div>
+			
+			
+		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+				</div>
 			<!------------底部定位层---------->
 		</div>
 	</body>

@@ -508,7 +508,8 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"image/into_back.png",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"image/normalUser.png"
 				],
 				"priority": 13,
 				"refer": []
@@ -817,7 +818,8 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"image/comm_icon1.png",
-					"image/good.png"
+					"image/good.png",
+					"js/stringUtil.js"
 				],
 				"priority": 8,
 				"refer": []

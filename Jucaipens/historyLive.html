@@ -115,13 +115,23 @@
 							for (var i = 0; i < data.length; i++) {
 								var myDate = subStr(1, data[i].insertDate);
 								var logo = data[i].userLogo;
+								var body=data[i].body;
 								if (logo.indexOf('121.40.227.121') > 0) {
 									//app 头像
 									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
 								}
-								commUrl = commUrl + " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" + " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good'><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em>0</em></a></span>" + "  <span class='comm'><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + data[i].body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>"
+								commUrl = commUrl + " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" + " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good'><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em>0</em></a></span>" + "  <span class='comm'><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>"
 							}
 							commList.innerHTML = commUrl;
+							if(body!=null){
+								var imgs=document.getElementsByTagName("img");
+								for(var i=0;i<imgs.length;i++){
+									if(imgs[i].src.indexOf('gif')>0){
+										imgs[i].style.width='28px';
+										imgs[i].style.height='28px';
+									}
+								}
+							}
 						},
 						error: function(e) {}
 					})

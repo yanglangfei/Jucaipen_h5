@@ -190,7 +190,8 @@
 			"css/mui.min.css",
 			"css/style.css",
 			"image/good.png",
-			"image/kaishi.png"
+			"image/kaishi.png",
+			"js/stringUtil.js"
 		],
 		"refer": []
 	},
@@ -217,7 +218,8 @@
 			"css/mui.min.css",
 			"css/style.css",
 			"image/guan.png",
-			"js/stringUtil.js"
+			"js/stringUtil.js",
+			"image/normalUser.png"
 		],
 		"refer": []
 	},

@@ -230,18 +230,31 @@
 			},
 			"splashscreen": {
 				"ios": {
+					"ipad": {
+						"portrait": "image/start.png",
+						"landscape": "image/start.png",
+						"portrait7": "image/start.png",
+						"landscape7": "image/start.png",
+						"portrait-retina": "image/start.png",
+						"portrait-retina7": "image/start.png",
+						"landscape-retina": "image/start.png",
+						"landscape-retina7": "image/start.png"
+					},
 					"iphone": {
-						 /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "unpackage/res/icons/144x144.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": "unpackage/res/icons/144x144.png"
+						"default": "image/start.png",
+						"retina55": "image/start.png",
+						"retina47": "image/start.png",
+						"retina40": "image/start.png",
+						"retina35": "image/start.png",
+						"retina55l": "image/start.png"
 					}
 				},
 				"android": {
-					"mdpi": "unpackage/res/icons/144x144.png", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "unpackage/res/icons/144x144.png", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "unpackage/res/icons/144x144.png", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "unpackage/res/icons/144x144.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "unpackage/res/icons/144x144.png"
+					"hdpi": "image/start.png",
+					"ldpi": "image/start.png",
+					"mdpi": "image/start.png",
+					"xhdpi": "image/start.png",
+					"xxhdpi": "image/start.png"
 				}
 			},
 			"debug": false
@@ -275,7 +288,10 @@
 					"newsDetail.html",
 					"attention.html",
 					"login.html",
-					"vipcenter.html"
+					"vipcenter.html",
+					"index.html",
+					"liveList.html",
+					"famousDish.html"
 				],
 				"priority": 0
 			},
@@ -328,7 +344,8 @@
 					"css/style.css",
 					"js/stringUtil.js",
 					"image/head.png",
-					"image/response.png"
+					"image/response.png",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"login.html"
@@ -348,7 +365,8 @@
 					"css/style.css",
 					"css/tuch.css",
 					"js/stringUtil.js",
-					"famousDish.html"
+					"famousDish.html",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"ideaDetail.html"
@@ -382,7 +400,8 @@
 					"image/v1.png",
 					"liveList.html",
 					"trhreeBoard.html",
-					"answerList.html"
+					"answerList.html",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"ideaDetail.html",
@@ -392,7 +411,13 @@
 					"teacherDetail.html",
 					"askQuestion.html",
 					"login.html",
-					"vipcenter.html"
+					"vipcenter.html",
+					"answerList.html",
+					"intrvlIdea.html",
+					"trhreeBoard.html",
+					"index.html",
+					"liveList.html",
+					"attention.html"
 				]
 			},
 			"index.html": {
@@ -427,7 +452,10 @@
 					"historyLive.html",
 					"ideaDetail.html",
 					"liveRoom.html",
-					"vipcenter.html"
+					"vipcenter.html",
+					"trhreeBoard.html",
+					"liveList.html",
+					"famousDish.html"
 				],
 				"priority": 0
 			},
@@ -450,10 +478,12 @@
 					"image/more.png",
 					null,
 					"js/stringUtil.js",
-					"image/loading-0.gif"
+					"image/loading-0.gif",
+					"fonts/mui.ttf"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"newsDetail.html"
 				]
 			},
 			"news/moreNews.html": {
@@ -489,13 +519,18 @@
 					"image/indexnormal.png",
 					"css/tuch.css",
 					"famousDish.html",
-					"liveList.html"
+					"liveList.html",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"newsDetail.html",
 					"login.html",
 					"news/moreNews.html",
-					"vipcenter.html"
+					"vipcenter.html",
+					"index.html",
+					"trhreeBoard.html",
+					"liveList.html",
+					"famousDish.html"
 				]
 			},
 			"liveRoom.html": {
@@ -533,12 +568,17 @@
 					"trhreeBoard.html",
 					"index.html",
 					"famousDish.html",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"liveRoom.html",
 					"login.html",
-					"vipcenter.html"
+					"vipcenter.html",
+					"index.html",
+					"trhreeBoard.html",
+					"attention.html",
+					"famousDish.html"
 				]
 			},
 			"completeInfo.html": {
@@ -608,10 +648,12 @@
 					null,
 					"image/loading-0.gif",
 					"image/shijian.jpg",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
-					"communite.html"
+					"communite.html",
+					"txtLive.html"
 				]
 			},
 			"communite.html": {
@@ -673,10 +715,12 @@
 					"image/loading-0.gif",
 					"image/askinfo.png",
 					"image/v1.png",
-					"famousDish.html"
+					"famousDish.html",
+					"fonts/mui.ttf"
 				],
 				"refer": [
-					"askList.html"
+					"askList.html",
+					"answerList.html"
 				]
 			},
 			"teacherIntroduce.html": {
@@ -703,7 +747,8 @@
 					"image/into_back.png",
 					"css/mui.min.css",
 					"css/style.css",
-					"css/tuch.css"
+					"css/tuch.css",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"login.html"
@@ -729,7 +774,8 @@
 					"image/guanzhu.png",
 					"image/attention.png",
 					"image/noattention.png",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"fansList.html",
@@ -999,9 +1045,12 @@
 					"css/mui.min.css",
 					"css/mui.poppicker.css",
 					"css/mui.picker.css",
-					"js/city.data-3.js"
+					"js/city.data-3.js",
+					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"userInfo.html"
+				],
 				"priority": 0
 			},
 			"updatePhone.html": {
@@ -1009,7 +1058,8 @@
 					"js/mui.min.js",
 					"image/into_back.png",
 					"css/mui.min.css",
-					"css/style.css"
+					"css/style.css",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -1017,17 +1067,19 @@
 		},
 		"idle": {
 			"resources": [
-				"css/layer.css",
 				"image/no_network.png",
+				"css/layer.css",
 				"image/sex_men.png",
+				"js/createCity.js",
 				"image/exit.png",
 				"image/logo_wechatmoments.png",
-				"news/news_sub.html",
 				"image/skyblue_editpage_image_remove.png",
+				"news/news_sub.html",
 				"image/thumb.png",
 				"image/find.png",
 				"image/dur.png",
 				"image/logo_wechatfavorite.png",
+				"js/screenAdapter.js",
 				"image/zhuanjia.9.png",
 				"image/skyblue_actionbar_back_btn.png",
 				"js/layer.js",
@@ -1052,9 +1104,10 @@
 				"image/logo_email.png",
 				"image/skyblue_platform_checked_disabled.png",
 				"image/thubm_state.png",
-				"image/btn_back_nor.9.png",
+				"image/1.jpg",
 				"js/layer.ext.js",
 				"image/skyblue_actionbar_ok_btn.png",
+				"image/btn_back_nor.9.png",
 				"image/zan_press.png",
 				"image/logo_qzone.png",
 				"image/jianpan.png",
@@ -1062,16 +1115,17 @@
 				"image/pic.png",
 				"image/xlistview_arrow.png",
 				"js/jquery-1.11.0.js",
-				"image/logo_tencentweibo.png",
 				"image/sex_women.png",
+				"image/logo_tencentweibo.png",
 				"image/huanyings.png",
 				"image/logo_shortmessage.png",
 				"image/skyblue_platform_checked.png",
-				"image/licainormal.png",
 				"image/play_center.png",
+				"image/licainormal.png",
+				"image/delete.png",
 				"image/jucaipens.png",
 				"css/lay.css",
-				"image/delete.png",
+				"image/loading.gif",
 				"image/ic_launcher.png",
 				"image/press_stars.png",
 				"image/skyblue_editpage_divider.9.png",
@@ -1081,10 +1135,13 @@
 				"startPage.html",
 				"image/skyblue_editpage_bg.9.png",
 				"image/v.png",
-				"image/logo_twitter.png",
 				"image/pause.png",
+				"image/logo_twitter.png",
 				"image/small.png"
 			]
 		}
-	}
+	},
+	"unpackage": [
+		"vipService.html"
+	]
 }

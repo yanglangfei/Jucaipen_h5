@@ -63,7 +63,6 @@
 				var isManager = plus.storage.getItem("isManager");
 				var isServer = plus.storage.getItem("isServer");
 				var userId = plus.storage.getItem("userId");
-				                                            (isManager, liveId, isServer);
 				
 				
 				function getMsgForEver(){
@@ -158,7 +157,7 @@
 						type: "post", 
 						success: function(data) {
 							if(data.length>0){
-							topId=data[data.length-1].Id+1;
+							topId=data[data.length-1].Id+1; 
 							for (var i = 0; i < data.length; i++) {
 								var myDate=subChatStr(1,data[i].SendDate);
 								var headLogo;

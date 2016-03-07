@@ -59,6 +59,8 @@ var subStr = function(type, str) {
 			}
 		}
 		return year+"-"+moth+"-"+day;
+	}else if(type==5){
+		return hour + ":" + min;
 	}
 }
 

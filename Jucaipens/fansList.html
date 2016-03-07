@@ -29,6 +29,7 @@
 			var fansLay=document.getElementById("fansLay");
 			var querryFans="http://121.40.227.121:8080/AccumulateWealth/jucaipen/fansList";
 			var currentPage=1;
+			var nodata=document.getElementById("layer-nodata");
 			var totlePage;
 			var loadMore=document.getElementById("loadMore");
 			var fans_gd=document.getElementById("fans_gd");
@@ -59,6 +60,13 @@
 					loadFans.style.display='none';
 					if(loadMore.style.display='block'){
 						loadMore.style.display='none';
+					}
+					if(data.length<=0){
+						nodata.style.display='block';
+						fansLay.style.display='none';
+					}else{
+						nodata.style.display='none';
+						fansLay.style.display='block';
 					}
 					for(var i=0;i<data.length;i++){
 					totlePage=data[0].totlePage;
@@ -108,7 +116,7 @@
 					</div>
 				</header>
 				<!---------粉丝列表开始---------->
-				<div class="fanslist" id="fansLay">
+				<div class="fanslist" id="fansLay" style="display: none;">
 
 					</div>
 
@@ -116,6 +124,10 @@
 				<div id="gd_fand" class="linkmore">
 					<a id="fans_gd" style="color: #8D8D8D;display: none;">更多>></a>
 					<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore"/>
+				</div>
+				
+		       <div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
 				</div>
 				<!---------粉丝列表结束---------->
 				

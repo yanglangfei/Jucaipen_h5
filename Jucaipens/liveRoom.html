@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -54,6 +53,11 @@
 						}else{
 							videoUrl="<embed width='100%' height='100%' id='live' src="+data.videoUrl+"></embed>";
 							 bd.innerHTML=videoUrl;
+							 var live=document.getElementById("live");
+							 live.addEventListener("tap",function(){
+							 		//监听视频屏幕尺寸
+							 })
+							 
 						}
 					}, 
 					error: function(e) {
@@ -81,7 +85,7 @@
 							if(data.length>0){
 							 topId=data[data.length-1].Id+1;
 							for (var i = 0; i < data.length; i++) {
-								var myDate=subChatStr(1,data[i].SendDate);
+								var myDate=subStr(5,data[i].SendDate);
 								if(data[i].SendManager==1){
 									//管理员
 									headLogo='image/guan.png';
@@ -104,7 +108,6 @@
 										imgs[i].style.width='25px';
 										imgs[i].style.height='25px';
 										continue ;
-										
 									}
 									if(imgs[i].src.indexOf('img.jucaipen.com')>0){
 										imgs[i].style.width='50%';
@@ -121,8 +124,6 @@
 				},5000);
 				}
 				getTopId(isManager,liveId,isServer);
-				
-			
 				//获取最近倒数第十条消息ID
 				function getTopId(isManager, roomId, isServer) {
 					mui.ajax(topIdPath, {
@@ -159,7 +160,7 @@
 							if(data.length>0){
 							topId=data[data.length-1].Id+1; 
 							for (var i = 0; i < data.length; i++) {
-								var myDate=subChatStr(1,data[i].SendDate);
+								var myDate=subStr(5,data[i].SendDate);
 								var headLogo;
 								if(data[i].SendManager==1){
 									//管理员
@@ -247,7 +248,7 @@
 				position: absolute;
 				top: 280px;
 				z-index: -1;
-				padding-bottom: 40px;
+				padding-bottom: 50px;
 			}
 			
 			#chat-time {
@@ -287,7 +288,6 @@
 			
 			.chat_div_btn ul li {
 				width: 100%;
-				float: left;
 				padding: 5px 0px;
 			}
 			
@@ -338,5 +338,4 @@
 
 		</div>
 	</body>
-
 </html>

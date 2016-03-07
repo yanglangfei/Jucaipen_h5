@@ -41,19 +41,15 @@
 							if(data.ret_code==0){
 								var versionCode=data.versionCode;
 								var apkUrl=data.apkUrl;
-								console.log(version);
 								if(versionCode>version){
 									 //更新版本
-								}else{
-									//暂无最新的版本可更新
-									mui.confirm("有新版本可更新","更新提示",["确定","取消"],function(e){
+									 mui.confirm("有新版本可更新","更新提示",["确定","取消"],function(e){
 										   if(e.index==0){
+										   	//更新版本
 										   	  downLoadApk(apkUrl);
-										   }else{
-										     
-										   } 
+										   }
 									})
-								} 
+								}
 							}
 							
 						},
@@ -63,19 +59,21 @@
 					})
 				}
 				
+				/*
+				 * 下载需要更新的apk
+				 */
 				function downLoadApk(downPath){
-					console.log(dowLoadPath+"?fileName="+downPath);
 					var task=plus.downloader.createDownload(dowLoadPath+"?fileName="+downPath,{},function(d,state){
-						if(state==200){ 
+						if(state==200){
 							var filePath=d.url;
-							console.log(JSON.stringify(d));
+							//安装apk文件 
 							plus.runtime.install(filePath,{},function(d){
 								console.log(JSON.stringify(d));
 							},function(e){
 								console.log(e.message);
 							});
 						}else{
-							
+							mui.toast('版本号获取失败');
 						}
 					});
 					task.start();
@@ -127,7 +125,7 @@
 									})
 								}
 							})
-							//设置广告自动轮询
+						//设置广告自动轮询
 						var gallery = mui(".mui-slider");
 						gallery.slider({
 							interval: 2000

@@ -12,20 +12,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<link rel="stylesheet" href="css/mui.picker.css" />
-		<script type="text/javascript" src="js/city.data-3.js"></script>
-		<script type="text/javascript" src="js/city.data.js"></script>
-		<link rel="stylesheet" href="css/mui.poppicker.css" />
 		<script type="text/javascript" src="js/stringUtil.js"></script>
-		<script type="text/javascript" src="js/mui.picker.js"></script>
-		<script type="text/javascript" src="js/mui.poppicker.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var width = plus.screen.resolutionWidth;
+				var width = plus.screen.resolutionWidth; 
 				var height = plus.screen.resolutionHeight;
 				var uId = plus.storage.getItem("userId");
 				var name = document.getElementById("name");
@@ -46,7 +40,7 @@
 				sex.disabled = true;
 				var btn_send = document.getElementById("btn_send");
 				btn_send.disabled = true;
-				var updateImagePath = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/imageUpload";
+				var updateImagePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/imageUpload";
 				var getMyInfo = "http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
 				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
 				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
@@ -57,6 +51,10 @@
 				var returePro;
 				var retureCy;
 				var returnArea;
+				var currentPro;
+				var currentCy;
+				var currentArea;
+				var fromType;
 				var values = location.search;
 				if (uId <= 0) {
 					return;
@@ -64,6 +62,7 @@
 				if (values != null && values.length > 0) {
 					var array = values.split("&");
 					if (array != null && array.length > 0) {
+						fromType=1;
 						var pId = array[0].replace("?", "");
 						var cId = array[1];
 						var aId = array[2];
@@ -72,11 +71,12 @@
 						returnArea = decodeURIComponent(array[5]);
 						address.innerHTML = returePro + "-" + retureCy + "-" + returnArea;
 					}
+				}else{
+					fromType=0; 
+					
 				}
-				
-				getUserInfo();
-
-				function getUserInfo() {
+			    getUserInfo(fromType); 
+				function getUserInfo(type) {
 					//获取个人信息
 					mui.ajax(getMyInfo, {
 						data: {
@@ -92,7 +92,10 @@
 							birth.valueAsDate = time;
 							email.value = data.email;
 							sex.innerHTML = data.sex;
-							if (data.localProId > 0 || data.localCityId > 0 || data.localAreaId > 0) {
+							if (data.localProId > 0 || data.localCityId > 0 || data.localAreaId > 0&&type==0) {
+								currentPro=data.localProvince;
+								currentCy=data.localCity;
+								currentArea=data.localArea;
 								address.innerHTML = data.localProvince + "-" + data.localCity + "-" + data.localArea;
 							}
 							introduce.value = data.descript;
@@ -135,10 +138,13 @@
 				function getGrial() {
 					plus.gallery.pick(function(data) {
 						userLogo.src = data;
-						console.log(JSON.stringify(data));
+						var photoExt=data.substr(data.lastIndexOf(".")).toLowerCase();
+						if(photoExt!='.jpg'&&photoExt!='.jpeg'&&photoExt!='.png'&&photoExt!='.bmp'){
+							mui.toast('图片格式只允许为 "jpg"或"jpeg"或"png"或"bmp"');
+							return ;
+						} 
 						uploadLogo(data);
 					}, function(e) {
-						console.log("err");
 					})
 				}
 				//获取拍照图片
@@ -147,11 +153,15 @@
 					var form = camera.supportedImageFormats[0];
 					var res = camera.supportedImageResolutions[0];
 					camera.captureImage(function(data) {
-						console.log(JSON.stringify(data));
 						userLogo.src = data;
+						var photoExt=data.substr(data.lastIndexOf(".")).toLowerCase();
+						if(photoExt!='.jpg'&&photoExt!='.jpeg'&&photoExt!='.png'&&photoExt!='.bmp'){
+							mui.toast('图片格式只允许为 "jpg"或"jpeg"或"png"或"bmp"');
+							return ;
+						}
 						uploadLogo(data);
 					}, function(e) {
-						console.log("error:" + e.message);
+						
 					})
 				}
 				//编辑资料按钮
@@ -228,7 +238,12 @@
 							id: "choseCity",
 							waiting: {
 								autoShow: false
-							}
+							},
+							extras:{
+								province:currentPro,
+								city:currentCy,
+								county:currentArea
+                          }
 						})
 					})
 					//提交非文件信息
@@ -253,10 +268,6 @@
 						mui.toast("Email不能为空");
 						return;
 					}
-					/*if(provinceLay.value.length<=0||cityLay.value.length<=0||areaLay.value.length<=0){
-						mui.toast("请正确选择所在地");
-						return ;
-					}*/
 					mui.ajax(sendUserInfoPath, {
 						data: {
 							nikeName: name.value,
@@ -321,64 +332,6 @@
 							}
 						})
 					})
-				//获取省份信息
-				function getProvinceData() {
-					var provinceStr = "";
-					mui.ajax(queryProvincePath, {
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							for (var i = 0; i < data.length; i++) {
-								provinceStr = provinceStr + "<option value=" + data[i].id + ">" + data[i].name + "</option>";
-							}
-							provinceLay.innerHTML=provinceStr;
-							var id = provinceLay.options[provinceLay.options.selectedIndex].value;
-							getCityInfo(id);
-						},
-						error: function(e) {}
-					})
-				}
-				//获取城市信息
-				function getCityInfo(pId) {
-					var cityStr = "";
-					mui.ajax(queryCityPath, {
-						data: {
-							provinceId: pId
-						},
-						type: 'get',
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							for (var i = 0; i < data.length; i++) {
-								cityStr = cityStr + "<option value=" + data[i].id + ">" + data[i].name + "</option>";
-							}
-							//cityLay.innerHTML=cityStr;
-							var id = cityLay.options[cityLay.options.selectedIndex].value;
-							getAreaInfo(id);
-						},
-						error: function(e) {}
-					})
-				}
-				//获取县（区）信息
-				function getAreaInfo(cId) {
-					var areaStr = "";
-					mui.ajax(queryArea, {
-						data: {
-							cityId: cId
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							for (var i = 0; i < data.length; i++) {
-								areaStr = areaStr + "<option>" + data[i].name + "</option>";
-							}
-							//	areaLay.innerHTML=areaStr;
-						},
-						error: function(e) {}
-					})
-				}
 			});
 		</script>
 		<style type="text/css">
@@ -412,14 +365,13 @@
 				font-size: 15px;
 				background: #efeff4;
 			}
-			
 			#btn_send:active {
 				color: #E73822;
 			}
 		</style>
 	</head>
 
-	<body>
+	<body >
 		<header class="header">
 			<div class="head">
 				<div class="denglu1 mui-action-back">
@@ -458,26 +410,11 @@
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;"> Email：</span>
-				<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" placeholder="输入邮箱" />
+				 <input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" placeholder="输入邮箱" />
 			</div>
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;">所在地:</span>
-				<!--<div style="width: 25%;float: left;margin-left: 5px;">
-					<select style="border: #e0e0e0 1px solid;" id="data-province">
-						<option>请选择省份</option>
-					</select>
-				</div>
-				<div style="width: 25%;float: left;margin-left: 5px;">
-					<select style="border: #e0e0e0 1px solid;" id="data-city">
-						<option>请选择城市</option>
-					</select>
-				</div>
-				<div style="width: 25%;float: left;margin-left: 5px;">
-					<select style="border: #e0e0e0 1px solid;" id="data-area">
-						<option>请选择县／区</option>
-					</select>
-				</div>-->
 				<button id='address' style="display: inline;width: 80%;padding: 10px;border: solid #E0E0E0 1px;border-radius: 5px;">选择城市</button>
 			</div>
 
@@ -485,13 +422,6 @@
 				<span style="float: left;line-height: 100px;">简&nbsp;介: &nbsp;&nbsp;&nbsp;</span>
 				<textarea style="width: 80%;min-height: 100px;border: solid #E0E0E0 1px;border-radius: 5px;" id="introduce" placeholder="个人简介"></textarea>
 			</div>
-
-			<!--
-    	作者：185601452@qq.com
-    	时间：2016-01-11
-    	描述：电话   邮箱     地址    简介
-    -->
-
 		</div>
 
 	</body>

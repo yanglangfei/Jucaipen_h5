@@ -32,6 +32,7 @@
 				var loadIdea = document.getElementById("loadIdea");
 				var gengduo = document.getElementById("gengduo");
 				var teacherId = web.teacherId;
+				var nodata=document.getElementById("layer-nodata");
 				var loadMorfe=document.getElementById("loadMorfe");
 				var currentPage = 1;
 				var totlePage;
@@ -68,6 +69,13 @@
 							loadIdea.style.display = 'none';
 							if(loadMorfe.style.display='block'){
 								loadMorfe.style.display='none';
+							}
+							if(data.length<=0){
+								nodata.style.display='block';
+								intrivlIdea.style.display='none';
+							}else{
+								nodata.style.display='none';
+								intrivlIdea.style.display='block';
 							}
 							totlePage = data[0].totlePage;
 							for (var i = 0; i < data.length; i++) {
@@ -116,6 +124,15 @@
 							if(loadMorfe.style.display='block'){
 								loadMorfe.style.display='none';
 							}
+							
+							if(data.length<=0){
+								nodata.style.display='block';
+								intrivlIdea.style.display='none';
+							}else{
+								nodata.style.display='none';
+								intrivlIdea.style.display='block';
+							}
+							
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[0].totlePage;
 								var myDate=subStr(4,data[i].insertDate);
@@ -184,6 +201,10 @@
 		<div style="text-align: center;margin-top: 80%;display: none;" id="loadIdea">
 			<img src="image/loading-0.gif" />
 		</div>
+		
+		 <div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+					<label style="font-size: 25px;">暂无数据</label>
+			</div> 
 
 		<!--------热门观点结束---------->
 

@@ -5,8 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<title>
-		</title>
+		<title></title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
@@ -20,7 +19,7 @@
 			});
 			mui.plusReady(function() {
 				var commPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
-				var addExchangePath = "http://192.168.1.228:8080/AccumulateWealth/jucaipen/addExChange";
+				var addExchangePath = "http://192.168.1.86:8080/AccumulateWealth/jucaipen/addExChange";
 				var commLay = document.getElementById("commLay");
 				var today = document.getElementById("today");
 				var communit = document.getElementById("communit");
@@ -76,7 +75,11 @@
 								if (logo.indexOf('121.40.227.121') > 0) {
 									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
 								}
-								commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" + isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name' style='margin-left:10px;'>" + data[i].userName + "</span><span class='u_date' style='margin-left:10px;'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user'  ><img src='image/response.png'></a>" + "</div><div class='bodys'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
+								commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" 
+								+ isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name' style='margin-left:15px;'>"
+								+ data[i].userName + "</span><span class='u_date' style='margin-left:15px;'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user' index="
+								+data[i].id+" un="+data[i].userName+"  bs="+data[i].bodys+" style='display:none;><img src='image/response.png'></a>" + "</div><div class='bodys' style='margin-top:5px;'>" 
+								+ data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
 							}
 							commLay.innerHTML = commStr;
 							if(currentPage<totlePage){
@@ -139,15 +142,14 @@
 				}
 				//添加交流信息
 				function addExchangeFN(uId, body) {
-					console.log(body);
 					mui.ajax(addExchangePath, {
 						data: {
 							userId: uId,
 							liveId: liveId,
-							bodys: encodeURI(body)
+							bodys:body
 						},
 						dataType: "json",
-						type: "get",
+						type: "post",
 						timeout: 10000,
 						success: function(data) {
 							if (data.ret_code == 0) {
@@ -194,7 +196,6 @@
 			</div>
 			<!--------名家问答开始---------->
 			<div class="livetalk_list" id="commLay">
-
 				<!-------------->
 
 			</div>
@@ -209,18 +210,17 @@
 			<div id="addContent" class="livetakl_fload">
 
 				<div class="input_txt">
-					<textarea name="textarea" id="textarea" placeholder="来说点什么吧..." cols="45" rows="5"></textarea>
+					<input name="textarea" id="textarea" placeholder="来说点什么吧..." type="text" />
 				</div>
 				<div class="input_btn">
 					<input type="button" name="button" id="button" class="def" value="发表" />
 				</div>
 			</div>
 			<!------------底部定位层---------->
-			
-		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label>
-				</div>
-			
+
+			<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+				<label style="font-size: 25px;">暂无数据</label>
+			</div>
 
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<img src="image/loading-0.gif" />

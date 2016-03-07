@@ -8,11 +8,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
@@ -21,21 +21,21 @@
 				var chatPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
 				var topIdPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getTopId";
 				var getChatMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getlist";
-				var sendMsgPath="http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
+				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
 				var uId = plus.storage.getItem("userId");
 				var liveId = web.liveId;
 				var msgType = 0;
 				var topId;
 				var isNormal;
-				var roomFace=web.face;
+				var roomFace = web.face;
 				var isManager = plus.storage.getItem("isManager");
 				var isServer = plus.storage.getItem("isServer");
 				var userNmae = plus.storage.getItem("userName");
-				var bd=document.getElementById("bd");
-				if(isServer==1||isManager==1){
-					isNormal=1;
-				}else{
-					isNormal=1;
+				var bd = document.getElementById("bd");
+				if (isServer == 1 || isManager == 1) {
+					isNormal = 1;
+				} else {
+					isNormal = 1;
 				}
 				//获取视频资源
 				mui.ajax(liveResourcePath, {
@@ -48,18 +48,23 @@
 					timeout: 10000,
 					success: function(data) {
 						var videoUrl;
-						if(data.videoUrl.indexOf('yyscene')>0){
-							bd.style.background='#AAAAAA';
-						}else{
-							videoUrl="<embed width='100%' height='100%' id='live' src="+data.videoUrl+"></embed>";
-							 bd.innerHTML=videoUrl;
-							 var live=document.getElementById("live");
-							 live.addEventListener("tap",function(){
-							 		//监听视频屏幕尺寸
-							 })
-							 
+						if (data.videoUrl.indexOf('yyscene') > 0) {
+							bd.style.background = '#AAAAAA';
+						} else {
+							videoUrl = "<embed width='100%' height='100%' id='live' src=" + data.videoUrl + "></embed>";
+							bd.innerHTML = videoUrl;
+							var live = document.getElementById("live");
+							document.addEventListener('fullscreenchange',function(){
+								console.log(document.fullScreen);
+							},false);
+							document.addEventListener('mozfullscreenchange',function(){
+								console.log(document.onmozfullscreenchange);
+							},false);
+							document.addEventListener('webkitfullscreenchange',function(){
+								console.log(document.webkitIsFullScreen);
+							},false);
 						}
-					}, 
+					},
 					error: function(e) {
 						mui.toast('资源加载失败');
 					}
@@ -67,63 +72,60 @@
 				var isManager = plus.storage.getItem("isManager");
 				var isServer = plus.storage.getItem("isServer");
 				var userId = plus.storage.getItem("userId");
-				
-				
-				function getMsgForEver(){
-					setInterval(function(){               
-					var content = chatLay.innerHTML;
-					mui.ajax(getChatMsgPath, {
-						data: {
-							topId: topId,
-							roomid: liveId,
-							userId: userId,
-							isServer: isNormal   
-						},
-						dataType: "json",
-						type: "post",
-						success: function(data) {
-							if(data.length>0){
-							 topId=data[data.length-1].Id+1;
-							for (var i = 0; i < data.length; i++) {
-								var myDate=subStr(5,data[i].SendDate);
-								if(data[i].SendManager==1){
-									//管理员
-									headLogo='image/guan.png';
-								}else{
-									//普通用户
-									headLogo='image/normalUser.png';
-								}
-								if(data[i].SendServiceId==1){
-									//客服
-								}else{
-									//非客服
-								}
-								content = content + "<li><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src="+headLogo+" id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
-							}
-							chatLay.innerHTML = content;
-							if(content!=null){
-								var imgs=document.getElementsByTagName("img");
-								for(var i=0;i<imgs.length;i++){
-									if(imgs[i].src.indexOf('gif')>0){
-										imgs[i].style.width='25px';
-										imgs[i].style.height='25px';
-										continue ;
+
+				function getMsgForEver() {
+					setInterval(function() {
+						var content = chatLay.innerHTML;
+						mui.ajax(getChatMsgPath, {
+							data: {
+								topId: topId,
+								roomid: liveId,
+								userId: userId,
+								isServer: isNormal
+							},
+							dataType: "json",
+							type: "post",
+							success: function(data) {
+								if (data.length > 0) {
+									topId = data[data.length - 1].Id + 1;
+									for (var i = 0; i < data.length; i++) {
+										var myDate = subStr(5, data[i].SendDate);
+										if (data[i].SendManager == 1) {
+											//管理员
+											headLogo = 'image/guan.png';
+										} else {
+											//普通用户
+											headLogo = 'image/normalUser.png';
+										}
+										if (data[i].SendServiceId == 1) {
+											//客服
+										} else {
+											//非客服
+										}
+										content = content + "<li><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 									}
-									if(imgs[i].src.indexOf('img.jucaipen.com')>0){
-										imgs[i].style.width='50%';
-									} 
+									chatLay.innerHTML = content;
+									if (content != null) {
+										var imgs = document.getElementsByTagName("img");
+										for (var i = 0; i < imgs.length; i++) {
+											if (imgs[i].src.indexOf('gif') > 0) {
+												imgs[i].style.width = '25px';
+												imgs[i].style.height = '25px';
+												continue;
+											}
+											if (imgs[i].src.indexOf('img.jucaipen.com') > 0) {
+												imgs[i].style.width = '50%';
+											}
+										}
+									}
+									mui.scrollTo(document.body.scrollHeight, 100);
 								}
-							}
-							mui.scrollTo(document.body.scrollHeight,100);
-							} 
-						},
-						error: function(e) {
-						} 
-					})
-				
-				},5000);
+							},
+							error: function(e) {}
+						})
+					}, 5000);
 				}
-				getTopId(isManager,liveId,isServer);
+				getTopId(isManager, liveId, isServer);
 				//获取最近倒数第十条消息ID
 				function getTopId(isManager, roomId, isServer) {
 					mui.ajax(topIdPath, {
@@ -139,7 +141,7 @@
 							topId = JSON.stringify(data);
 							getChatMessaged();
 						},
-						error: function(e) { 
+						error: function(e) {
 							console.log('连接失败');
 						}
 					})
@@ -152,45 +154,45 @@
 							topId: topId,
 							roomid: liveId,
 							userId: userId,
-							isServer: isNormal 
+							isServer: isNormal
 						},
 						dataType: "json",
-						type: "post", 
+						type: "post",
 						success: function(data) {
-							if(data.length>0){
-							topId=data[data.length-1].Id+1; 
-							for (var i = 0; i < data.length; i++) {
-								var myDate=subStr(5,data[i].SendDate);
-								var headLogo;
-								if(data[i].SendManager==1){
-									//管理员
-									headLogo='image/guan.png';
-								}else{
-									//普通用户
-									headLogo='image/normalUser.png';
-								}
-								if(data[i].SendServiceId==1){
-									//客服
-								}else{
-									//非客服
-								}
-								content = content + "<li ><span id='chat-time'>"+myDate+"</span><span id='sp_head'>" + "<img src="+headLogo+" id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
-							}
-							chatLay.innerHTML = content;
-							if(content!=null){
-								var imgs=document.getElementsByTagName("img");
-								for(var i=0;i<imgs.length;i++){
-									if(imgs[i].src.indexOf('gif')>0){
-										imgs[i].style.width='25px';
-										imgs[i].style.height='25px';
-										continue ;
+							if (data.length > 0) {
+								topId = data[data.length - 1].Id + 1;
+								for (var i = 0; i < data.length; i++) {
+									var myDate = subStr(5, data[i].SendDate);
+									var headLogo;
+									if (data[i].SendManager == 1) {
+										//管理员
+										headLogo = 'image/guan.png';
+									} else {
+										//普通用户
+										headLogo = 'image/normalUser.png';
 									}
-									if(imgs[i].src.indexOf('img.jucaipen.com')>0){
-										imgs[i].style.width='50%';
-									} 
+									if (data[i].SendServiceId == 1) {
+										//客服
+									} else {
+										//非客服
+									}
+									content = content + "<li ><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 								}
-							}
-							mui.scrollTo(document.body.scrollHeight,100);
+								chatLay.innerHTML = content;
+								if (content != null) {
+									var imgs = document.getElementsByTagName("img");
+									for (var i = 0; i < imgs.length; i++) {
+										if (imgs[i].src.indexOf('gif') > 0) {
+											imgs[i].style.width = '25px';
+											imgs[i].style.height = '25px';
+											continue;
+										}
+										if (imgs[i].src.indexOf('img.jucaipen.com') > 0) {
+											imgs[i].style.width = '50%';
+										}
+									}
+								}
+								mui.scrollTo(document.body.scrollHeight, 100);
 							}
 							getMsgForEver();
 						},
@@ -199,45 +201,41 @@
 						}
 					})
 				}
-				var btn_send=document.getElementById("btn-send");
-				var content=document.getElementById("msg-content");
-				var userName=plus.storage.getItem('userName');
-				btn_send.addEventListener('tap',function(){
-					if(content.value.length<=0){
+				var btn_send = document.getElementById("btn-send");
+				var content = document.getElementById("msg-content");
+				var userName = plus.storage.getItem('userName');
+				btn_send.addEventListener('tap', function() {
+					if (content.value.length <= 0) {
 						mui.toast('发送消息不能为空');
-						return ;
+						return;
 					}
-					sendMsg(content.value,userName);
-					
+					sendMsg(content.value, userName);
 				})
-				
 				//发送消息 
-				function sendMsg(c,uName){
-					mui.ajax(sendMsgPath,{
-						data:{
-							msgcontent:c,
-							sendusername:uName,
-							SendUserId:userId,
-							roomid:liveId
+				function sendMsg(c, uName) {
+					mui.ajax(sendMsgPath, {
+						data: {
+							msgcontent: c,
+							sendusername: uName,
+							SendUserId: userId,
+							roomid: liveId
 						},
-						type:"post",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							if(data.Result){
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.Result) {
 								mui.toast('发送成功');
-								content.value='';
-							}else{
+								content.value = '';
+							} else {
 								mui.toast(data.Msg);
 							}
 						},
-						error: function(e){
+						error: function(e) {
 							console.log("err");
-							
 						}
 					})
 				}
-				
 			})
 		</script>
 
@@ -294,7 +292,6 @@
 			.mui-content {
 				margin-top: 40px;
 			}
-			
 		</style>
 
 	</head>
@@ -312,8 +309,8 @@
 		</header>
 		<div class="mui-content">
 			<div style="width: 100%;height: 250px;position: fixed;">
-				<div style="width: 100%;height: 250px;position: fixed;" id="bd" >
-					
+				<div style="width: 100%;height: 250px;position: fixed;" id="bd">
+
 				</div>
 			</div>
 
@@ -328,7 +325,7 @@
 
 			<div class="sendMsg" style="position: fixed;bottom: 0px;width: 100%;">
 				<div class="msgContent" style="float: left;width: 80%;height: 45px;">
-					<input type="text" style="width: 100%;height: 100%;border-right: solid white;" id="msg-content"/>
+					<input type="text" style="width: 100%;height: 100%;border-right: solid white;" id="msg-content" />
 				</div>
 
 				<div class="btn_send" style="float: right;width: 20%;height: 45px;">
@@ -338,4 +335,5 @@
 
 		</div>
 	</body>
+
 </html>

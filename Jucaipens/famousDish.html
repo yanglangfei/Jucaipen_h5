@@ -183,6 +183,17 @@
 							question.innerHTML = questionStr;
 							mui("#data-question").on("tap", ".ask", function() {
 								var tId = this.getAttribute("t");
+								var uId=plus.storage.getItem('userId');
+								if(uId<=0){
+									mui.openWindow({
+										url:"login.html",
+										id:"login",
+										waiting: {
+											autoShow: false
+										}
+									})
+									return false;
+								}
 									mui.openWindow({
 										url: "askQuestion.html",
 										id: "askQuestion",

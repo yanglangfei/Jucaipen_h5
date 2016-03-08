@@ -24,64 +24,68 @@
 				var video = document.getElementById("data-live");
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
 				var load = document.getElementById("load");
+				var trhreeBoard = document.getElementById("trhreeBoard");
+				var index = document.getElementById("index");
+				var famousDish = document.getElementById("famousDish");
+				var attentions = document.getElementById("attentions");
 				//获取直播列表信息
 				load.style.display = 'block';
 				var liveInfo = "";
 				mui.ajax(videoList, {
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							load.style.display = 'none';
-							var reginDate = plus.storage.getItem("reginDate");
-							var buyProductId = plus.storage.getItem("buyProductId");
-							for (var i = 0; i < data.length; i++) {
-								var liveUrl = data[i].liveUrl;
-								var roomFace = data[i].RoomFace;
-								var UserLevel = data[i].UserLevel;
-								if (liveUrl != null) {
-									liveInfo = liveInfo + "<li face=" + roomFace + " style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
+					dataType: "json",
+					type: "get",
+					timeout: 10000,
+					success: function(data) {
+						load.style.display = 'none';
+						var reginDate = plus.storage.getItem("reginDate");
+						var buyProductId = plus.storage.getItem("buyProductId");
+						for (var i = 0; i < data.length; i++) {
+							var liveUrl = data[i].liveUrl;
+							var roomFace = data[i].RoomFace;
+							var UserLevel = data[i].UserLevel;
+							if (liveUrl != null) {
+								liveInfo = liveInfo + "<li face=" + roomFace + " style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
+							}
+						}
+						video.innerHTML = liveInfo;
+						mui("#data-live").on("tap", "li", function() {
+							var lId = this.getAttribute("id");
+							var face = this.getAttribute('face');
+							// 是否免费试听  0   是     1   否
+							var visit = this.getAttribute("isVisit");
+							//试听天数
+							var visitDay = this.getAttribute("visitDay");
+							//试听用户等级
+							var visitLeal = this.getAttribute("visitLeal");
+							var uId = plus.storage.getItem("userId");
+							if (visit == 0) {
+								//免费
+								intoLiveRoom(lId, face);
+								return;
+							}
+							if (uId <= 0) {
+								//跳转到登录
+								plus.nativeUI.confirm("您还没有登录，此房间不允许游客登录!", function(e) {
+									intoLogin();
+								}, "", ['确定']);
+							} else {
+								var isServer = plus.storage.getItem("isServer");
+								var isManager = plus.storage.getItem("isManager");
+								var buyProductId = plus.storage.getItem("buyProductId");
+								if (visit == 1) {
+									if (isServer == 1 || isManager == 1 || UserLevel == visitLeal) {
+										//管理员客服,已购买用户可以进入
+										intoLiveRoom(lId, face);
+										return;
+									}
+									plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {}, "", "确定");
 								}
 							}
-							video.innerHTML = liveInfo;
-							mui("#data-live").on("tap", "li", function() {
-								var lId = this.getAttribute("id");
-								var face = this.getAttribute('face');
-								// 是否免费试听  0   是     1   否
-								var visit = this.getAttribute("isVisit");
-								//试听天数
-								var visitDay = this.getAttribute("visitDay");
-								//试听用户等级
-								var visitLeal = this.getAttribute("visitLeal");
-								var uId = plus.storage.getItem("userId");
-								if (visit == 0) { 
-									//免费
-									intoLiveRoom(lId, face);
-									return;
-								}
-								if (uId <= 0) {
-									//跳转到登录
-									plus.nativeUI.confirm("您还没有登录，此房间不允许游客登录!", function(e) {
-										intoLogin();
-									}, "", ['确定']);
-								} else {
-									var isServer = plus.storage.getItem("isServer");
-									var isManager = plus.storage.getItem("isManager");
-									var buyProductId = plus.storage.getItem("buyProductId");
-									if (visit == 1) {
-										if (isServer == 1 || isManager == 1 || UserLevel == visitLeal) {
-											//管理员客服,已购买用户可以进入
-											intoLiveRoom(lId, face);
-											return;
-										}
-										plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {}, "", "确定");
-									}
-								}
-							});
-						},
-						error: function(e) {}
-					})
-					//进入直播室
+						});
+					},
+					error: function(e) {}
+				})
+				//进入直播室
 				function intoLiveRoom(liveId, roomFace) {
 					mui.openWindow({
 						url: "liveRoom.html",
@@ -124,6 +128,58 @@
 						intoCenter();
 					}
 				})
+				//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到热门
+				trhreeBoard.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "trhreeBoard.html",
+							id: "trhreeBoard",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到关注
+				attentions.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "attention.html",
+							id: "attention",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到名家
+				famousDish.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "famousDish.html",
+						id: "famousDish",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				})
 			})
 		</script>
 	</head>
@@ -155,11 +211,11 @@
 			<div class="foot">
 				<div class="footcenter">
 					<ul style="height: 60px;">
-						<li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;" /></span></a></li>
-						<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="index"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;" /></span></a></li>
+						<li><a id="trhreeBoard"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/livepress.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="famousDish"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 					</ul>
 				</div>
 			</div>

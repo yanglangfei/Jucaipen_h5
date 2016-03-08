@@ -14,9 +14,24 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				//预加载名师看盘信息
+				var dishPage = mui.preload({
+					url: "dishList.html",
+					id: "dishList"
+				})
+				//与加载投资观点
+				var ideaListPage = mui.preload({
+					url: "intrvlIdea.html",
+					id: "intrvlIdea"
+				})
+				//与加载找名家
+				var teacherListPage = mui.preload({
+					url: "teacherList.html",
+					id: "teacherList"
+				})
 				var page = document.getElementById('pager');
 				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
 				var teacherList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
@@ -25,16 +40,19 @@
 				var hotIdeas = document.getElementById("data-hotIdeas");
 				var intoLogin = document.getElementById("pageTop1_show_login_link");
 				var famousList = document.getElementById("famousList");
+				var index = document.getElementById("index");
+				var trhreeBoard = document.getElementById("trhreeBoard");
 				var question = document.getElementById("data-question");
 				var renqi = document.getElementById("renqi");
 				var answerCount = document.getElementById("answerCount");
 				var ideaCount = document.getElementById("ideaCount");
 				var fans = document.getElementById("fans");
 				var dish = document.getElementById("dish");
-				var isAsk;
+				var attentions = document.getElementById("attentions");
 				var intoAsk = document.getElementById("intoAsk");
 				var intrial = document.getElementById("intrialIdea");
 				var findTeacher = document.getElementById("findTeacher");
+				var liveList = document.getElementById("liveList");
 				//获取广告
 				var url = "";
 				mui.ajax(queryAdice, {
@@ -99,9 +117,7 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>"
-								+ data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>"
-								+ body + "</lable></div> </li>";
+								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
 							}
 							hotIdeas.innerHTML = hotUrl;
 							mui("#data-hotIdeas").on("tap", "li", function() {
@@ -132,9 +148,7 @@
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
 								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
-								teacherStr = teacherStr + "  <div id=" + data[i].id + " class='item'><a><span><img src=" + data[i].headFace + "></span></a><a><h4>"
-								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>"
-								+ "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
+								teacherStr = teacherStr + "  <div id=" + data[i].id + " class='item'><a><span><img src=" + data[i].headFace + "></span></a><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
 							}
 							famousList.innerHTML = teacherStr;
 							mui("#famousList").on("tap", ".item", function() {
@@ -164,17 +178,11 @@
 						timeout: 10000,
 						success: function(data) {
 							for (var i = 0; i < data.length; i++) {
-								questionStr = questionStr + "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" 
-								+ data[i].headFace + "></span></a><div class='name'><a><h4>" 
-								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" 
-								+ data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" 
-								+ "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+								questionStr = questionStr + "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" + data[i].headFace + "></span></a><div class='name'><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
 							}
 							question.innerHTML = questionStr;
 							mui("#data-question").on("tap", ".ask", function() {
-								isAsk = true;
 								var tId = this.getAttribute("t");
-								if (isAsk) {
 									mui.openWindow({
 										url: "askQuestion.html",
 										id: "askQuestion",
@@ -185,17 +193,10 @@
 											autoShow: false
 										}
 									})
-								}
+									return false;
 							})
 							mui("#data-question").on("tap", ".item", function() {
 								var tId = this.getAttribute("id");
-								var isQues;
-								if (!isAsk) {
-									isQues = true;
-								} else {
-									isQues = false;
-								}
-								if (isQues) {
 									mui.openWindow({
 										url: "teacherDetail.html",
 										id: "teacherDetail",
@@ -206,7 +207,7 @@
 											autoShow: false
 										}
 									})
-								}
+									return false;
 							})
 						},
 						error: function(e) {}
@@ -217,7 +218,7 @@
 					dataType: "json",
 					timeout: 10000,
 					success: function(data) {
-						renqi.innerText = "人气：" +(data.renQi/10000).toFixed(2)+ "万人";
+						renqi.innerText = "人气：" + (data.renQi / 10000).toFixed(2) + "万人";
 						answerCount.innerText = "回答:" + data.answerCount + "个";
 						ideaCount.innerText = "观点：" + data.ideas + "篇";
 						fans.innerText = "粉丝：" + data.fans + "人";
@@ -282,7 +283,60 @@
 								autoShow: false
 							}
 						})
-					}})
+					}
+				})
+				//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到热门
+				trhreeBoard.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "trhreeBoard.html",
+							id: "trhreeBoard",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到直播
+				liveList.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "liveList.html",
+							id: "liveList",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到名家
+				attentions.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "attention.html",
+						id: "attention",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				})
 			})
 		</script>
 
@@ -446,10 +500,10 @@
 			<div class="foot">
 				<div class="footcenter">
 					<ul style="height: 60px;">
-						<li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="liveList.html"><span><img src="image/livenormal.png"style="width: 50px;height: 50px;" /></span></a></li>
-						<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="index"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="trhreeBoard"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="liveList"><span><img src="image/livenormal.png"style="width: 50px;height: 50px;" /></span></a></li>
+						<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/classpress.png" style="width: 50px;height: 50px;"/></span></a></li>
 					</ul>
 				</div>

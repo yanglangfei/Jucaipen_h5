@@ -97,7 +97,7 @@
 		"OAuth": {},
 		"Push": {},
 		"Share": {},
-		"Payment": {}
+		"Payment": {},"Orientation":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -200,30 +200,30 @@
 			"splashscreen": {
 				"ios": {
 					"ipad": {
-						"portrait": "image/start.png",
-						"landscape": "image/start.png",
-						"portrait7": "image/start.png",
-						"landscape7": "image/start.png",
-						"portrait-retina": "image/start.png",
-						"portrait-retina7": "image/start.png",
-						"landscape-retina": "image/start.png",
-						"landscape-retina7": "image/start.png"
+						"portrait": "unpackage/res/prologue/start.png",
+						"landscape": "unpackage/res/prologue/start.png",
+						"portrait7": "unpackage/res/prologue/start.png",
+						"landscape7": "unpackage/res/prologue/start.png",
+						"portrait-retina": "unpackage/res/prologue/start.png",
+						"portrait-retina7": "unpackage/res/prologue/start.png",
+						"landscape-retina": "unpackage/res/prologue/start.png",
+						"landscape-retina7": "unpackage/res/prologue/start.png"
 					},
 					"iphone": {
-						"default": "image/start.png",
-						"retina55": "image/start.png",
-						"retina47": "image/start.png",
-						"retina40": "image/start.png",
-						"retina35": "image/start.png",
-						"retina55l": "image/start.png"
+						"default": "unpackage/res/prologue/start.png",
+						"retina55": "unpackage/res/prologue/start.png",
+						"retina47": "unpackage/res/prologue/start.png",
+						"retina40": "unpackage/res/prologue/start.png",
+						"retina35": "unpackage/res/prologue/start.png",
+						"retina55l": "unpackage/res/prologue/start.png"
 					}
 				},
 				"android": {
-					"hdpi": "image/start.png",
-					"ldpi": "image/start.png",
-					"mdpi": "image/start.png",
-					"xhdpi": "image/start.png",
-					"xxhdpi": "image/start.png"
+					"hdpi": "unpackage/res/prologue/start.png",
+					"ldpi": "unpackage/res/prologue/start.png",
+					"mdpi": "unpackage/res/prologue/start.png",
+					"xhdpi": "unpackage/res/prologue/start.png",
+					"xxhdpi": "unpackage/res/prologue/start.png"
 				}
 			},
 			"debug": false
@@ -257,10 +257,7 @@
 					"newsDetail.html",
 					"attention.html",
 					"login.html",
-					"vipcenter.html",
-					"index.html",
-					"liveList.html",
-					"famousDish.html"
+					"vipcenter.html"
 				],
 				"priority": 0
 			},
@@ -370,23 +367,17 @@
 					"liveList.html",
 					"trhreeBoard.html",
 					"answerList.html",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"teacherList.html"
 				],
 				"refer": [
 					"ideaDetail.html",
 					"dishList.html",
 					"liveRoom.html",
-					"teacherList.html",
 					"teacherDetail.html",
 					"askQuestion.html",
 					"login.html",
-					"vipcenter.html",
-					"answerList.html",
-					"intrvlIdea.html",
-					"trhreeBoard.html",
-					"index.html",
-					"liveList.html",
-					"attention.html"
+					"vipcenter.html"
 				]
 			},
 			"index.html": {
@@ -410,21 +401,18 @@
 					"famousDish.html",
 					"trhreeBoard.html",
 					"liveList.html",
-					"js/netUtils.js"
+					"js/netUtils.js",
+					"attention.html"
 				],
 				"refer": [
 					"login.html",
 					"intrvlIdea.html",
 					"index.html",
-					"attention.html",
 					"newsDetail.html",
 					"historyLive.html",
 					"ideaDetail.html",
 					"liveRoom.html",
-					"vipcenter.html",
-					"trhreeBoard.html",
-					"liveList.html",
-					"famousDish.html"
+					"vipcenter.html"
 				],
 				"priority": 0
 			},
@@ -489,17 +477,15 @@
 					"css/tuch.css",
 					"famousDish.html",
 					"liveList.html",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"index.html"
 				],
 				"refer": [
 					"newsDetail.html",
 					"login.html",
 					"news/moreNews.html",
 					"vipcenter.html",
-					"index.html",
-					"trhreeBoard.html",
-					"liveList.html",
-					"famousDish.html"
+					"trhreeBoard.html"
 				]
 			},
 			"liveRoom.html": {
@@ -543,11 +529,7 @@
 				"refer": [
 					"liveRoom.html",
 					"login.html",
-					"vipcenter.html",
-					"index.html",
-					"trhreeBoard.html",
-					"attention.html",
-					"famousDish.html"
+					"vipcenter.html"
 				]
 			},
 			"completeInfo.html": {
@@ -772,10 +754,13 @@
 					"image/touzi.png",
 					"image/tb_manyi.png",
 					"image/guanzhu.png",
-					"image/loading-0.gif"
+					"image/loading-0.gif",
+					"famousDish.html"
 				],
 				"refer": [
-					"teacherDetail.html"
+					"teacherDetail.html",
+					"login.html",
+					"askQuestion.html"
 				],
 				"priority": 7
 			},

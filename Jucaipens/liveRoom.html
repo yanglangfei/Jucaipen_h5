@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -24,6 +25,7 @@
 				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
 				var uId = plus.storage.getItem("userId");
 				var liveId = web.liveId;
+				var isLand;
 				var msgType = 0;
 				var topId;
 				var isNormal;
@@ -54,15 +56,24 @@
 							videoUrl = "<embed width='100%' height='100%' id='live' src=" + data.videoUrl + "></embed>";
 							bd.innerHTML = videoUrl;
 							var live = document.getElementById("live");
-							document.addEventListener('fullscreenchange',function(){
+							//判断是否全屏
+							document.addEventListener('fullscreenchange', function() {
 								console.log(document.fullScreen);
-							},false);
-							document.addEventListener('mozfullscreenchange',function(){
+								plus.screen.lockOrientation('landscape-primary');
+							}, false);
+							document.addEventListener('mozfullscreenchange', function() {
 								console.log(document.onmozfullscreenchange);
-							},false);
-							document.addEventListener('webkitfullscreenchange',function(){
-								console.log(document.webkitIsFullScreen);
-							},false);
+								plus.screen.lockOrientation('landscape-primary');
+							}, false);
+							document.addEventListener('webkitfullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									plus.screen.unlockOrientation();
+								}
+							}, false);
 						}
 					},
 					error: function(e) {
@@ -205,13 +216,13 @@
 				var content = document.getElementById("msg-content");
 				var userName = plus.storage.getItem('userName');
 				btn_send.addEventListener('tap', function() {
-					if (content.value.length <= 0) {
-						mui.toast('发送消息不能为空');
-						return;
-					}
-					sendMsg(content.value, userName);
-				})
-				//发送消息 
+						if (content.value.length <= 0) {
+							mui.toast('发送消息不能为空');
+							return;
+						}
+						sendMsg(content.value, userName);
+					})
+					//发送消息 
 				function sendMsg(c, uName) {
 					mui.ajax(sendMsgPath, {
 						data: {

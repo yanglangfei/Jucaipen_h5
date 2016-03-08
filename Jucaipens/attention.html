@@ -18,13 +18,17 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
 				var newsListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
 				var typeLay = document.getElementById("typeLay");
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
 				var loading = document.getElementById("loaging");
+				var index = document.getElementById("index");
+				var trhreeBoard = document.getElementById("trhreeBoard");
+				var liveList = document.getElementById("liveList");
+				var famousDish = document.getElementById("famousDish");
 				//获取分类信息
 				var str = typeLay.innerHTML;
 				loading.style.display = 'block';
@@ -100,6 +104,58 @@
 						})
 					}
 				})
+				//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到热门
+				trhreeBoard.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "trhreeBoard.html",
+							id: "trhreeBoard",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到直播
+				liveList.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "liveList.html",
+							id: "liveList",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到名家
+				famousDish.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "famousDish.html",
+						id: "famousDish",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				})
 			})
 		</script>
 
@@ -123,7 +179,7 @@
 			<div class="lcxm_list">
 				<div class="lcxmcenter">
 					<div class="zhishi" id="typeLay">
-					</div> 
+					</div>
 				</div>
 			</div>
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loaging">
@@ -137,11 +193,11 @@
 			<div class="foot">
 				<div class="footcenter">
 					<ul style="height: 60px;">
-						<li><a href="index.html"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="trhreeBoard.html"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="index"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="trhreeBoard"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="liveList"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/fincepress.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="famousDish"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 					</ul>
 				</div>
 			</div>

@@ -16,7 +16,7 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
 				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoard";
@@ -25,15 +25,19 @@
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
 				var load = document.getElementById("load");
 				var currentPage = 1;
-				var areaLoad=document.getElementById("areaLoad");
+				var areaLoad = document.getElementById("areaLoad");
 				var totlePage;
+				var famousDish = document.getElementById("famousDish");
+				var attentions = document.getElementById("attentions");
+				var liveList = document.getElementById("liveList");
+				var index = document.getElementById("index");
 				findThreeBoard(currentPage);
 				load.style.display = 'block';
 				//获取更多信息
 				more_three.addEventListener("tap", function() {
-					more_three.style.display='none';
+					more_three.style.display = 'none';
 					if (currentPage < totlePage) {
-						areaLoad.style.display='block';
+						areaLoad.style.display = 'block';
 						findThreeBoard(++currentPage);
 					}
 				})
@@ -50,8 +54,8 @@
 						timeout: 10000,
 						success: function(data) {
 							load.style.display = 'none';
-							if(areaLoad.style.display='block'){
-								areaLoad.style.display='none';
+							if (areaLoad.style.display = 'block') {
+								areaLoad.style.display = 'none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePager;
@@ -101,13 +105,64 @@
 						})
 					}
 				})
+				//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到直播
+				liveList.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "livelist.html",
+							id: "livelist",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到关注
+				attentions.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "attention.html",
+							id: "attention",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none'//页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					})
+					//跳转到名家
+				famousDish.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "famousDish.html",
+						id: "famousDish",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				})
 			})
 		</script>
 		<style type="text/css">
 			.lcxms {
 				margin-top: 50px;
 			}
-			
 		</style>
 
 	</head>
@@ -135,7 +190,7 @@
 
 				<div class="linkmore">
 					<a id="more_three" style="color: #8D8D8D;display: none;">更多>></a>
-					<img src="image/loading-0.gif"  id="areaLoad" style="display: none;margin: auto;"/>
+					<img src="image/loading-0.gif" id="areaLoad" style="display: none;margin: auto;" />
 				</div>
 
 			</div>
@@ -149,15 +204,15 @@
 
 		<!------------底部定位层---------->
 
-		<footer class="footer" >
+		<footer class="footer">
 			<div class="foot">
 				<div class="footcenter">
 					<ul style="height: 60px;">
-						<li><a href="index.html"><span><img src="image/indexnormal.png"  style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="index"><span><img src="image/indexnormal.png"  style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/licaipress.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="liveList.html"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="attention.html"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						<li><a href="famousDish.html"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="liveList"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></aside></li>
+						<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="famousDish"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 					</ul>
 				</div>
 			</div>

@@ -16,9 +16,19 @@
 		<link rel="stylesheet" href="css/tuch.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true //启用右滑关闭功能
+				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				var uId = plus.storage.getItem('userId');
+				/*if (uId > 0) {
+					var userInfo = mui.preload({
+						url: "userInfo.html",
+						id: "userInfo",
+						extras: {
+							fromType: 0
+						}
+					})
+				}*/
 				var abord = document.getElementById("abord");
 				abord.addEventListener("tap", function() {
 					plus.storage.setItem("userId", -1 + "");
@@ -31,6 +41,9 @@
 						mui.openWindow({
 							url: "userInfo.html",
 							id: "user",
+							extras: {
+								fromType: 0
+							},
 							waiting: {
 								autoShow: false
 							}

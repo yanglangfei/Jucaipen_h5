@@ -18,6 +18,14 @@
 				var sendVail=document.getElementById("sendVail");
 				var savePhone=document.getElementById("savePhone");
 				var restSecond;
+				var web=plus.webview.currentWebview();
+				var name=web.name;
+				var sex=web.sex;
+				var birth=web.birth;
+				var email=web.email;
+				var address=web.address;
+				var introduce=web.introduce;
+				var userLogo=web.userLogo;
 				var uId=plus.storage.getItem("userId");
 				var updatePhonePath="http://192.168.1.228:8080/AccumulateWealth/jucaipen/updatePhone";
 				var sendMobileCodePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
@@ -83,7 +91,22 @@
 						success: function(data){  
 							if(data.ret_code==0){
 								mui.toast("手机号保存成功");
-								mui.back();
+								mui.openWindow({
+									url:"userInfo.html",
+									id:"userInfo",
+									extras:{
+										fromType:1,
+										name:name,
+				                        sex:sex,
+				                        birth:birth,
+				                        email:email,
+				                        address:address,
+				                        introduce:introduce,
+				                        userLogo:userLogo,
+				                        telPhont:tel
+									}
+								})
+								
 							}else{
 								mui.toast(data.err_msg);
 							}

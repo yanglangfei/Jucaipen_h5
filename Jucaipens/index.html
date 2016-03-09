@@ -16,7 +16,24 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				//预加载主页面　
+				//预加载主页面
+				var indexPage=mui.preload({
+					url:"index.html",
+					id:"index"
+				})
+				var newsPage=mui.preload({
+					url:"trhreeBoard.html",
+					id:"trhreeBoard"
+				})
+				var livePage=mui.preload({
+					url:"liveList.html",
+					id:"livelist"
+				})
+				var dishPage=mui.preload({
+					url:"famousDish.html",
+					id:"dishlist"
+				})
+				plus.navigator.closeSplashscreen();
 				var version;
 				var name = plus.os.name;
 				var hei = plus.screen.resolutionHeight;

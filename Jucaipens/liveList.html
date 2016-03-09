@@ -38,7 +38,6 @@
 					success: function(data) {
 						load.style.display = 'none';
 						var reginDate = plus.storage.getItem("reginDate");
-						var buyProductId = plus.storage.getItem("buyProductId");
 						for (var i = 0; i < data.length; i++) {
 							var liveUrl = data[i].liveUrl;
 							var roomFace = data[i].RoomFace;
@@ -73,7 +72,7 @@
 								var isManager = plus.storage.getItem("isManager");
 								var buyProductId = plus.storage.getItem("buyProductId");
 								if (visit == 1) {
-									if (isServer == 1 || isManager == 1 || UserLevel == visitLeal) {
+									if (isServer == 1 || isManager == 1 || buyProductId == visitLeal) {
 										//管理员客服,已购买用户可以进入
 										intoLiveRoom(lId, face);
 										return;

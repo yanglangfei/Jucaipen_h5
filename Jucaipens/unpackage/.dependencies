@@ -1,61 +1,19 @@
 {
-  "newsDetail.html": {
-    "href": "newsDetail.html",
-    "resources": [],
-    "refer": [],
-    "priority": 2
-  },
   "updatePhone.html": {
     "href": "updatePhone.html",
     "resources": [],
+    "refer": [
+      "userInfo.html"
+    ],
     "priority": 4
   },
-  "choseCity.html": {
-    "href": "choseCity.html",
-    "resources": [],
+  "teacherList.html": {
+    "href": "teacherList.html",
+    "resources": [
+      "image/noattention.png",
+      "image/attention.png"
+    ],
     "refer": [],
-    "priority": 5
-  },
-  "txtLive.html": {
-    "href": "txtLive.html",
-    "resources": [],
-    "refer": [],
-    "priority": 21
-  },
-  "answerList.html": {
-    "href": "answerList.html",
-    "resources": [],
-    "refer": [],
-    "priority": 23
-  },
-  "intrvlIdea.html": {
-    "href": "intrvlIdea.html",
-    "resources": [],
-    "refer": [],
-    "priority": 32
-  },
-  "teacherDetail.html": {
-    "href": "teacherDetail.html",
-    "resources": [],
-    "refer": [],
-    "priority": 25
-  },
-  "famousDish.html": {
-    "href": "famousDish.html",
-    "resources": [],
-    "refer": [],
-    "priority": 20
-  },
-  "attention.html": {
-    "href": "attention.html",
-    "resources": [],
-    "refer": [],
-    "priority": 13
-  },
-  "liveList.html": {
-    "href": "liveList.html",
-    "resources": [],
-    "refer": [],
-    "priority": 8
+    "priority": 7
   }
 }

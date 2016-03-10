@@ -26,6 +26,7 @@
 				var loadTeacher = document.getElementById("loadTeacher");
 				var currentPage = 1;
 				var totlePage;
+				var isAttention;
 				var loadMore = document.getElementById("loadMore");
 				var find_gengduo = document.getElementById("find_gengduo");
 				loadTeacher.style.display = 'block';
@@ -56,10 +57,12 @@
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[0].totlePage;
 								var intro = data[i].introduce.replace(/<[^>]+>/g, "").replace("<span style=", "");
-								teacherStr = teacherStr + "<div class='item' id=" + data[i].id + ">" + "<div class='t_head'><a><span><img src=" + data[i].headFace + "></span></a><h4><a id='zx' tag=" + data[i].id + ">咨询</a></h4></div><div class='t_name'><h3><a>" 
-								+ data[i].nickName + "</a><i></i></h3>" + "<h4>" + data[i].level + "</h4><a><p style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;"
-								+ data[i].answerCount + "</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;" + data[i].fans + "</em></span></p>" + "</div><div class='t_guanzhu'><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1' tag=" 
-								+ data[i].id + ">加关注</i></a></div></div>";
+								teacherStr = teacherStr + "<div class='item' id=" + data[i].id + ">" + "<div class='t_head'><a><span><img src=" + data[i].headFace 
+								+ "></span></a><h4><a id='zx' tag=" + data[i].id + ">咨询</a></h4></div><div class='t_name'><h3><a>"
+								+ data[i].nickName + "</a><i></i></h3>" + "<h4>" + data[i].level + "</h4><a><p style='height: 40px;overflow: hidden;'>" 
+								+ intro + "</p>" + "</a><p class='link'><span><i><img src='image/tb_manyi.png' alt='满意度'></i><em>&nbsp;100%</em></span><span><i><img src='image/touzi.png' alt='回答数'></i><em>&nbsp;"
+								+ data[i].answerCount + "</em></span><span><i><img src='image/tb_gz.png' alt='粉丝数'></i><em>&nbsp;" + data[i].fans + "</em></span></p>" 
+								+ "</div><div style='display:none;' class='t_guanzhu' id='attention' tag="+data[i].id +"><a class='guanzhu' id='t1'  data-tid='1'><em><img src='image/guanzhu.png'></em><i id='guanZhu_1'>加关注</i></a></div></div>";
 							}
 							teacherLay.innerHTML = teacherStr;
 							if (data.length > 0) {
@@ -90,9 +93,10 @@
 										return false;
 									})
 									//关注监听
-								mui('#teacherLay').on('tap', '#guanZhu_1', function() {
+								mui('#teacherLay').on('tap', '#attention', function() {
 									var tag = this.getAttribute('tag');
 									var uId = plus.storage.getItem('userId');
+									var i=this.getElementsByTagName('i');
 									if (uId <= 0) {
 										mui.openWindow({
 											url: "login.html",
@@ -109,7 +113,7 @@
 									} else if (!isAttention) {
 										type = 0;
 									}
-									addAttention();
+									addAttention(type,uId,tag,i[0]);
 									return false;
 								})
 							}
@@ -152,10 +156,10 @@
 						success: function(data) {
 							if (data.ret_code == 0) {
 								isAttention = true;
-								iv_attention.src = 'image/noattention.png';
+								//iv_attention.src = 'image/noattention.png';
 							} else if (data.ret_code == 3) {
 								isAttention = false;
-								iv_attention.src = 'image/attention.png';
+								//iv_attention.src = 'image/attention.png';
 							} else {}
 						},
 						error: function(e) {}
@@ -166,7 +170,7 @@
 				
 				
 				//添加/取消 关注
-				function addAttention(type, uId, tId) {
+				function addAttention(type, uId, tId,lay) {
 					mui.ajax(teacherAttentionPath, {
 						data: {
 							opType: type,
@@ -182,7 +186,7 @@
 								if (data.ret_code == 0) {
 									isAttention = true;
 									mui.toast('添加关注成功');
-									iv_attention.src = 'image/noattention.png';
+									lay.innerHTML='已关注';
 								} else {
 									isAttention = false;
 									mui.toast(data.err_msg);
@@ -192,7 +196,7 @@
 								if (data.ret_code == 0) {
 									isAttention = false;
 									mui.toast('取消关注成功');
-									iv_attention.src = 'image/attention.png';
+									lay.innerHTML='加关注';
 								} else {
 									isAttention = true;
 									mui.toast(data.err_msg);

@@ -20,15 +20,12 @@
 			});
 			mui.plusReady(function() {
 				var uId = plus.storage.getItem('userId');
-				/*if (uId > 0) {
-					var userInfo = mui.preload({
-						url: "userInfo.html",
-						id: "userInfo",
-						extras: {
-							fromType: 0
-						}
+				if (uId > 0) {
+					var commInfo = mui.preload({
+						url: "myRemark.html",
+						id: "myRemark"
 					})
-				}*/
+				}
 				var abord = document.getElementById("abord");
 				abord.addEventListener("tap", function() {
 					plus.storage.setItem("userId", -1 + "");

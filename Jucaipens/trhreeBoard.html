@@ -19,55 +19,50 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoard";
+				var threeBoard = "http://192.168.1.86:8080/AccumulateWealth/jucaipen/threeBoardIndex";
 				var board = document.getElementById("bopard");
-				var more_three = document.getElementById("more_three");
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
 				var load = document.getElementById("load");
-				var currentPage = 1;
 				var areaLoad = document.getElementById("areaLoad");
-				var totlePage;
 				var famousDish = document.getElementById("famousDish");
 				var attentions = document.getElementById("attentions");
 				var liveList = document.getElementById("liveList");
 				var index = document.getElementById("index");
-				findThreeBoard(currentPage);
+				findThreeBoard();
 				load.style.display = 'block';
-				//获取更多信息
-				more_three.addEventListener("tap", function() {
-					more_three.style.display = 'none';
-					if (currentPage < totlePage) {
-						areaLoad.style.display = 'block';
-						findThreeBoard(++currentPage);
-					}
-				})
 
-				function findThreeBoard(p) {
+				function findThreeBoard() {
 					//获取新三板列表
-					var boardStr = board.innerHTML;
+					var str=board.innerHTML;
 					mui.ajax(threeBoard, {
-						data: {
-							pager: p
-						},
 						type: "get",
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
 							load.style.display = 'none';
-							if (areaLoad.style.display = 'block') {
-								areaLoad.style.display = 'none';
+							for(var i=0;i<data.length;i++){
+								var smallId=data[i].smallId;
+								var bigId=data[i].bigId;
+								var typeName=data[i].name;
+								var item=data[i].item;
+								str = str + "<div class='xiangmu_t' id='more-lay'><h3>" + typeName 
+								+ "</h3><a sId=" + data[i].smallId
+								+ " bId=" + data[i].bigId 
+								+ " style='color:#4f4f4f;' id='more-ns'>更多</a></div><div class='yaowen_b'><ul class='lay-board'>";
+							    for(var j=0;j<item.length;j++){
+							    	var title = item[j].title;
+									var id = item[j].id;
+									var desc = item[j].desc;
+									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>"
+									+ "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+							    }
+							    str = str + "</ul></div>";
+								board.innerHTML = str;
 							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[i].totlePager;
-								boardStr = boardStr + "<li id=" + data[i].id + " class='noimg'> <div>" + " <h3><a>" + data[i].title + "</a></h3>" + " <p style='height: 40px;overflow: hidden;'>" + data[i].descripte + "</p></div>  </li>";
-							}
-							board.innerHTML = boardStr;
-							if (currentPage < totlePage) {
-								more_three.style.display = 'block';
-							} else {
-								more_three.style.display = 'none';
-							}
-							mui("#bopard").on("tap", "li", function() {
+							board.innerHTML = str;
+							if(data.length>0){
+								//进入新三板详细页面
+								mui(".lay-board").on("tap", "li", function() {
 								var nId = this.getAttribute("id");
 								mui.openWindow({
 									url: "newsDetail.html",
@@ -80,6 +75,24 @@
 									}
 								})
 							})
+							//更多新三板
+							mui("#bopard").on("tap","a",function(){
+								var sId = this.getAttribute("sId");
+								var bId = this.getAttribute("bId");
+								mui.openWindow({
+									url: "news/moreNews.html",
+									id: "moreNews",
+									extras: {
+										bigId: bId,
+										smallId: sId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+								
+							}
 						},
 						error: function(e) {}
 					})
@@ -187,12 +200,6 @@
 					<ul id="bopard">
 					</ul>
 				</div>
-
-				<div class="linkmore">
-					<a id="more_three" style="color: #8D8D8D;display: none;">更多>></a>
-					<img src="image/loading-0.gif" id="areaLoad" style="display: none;margin: auto;" />
-				</div>
-
 			</div>
 			<!--------------------->
 

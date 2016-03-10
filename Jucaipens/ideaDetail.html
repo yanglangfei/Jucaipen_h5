@@ -74,8 +74,10 @@
 								    bs[i].onclick=function(){
 								    	document.getElementById("imgFrame").style.display = "block";
                                      document.getElementById("imgbox").innerHTML = "<img src='" + this.getAttribute("src") + "' />";
-								   document.getElementById("imgbox").style.width='100%';
-								    document.getElementById("imgbox").style.height='100%';
+								    document.getElementById("imgbox").style.width='100px';
+								    document.getElementById("imgbox").style.height='200px';
+								    document.getElementById("imgFrame").style.width='100px';
+								    document.getElementById("imgFrame").style.height='200px';
 								    }
 								}
 							}
@@ -427,10 +429,10 @@
 			}
 			#imgFrame{
 				position:absolute; 
-				top: 50px;
 				 z-index:1000; 
 				 display:none;
-			} 
+				 top: 50px;
+			}
 		</style>
 
 	</head>
@@ -468,16 +470,12 @@
 				</div>
 				<div class="showarticlebody" id="ideaBody">
 				</div>
-				
-				
+
 				<div id="imgFrame">
-        <div><a id="close">关闭</a></div>
-        <div id="imgbox"></div>
-    </div>
-				
-				
-				
-				
+					<div><a id="close">关闭</a></div>
+					<div id="imgbox"></div>
+				</div>
+
 				<div class="showarticle_good">
 
 					<p id="big"></p>

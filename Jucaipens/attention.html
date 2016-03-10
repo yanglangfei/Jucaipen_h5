@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -41,18 +40,21 @@
 							for (var i = 0; i < data.length; i++) {
 								var typeName = data[i].name;
 								var item = data[i].item;
-								str = str + "<div class='xiangmu_t'><h3>" + typeName + "</h3><a sId=" + data[i].smallId + " bId=" + data[i].bigId + " style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
+								str = str + "<div class='xiangmu_t'><h3>" + typeName + "</h3><a id='mo' sId=" + data[i].smallId 
+								+ " bId=" + data[i].bigId + " style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
 								for (var j = 0; j < item.length; j++) {
 									var title = item[j].title;
 									var id = item[j].id;
 									var desc = item[j].desc;
-									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>"
+									+ "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
 								}
 								str = str + "</ul></div>";
 								typeLay.innerHTML = str;
 							}
 							typeLay.innerHTML = str;
-							mui(".layer").on("tap", "li", function() {
+							if(data.length>0){
+								mui(".layer").on("tap", "li", function() {
 								var id = this.getAttribute("id");
 								mui.openWindow({
 									url: "newsDetail.html",
@@ -65,7 +67,7 @@
 									}
 								})
 							})
-							mui(".xiangmu_t").on("tap", "a", function() {
+							mui("#typeLay").on("tap", "#mo", function() {
 								var sId = this.getAttribute("sId");
 								var bId = this.getAttribute("bId");
 								mui.openWindow({
@@ -80,6 +82,7 @@
 									}
 								})
 							})
+							}
 						},
 						error: function(e) {}
 					})

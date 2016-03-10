@@ -62,15 +62,65 @@
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
-								questionStr = questionStr + "<div class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" 
-								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask'>咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
-								+ data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+								questionStr = questionStr + "<div id="+data[i].teacherId+" class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src="
+								+ data[i].headFace + "></span></a><div class='name'>" + "<a><h4>"
+								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" 
+								+ data[i].level + "</em></div><a class='ask' id='ask' tag="+data[i].teacherId+">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
+								+ data[i].askName + ":</a>" + "<a style='color: #666'>"
+								+ data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
 							}
 							answerList.innerHTML = questionStr;
 							if (currentPage < totlePage) {
 								getMore.style.display = 'block';
 							} else {
 								getMore.style.display = 'none';
+							}
+							if(data.length>0){
+								//进入讲师详细信息列表
+								mui("#answerList").on("tap",'.item',function(){
+									var tId=this.getAttribute('id');
+									mui.openWindow({
+										url:"teacherDetail.html",
+										id:"teacherDetail",
+										 waiting:{
+                                           autoShow:false
+                                          },
+                                          extras:{
+                                          	teacherId:tId
+                                          }
+									})
+									return false;
+								})
+								//咨询讲师
+								mui("#answerList").on('tap','#ask',function(){
+									var tId=this.getAttribute('tag');
+									var uId=plus.storage.getItem('userId');
+									if(uId<=0){
+										mui.openWindow({
+											url:"login.html",
+											id:"login",
+											 waiting:{
+                                              autoShow:false
+                                              }
+										})
+										return false;
+									}
+									mui.openWindow({
+										url:"askQuestion.html",
+										id:"askQuestion",
+										extras:{
+                                          	teacherId:tId
+                                         },
+                                          waiting:{
+                                           autoShow:false
+                                          }
+									})
+									return false;
+								})
+								
+								
+								
+								
 							}
 						},
 						error: function(e) {

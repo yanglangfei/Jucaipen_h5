@@ -22,11 +22,7 @@
 					url: "dishList.html",
 					id: "dishList"
 				})
-				//与加载投资观点
-				/*var ideaListPage = mui.preload({
-					url: "intrvlIdea.html",
-					id: "intrvlIdea"
-				})*/
+			
 				//与加载找名家
 				var teacherListPage = mui.preload({
 					url: "teacherList.html",
@@ -237,13 +233,13 @@
 					error: function(e) {}
 				})
 				dish.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "dishList.html",
-							id: "dishList",
-							waiting: {
+					    mui.openWindow({
+					    	url:"dishList.html",
+					    	id:"dishList",
+					    	waiting: {
 								autoShow: false
 							}
-						})
+					    })
 					})
 					//名师问答
 				intoAsk.addEventListener("tap", function() {
@@ -255,7 +251,7 @@
 							}
 						})
 					})
-					//热门观点
+					//投资观点
 				intrial.addEventListener("tap", function() {
 						mui.openWindow({
 							url: "intrvlIdea.html",

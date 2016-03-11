@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+	<!--
+	作者：185601452@qq.com
+	时间：2016-03-11
+	描述：新闻详细页
+-->
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,7 +20,7 @@
 		<link rel="stylesheet" href="css/app.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true ,//启用右滑关闭功能
+				swipeBack: true, //启用右滑关闭功能
 				gestureConfig: {
 					hold: true,
 					release: true
@@ -29,7 +34,7 @@
 				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
 				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
 				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
-				var list = document.getElementById("lv-share"); 
+				var list = document.getElementById("lv-share");
 				var web = plus.webview.currentWebview();
 				var title = document.getElementById("show_newstit");
 				var repoter = document.getElementById("show_newsinfo");
@@ -48,8 +53,12 @@
 				var li_collect = document.getElementById("li-collect");
 				var more = document.getElementById("more");
 				var li_more = document.getElementById("li-more");
-				var coll_lab=document.getElementById("coll_lab");
-				var moreLoad=document.getElementById("moreLoad");
+				var coll_lab = document.getElementById("coll_lab");
+				var moreLoad = document.getElementById("moreLoad");
+				var newsInfo = document.getElementById("newsInfo");
+				var newsAbout = document.getElementById("newsAbout");
+				var showvideoinfo_3 = document.getElementById("showvideoinfo_3");
+				var newsDetail_load=document.getElementById("newsDetail_load");
 				var bhref = false;
 				var isCollected;
 				var currentPage = 1;
@@ -62,6 +71,7 @@
 				var descript;
 				var typeId = 0;
 				var uId;
+				newsDetail_load.style.display='block';
 				if (id <= 0) {
 					plus.nativeUI.toast("新闻ID异常");
 					return;
@@ -76,8 +86,10 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
-						descript=data.descript;
-						linkUrl="http://jucaipen.com/"+data.htmlPath;
+						newsDetail_load.style.display='none';
+						newsInfo.style.display = 'block';
+						descript = data.descript;
+						linkUrl = "http://jucaipen.com/" + data.htmlPath;
 						title.innerHTML = data.title;
 						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + subStr(2, data.publishDate);
 						content.innerHTML = data.Bodys;
@@ -94,6 +106,8 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
+						newsDetail_load.style.display='none';
+						newsAbout.style.display = 'block';
 						for (var i = 0; i < data.length; i++) {
 							relaUrl = relaUrl + "<li id=" + data[i].id + ">•<a>" + data[i].title + "</a></li>";
 						}
@@ -130,8 +144,9 @@
 						type: "get",
 						timeout: 10000,
 						success: function(data) {
-							if(moreLoad.style.display='block'){
-								moreLoad.style.display='none';
+							showvideoinfo_3.style.display = 'block';
+							if (moreLoad.style.display = 'block') {
+								moreLoad.style.display = 'none';
 							}
 							comm_count.innerHTML = "共" + data.length + "条";
 							for (var i = 0; i < data.length; i++) {
@@ -141,9 +156,7 @@
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + logoStr;
 								}
-								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" 
-								+ "<labe style='margin-left:10px;'>"+data[i].userName + "</lable></span>"
-								+"<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
+								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" + "<labe style='margin-left:10px;'>" + data[i].userName + "</lable></span>" + "<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
 									"</span><span id='sp_comm'  class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
 									"</span></h4><span id='comBody' style='margin-left:10px;'>" + data[i].body + "</span><span id='commTime'>" +
 									myDate + "</span>" + "	</div></li> "
@@ -154,12 +167,11 @@
 							} else {
 								getMore.style.display = 'none';
 							}
-							if (data.length > 0) {
 								//点赞
 								mui("#newscommlist").on("tap", "#sp_good", function() {
 									uId = plus.storage.getItem("userId");
 									var commId = this.getAttribute("class");
-                                       if (uId <= 0) {
+									if (uId <= 0) {
 										mui.openWindow({
 											url: "login.html",
 											id: "login"
@@ -192,7 +204,6 @@
 									var commId = this.getAttribute("class");
 									myInputState(commId, "回复@" + name + "的评论:");
 								})
-							}
 						},
 						error: function(e) {}
 					});
@@ -222,11 +233,11 @@
 							if (data.ret_code == 0) {
 								iv_collect.src = "image/collect_s.png";
 								isCollected = true;
-								coll_lab.innerHTML='取消收藏';
+								coll_lab.innerHTML = '取消收藏';
 							} else {
 								iv_collect.src = "image/collect_c.png";
 								isCollected = false;
-								coll_lab.innerHTML='收藏';
+								coll_lab.innerHTML = '收藏';
 							}
 						},
 						error: function(e) {}
@@ -249,21 +260,21 @@
 								if (data.ret_code == 0) {
 									isCollected = true;
 									mui.toast("收藏成功");
-									coll_lab.innerHTML='取消收藏';
+									coll_lab.innerHTML = '取消收藏';
 									iv_collect.src = "image/collect_s.png";
 								} else {
-									coll_lab.innerHTML='收藏';
+									coll_lab.innerHTML = '收藏';
 									mui.toast("收藏失败");
 									isCollected = false;
 								}
 							} else {
 								if (data.ret_code == 0) {
 									isCollected = false;
-									coll_lab.innerHTML='收藏';
+									coll_lab.innerHTML = '收藏';
 									mui.toast("取消收藏成功");
 									iv_collect.src = "image/collect_c.png";
 								} else {
-									coll_lab.innerHTML='收藏';
+									coll_lab.innerHTML = '收藏';
 									mui.toast("取消收藏失败");
 									isCollected = true;
 								}
@@ -342,7 +353,7 @@
 							if (data.ret_code) {
 								plus.nativeUI.toast("评论发表成功");
 								HiddenFieldId.value = "";
-								currentPage=1;
+								currentPage = 1;
 								findCommList(currentPage);
 							} else {
 								plus.nativeUI.toast(data.err_msg);
@@ -353,9 +364,9 @@
 				}
 				//获取更多评论信息
 				getMore.addEventListener("tap", function() {
-					  getMore.style.display='none';
+					getMore.style.display = 'none';
 					if (currentPage < totlePage) {
-						moreLoad.style.display='block';
+						moreLoad.style.display = 'block';
 						findCommList(++currentPage);
 					}
 				});
@@ -375,23 +386,23 @@
 					// 打开分享
 				function shareShow(s) {
 					bhref = false;
-						bts = [{
-							title: "分享到新浪微博"
-						}, {
-							title: "分享到腾讯微博"
-						}, {
-							title: "分享到QQ"
-						}, {
-							title: "分享到微信"
-						}];
+					bts = [{
+						title: "分享到新浪微博"
+					}, {
+						title: "分享到腾讯微博"
+					}, {
+						title: "分享到QQ"
+					}, {
+						title: "分享到微信"
+					}];
 					plus.nativeUI.actionSheet({
-							cancel: "取消", 
+							cancel: "取消",
 							buttons: bts
 						},
 						function(e) {
 							var i = e.index;
 							if (i > 0) {
-								shareAction(s,i-1);
+								shareAction(s, i - 1);
 							}
 						}
 					);
@@ -408,15 +419,15 @@
 					});
 				}
 
-				function shareAction(s,index) {
-					var sa=s[index];
-					if(!sa.authenticated){
-						sa.authorize(function(){
+				function shareAction(s, index) {
+					var sa = s[index];
+					if (!sa.authenticated) {
+						sa.authorize(function() {
 							shareMessage(sa);
-						},function(){
+						}, function() {
 							mui.toast('分享认证失败');
 						})
-					}else{
+					} else {
 						shareMessage(sa);
 					}
 				}
@@ -426,15 +437,14 @@
 				 */
 				function shareMessage(s) {
 					s.send({
-						content:descript,
-						href:linkUrl,
-						title:title.innerHTML,
-						
-					}, function() {  
+						content: descript,
+						href: linkUrl,
+						title: title.innerHTML,
+					}, function() {
 						alert('成功');
-						console.log('s'); 
+						console.log('s');
 					}, function(e) {
-						alert('失败:'+JSON.stringify(e)); 
+						alert('失败:' + JSON.stringify(e));
 						console.log('e');
 					});
 				}
@@ -576,6 +586,7 @@
 			
 			#showvideoinfo_3 {
 				margin-left: 10px;
+				display: none;
 			}
 			
 			#btn_sub_comm {
@@ -612,6 +623,14 @@
 			#head {
 				display: none!important;
 			}
+			
+			#newsInfo {
+				display: none;
+			}
+			
+			#newsAbout {
+				display: none;
+			}
 		</style>
 
 	</head>
@@ -639,11 +658,12 @@
 			<div class="indexnewslist">
 				<div class="newsshow">
 					<div class="show">
-						<div id="show_newstit" class="newsshow_tit"></div>
-						<div id="show_newsinfo" class="newsshow_info"></div>
-						<div id="show_newsbody" class="newsshow_body"></div>
-
-						<div class="newsshow_next">
+						<div id="newsInfo">
+							<div id="show_newstit" class="newsshow_tit"></div>
+							<div id="show_newsinfo" class="newsshow_info"></div>
+							<div id="show_newsbody" class="newsshow_body"></div>
+						</div>
+						<div class="newsshow_next" id="newsAbout">
 							<h3>相关阅读</h3>
 							<ul class="yd" id="data-relate">
 							</ul>
@@ -664,19 +684,23 @@
 							</ul>
 							<div class="linkmore">
 								<a class="morepinglun" id="getMore" style="display: none;">更多</a>
-								<img src="image/loading-0.gif" style="margin: auto;display: none;" id="moreLoad"/>
+								<img src="image/loading-0.gif" style="margin: auto;display: none;" id="moreLoad" />
 							</div>
 
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			<div style="text-align: center;margin-top: 80%;display: none;" id="newsDetail_load">
+			<img src="image/loading-0.gif" />
+	      	</div>
 			<!------------底部定位层---------->
 
 		</div>
 		<!--评论弹出层-->
 		<div class="float_comm_input" id="myinput" style="display: none;padding-top: 10px;">
-			<div class="left" >
+			<div class="left">
 				<input type="text" name="HiddenFieldId" id="HiddenFieldId" />
 			</div>
 			<div class="right">

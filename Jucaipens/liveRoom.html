@@ -53,7 +53,8 @@
 						if (data.videoUrl.indexOf('yyscene') > 0) {
 							bd.style.background = '#AAAAAA';
 						} else {
-							videoUrl = "<embed width='100%' height='100%' id='live'   src=" + data.videoUrl + "></embed>";
+							videoUrl = "<embed width='100%' height='100%' id='live'   src="
+							+ data.videoUrl + "></embed>";
 							bd.innerHTML = videoUrl;
 							var live = document.getElementById("live");
 							//判断是否全屏
@@ -91,7 +92,7 @@
 						}
 					},
 					error: function(e) {
-						mui.toast('资源加载失败');
+						mui.toast('连接失败');
 					}
 				})
 				var isManager = plus.storage.getItem("isManager");
@@ -127,7 +128,11 @@
 										} else {
 											//非客服
 										}
-										content = content + "<li><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+										content = content + "<li><span id='chat-time'>"
+										+ myDate + "</span><span id='sp_head'>"
+										+ "<img src=" + headLogo + " id='iv_head'/>" 
+										+ "</span><span id='chat-name'>" + data[i].SendUserName
+										+ "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
 									}
 									chatLay.innerHTML = content;
 									if (content != null) {
@@ -146,7 +151,9 @@
 									mui.scrollTo(document.body.scrollHeight, 100);
 								}
 							},
-							error: function(e) {}
+							error: function(e) {
+								mui.toast('连接失败');
+							}
 						})
 					}, 5000);
 				}
@@ -167,7 +174,7 @@
 							getChatMessaged();
 						},
 						error: function(e) {
-							console.log('连接失败');
+							mui.toast('连接失败');
 						}
 					})
 				}
@@ -201,7 +208,11 @@
 									} else {
 										//非客服
 									}
-									content = content + "<li ><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+									content = content + "<li ><span id='chat-time'>" + myDate 
+									+ "</span><span id='sp_head'>" + "<img src=" + headLogo 
+									+ " id='iv_head'/>" + "</span><span id='chat-name'>" 
+									+ data[i].SendUserName + "</span>" + "<span id='chat-content'>"
+									+ data[i].MessBody + "</span></li>";
 								}
 								chatLay.innerHTML = content;
 								if (content != null) {
@@ -222,7 +233,7 @@
 							getMsgForEver();
 						},
 						error: function(e) {
-							console.log(JSON.stringify(e));
+							mui.toast('连接失败');
 						}
 					})
 				}
@@ -232,7 +243,7 @@
 				btn_send.addEventListener('tap', function() {
 						if (content.value.length <= 0) {
 							mui.toast('发送消息不能为空');
-							return;
+							return false;
 						}
 						sendMsg(content.value, userName);
 					})
@@ -257,7 +268,7 @@
 							}
 						},
 						error: function(e) {
-							console.log("err");
+							mui.toast('连接失败');
 						}
 					})
 				}

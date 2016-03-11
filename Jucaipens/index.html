@@ -57,6 +57,13 @@
 				var fDish = document.getElementById("fDish");
 				var tBoard = document.getElementById("tBoard");
 				var ation = document.getElementById("ation");
+				var nav=document.getElementById("navition");
+				var board_banner=document.getElementById("board-banner");
+				var live_banner=document.getElementById("live-banner");
+				var attention_banner=document.getElementById("attention-banner");
+				var idea_banner=document.getElementById("idea-banner");
+				var load_index=document.getElementById("load_index");
+				load_index.style.display='block';
 				//获取版本号
 				function getVersion() {
 					mui.ajax(getVersionPath, {
@@ -110,6 +117,8 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
+						load_index.style.display='none';
+						nav.style.display='block';
 						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
 						for (var i = 0; i < data.length; i++) {
 							var imageUrl = data[i].imageUrl;
@@ -159,6 +168,10 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
+						load_index.style.display='none';
+						if(data.length>0){
+							live_banner.style.display='block';
+						}
 						for (var i = 0; i < data.length; i++) {
 							liveUrl = liveUrl + "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
 						}
@@ -189,6 +202,10 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
+						load_index.style.display='none';
+						if(data.length>0){
+							board_banner.style.display='block';
+						}
 						for (var i = 0; i < data.length; i++) {
 							three_board = three_board + "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
 						}
@@ -219,6 +236,10 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
+						load_index.style.display='none';
+						if(data.length>0){
+							attention_banner.style.display='block';
+						}
 						for (var i = 0; i < data.length; i++) {
 							attentionUrl = attentionUrl + " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
 						}
@@ -249,6 +270,10 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data) {
+							load_index.style.display='none';
+							if(data.length>0){
+								idea_banner.style.display='block';
+							}
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
 								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
@@ -402,6 +427,21 @@
 			.mui-slider {
 				margin-top: 40px;
 			}
+			.nav{
+				display: none;
+			}
+			#board-banner{
+				display: none;
+			}
+			#live-banner{
+				display: none;
+			}
+			#attention-banner{
+				display: none;
+			}
+			#idea-banner{
+				display: none;
+			}
 		</style>
 
 	</head>
@@ -426,7 +466,7 @@
 				</div>
 			</div>
 			<!------------导航---------->
-			<nav class="nav">
+			<nav class="nav" id="navition">
 				<div class="page_menu">
 					<ul>
 						<li><a id="lList"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
@@ -437,10 +477,10 @@
 				</div>
 			</nav>
 			<!------------居中部分---------->
-			<div class="middle">
+			<div class="middle" >
 				<div class="middlecenter">
 					<!----新三板------->
-					<div class="zhishi">
+					<div class="zhishi" id="board-banner">
 						<div class="licai_top">
 							<h3>新三板</h3>
 							<a href="trhreeBoard.html">更多</a>
@@ -451,7 +491,7 @@
 						</div>
 					</div>
 					<!------------直播回顾---------->
-					<div class="zhibohuigu">
+					<div class="zhibohuigu" id="live-banner">
 						<div class="zhibohuigu_top">
 							<h3>直播回顾</h3>
 
@@ -462,7 +502,7 @@
 						</div>
 					</div>
 					<!------------财经栏目---------->
-					<div class="caijing">
+					<div class="caijing" id="attention-banner">
 						<div class="licai_top">
 							<h3>特别关注</h3>
 							<a href="attention.html">更多</a>
@@ -473,7 +513,7 @@
 						</div>
 					</div>
 					<!------------热门观点---------->
-					<div class="remengd" style="background:none">
+					<div class="remengd" style="background:none" id="idea-banner">
 						<div class="licai_top" style="margin-bottom:0.4rem;">
 							<h3>热门观点</h3>
 							<a href="intrvlIdea.html">更多</a>
@@ -485,6 +525,12 @@
 					</div>
 				</div>
 			</div>
+			
+		<div style="text-align: center;margin-top: 80%;display: none;" id="load_index">
+			<img src="image/loading-0.gif" />
+		</div>
+			
+			
 			<!------------底部定位层---------->
 
 			<footer class="footer">

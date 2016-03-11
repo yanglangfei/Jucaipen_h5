@@ -22,7 +22,6 @@
 					url: "dishList.html",
 					id: "dishList"
 				})
-			
 				//与加载找名家
 				var teacherListPage = mui.preload({
 					url: "teacherList.html",
@@ -49,6 +48,12 @@
 				var intrial = document.getElementById("intrialIdea");
 				var findTeacher = document.getElementById("findTeacher");
 				var liveList = document.getElementById("liveList");
+				var natives = document.getElementById("native");
+				var remen_banner = document.getElementById("remen_banner");
+				var mingshi_banner = document.getElementById("mingshi_banner");
+				var wenda_banner = document.getElementById("wenda_banner");
+				var fad_load = document.getElementById("fad_load");
+				fad_load.style.display = 'block';
 				//获取广告
 				var url = "";
 				mui.ajax(queryAdice, {
@@ -59,6 +64,8 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
+						natives.style.display = 'block';
+						fad_load.style.display = 'none';
 						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
 						for (var i = 0; i < data.length; i++) {
 							var imageUrl = data[i].imageUrl;
@@ -111,6 +118,10 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data) {
+							fad_load.style.display = 'none';
+							if (data.length > 0) {
+								remen_banner.style.display = 'block';
+							}
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
 								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
@@ -142,6 +153,10 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							fad_load.style.display = 'none';
+							if (data.length > 0) {
+								mingshi_banner.style.display = 'block';
+							}
 							for (var i = 0; i < data.length; i++) {
 								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
 								teacherStr = teacherStr + "  <div id=" + data[i].id + " class='item'><a><span><img src=" + data[i].headFace + "></span></a><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
@@ -173,48 +188,52 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							fad_load.style.display = 'none';
+							if (data.length > 0) {
+								wenda_banner.style.display = 'block';
+							}
 							for (var i = 0; i < data.length; i++) {
 								questionStr = questionStr + "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" + data[i].headFace + "></span></a><div class='name'><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
 							}
 							question.innerHTML = questionStr;
 							mui("#data-question").on("tap", ".ask", function() {
 								var tId = this.getAttribute("t");
-								var uId=plus.storage.getItem('userId');
-								if(uId<=0){
+								var uId = plus.storage.getItem('userId');
+								if (uId <= 0) {
 									mui.openWindow({
-										url:"login.html",
-										id:"login",
+										url: "login.html",
+										id: "login",
 										waiting: {
 											autoShow: false
 										}
 									})
 									return false;
 								}
-									mui.openWindow({
-										url: "askQuestion.html",
-										id: "askQuestion",
-										extras: {
-											teacherId: tId
-										},
-										waiting: {
-											autoShow: false
-										}
-									})
-									return false;
+								mui.openWindow({
+									url: "askQuestion.html",
+									id: "askQuestion",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+								return false;
 							})
 							mui("#data-question").on("tap", ".item", function() {
 								var tId = this.getAttribute("id");
-									mui.openWindow({
-										url: "teacherDetail.html",
-										id: "teacherDetail",
-										extras: {
-											teacherId: tId
-										},
-										waiting: {
-											autoShow: false
-										}
-									})
-									return false;
+								mui.openWindow({
+									url: "teacherDetail.html",
+									id: "teacherDetail",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+								return false;
 							})
 						},
 						error: function(e) {}
@@ -233,13 +252,13 @@
 					error: function(e) {}
 				})
 				dish.addEventListener("tap", function() {
-					    mui.openWindow({
-					    	url:"dishList.html",
-					    	id:"dishList",
-					    	waiting: {
+						mui.openWindow({
+							url: "dishList.html",
+							id: "dishList",
+							waiting: {
 								autoShow: false
 							}
-					    })
+						})
 					})
 					//名师问答
 				intoAsk.addEventListener("tap", function() {
@@ -273,26 +292,26 @@
 					})
 					//进入登录
 				intoLogin.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-					} else {
-						mui.openWindow({
-							url: "vipcenter.html",
-							id: "vipcenter",
-							waiting: {
-								autoShow: false
-							}
-						})
-					}
-				})
-				//跳转到首页
+						var uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+						} else {
+							mui.openWindow({
+								url: "vipcenter.html",
+								id: "vipcenter",
+								waiting: {
+									autoShow: false
+								}
+							})
+						}
+					})
+					//跳转到首页
 				index.addEventListener('tap', function() {
 						mui.openWindow({
 							url: "index.html",
@@ -409,6 +428,22 @@
 			.mui-slider {
 				margin-top: 40px;
 			}
+			
+			#native {
+				display: none;
+			}
+			
+			#remen_banner {
+				display: none;
+			}
+			
+			#mingshi_banner {
+				display: none;
+			}
+			
+			#wenda_banner {
+				display: none;
+			}
 		</style>
 
 	</head>
@@ -436,7 +471,7 @@
 			</div>
 			<!------------导航---------->
 
-			<div class="mj_menu">
+			<div class="mj_menu" id="native">
 				<a class="left_border" id="dish" style="border-right: 2px solid #efeff4;">
 					<p>
 						<img src="image/lookimage.png" /></p>
@@ -464,7 +499,7 @@
 			</div>
 			<!------------居中部分---------->
 			<!------------热门观点开始---------->
-			<div class="remengd">
+			<div class="remengd" id="remen_banner">
 				<div class="licai_top">
 					<h3>热门观点</h3>
 					<a href="intrvlIdea.html">更多</a>
@@ -478,7 +513,7 @@
 		</div>
 		<!--------热门观点结束---------->
 		<!------------推荐名师开始---------->
-		<div class="mingshi">
+		<div class="mingshi" id="mingshi_banner">
 			<div class="licai_top">
 				<h3>推荐名师</h3>
 				<span><a href="teacherList.html">更多></a></span></div>
@@ -489,7 +524,7 @@
 		</div>
 		<!--------推荐名师结束---------->
 		<!--------名家问答开始---------->
-		<div class="mingjiaask">
+		<div class="mingjiaask" id="wenda_banner">
 			<div class="licai_top">
 				<h3>名家问答</h3>
 				<span><a href="answerList.html">更多></a></span></div>
@@ -502,6 +537,10 @@
 		<!--------名家问答结束---------->
 
 		<!------------底部定位层---------->
+
+		<div style="text-align: center;margin-top: 60%;display: none;" id="fad_load">
+			<img src="image/loading-0.gif" />
+		</div>
 
 		<footer class="footer">
 			<div class="foot">

@@ -403,7 +403,8 @@
 					"trhreeBoard.html",
 					"liveList.html",
 					"js/netUtils.js",
-					"attention.html"
+					"attention.html",
+					"image/loading-0.gif"
 				],
 				"refer": [
 					"login.html",

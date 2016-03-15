@@ -16,22 +16,28 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				var osName = plus.os.name;
+				var screenWidth = plus.screen.resolutionWidth;
+				var screenHeight = plus.screen.resolutionHeight;
+				var screenWidthDpi = screenWidth * plus.screen.scale;
+				var screenHeightDpi = screenHeight * plus.screen.scale;
+				//console.log(screenWidthDpi + " " + screenHeightDpi);
 				//预加载主页面
-				var indexPage=mui.preload({
-					url:"index.html",
-					id:"index"
+				var indexPage = mui.preload({
+					url: "index.html",
+					id: "index"
 				})
-				var newsPage=mui.preload({
-					url:"trhreeBoard.html",
-					id:"trhreeBoard"
+				var newsPage = mui.preload({
+					url: "trhreeBoard.html",
+					id: "trhreeBoard"
 				})
-				var livePage=mui.preload({
-					url:"liveList.html",
-					id:"livelist"
+				var livePage = mui.preload({
+					url: "liveList.html",
+					id: "livelist"
 				})
-				var dishPage=mui.preload({
-					url:"famousDish.html",
-					id:"famousDish"
+				var dishPage = mui.preload({
+					url: "famousDish.html",
+					id: "famousDish"
 				})
 				plus.navigator.closeSplashscreen();
 				var version;
@@ -57,13 +63,15 @@
 				var fDish = document.getElementById("fDish");
 				var tBoard = document.getElementById("tBoard");
 				var ation = document.getElementById("ation");
-				var nav=document.getElementById("navition");
-				var board_banner=document.getElementById("board-banner");
-				var live_banner=document.getElementById("live-banner");
-				var attention_banner=document.getElementById("attention-banner");
-				var idea_banner=document.getElementById("idea-banner");
-				var load_index=document.getElementById("load_index");
-				load_index.style.display='block';
+				var nav = document.getElementById("navition");
+				var board_banner = document.getElementById("board-banner");
+				var live_banner = document.getElementById("live-banner");
+				var attention_banner = document.getElementById("attention-banner");
+				var idea_banner = document.getElementById("idea-banner");
+				var load_index = document.getElementById("load_index");
+				load_index.style.display = 'block';
+				var styles = {};
+				var extras = {};
 				//获取版本号
 				function getVersion() {
 					mui.ajax(getVersionPath, {
@@ -117,8 +125,8 @@
 					type: "get",
 					timeout: 10000,
 					success: function(data) {
-						load_index.style.display='none';
-						nav.style.display='block';
+						load_index.style.display = 'none';
+						nav.style.display = 'block';
 						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
 						for (var i = 0; i < data.length; i++) {
 							var imageUrl = data[i].imageUrl;
@@ -168,26 +176,34 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
-						load_index.style.display='none';
-						if(data.length>0){
-							live_banner.style.display='block';
+						load_index.style.display = 'none';
+						if (data.length > 0) {
+							live_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
 							liveUrl = liveUrl + "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
 						}
-						live.innerHTML = liveUrl;
+						live.innerHTML = liveUrl; 
 						mui("#data-live").on("tap", "li", function() {
 							var liveId = this.getAttribute("id");
-							mui.openWindow({ 
-								url: "historyLive.html",
-								id: "historyLive",
-								extras: {
-									liveId: liveId
-								},
-								waiting: {
-									autoShow: false
-								}
-							})
+							var name = plus.os.name;
+							if (name == 'Android' && !plus.webview.defauleHardwareAccelerated() && parseInt(plus.os.version) >= 5) {
+								extras.liveId = liveId;
+								styles.hardwareAccelerated = true;
+								var historys = plus.webview.create("historyLive.html", "history", styles, extras);
+								plus.webview.show(historys);
+							} else {
+								mui.openWindow({
+									url: "historyLive.html",
+									id: "historyLive",
+									extras: {
+										liveId: liveId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							}
 						})
 					},
 					error: function(e) {}
@@ -202,9 +218,9 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
-						load_index.style.display='none';
-						if(data.length>0){
-							board_banner.style.display='block';
+						load_index.style.display = 'none';
+						if (data.length > 0) {
+							board_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
 							three_board = three_board + "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
@@ -236,9 +252,9 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
-						load_index.style.display='none';
-						if(data.length>0){
-							attention_banner.style.display='block';
+						load_index.style.display = 'none';
+						if (data.length > 0) {
+							attention_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
 							attentionUrl = attentionUrl + " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
@@ -270,9 +286,9 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data) {
-							load_index.style.display='none';
-							if(data.length>0){
-								idea_banner.style.display='block';
+							load_index.style.display = 'none';
+							if (data.length > 0) {
+								idea_banner.style.display = 'block';
 							}
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
@@ -331,18 +347,18 @@
 					})
 					//热门咨询
 				tBoard.addEventListener('tap', function() {
-					mui.openWindow({
-						url: "trhreeBoard.html",
-						id: "trhreeBoard",
-						waiting: {
-							autoShow: false
-						},
-						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-						}
+						mui.openWindow({
+							url: "trhreeBoard.html",
+							id: "trhreeBoard",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
 					})
-				})
-				//跳转到直播
+					//跳转到直播
 				liveList.addEventListener('tap', function() {
 						mui.openWindow({
 							url: "livelist.html",
@@ -370,18 +386,18 @@
 					})
 					//跳转到关注
 				attentions.addEventListener('tap', function() {
-					mui.openWindow({
-						url: "attention.html",
-						id: "attention",
-						waiting: {
-							autoShow: false
-						},
-						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-						}
+						mui.openWindow({
+							url: "attention.html",
+							id: "attention",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
 					})
-				})
-				//特别关注 
+					//特别关注 
 				ation.addEventListener('tap', function() {
 						mui.openWindow({
 							url: "attention.html",
@@ -427,19 +443,24 @@
 			.mui-slider {
 				margin-top: 40px;
 			}
-			.nav{
+			
+			.nav {
 				display: none;
 			}
-			#board-banner{
+			
+			#board-banner {
 				display: none;
 			}
-			#live-banner{
+			
+			#live-banner {
 				display: none;
 			}
-			#attention-banner{
+			
+			#attention-banner {
 				display: none;
 			}
-			#idea-banner{
+			
+			#idea-banner {
 				display: none;
 			}
 		</style>
@@ -477,7 +498,7 @@
 				</div>
 			</nav>
 			<!------------居中部分---------->
-			<div class="middle" >
+			<div class="middle">
 				<div class="middlecenter">
 					<!----新三板------->
 					<div class="zhishi" id="board-banner">
@@ -525,12 +546,11 @@
 					</div>
 				</div>
 			</div>
-			
-		<div style="text-align: center;margin-top: 60%;display: none;" id="load_index">
-			<img src="image/loading-0.gif" />
-		</div>
-			
-			
+
+			<div style="text-align: center;margin-top: 60%;display: none;" id="load_index">
+				<img src="image/loading-0.gif" />
+			</div>
+
 			<!------------底部定位层---------->
 
 			<footer class="footer">

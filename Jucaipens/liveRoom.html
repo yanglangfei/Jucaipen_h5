@@ -58,13 +58,13 @@
 							bd.style.background = '#AAAAAA';
 						} else {
 							videoUrl = "<embed width='100%' height='100%' id='live'   src="
-							+ data.videoUrl + "></embed>";
+							+ data.videoUrl + " webkit-playsinline ></embed>";
 							bd.innerHTML = videoUrl;
 							var live = document.getElementById("live");
 							//判断是否全屏
 							document.addEventListener('fullscreenchange', function() {
 								if (!isLand) {
-									isLand = true;
+									isLand = true; 
 									plus.screen.lockOrientation('landscape-primary');
 								} else {
 									isLand = false;

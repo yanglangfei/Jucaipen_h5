@@ -4,8 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<title>
-		</title>
+		<title></title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
@@ -47,9 +46,10 @@
 				var isAttention;
 				var liveId;
 				var userId = plus.storage.getItem('userId');
-				//查看关注状况
+				getTeacherDetailInfo();
 				getAtttentionState(id, userId);
 				//获取讲师详细信息
+				function getTeacherDetailInfo(){
 				mui.ajax(teacherDetails, {
 						data: {
 							teacherId: id
@@ -71,9 +71,14 @@
 							hoby.innerText = data.hoby;
 							introduce.innerHTML = data.introduce;
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败');
+						}
 					})
-					//进入粉丝列表
+				}
+				
+				
+				//进入粉丝列表
 				fansList.addEventListener("tap", function() {
 						mui.openWindow({
 							url: "fansList.html",

@@ -205,7 +205,9 @@
 			"image/kaishi.png",
 			"js/stringUtil.js"
 		],
-		"refer": []
+		"refer": [
+			"login.html"
+		]
 	},
 	"ideaDetail.html": {
 		"resources": [
@@ -321,7 +323,9 @@
 		"refer": [
 			"askList.html",
 			"famousDish.html",
-			"answerList.html"
+			"answerList.html",
+			"login.html",
+			"teacherDetail.html"
 		]
 	},
 	"askList.html": {

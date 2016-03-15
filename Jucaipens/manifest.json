@@ -104,6 +104,7 @@
 			"autoclose": false,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
 			"waiting": true
 		},
+		"allowsInlineMediaPlayback":true,   //允许內连播放
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
@@ -151,6 +152,7 @@
 				"frameworks": []
 			},
 			"google": {
+			    "hardwareAccelerated":true,  //开启硬件加速
 				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
@@ -673,7 +675,9 @@
 				],
 				"refer": [
 					"askList.html",
-					"answerList.html"
+					"answerList.html",
+					"login.html",
+					"teacherDetail.html"
 				]
 			},
 			"teacherIntroduce.html": {
@@ -826,7 +830,9 @@
 					"js/stringUtil.js"
 				],
 				"priority": 8,
-				"refer": []
+				"refer": [
+					"login.html"
+				]
 			},
 			"userInfo.html": {
 				"resources": [

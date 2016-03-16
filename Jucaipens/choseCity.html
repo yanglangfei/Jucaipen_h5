@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<link rel="stylesheet" href="css/mui.poppicker.css" />
+		<script type="text/javascript" src="js/mui.picker.js"></script>
+		<script type="text/javascript" src="js/mui.poppicker.js"></script>
+		<script type="text/javascript" src="js/city.data-3.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var sure = document.getElementById("sure");
+				var locations = document.getElementById("location");
+				var country = document.getElementById("country");
+				var cy = document.getElementById("cy");
+				var provinceLay = document.getElementById("province");
+				var cityLay = document.getElementById("city");
+				var addressLay = document.getElementById("county");
+				var web = plus.webview.currentWebview();
+				var name = web.name;
+				var sex = web.sex;
+				var birth = web.birth;
+				var email = web.email;
+				var introduce = web.introduce;
+				var userLogo = web.userLogo;
+				var tel = web.tel;
+				var orlPro = web.province;
+				var orlCity = web.city;
+				var orlArea = web.county;
+				
+				if (orlPro != null && orlCity != null && orlArea != null) {
+					provinceLay.innerHTML = orlPro;
+					cityLay.innerHTML = orlCity;
+					addressLay.innerHTML = orlArea;
+				}
+				
+				//确定提交信息 
+				sure.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "userInfo.html",
+							id: "userInfo",
+							waiting: {
+								autoShow: false
+							},
+							extras: {
+								fromType: 2,
+								proStr: provinceLay.innerHTML,
+								cityStr: cityLay.innerHTML,
+								areaStr: addressLay.innerHTML,
+								proIndex: provinceLay.index,
+								cityIndex: cityLay.index,
+								areaIndex: addressLay.index,
+								name: name,
+								sex: sex,
+								birth: birth,
+								email: email,
+								introduce: introduce,
+								userLogo: userLogo,
+								tel: tel
+							}
+						})
+						web.hide();
+						web.close();
+						//mui.back();
+					})
+					//定位
+				locations.addEventListener("tap", function() {
+					var wait = plus.nativeUI.showWaiting();
+					plus.geolocation.getCurrentPosition(function(p) {
+						wait.close();
+						cy.innerHTML = p.address.country;
+						provinceLay.innerHTML = p.address.province;
+						cityLay.innerHTML = p.address.city;
+						addressLay.innerHTML = p.address.district;
+					}, function(e) {
+						wait.close();
+						mui.toast(e.message);
+					})
+				})
+			})
+		</script>
+		<style type="text/css">
+			ul li {
+				list-style-type: none;
+				height: 40px;
+				margin-top: 8px;
+				margin-left: 15px;
+				margin-right: 15px;
+				background: white;
+				line-height: 40px;
+			}
+			
+			ul li label {
+				margin-left: 10px;
+			}
+			
+			* {
+				padding: 0px;
+			}
+			
+			.mui-input-row {
+				line-height: 40px;
+				margin-left: 15px;
+				background: white;
+				margin-right: 15px;
+				margin-top: 10px;
+			}
+			
+			.mui-input-row span {
+				margin-left: 10px;
+			}
+			
+			li img {
+				height: 20px;
+				margin-right: 10px;
+			}
+			
+			.mui-title {
+				color: white;
+			}
+			
+			header img {
+				width: 30px;
+				height: 30px;
+				margin-top: 5px;
+			}
+			
+			#sure-lab {
+				color: white;
+				font-size: 18px;
+				margin-top: 14px;
+				font-style: normal;
+			}
+			
+			#location {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #bd0b19;">
+			<img src="image/into_back.png" class="mui-action-back" />
+			<h1 class="mui-title">所在地</h1>
+			<a id="sure"><h1 id="sure-lab" class="mui-pull-right" >确定</h1></a>
+		</header>
+
+		<div class="mui-content">
+			<div class="mui-input-row" id="location">
+				<span>使用当前位置</span>
+			</div>
+
+			<div class="data-area">
+				<ul>
+					<li id="country">
+						<label>国家</label>
+						<span class="mui-pull-right">
+							<label id="cy">中国</label>
+							<img src="image/into_next.png" />
+						</span>
+					</li>
+					<li id="pro">
+						<label>省</label>
+						<span class="mui-pull-right">
+							<label id="province" class="0">请选择省份</label>
+							<img src="image/into_next.png" />
+						</span>
+					</li>
+					<li id="cty">
+						<label>市</label>
+						<span class="mui-pull-right">
+							<label id="city" class="0">请选择市</label>
+							<img src="image/into_next.png" />
+						</span>
+					</li>
+					<li id="adr">
+						<label>区／县</label>
+						<span class="mui-pull-right">
+							<label id="county" class="0">请选择区／县</label>
+							<img src="image/into_next.png" />
+						</span>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var proDataPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
+					var ctyDatapath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
+					var areaDataPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
+					var sure = document.getElementById("sure");
+					var proPickerButton = document.getElementById('pro');
+					var provinceLay = document.getElementById("province");
+					var adrButton = document.getElementById("adr");
+					var areaLay = document.getElementById("county");
+					var ctyButton = document.getElementById("cty");
+					var cityLay = document.getElementById("city");
+					var proPicker = new $.PopPicker();
+					var ctyPicker = new $.PopPicker();
+					var areaPicker = new $.PopPicker();
+					var areaData;
+					var ctyData;
+					var proData;
+					querryProvinceData();
+					//获取省份信息
+					function querryProvinceData() {
+						proData = "[";
+						mui.ajax(proDataPath, {
+							type: "get",
+							dataType: "json",
+							timeout: 10000,
+							success: function(data) {
+								for (var i = 0; i < data.length; i++) {
+									if (i < data.length - 1) {
+										proData = proData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+									} else {
+										proData = proData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+									}
+								}
+								var jsonStr = eval((proData));
+								proPicker.setData(jsonStr);
+							},
+							error: function(e) {}
+						})
+					}
+					//获取市信息
+					function querryCityData(pId) {
+						ctyData = "[";
+						mui.ajax(ctyDatapath, {
+							data: {
+								provinceId: pId
+							},
+							type: "get",
+							dataType: "json",
+							timeout: 10000,
+							success: function(data) {
+								for (var i = 0; i < data.length; i++) {
+									if (i < data.length - 1) {
+										ctyData = ctyData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+									} else {
+										ctyData = ctyData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+									}
+								}
+								var jsonStr = eval((ctyData));
+								ctyPicker.setData(jsonStr);
+							},
+							error: function(e) {}
+						})
+					}
+					//获取区／县数据
+					function querryCountyData(cId) {
+						areaData = "[";
+						mui.ajax(areaDataPath, {
+							data: {
+								cityId: cId
+							},
+							type: "get",
+							dataType: "json",
+							timeout: 10000,
+							success: function(data) {
+								for (var i = 0; i < data.length; i++) {
+									if (i < data.length - 1) {
+										areaData = areaData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+									} else {
+										areaData = areaData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+									}
+								}
+								var jsonStr = eval((areaData));
+								areaPicker.setData(jsonStr);
+							},
+							error: function(e) {}
+						})
+					}
+					//省份逻辑处理
+					proPickerButton.addEventListener('tap', function(event) {
+						proPicker.show(function(items) {
+							provinceLay.innerText = items[0].text;
+							provinceLay.index = items[0].value;
+							cityLay.innerText = '请选择市';
+							areaLay.innerText = '请选择区／县';
+							areaLay.index = '0';
+							cityLay.index = '0';
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					//市逻辑处理
+					ctyButton.addEventListener("tap", function() {
+						querryCityData(provinceLay.index);
+						ctyPicker.show(function(items) {
+							cityLay.innerText = items[0].text;
+							cityLay.index = items[0].value;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					//区县逻辑处理
+					adrButton.addEventListener("tap", function() {
+						querryCountyData(cityLay.index);
+						areaPicker.show(function(items) {
+							areaLay.innerText = items[0].text;
+							areaLay.index = items[0].value;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+		</script>
+
+	</body>
+
+</html>

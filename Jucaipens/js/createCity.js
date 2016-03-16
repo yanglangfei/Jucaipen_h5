@@ -1,0 +1,1 @@
+createProvince();var createProvince=function(){mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince",{type:"GET",dataType:"json",timeout:10000,success:function(d){alert(JSON.stringify(d));var c=new JavaArray();c.push}})};

@@ -1,0 +1,1 @@
+var sreeenRent=function(f,e,d){return f/d};

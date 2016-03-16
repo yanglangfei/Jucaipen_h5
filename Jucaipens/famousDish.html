@@ -12,7 +12,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-
+        <script type="text/javascript" src="js/style.js" ></script>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
@@ -57,6 +57,9 @@
 				var mingshi_banner = document.getElementById("mingshi_banner");
 				var wenda_banner = document.getElementById("wenda_banner");
 				var fad_load = document.getElementById("fad_load");
+				var styles={};
+				styles.scrollIndicator='none';
+				controlScrollBar(plus.webview.currentWebview(),styles);
 				fad_load.style.display = 'block';
 				//获取广告
 				var url = "";
@@ -248,7 +251,7 @@
 					dataType: "json",
 					timeout: 10000,
 					success: function(data) {
-						renqi.innerText = "人气：" + (data.renQi / 10000).toFixed(2) + "万人";
+						renqi.innerText = "人气：" + (data.renQi / 10000).toFixed(1) + "万人";
 						answerCount.innerText = "回答:" + data.answerCount + "个";
 						ideaCount.innerText = "观点：" + data.ideas + "篇";
 						fans.innerText = "粉丝：" + data.fans + "人";

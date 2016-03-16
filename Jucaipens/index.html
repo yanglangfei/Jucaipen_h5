@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<title></title>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
@@ -17,11 +18,15 @@
 			});
 			mui.plusReady(function() {
 				var osName = plus.os.name;
+				var styles={};
 				var screenWidth = plus.screen.resolutionWidth;
 				var screenHeight = plus.screen.resolutionHeight;
 				var screenWidthDpi = screenWidth * plus.screen.scale;
 				var screenHeightDpi = screenHeight * plus.screen.scale;
 				//console.log(screenWidthDpi + " " + screenHeightDpi);
+				//隐藏滚动条
+				styles.scrollIndicator='none';
+				controlScrollBar(plus.webview.currentWebview(),styles);
 				//预加载主页面
 				var indexPage = mui.preload({
 					url: "index.html",

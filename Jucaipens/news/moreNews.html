@@ -9,6 +9,7 @@
 		<link href="../css/tuch.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/style.js" ></script>
 		<script type="text/javascript">
 			mui.init({ 
 				swipeBack:true //启用右滑关闭功能
@@ -23,6 +24,9 @@
 				var totlePage;
 				var loadMore=document.getElementById("loadMore");
 				var currentPage = 1;
+				var styles={};
+				styles.scrollIndicator='none';
+				controlScrollBar(web,styles);
 				findNews(currentPage);
 				loadNews.style.display = 'block';
 				//获取更多新闻

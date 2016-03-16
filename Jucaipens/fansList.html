@@ -19,6 +19,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
 		mui.init({
 			swipeBack:true //启用右滑关闭功能
@@ -34,6 +35,10 @@
 			var loadMore=document.getElementById("loadMore");
 			var fans_gd=document.getElementById("fans_gd");
 			var loadFans=document.getElementById("loadFans");
+			var styles={};
+			styles.scrollIndicator='none';
+			//隐藏滚动条
+			controlScrollBar(web,styles);
 			loadFans.style.display='block';
 			findFansByTeacher(currentPage);
 			//加载更多数据

@@ -8,6 +8,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script src="js/mingjia.js" type="text/javascript"></script>
 		<title></title>
 		<!--标准mui.css-->
@@ -19,6 +20,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				var styles={};
 				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoardIndex";
 				var board = document.getElementById("bopard");
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
@@ -28,6 +30,9 @@
 				var attentions = document.getElementById("attentions");
 				var liveList = document.getElementById("liveList");
 				var index = document.getElementById("index");
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(plus.webview.currentWebview(),styles);
 				findThreeBoard();
 				load.style.display = 'block';
 

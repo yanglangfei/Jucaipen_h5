@@ -15,7 +15,8 @@
 			"image/loading-0.gif",
 			"image/comm_icon1.png",
 			"image/good.png",
-			"image/share_press.png"
+			"image/share_press.png",
+			"js/style.js"
 		],
 		"refer": [
 			"login.html",
@@ -43,7 +44,8 @@
 			"liveList.html",
 			"js/netUtils.js",
 			"attention.html",
-			"image/loading-0.gif"
+			"image/loading-0.gif",
+			"js/style.js"
 		],
 		"refer": [
 			"newsDetail.html",
@@ -106,7 +108,8 @@
 			"css/tuch.css",
 			"famousDish.html",
 			"liveList.html",
-			"index.html"
+			"index.html",
+			"js/style.js"
 		],
 		"refer": [
 			"newsDetail.html",
@@ -174,7 +177,9 @@
 			"trhreeBoard.html",
 			"index.html",
 			"answerList.html",
-			"teacherList.html"
+			"teacherList.html",
+			"image/loading-0.gif",
+			"js/style.js"
 		],
 		"refer": [
 			"liveRoom.html",
@@ -203,7 +208,8 @@
 			"css/style.css",
 			"image/good.png",
 			"image/kaishi.png",
-			"js/stringUtil.js"
+			"js/stringUtil.js",
+			"js/style.js"
 		],
 		"refer": [
 			"login.html"
@@ -219,7 +225,8 @@
 			"image/good.png",
 			"js/stringUtil.js",
 			"image/head.png",
-			"image/response.png"
+			"image/response.png",
+			"js/style.js"
 		],
 		"refer": [
 			"login.html"
@@ -424,7 +431,9 @@
 			"css/tuch.css",
 			"image/loading-0.gif",
 			"image/shijian.jpg",
-			"js/stringUtil.js"
+			"js/stringUtil.js",
+			"image/1.jpg",
+			"js/style.js"
 		],
 		"refer": [
 			"communite.html",

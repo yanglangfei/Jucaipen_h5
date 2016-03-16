@@ -10,6 +10,7 @@
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/app.css" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script src="js/mingjia.js" type="text/javascript"></script>
 		<!--标准mui.css-->
@@ -28,6 +29,10 @@
 				var totlePage;
 				var isShow;
 				var loadMore=document.getElementById("loadMore");
+				var styles={};
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(plus.webview.currentWebview(),styles);
 				getDishList(currentPage);
 				loadDish.style.display = 'block';
 				//加载更多

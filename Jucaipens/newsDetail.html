@@ -18,6 +18,7 @@
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<link rel="stylesheet" href="css/app.css" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
 				swipeBack: true, //启用右滑关闭功能
@@ -71,6 +72,10 @@
 				var descript;
 				var typeId = 0;
 				var uId;
+				var styles={};
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(web,styles);
 				newsDetail_load.style.display='block';
 				if (id <= 0) {
 					plus.nativeUI.toast("新闻ID异常");

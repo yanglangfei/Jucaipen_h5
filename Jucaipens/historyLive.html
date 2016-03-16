@@ -12,6 +12,7 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
@@ -40,6 +41,9 @@
 				var btn_send = document.getElementById("btn_send");
 				var commCount = document.getElementById("show_Video_CommCount");
 				var id = web.liveId;
+				var styles={};
+				styles.scrollIndicator='none';
+				controlScrollBar(web,styles);
 				if (id <= 0) {
 					return;
 				}
@@ -130,6 +134,7 @@
 						getLiveComment(++currentPage);
 					}
 				})
+				
 				/*
 				 * 发表评论  回复
 				 * typeId  0  新闻评论   1  视频评论

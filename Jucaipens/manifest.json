@@ -314,7 +314,8 @@
 					"js/stringUtil.js",
 					"image/head.png",
 					"image/response.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/style.js"
 				],
 				"refer": [
 					"login.html"
@@ -371,7 +372,9 @@
 					"trhreeBoard.html",
 					"answerList.html",
 					"fonts/mui.ttf",
-					"teacherList.html"
+					"teacherList.html",
+					"image/loading-0.gif",
+					"js/style.js"
 				],
 				"refer": [
 					"ideaDetail.html",
@@ -406,7 +409,8 @@
 					"liveList.html",
 					"js/netUtils.js",
 					"attention.html",
-					"image/loading-0.gif"
+					"image/loading-0.gif",
+					"js/style.js"
 				],
 				"refer": [
 					"login.html",
@@ -440,7 +444,8 @@
 					null,
 					"js/stringUtil.js",
 					"image/loading-0.gif",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/style.js"
 				],
 				"refer": [
 					"login.html",
@@ -482,7 +487,8 @@
 					"famousDish.html",
 					"liveList.html",
 					"fonts/mui.ttf",
-					"index.html"
+					"index.html",
+					"js/style.js"
 				],
 				"refer": [
 					"newsDetail.html",
@@ -604,7 +610,9 @@
 					"image/loading-0.gif",
 					"image/shijian.jpg",
 					"js/stringUtil.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"image/1.jpg",
+					"js/style.js"
 				],
 				"refer": [
 					"communite.html",
@@ -827,7 +835,8 @@
 					"fonts/mui.ttf",
 					"image/comm_icon1.png",
 					"image/good.png",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"js/style.js"
 				],
 				"priority": 8,
 				"refer": [
@@ -1069,7 +1078,6 @@
 				"image/logo_email.png",
 				"image/skyblue_platform_checked_disabled.png",
 				"image/thubm_state.png",
-				"image/1.jpg",
 				"js/layer.ext.js",
 				"image/skyblue_actionbar_ok_btn.png",
 				"image/btn_back_nor.9.png",

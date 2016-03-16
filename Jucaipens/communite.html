@@ -12,6 +12,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
@@ -32,6 +33,10 @@
 				var getMore = document.getElementById("getMore-comm");
 				var nodataLay=document.getElementById("layer-nodata");
 				var web = plus.webview.currentWebview();
+				var styles={};
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(web,styles);
 				var title = web.title;
 				var liveId = web.liveId;
 				var currentPage=1;
@@ -78,7 +83,7 @@
 								commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" 
 								+ isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name' style='margin-left:15px;'>"
 								+ data[i].userName + "</span><span class='u_date' style='margin-left:15px;'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user' index="
-								+data[i].id+" un="+data[i].userName+"  bs="+data[i].bodys+" style='display:none;><img src='image/response.png'></a>" + "</div><div class='bodys' style='margin-top:5px;'>" 
+								+data[i].id+" un="+data[i].userName+"  bs="+data[i].bodys+"></a>" + "</div><div class='bodys' style='margin-top:5px;'>" 
 								+ data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
 							}
 							commLay.innerHTML = commStr;

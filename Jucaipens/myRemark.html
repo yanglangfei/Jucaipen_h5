@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript">
@@ -21,11 +22,16 @@
 				var remarkLay = document.getElementById("remarkLay");
 				var remarkPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
 				var currentPage = 1;
+				var moreLoad=document.getElementById("moreLoad");
 				var totlePager;
 				var uId = plus.storage.getItem("userId");
 				var loadRemark = document.getElementById("loadRemark");
 				var nodataLay=document.getElementById("layer-nodata");
 				var linkmore_p = document.getElementById("linkmore_p");
+				var styles={};
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(plus.webview.currentWebview(),styles);
 				if (uId <= 0) {
 					return;
 				}
@@ -33,7 +39,9 @@
 				getRemarkInfo(currentPage);
 				//加载更多
 				linkmore_p.addEventListener("tap", function() {
+					linkmore_p.style.display='none';
 					if (currentPage < totlePager) {
+						moreLoad.style.display='block';
 						getRemarkInfo(++currentPage);
 					}
 				})
@@ -49,6 +57,7 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							moreLoad.style.display='none';
 							loadRemark.style.display = 'none';
 							if(data.length<=0){
 								nodataLay.style.display='block';
@@ -117,7 +126,10 @@
 				<ul class="mymessge" id="remarkLay">
 
 				</ul>
-				<p class="more"><a id="linkmore_p" class="linkmore" style="display: none;background: #e8e8e8;">查看更多>></a></p>
+				<p class="more" style="text-align: center;">
+					<img src="image/loading-0.gif"  style="display: none;margin: auto;" id="moreLoad"/>
+					<a id="linkmore_p" class="linkmore" style="display: none;background: #e8e8e8;">查看更多>></a>
+				</p>
 
 			</div>
 			<!------------底部定位层---------->

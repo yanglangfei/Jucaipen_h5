@@ -5,6 +5,7 @@
 	描述：登录
 -->
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -15,7 +16,7 @@
 		<link rel="stylesheet" href="css/tuch.css" />
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack:true, //启用右滑关闭功能
+				swipeBack: true, //启用右滑关闭功能
 				gestureConfig: {
 					tap: true, //默认为true
 					doubletap: true, //默认为false
@@ -29,7 +30,7 @@
 			//获取认证列表
 			var authos;
 			var otherLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountLogin";
-			var oriLoginPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/login";
+			var oriLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/login";
 			document.addEventListener("plusready", function() {
 				plus.oauth.getServices(function(serice) {
 					authos = serice;
@@ -60,17 +61,26 @@
 						}
 						if (pwds.value.length <= 0) {
 							plus.ui.toast("密码不能为空");
-							return;
+							return; 
 						}
+						var wait = plus.nativeUI.showWaiting("正在登录，请稍后...", {
+							style: "white",
+							round: 10,
+							loading: {
+								display: 'block',
+								back:'close'
+							}
+						})
 						mui.ajax(oriLoginPath, {
 							data: {
-								userName: account.value,     
+								userName: account.value,
 								password: pwds.value
 							},
 							type: "post",
 							dataType: "json",
 							timeout: 10000,
 							success: function(data) {
+								wait.close();
 								if (data.ret_code == 0) {
 									plus.nativeUI.toast("登录成功");
 									//用户ID 
@@ -99,18 +109,18 @@
 					//qq登录
 				qq.addEventListener("tap", function() {
 						//获取openID
-						authLogin(0,1);
+						authLogin(0, 1);
 					})
 					//微信登录
 				weixin.addEventListener("tap", function() {
 						//获取openID
-						authLogin(1,0);
+						authLogin(1, 0);
 					})
 					//新浪登录
 				sina.addEventListener("tap", function() {
 					//获取openID
-					authLogin(2,2);
-				}) 
+					authLogin(2, 2);
+				})
 
 				function otherLogin(t, id) {
 					mui.ajax(otherLoginPath, {
@@ -147,7 +157,7 @@
 					})
 				}
 
-				function authLogin(t,i) {
+				function authLogin(t, i) {
 					var s = authos[i];
 					if (!s.authResult) {
 						s.login(function(e) {
@@ -155,7 +165,7 @@
 							otherLogin(t, openId);
 						}, function(e) {
 							plus.nativeUI.toast('登录失败');
-						}); 
+						});
 					} else {
 						var openId = s.authResult.openid;
 						otherLogin(t, openId);
@@ -194,27 +204,25 @@
 				qq.addEventListener("hold", function() {
 					qq.src = 'image/loginqq_press.png';
 				});
-				
 				//QQ登录的释放效果
-				qq.addEventListener('release',function(){
-					qq.src='image/loginqq_unpress.png';
+				qq.addEventListener('release', function() {
+						qq.src = 'image/loginqq_unpress.png';
+					})
+					//微信登录的按下特效
+				weixin.addEventListener('hold', function() {
+						weixin.src = 'image/weixin_press.png';
+					})
+					//微信登录的释放特效
+				weixin.addEventListener('release', function() {
+						weixin.src = 'image/loginweixins.png';
+					})
+					//新浪登录释放特效
+				sina.addEventListener('hold', function() {
+					sina.src = 'image/loginsina_press.png';
 				})
-				//微信登录的按下特效
-				weixin.addEventListener('hold',function(){
-					weixin.src='image/weixin_press.png';
-				})
-				//微信登录的释放特效
-				weixin.addEventListener('release',function(){
-					weixin.src='image/loginweixins.png';
-				})
-				//新浪登录释放特效
-				sina.addEventListener('hold',function(){
-					sina.src='image/loginsina_press.png';
-				})
-				
 				//新浪登录释放的特效
-				sina.addEventListener('release',function(){
-					sina.src='image/loginsina_unpress.png';
+				sina.addEventListener('release', function() {
+					sina.src = 'image/loginsina_unpress.png';
 				})
 			});
 		</script>
@@ -242,7 +250,8 @@
 			#login-qq:active {
 				src: url(image/loginqq_press.png);
 			}
-			#into-regin:active{
+			
+			#into-regin:active {
 				color: #BBBBBB;
 			}
 		</style>
@@ -258,11 +267,11 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label for="" style="font-size: 15px;">账号</label>
-					<input type="text" class="mui-input mui-input-clear" id="username" style="font-size: 15px;" />
+					<input type="text" class="mui-input " id="username" style="font-size: 15px;" />
 				</div>
 				<div class="mui-input-row">
 					<label for="" style="font-size: 15px;">密码</label>
-					<input type="password" id="password" class="mui-input mui-input-clear" placeholder="输入6-23位密码" maxlength="23" style="font-size: 15px;" />
+					<input type="password" id="password" class="mui-input " placeholder="输入6-23位密码" maxlength="23" style="font-size: 15px;" />
 				</div>
 			</form>
 			<div style="margin: 10px 10px 0 10px;" id="loginLogo">

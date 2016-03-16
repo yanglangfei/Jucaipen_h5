@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -38,6 +39,10 @@
 				var isServer = plus.storage.getItem("isServer");
 				var userNmae = plus.storage.getItem("userName");
 				var bd = document.getElementById("bd");
+				var styles={};
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(web,styles);
 				if (isServer == 1 || isManager == 1) {
 					isNormal = 1;
 				} else {

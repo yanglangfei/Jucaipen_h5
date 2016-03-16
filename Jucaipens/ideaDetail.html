@@ -13,6 +13,7 @@
 		</title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/style.js" ></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<!--标准mui.css-->
@@ -45,8 +46,15 @@
 				var commId;
 				var lastBody;
 				var name;
+				var styles={};
+				styles.scrollIndicator='none';
+				//隐藏滚动条
+				controlScrollBar(web,styles);
+			    getIdeaDetails();
+				
 				//获取热门观点详细信息
-				mui.ajax(ideaDetail, {
+				function getIdeaDetails(){
+					mui.ajax(ideaDetail, {
 					data: {
 						ideaId: id
 					},
@@ -91,6 +99,10 @@
 					},
 					error: function(e) {}
 				})
+				}
+				
+				
+				
 				queryComments(currentPage);
 				
 				

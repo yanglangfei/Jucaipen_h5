@@ -63,16 +63,16 @@
 							plus.ui.toast("密码不能为空");
 							return; 
 						}
-						var wait = plus.nativeUI.showWaiting("正在登录，请稍后...", {
+					/*	var wait = plus.nativeUI.showWaiting("正在登录，请稍后...", {
 							style: "white",
 							round: 10,
 							loading: {
 								display: 'block',
 								back:'close'
 							}
-						})
+						})*/
 						mui.ajax(oriLoginPath, {
-							data: {
+							data: { 
 								userName: account.value,
 								password: pwds.value
 							},
@@ -80,7 +80,7 @@
 							dataType: "json",
 							timeout: 10000,
 							success: function(data) {
-								wait.close();
+								//wait.close();
 								if (data.ret_code == 0) {
 									plus.nativeUI.toast("登录成功");
 									//用户ID 
@@ -95,12 +95,15 @@
 									plus.storage.setItem("reginDate", data.reginDate);
 									//用户名
 									plus.storage.setItem('userName', data.userName);
+									//用户类型   0  普通用户   1  聚财盆用户  2  金刚用户
+									plus.storage.setItem("userType",data.userType+'');
 									mui.back();
 								} else {
 									plus.ui.toast(data.err_msg);
 								}
 							},
 							error: function(e) {
+								//wait.close();
 								plus.nativeUI.toast("连接失败");
 							}
 						});
@@ -146,6 +149,8 @@
 								plus.storage.setItem("reginDate", data.reginDate);
 								//用户名
 								plus.storage.setItem('userName', data.userName);
+								//用户类型   0  普通用户   1  聚财盆用户  2  金刚用户
+								plus.storage.setItem("userType",data.userType+'');
 								mui.back();
 							} else {
 								plus.nativeUI.toast(data.err_msg);

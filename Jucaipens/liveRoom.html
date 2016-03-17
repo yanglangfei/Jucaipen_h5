@@ -24,20 +24,19 @@
 				var web = plus.webview.currentWebview();
 				var chatLay = document.getElementById("chatLay");
 				var liveResourcePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
-				var chatPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
 				var topIdPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getTopId";
 				var getChatMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getlist";
 				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
+				var changeState="http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
 				var uId = plus.storage.getItem("userId");
 				var liveId = web.liveId;
 				var isLand;
-				var msgType = 0;
 				var topId;
 				var isNormal;
 				var roomFace = web.face;
 				var isManager = plus.storage.getItem("isManager");
 				var isServer = plus.storage.getItem("isServer");
-				var userNmae = plus.storage.getItem("userName");
+				var userName = plus.storage.getItem("userName");
 				var bd = document.getElementById("bd");
 				var styles={};
 				styles.scrollIndicator='none';
@@ -48,6 +47,12 @@
 				} else {
 					isNormal = 1;
 				}
+				//msType,fromId,roomId,managerId,serverId,userName
+				sendUserState(0,uId,liveId,isManager,isServer,userName);
+				web.addEventListener('close',function(){
+					console.log('close');
+					sendUserState(1,uId,liveId,isManager,isServer,userName);
+				})
 				//获取视频资源
 				mui.ajax(liveResourcePath, {
 					data: {
@@ -104,9 +109,6 @@
 						mui.toast('连接失败');
 					}
 				})
-				var isManager = plus.storage.getItem("isManager");
-				var isServer = plus.storage.getItem("isServer");
-				var userId = plus.storage.getItem("userId");
 
 				function getMsgForEver() {
 					setInterval(function() {
@@ -115,7 +117,7 @@
 							data: {
 								topId: topId,
 								roomid: liveId,
-								userId: userId,
+								userId: uId,
 								isServer: isNormal
 							},
 							dataType: "json",
@@ -194,7 +196,7 @@
 						data: {
 							topId: topId,
 							roomid: liveId,
-							userId: userId,
+							userId: uId,
 							isServer: isNormal
 						},
 						dataType: "json",
@@ -248,7 +250,6 @@
 				}
 				var btn_send = document.getElementById("btn-send");
 				var content = document.getElementById("msg-content");
-				var userName = plus.storage.getItem('userName');
 				btn_send.addEventListener('tap', function() {
 						if (content.value.length <= 0) {
 							mui.toast('发送消息不能为空');
@@ -262,7 +263,7 @@
 						data: {
 							msgcontent: c,
 							sendusername: uName,
-							SendUserId: userId,
+							SendUserId: uId,
 							roomid: liveId
 						},
 						type: "post",
@@ -278,6 +279,32 @@
 						},
 						error: function(e) {
 							mui.toast('连接失败');
+						}
+					})
+				}
+				//向服务端发送在线状态
+				function sendUserState(msgType,fromId,roomId,managerId,serverId,userName){
+					var param={
+						msgType:msgType,
+						fromUser:fromId,
+						roomId:roomId,
+						isManager:managerId,
+						isServer:serverId,
+						userName:userName
+					};
+					mui.ajax(changeState,{
+						data:{
+							messageObject:JSON.stringify(param)
+						},
+						type:"get",
+						dataType:"json",
+						timeout:10000,
+						success: function(data){
+							console.log('see');
+						},
+						error: function(e){
+							console.log('err');
+							
 						}
 					})
 				}

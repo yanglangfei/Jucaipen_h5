@@ -509,7 +509,8 @@
 					"fonts/mui.ttf",
 					"image/into_back.png",
 					"js/stringUtil.js",
-					"image/normalUser.png"
+					"image/normalUser.png",
+					"js/style.js"
 				],
 				"priority": 13,
 				"refer": []
@@ -931,7 +932,8 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"image/loading-0.gif",
-					"js/stringUtil.js"
+					"js/stringUtil.js",
+					"js/style.js"
 				],
 				"refer": [
 					"newsDetail.html"

@@ -11,7 +11,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
-
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
@@ -51,6 +50,7 @@
 							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
+								var userType=plus.storage.getItem("userType");
 								var face = this.getAttribute('face');
 								// 是否免费试听  0   是     1   否
 								var visit = this.getAttribute("isVisit");
@@ -59,6 +59,10 @@
 								//试听用户等级
 								var visitLeal = this.getAttribute("visitLeal");
 								var uId = plus.storage.getItem("userId");
+								if(userType==2){
+									mui.alert("对不起,您不是当前直播室客户,请您关注公众号:cctvjingang");
+									return ;
+								}
 								if (visit == 0) {
 									//免费
 									intoLiveRoom(lId, face);

@@ -63,14 +63,14 @@
 							plus.ui.toast("密码不能为空");
 							return; 
 						}
-					/*	var wait = plus.nativeUI.showWaiting("正在登录，请稍后...", {
+					var wait = plus.nativeUI.showWaiting("正在登录，请稍后...", {
 							style: "white",
 							round: 10,
 							loading: {
 								display: 'block',
 								back:'close'
 							}
-						})*/
+						})
 						mui.ajax(oriLoginPath, {
 							data: { 
 								userName: account.value,
@@ -80,7 +80,7 @@
 							dataType: "json",
 							timeout: 10000,
 							success: function(data) {
-								//wait.close();
+								wait.close();
 								if (data.ret_code == 0) {
 									plus.nativeUI.toast("登录成功");
 									//用户ID 
@@ -103,8 +103,8 @@
 								}
 							},
 							error: function(e) {
-								//wait.close();
-								plus.nativeUI.toast("连接失败");
+								wait.close();
+								plus.nativeUI.toast("连接失败,请稍后重试");
 							}
 						});
 					})

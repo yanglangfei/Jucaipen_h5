@@ -79,17 +79,17 @@
 									var u=bs[i].src.replace('file://',"http://live.jucaipen.com");
 									bs[i].src=u;
 								    bs[i].style.width='100%';
-								    bs[i].onclick=function(){
-								    	document.getElementById("imgFrame").style.display = "block";
+								    bs[i].addEventListener('tap',function(){
+								    	 document.getElementById("imgFrame").style.display = "block";
                                      document.getElementById("imgbox").innerHTML = "<img src='" + this.getAttribute("src") + "' />";
 								    document.getElementById("imgbox").style.width='100px';
 								    document.getElementById("imgbox").style.height='200px';
 								    document.getElementById("imgFrame").style.width='100px';
 								    document.getElementById("imgFrame").style.height='200px';
-								    }
-								}
+								    })
+								} 
 							}
-						} 
+						}  
 						var isV = data.isV;
 						if (isV == 0) {
 							vLogo.src = "image/v1.png";

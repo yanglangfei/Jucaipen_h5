@@ -6,8 +6,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<title></title>
+		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script type="text/javascript" src="js/netUtils.js"></script>
@@ -18,15 +19,15 @@
 			});
 			mui.plusReady(function() {
 				var osName = plus.os.name;
-				var styles={};
+				var styles = {};
 				var screenWidth = plus.screen.resolutionWidth;
 				var screenHeight = plus.screen.resolutionHeight;
 				var screenWidthDpi = screenWidth * plus.screen.scale;
 				var screenHeightDpi = screenHeight * plus.screen.scale;
 				//console.log(screenWidthDpi + " " + screenHeightDpi);
 				//隐藏滚动条
-				styles.scrollIndicator='none';
-				controlScrollBar(plus.webview.currentWebview(),styles);
+				styles.scrollIndicator = 'none';
+				controlScrollBar(plus.webview.currentWebview(), styles);
 				//预加载主页面
 				var indexPage = mui.preload({
 					url: "index.html",
@@ -188,7 +189,7 @@
 						for (var i = 0; i < data.length; i++) {
 							liveUrl = liveUrl + "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
 						}
-						live.innerHTML = liveUrl; 
+						live.innerHTML = liveUrl;
 						mui("#data-live").on("tap", "li", function() {
 							var liveId = this.getAttribute("id");
 							var name = plus.os.name;
@@ -553,7 +554,26 @@
 			</div>
 
 			<div style="text-align: center;margin-top: 60%;display: none;" id="load_index">
-				<img src="image/loading-0.gif" />
+				<div class="spinner">
+					<div class="spinner-container container1">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+					<div class="spinner-container container2">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+					<div class="spinner-container container3">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+				</div>
 			</div>
 
 			<!------------底部定位层---------->

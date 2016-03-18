@@ -88,7 +88,7 @@
 						plus.ui.toast("两次密码不一致");
 						return;
 					}
-					var wait = plus.nativeUI.showWaiting("正在登录，请稍后...", {
+					var wait = plus.nativeUI.showWaiting("正在注册，请稍后...", {
 							style: "white",
 							round: 10,
 							loading: {
@@ -122,6 +122,8 @@
 							}
 						},
 						error: function(e) {
+							wait.close();
+							mui.toast('连接失败，请稍后重试');
 						}
 					});
 				});

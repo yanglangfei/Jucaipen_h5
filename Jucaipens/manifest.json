@@ -3,7 +3,7 @@
 		"android",
 		"iPhone"
 	],
-	"id": "H5E5BFE12",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "H529E206B",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "聚财盆",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0",/*应用版本名称*/
@@ -232,902 +232,935 @@
 		}
 	},
 	"dependencies": {
-		"pages": {
-			"trhreeBoard.html": {
-				"href": "trhreeBoard.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/unlogin.png",
-					"image/indexnormal.png",
-					"image/livenormal.png",
-					"image/jucai.png",
-					"image/fincenormal.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/classnormal.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/licaipress.png",
-					"image/loading-0.gif",
-					"index.html",
-					"liveList.html",
-					"famousDish.html"
-				],
-				"refer": [
-					"trhreeBoard.html",
-					"newsDetail.html",
-					"attention.html",
-					"login.html",
-					"vipcenter.html",
-					"news/moreNews.html"
-				],
-				"priority": 0
-			},
-			"login.html": {
-				"href": "login.html",
-				"priority": 1,
-				"resources": [
-					"image/loginsina_unpress.png",
-					"image/loginweixins.png",
-					"image/loginqq_unpress.png",
-					"image/into_back.png",
-					"css/tuch.css",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css",
-					"fonts/mui.ttf",
-					"image/loginqq_press.png",
-					"image/weixin_press.png",
-					"image/loginsina_press.png"
-				],
-				"refer": [
-					"regin.html"
-				]
-			},
-			"regin.html": {
-				"href": "regin.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 2
-			},
-			"ideaDetail.html": {
-				"href": "ideaDetail.html",
-				"priority": 9,
-				"resources": [
-					"image/index.png",
-					"image/v1.png",
-					"image/into_back.png",
-					"image/good.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css",
-					"js/stringUtil.js",
-					"image/head.png",
-					"image/response.png",
-					"fonts/mui.ttf",
-					"js/style.js"
-				],
-				"refer": [
-					"login.html"
-				]
-			},
-			"intrvlIdea.html": {
-				"href": "intrvlIdea.html",
-				"priority": 2,
-				"resources": [
-					"image/v1.png",
-					"image/into_back.png",
-					"image/hits.png",
-					"css/mingjia.css",
-					"image/loading-0.gif",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css",
-					"css/tuch.css",
-					"js/stringUtil.js",
-					"famousDish.html",
-					"fonts/mui.ttf",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"refer": [
-					"ideaDetail.html"
-				]
-			},
-			"famousDish.html": {
-				"href": "famousDish.html",
-				"priority": 3,
-				"resources": [
-					"image/seeimage.png",
-					"image/lookimage.png",
-					"image/answerimage.png",
-					"image/findimage.png",
-					"image/classpress.png",
-					"css/mingjia.css",
-					"image/indexnormal.png",
-					"css/tuch.css",
-					"image/unlogin.png",
-					"image/livenormal.png",
-					"image/jucai.png",
-					"image/fincenormal.png",
-					"css/style.css",
-					"image/licainorma.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"index.html",
-					null,
-					"attention.html",
-					"intrvlIdea.html",
-					"image/askinfo.png",
-					"image/v1.png",
-					"liveList.html",
-					"trhreeBoard.html",
-					"answerList.html",
-					"fonts/mui.ttf",
-					"teacherList.html",
-					"image/loading-0.gif",
-					"js/style.js"
-				],
-				"refer": [
-					"ideaDetail.html",
-					"dishList.html",
-					"liveRoom.html",
-					"teacherDetail.html",
-					"askQuestion.html",
-					"login.html",
-					"vipcenter.html"
-				]
-			},
-			"index.html": {
-				"href": "index.html",
-				"resources": [
-					"image/unlogin.png",
-					"image/class_index.png",
-					"image/fince_index.png",
-					"image/fincenormal.png",
-					"js/mui.min.js",
-					"image/live_index.png",
-					"image/classnormal.png",
-					"image/licai_index.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/livenormal.png",
-					"image/indexpress.png",
-					"image/jucai.png",
-					"css/style.css",
-					"image/licainorma.png",
-					"famousDish.html",
-					"trhreeBoard.html",
-					"liveList.html",
-					"js/netUtils.js",
-					"attention.html",
-					"image/loading-0.gif",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"refer": [
-					"login.html",
-					"intrvlIdea.html",
-					"index.html",
-					"newsDetail.html",
-					"historyLive.html",
-					"ideaDetail.html",
-					"liveRoom.html",
-					"vipcenter.html"
-				],
-				"priority": 0
-			},
-			"newsDetail.html": {
-				"href": "newsDetail.html",
-				"priority": 6,
-				"resources": [
-					"image/head.png",
-					"image/share_press.png",
-					"image/share_normal.png",
-					"image/collect_c.png",
-					"image/into_back.png",
-					"image/comm_icon1.png",
-					"image/good.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css",
-					"image/collect_s.png",
-					"css/app.css",
-					"image/more.png",
-					null,
-					"js/stringUtil.js",
-					"image/loading-0.gif",
-					"fonts/mui.ttf",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"refer": [
-					"login.html",
-					"newsDetail.html"
-				]
-			},
-			"news/moreNews.html": {
-				"href": "news/moreNews.html",
-				"resources": [
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/style.css",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/tuch.css",
-					"image/loading-0.gif",
-					"js/style.js"
-				],
-				"refer": [
-					"newsDetail.html"
-				],
-				"priority": 7
-			},
-			"attention.html": {
-				"href": "attention.html",
-				"priority": 5,
-				"resources": [
-					"image/fincepress.png",
-					"image/loading-0.gif",
-					"image/classnormal.png",
-					"image/licainorma.png",
-					"image/unlogin.png",
-					"image/livenormal.png",
-					"image/jucai.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css",
-					"image/indexnormal.png",
-					"css/tuch.css",
-					"famousDish.html",
-					"liveList.html",
-					"fonts/mui.ttf",
-					"index.html",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"refer": [
-					"newsDetail.html",
-					"login.html",
-					"news/moreNews.html",
-					"vipcenter.html",
-					"trhreeBoard.html"
-				]
-			},
-			"liveRoom.html": {
-				"href": "liveRoom.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/guan.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/into_back.png",
-					"js/stringUtil.js",
-					"image/normalUser.png",
-					"js/style.js"
-				],
-				"priority": 13,
-				"refer": []
-			},
-			"liveList.html": {
-				"href": "liveList.html",
-				"priority": 7,
-				"resources": [
-					"image/licainorma.png",
-					"image/livepress.png",
-					"image/indexnormal.png",
-					"image/loading-0.gif",
-					"image/classnormal.png",
-					"image/unlogin.png",
-					"image/jucai.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"image/fincenormal.png",
-					"css/style.css",
-					"attention.html",
-					"trhreeBoard.html",
-					"index.html",
-					"famousDish.html",
-					"js/stringUtil.js",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"liveRoom.html",
-					"login.html",
-					"vipcenter.html"
-				]
-			},
-			"completeInfo.html": {
-				"href": "completeInfo.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 7
-			},
-			"choseQuace.html": {
-				"href": "choseQuace.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"image/guquanlogo.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/xin.png"
-				],
-				"refer": [
-					"completeInfo.html"
-				],
-				"priority": 7
-			},
-			"fansList.html": {
-				"href": "fansList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/head.png",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/loading-0.gif",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"priority": 9,
-				"refer": []
-			},
-			"txtLive.html": {
-				"href": "txtLive.html",
-				"priority": 11,
-				"resources": [
-					"image/yx.png",
-					"css/mingjia.css",
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"css/style.css",
-					"css/tuch.css",
-					null,
-					"image/loading-0.gif",
-					"image/shijian.jpg",
-					"js/stringUtil.js",
-					"fonts/mui.ttf",
-					"image/1.jpg",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"refer": [
-					"communite.html",
-					"txtLive.html"
-				]
-			},
-			"communite.html": {
-				"href": "communite.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/head.png",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/jucaipen.png",
-					"image/response.png",
-					"image/loading-0.gif",
-					"js/stringUtil.js"
-				],
-				"refer": [
-					"communite.html",
-					"txtLive.html",
-					"login.html"
-				],
-				"priority": 11
-			},
-			"askList.html": {
-				"href": "askList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"image/jucaipen.png",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"js/stringUtil.js",
-					"image/loading-0.gif",
-					"css/loadAnim1.css",
-					"js/style.js"
-				],
-				"refer": [
-					"askList.html",
-					"answerList.html"
-				],
-				"priority": 11
-			},
-			"answerList.html": {
-				"href": "answerList.html",
-				"priority": 8,
-				"resources": [
-					"css/mingjia.css",
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"css/style.css",
-					"css/tuch.css",
-					null,
-					"image/loading-0.gif",
-					"image/askinfo.png",
-					"image/v1.png",
-					"famousDish.html",
-					"fonts/mui.ttf",
-					"js/style.js",
-					"css/loadAnim1.css"
-				],
-				"refer": [
-					"askList.html",
-					"answerList.html",
-					"login.html",
-					"teacherDetail.html"
-				]
-			},
-			"teacherIntroduce.html": {
-				"href": "teacherIntroduce.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"css/style.css",
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/tuch.css"
-				],
-				"priority": 12,
-				"refer": []
-			},
-			"askQuestion.html": {
-				"href": "askQuestion.html",
-				"priority": 9,
-				"resources": [
-					"css/mingjia.css",
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"css/style.css",
-					"css/tuch.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"login.html"
-				]
-			},
-			"teacherDetail.html": {
-				"href": "teacherDetail.html",
-				"priority": 11,
-				"resources": [
-					"css/mingjia.css",
-					"image/tb_gz.png",
-					"css/style.css",
-					"image/tb_manyi.png",
-					"image/into_next.png",
-					"image/remarks.png",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"image/into_back.png",
-					"image/v1.png",
-					"image/good.png",
-					"image/zixun.png",
-					"css/tuch.css",
-					"image/guanzhu.png",
-					"image/attention.png",
-					"image/noattention.png",
-					"js/stringUtil.js",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"fansList.html",
-					"intrvlIdea.html",
-					"teacherIntroduce.html",
-					"answerList.html",
-					"txtLive.html",
-					"askQuestion.html",
-					"choseQuace.html",
-					"login.html"
-				]
-			},
-			"teacherList.html": {
-				"href": "teacherList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/tb_gz.png",
-					"image/touzi.png",
-					"image/tb_manyi.png",
-					"image/guanzhu.png",
-					"image/loading-0.gif",
-					"famousDish.html",
-					"image/noattention.png",
-					"image/attention.png"
-				],
-				"refer": [
-					"teacherDetail.html",
-					"login.html",
-					"askQuestion.html"
-				],
-				"priority": 7
-			},
-			"purchAndSign.html": {
-				"href": "purchAndSign.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/sign.png",
-					"image/index.png",
-					"image/buy.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/into_back.png"
-				],
-				"priority": 10,
-				"refer": [
-					"orderInfo.html"
-				]
-			},
-			"dishList.html": {
-				"href": "dishList.html",
-				"resources": [
-					"css/mingjia.css",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/app.css",
-					"image/v1.png",
-					"image/loading-0.gif",
-					"js/stringUtil.js"
-				],
-				"refer": [
-					"purchAndSign.html",
-					"txtLive.html",
-					"login.html"
-				],
-				"priority": 10
-			},
-			"historyLive.html": {
-				"href": "historyLive.html",
-				"resources": [
-					"image/kaishi.png",
-					"image/index.png",
-					"js/mui.min.js",
-					"css/style.css",
-					"image/head.png",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/comm_icon1.png",
-					"image/good.png",
-					"js/stringUtil.js",
-					"js/style.js"
-				],
-				"priority": 8,
-				"refer": [
-					"login.html"
-				]
-			},
-			"userInfo.html": {
-				"resources": [
-					"image/logo.jpg",
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"js/mui.picker.js",
-					"js/mui.poppicker.js",
-					"css/mui.poppicker.css",
-					"js/city.data.js",
-					"css/mui.picker.css",
-					"js/city.data-3.js",
-					"image/head.png",
-					"js/stringUtil.js"
-				],
-				"refer": [
-					"updatePhone.html",
-					"choseCity.html"
-				],
-				"priority": 0
-			},
-			"bindAccount.html": {
-				"href": "bindAccount.html",
-				"resources": [
-					"image/logo_sinaweibo.png",
-					"image/weixin.png",
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/qq.png"
-				],
-				"priority": 3,
-				"refer": []
-			},
-			"updatePwd.html": {
-				"href": "updatePwd.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 4
-			},
-			"myOrder.html": {
-				"href": "myOrder.html",
-				"resources": [
-					"css/mingjia.css",
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/loading-0.gif",
-					"js/stringUtil.js"
-				],
-				"priority": 5,
-				"refer": []
-			},
-			"myCollect.html": {
-				"href": "myCollect.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"newsDetail.html"
-				],
-				"priority": 6
-			},
-			"myRemark.html": {
-				"href": "myRemark.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/loading-0.gif",
-					"js/stringUtil.js",
-					"js/style.js"
-				],
-				"refer": [
-					"newsDetail.html"
-				],
-				"priority": 7
-			},
-			"CollectAndComment.html": {
-				"href": "CollectAndComment.html",
-				"resources": [
-					"js/mui.min.js",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"myCollect.html",
-					"myRemark.html"
-				],
-				"priority": 6
-			},
-			"infoCenter.html": {
-				"href": "infoCenter.html",
-				"resources": [
-					"css/style.css",
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"priority": 7,
-				"refer": []
-			},
-			"vipcenter.html": {
-				"href": "vipcenter.html",
-				"priority": 19,
-				"resources": [
-					"image/binds.png",
-					"image/myorder.png",
-					"image/personpush.png",
-					"image/remarks.png",
-					"js/mui.min.js",
-					"image/infos.png",
-					"image/pwd.png",
-					"fonts/mui.ttf",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"css/style.css",
-					"image/vips.png",
-					"css/tuch.css"
-				],
-				"refer": [
-					"userInfo.html",
-					"updatePwd.html",
-					"bindAccount.html",
-					"myRemark.html",
-					"myOrder.html",
-					"infoCenter.html"
-				]
-			},
-			"orderInfo.html": {
-				"href": "orderInfo.html",
-				"resources": [
-					"js/castapp.js",
-					"image/zfb.png",
-					"js/mui.min.js",
-					"css/tuch.css",
-					"css/style.css",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"image/pay_bg.png"
-				],
-				"priority": 13,
-				"refer": []
-			},
-			"choseCity.html": {
-				"resources": [
-					"image/into_next.png",
-					"js/mui.picker.js",
-					"js/mui.min.js",
-					"js/mui.poppicker.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"css/mui.poppicker.css",
-					"css/mui.picker.css",
-					"js/city.data-3.js",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"userInfo.html"
-				],
-				"priority": 0
-			},
-			"updatePhone.html": {
-				"resources": [
-					"js/mui.min.js",
-					"image/into_back.png",
-					"css/mui.min.css",
-					"css/style.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [
-					"userInfo.html"
-				],
-				"priority": 0
-			}
-		},
-		"idle": {
-			"resources": [
-				"image/no_network.png",
-				"css/layer.css",
-				"image/sex_men.png",
-				"js/createCity.js",
-				"image/exit.png",
-				"image/logo_wechatmoments.png",
-				"image/skyblue_editpage_image_remove.png",
-				"image/thumb.png",
-				"image/find.png",
-				"image/dur.png",
-				"image/logo_wechatfavorite.png",
-				"js/screenAdapter.js",
-				"image/zhuanjia.9.png",
-				"image/skyblue_actionbar_back_btn.png",
-				"js/layer.js",
-				"js/mui.js",
-				"image/jiahao.png",
-				"image/delect.png",
-				"image/dup.png",
-				"image/ktq.png",
-				"image/orders.png",
-				"css/mui.css",
-				"image/skyblue_editpage_image_bg.9.png",
-				"image/zhuanjias.png",
-				"image/zan_unpress.png",
-				"css/lay.ext.css",
-				"image/ktn.png",
-				"image/shares_panel_to_qq.png",
-				"image/logo_qq.png",
-				"image/load_video.png",
-				"image/reply_normal.png",
-				"image/return_last.png",
-				"image/skyblue_editpage_close.png",
-				"image/logo_email.png",
-				"image/skyblue_platform_checked_disabled.png",
-				"image/thubm_state.png",
-				"js/layer.ext.js",
-				"image/skyblue_actionbar_ok_btn.png",
-				"image/btn_back_nor.9.png",
-				"image/zan_press.png",
-				"image/logo_qzone.png",
-				"image/jianpan.png",
-				"image/unpress_stars.png",
-				"image/pic.png",
-				"image/xlistview_arrow.png",
-				"js/jquery-1.11.0.js",
-				"image/sex_women.png",
-				"image/logo_tencentweibo.png",
-				"image/huanyings.png",
-				"image/logo_shortmessage.png",
-				"image/skyblue_platform_checked.png",
-				"image/play_center.png",
-				"image/licainormal.png",
-				"image/delete.png",
-				"image/jucaipens.png",
-				"css/lay.css",
-				"image/loading.gif",
-				"image/ic_launcher.png",
-				"image/press_stars.png",
-				"image/skyblue_editpage_divider.9.png",
-				"image/main.gif",
-				"image/full_normal.png",
-				"vipService.html",
-				"startPage.html",
-				"image/skyblue_editpage_bg.9.png",
-				"image/v.png",
-				"image/pause.png",
-				"image/logo_twitter.png",
-				"image/small.png"
-			]
-		}
+	  "pages": {
+	    "trhreeBoard.html": {
+	      "href": "trhreeBoard.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/unlogin.png",
+	        "image/indexnormal.png",
+	        "image/livenormal.png",
+	        "image/jucai.png",
+	        "image/fincenormal.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/classnormal.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/licaipress.png",
+	        "image/loading-0.gif",
+	        "index.html",
+	        "liveList.html",
+	        "famousDish.html",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "trhreeBoard.html",
+	        "newsDetail.html",
+	        "attention.html",
+	        "login.html",
+	        "vipcenter.html",
+	        "news/moreNews.html",
+	        "famousDish.html",
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "login.html": {
+	      "href": "login.html",
+	      "priority": 1,
+	      "resources": [
+	        "image/loginsina_unpress.png",
+	        "image/loginweixins.png",
+	        "image/loginqq_unpress.png",
+	        "image/into_back.png",
+	        "css/tuch.css",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "fonts/mui.ttf",
+	        "image/loginqq_press.png",
+	        "image/weixin_press.png",
+	        "image/loginsina_press.png"
+	      ],
+	      "refer": [
+	        "regin.html"
+	      ]
+	    },
+	    "regin.html": {
+	      "href": "regin.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 2
+	    },
+	    "ideaDetail.html": {
+	      "href": "ideaDetail.html",
+	      "priority": 9,
+	      "resources": [
+	        "image/index.png",
+	        "image/v1.png",
+	        "image/into_back.png",
+	        "image/good.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "js/stringUtil.js",
+	        "image/head.png",
+	        "image/response.png",
+	        "fonts/mui.ttf",
+	        "js/style.js"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ]
+	    },
+	    "intrvlIdea.html": {
+	      "href": "intrvlIdea.html",
+	      "priority": 2,
+	      "resources": [
+	        "image/v1.png",
+	        "image/into_back.png",
+	        "image/hits.png",
+	        "css/mingjia.css",
+	        "image/loading-0.gif",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "css/tuch.css",
+	        "js/stringUtil.js",
+	        "famousDish.html",
+	        "fonts/mui.ttf",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "ideaDetail.html"
+	      ]
+	    },
+	    "famousDish.html": {
+	      "href": "famousDish.html",
+	      "priority": 3,
+	      "resources": [
+	        "image/seeimage.png",
+	        "image/lookimage.png",
+	        "image/answerimage.png",
+	        "image/findimage.png",
+	        "image/classpress.png",
+	        "css/mingjia.css",
+	        "image/indexnormal.png",
+	        "css/tuch.css",
+	        "image/unlogin.png",
+	        "image/livenormal.png",
+	        "image/jucai.png",
+	        "image/fincenormal.png",
+	        "css/style.css",
+	        "image/licainorma.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "index.html",
+	        null,
+	        "attention.html",
+	        "intrvlIdea.html",
+	        "image/askinfo.png",
+	        "image/v1.png",
+	        "liveList.html",
+	        "trhreeBoard.html",
+	        "answerList.html",
+	        "fonts/mui.ttf",
+	        "teacherList.html",
+	        "image/loading-0.gif",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "ideaDetail.html",
+	        "dishList.html",
+	        "liveRoom.html",
+	        "teacherDetail.html",
+	        "askQuestion.html",
+	        "login.html",
+	        "vipcenter.html",
+	        "answerList.html",
+	        "index.html",
+	        "teacherList.html",
+	        "intrvlIdea.html",
+	        "attention.html",
+	        "trhreeBoard.html",
+	        "liveList.html"
+	      ]
+	    },
+	    "index.html": {
+	      "href": "index.html",
+	      "resources": [
+	        "image/unlogin.png",
+	        "image/class_index.png",
+	        "image/fince_index.png",
+	        "image/fincenormal.png",
+	        "js/mui.min.js",
+	        "image/live_index.png",
+	        "image/classnormal.png",
+	        "image/licai_index.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/livenormal.png",
+	        "image/indexpress.png",
+	        "image/jucai.png",
+	        "css/style.css",
+	        "image/licainorma.png",
+	        "famousDish.html",
+	        "trhreeBoard.html",
+	        "liveList.html",
+	        "js/netUtils.js",
+	        "attention.html",
+	        "image/loading-0.gif",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "login.html",
+	        "intrvlIdea.html",
+	        "index.html",
+	        "newsDetail.html",
+	        "historyLive.html",
+	        "ideaDetail.html",
+	        "liveRoom.html",
+	        "vipcenter.html",
+	        "famousDish.html",
+	        "attention.html",
+	        "trhreeBoard.html",
+	        "liveList.html"
+	      ],
+	      "priority": 0
+	    },
+	    "newsDetail.html": {
+	      "href": "newsDetail.html",
+	      "priority": 6,
+	      "resources": [
+	        "image/head.png",
+	        "image/share_press.png",
+	        "image/share_normal.png",
+	        "image/collect_c.png",
+	        "image/into_back.png",
+	        "image/comm_icon1.png",
+	        "image/good.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "image/collect_s.png",
+	        "css/app.css",
+	        "image/more.png",
+	        null,
+	        "js/stringUtil.js",
+	        "image/loading-0.gif",
+	        "fonts/mui.ttf",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "login.html",
+	        "newsDetail.html"
+	      ]
+	    },
+	    "news/moreNews.html": {
+	      "href": "news/moreNews.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/style.css",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/tuch.css",
+	        "image/loading-0.gif",
+	        "js/style.js"
+	      ],
+	      "refer": [
+	        "newsDetail.html"
+	      ],
+	      "priority": 7
+	    },
+	    "attention.html": {
+	      "href": "attention.html",
+	      "priority": 5,
+	      "resources": [
+	        "image/fincepress.png",
+	        "image/loading-0.gif",
+	        "image/classnormal.png",
+	        "image/licainorma.png",
+	        "image/unlogin.png",
+	        "image/livenormal.png",
+	        "image/jucai.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "image/indexnormal.png",
+	        "css/tuch.css",
+	        "famousDish.html",
+	        "liveList.html",
+	        "fonts/mui.ttf",
+	        "index.html",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "newsDetail.html",
+	        "login.html",
+	        "news/moreNews.html",
+	        "vipcenter.html",
+	        "trhreeBoard.html",
+	        "famousDish.html",
+	        "liveList.html",
+	        "index.html"
+	      ]
+	    },
+	    "liveRoom.html": {
+	      "href": "liveRoom.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/guan.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/into_back.png",
+	        "js/stringUtil.js",
+	        "image/normalUser.png",
+	        "js/style.js"
+	      ],
+	      "priority": 13,
+	      "refer": []
+	    },
+	    "liveList.html": {
+	      "href": "liveList.html",
+	      "priority": 7,
+	      "resources": [
+	        "image/licainorma.png",
+	        "image/livepress.png",
+	        "image/indexnormal.png",
+	        "image/loading-0.gif",
+	        "image/classnormal.png",
+	        "image/unlogin.png",
+	        "image/jucai.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "image/fincenormal.png",
+	        "css/style.css",
+	        "attention.html",
+	        "trhreeBoard.html",
+	        "index.html",
+	        "famousDish.html",
+	        "js/stringUtil.js",
+	        "fonts/mui.ttf",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "liveRoom.html",
+	        "login.html",
+	        "vipcenter.html",
+	        "famousDish.html",
+	        "index.html",
+	        "attention.html",
+	        "trhreeBoard.html"
+	      ]
+	    },
+	    "completeInfo.html": {
+	      "href": "completeInfo.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 7
+	    },
+	    "choseQuace.html": {
+	      "href": "choseQuace.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "image/guquanlogo.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/xin.png"
+	      ],
+	      "refer": [
+	        "completeInfo.html"
+	      ],
+	      "priority": 7
+	    },
+	    "fansList.html": {
+	      "href": "fansList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/head.png",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/loading-0.gif",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "priority": 9,
+	      "refer": []
+	    },
+	    "txtLive.html": {
+	      "href": "txtLive.html",
+	      "priority": 11,
+	      "resources": [
+	        "image/yx.png",
+	        "css/mingjia.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "css/tuch.css",
+	        null,
+	        "image/loading-0.gif",
+	        "image/shijian.jpg",
+	        "js/stringUtil.js",
+	        "fonts/mui.ttf",
+	        "image/1.jpg",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "communite.html",
+	        "txtLive.html"
+	      ]
+	    },
+	    "communite.html": {
+	      "href": "communite.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/head.png",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/jucaipen.png",
+	        "image/response.png",
+	        "image/loading-0.gif",
+	        "js/stringUtil.js",
+	        "css/loadAnim1.css",
+	        "js/style.js"
+	      ],
+	      "refer": [
+	        "communite.html",
+	        "txtLive.html",
+	        "login.html"
+	      ],
+	      "priority": 11
+	    },
+	    "askList.html": {
+	      "href": "askList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "image/jucaipen.png",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/stringUtil.js",
+	        "image/loading-0.gif",
+	        "css/loadAnim1.css",
+	        "js/style.js"
+	      ],
+	      "refer": [
+	        "askList.html",
+	        "answerList.html"
+	      ],
+	      "priority": 11
+	    },
+	    "answerList.html": {
+	      "href": "answerList.html",
+	      "priority": 8,
+	      "resources": [
+	        "css/mingjia.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "css/tuch.css",
+	        null,
+	        "image/loading-0.gif",
+	        "image/askinfo.png",
+	        "image/v1.png",
+	        "famousDish.html",
+	        "fonts/mui.ttf",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "askList.html",
+	        "answerList.html",
+	        "login.html",
+	        "teacherDetail.html",
+	        "askQuestion.html"
+	      ]
+	    },
+	    "teacherIntroduce.html": {
+	      "href": "teacherIntroduce.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/tuch.css"
+	      ],
+	      "priority": 12,
+	      "refer": []
+	    },
+	    "askQuestion.html": {
+	      "href": "askQuestion.html",
+	      "priority": 9,
+	      "resources": [
+	        "css/mingjia.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "css/tuch.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ]
+	    },
+	    "teacherDetail.html": {
+	      "href": "teacherDetail.html",
+	      "priority": 11,
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/tb_gz.png",
+	        "css/style.css",
+	        "image/tb_manyi.png",
+	        "image/into_next.png",
+	        "image/remarks.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "image/into_back.png",
+	        "image/v1.png",
+	        "image/good.png",
+	        "image/zixun.png",
+	        "css/tuch.css",
+	        "image/guanzhu.png",
+	        "image/attention.png",
+	        "image/noattention.png",
+	        "js/stringUtil.js",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "fansList.html",
+	        "intrvlIdea.html",
+	        "teacherIntroduce.html",
+	        "answerList.html",
+	        "txtLive.html",
+	        "askQuestion.html",
+	        "choseQuace.html",
+	        "login.html"
+	      ]
+	    },
+	    "teacherList.html": {
+	      "href": "teacherList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/tb_gz.png",
+	        "image/touzi.png",
+	        "image/tb_manyi.png",
+	        "image/guanzhu.png",
+	        "image/loading-0.gif",
+	        "famousDish.html",
+	        "image/noattention.png",
+	        "image/attention.png",
+	        "css/loadAnim1.css",
+	        "js/style.js"
+	      ],
+	      "refer": [
+	        "teacherDetail.html",
+	        "login.html",
+	        "askQuestion.html"
+	      ],
+	      "priority": 7
+	    },
+	    "purchAndSign.html": {
+	      "href": "purchAndSign.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/sign.png",
+	        "image/index.png",
+	        "image/buy.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/into_back.png"
+	      ],
+	      "priority": 10,
+	      "refer": [
+	        "orderInfo.html"
+	      ]
+	    },
+	    "dishList.html": {
+	      "href": "dishList.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/app.css",
+	        "image/v1.png",
+	        "image/loading-0.gif",
+	        "js/stringUtil.js",
+	        "css/loadAnim1.css",
+	        "js/style.js"
+	      ],
+	      "refer": [
+	        "purchAndSign.html",
+	        "txtLive.html",
+	        "login.html"
+	      ],
+	      "priority": 10
+	    },
+	    "historyLive.html": {
+	      "href": "historyLive.html",
+	      "resources": [
+	        "image/kaishi.png",
+	        "image/index.png",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/head.png",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/comm_icon1.png",
+	        "image/good.png",
+	        "js/stringUtil.js",
+	        "js/style.js"
+	      ],
+	      "priority": 8,
+	      "refer": [
+	        "login.html"
+	      ]
+	    },
+	    "userInfo.html": {
+	      "resources": [
+	        "image/logo.jpg",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "css/mui.poppicker.css",
+	        "js/city.data.js",
+	        "css/mui.picker.css",
+	        "js/city.data-3.js",
+	        "image/head.png",
+	        "js/stringUtil.js"
+	      ],
+	      "refer": [
+	        "updatePhone.html",
+	        "choseCity.html"
+	      ],
+	      "priority": 0
+	    },
+	    "bindAccount.html": {
+	      "href": "bindAccount.html",
+	      "resources": [
+	        "image/logo_sinaweibo.png",
+	        "image/weixin.png",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/qq.png"
+	      ],
+	      "priority": 3,
+	      "refer": []
+	    },
+	    "updatePwd.html": {
+	      "href": "updatePwd.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 4
+	    },
+	    "myOrder.html": {
+	      "href": "myOrder.html",
+	      "resources": [
+	        "css/mingjia.css",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/loading-0.gif",
+	        "js/stringUtil.js"
+	      ],
+	      "priority": 5,
+	      "refer": []
+	    },
+	    "myCollect.html": {
+	      "href": "myCollect.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "newsDetail.html"
+	      ],
+	      "priority": 6
+	    },
+	    "myRemark.html": {
+	      "href": "myRemark.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/loading-0.gif",
+	        "js/stringUtil.js",
+	        "js/style.js",
+	        "css/loadAnim1.css"
+	      ],
+	      "refer": [
+	        "newsDetail.html"
+	      ],
+	      "priority": 7
+	    },
+	    "CollectAndComment.html": {
+	      "href": "CollectAndComment.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "myCollect.html",
+	        "myRemark.html"
+	      ],
+	      "priority": 6
+	    },
+	    "infoCenter.html": {
+	      "href": "infoCenter.html",
+	      "resources": [
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "priority": 7,
+	      "refer": []
+	    },
+	    "vipcenter.html": {
+	      "href": "vipcenter.html",
+	      "priority": 19,
+	      "resources": [
+	        "image/binds.png",
+	        "image/myorder.png",
+	        "image/personpush.png",
+	        "image/remarks.png",
+	        "js/mui.min.js",
+	        "image/infos.png",
+	        "image/pwd.png",
+	        "fonts/mui.ttf",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "image/vips.png",
+	        "css/tuch.css"
+	      ],
+	      "refer": [
+	        "userInfo.html",
+	        "updatePwd.html",
+	        "bindAccount.html",
+	        "myRemark.html",
+	        "myOrder.html",
+	        "infoCenter.html"
+	      ]
+	    },
+	    "orderInfo.html": {
+	      "href": "orderInfo.html",
+	      "resources": [
+	        "js/castapp.js",
+	        "image/zfb.png",
+	        "js/mui.min.js",
+	        "css/tuch.css",
+	        "css/style.css",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "image/pay_bg.png"
+	      ],
+	      "priority": 13,
+	      "refer": []
+	    },
+	    "choseCity.html": {
+	      "resources": [
+	        "image/into_next.png",
+	        "js/mui.picker.js",
+	        "js/mui.min.js",
+	        "js/mui.poppicker.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "css/mui.poppicker.css",
+	        "css/mui.picker.css",
+	        "js/city.data-3.js",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "userInfo.html"
+	      ],
+	      "priority": 0
+	    },
+	    "updatePhone.html": {
+	      "resources": [
+	        "js/mui.min.js",
+	        "image/into_back.png",
+	        "css/mui.min.css",
+	        "css/style.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "userInfo.html"
+	      ],
+	      "priority": 0
+	    }
+	  },
+	  "idle": {
+	    "resources": [
+	      "image/no_network.png",
+	      "css/layer.css",
+	      "image/sex_men.png",
+	      "js/createCity.js",
+	      "image/exit.png",
+	      "image/logo_wechatmoments.png",
+	      "image/skyblue_editpage_image_remove.png",
+	      "image/thumb.png",
+	      "image/find.png",
+	      "image/dur.png",
+	      "image/logo_wechatfavorite.png",
+	      "js/screenAdapter.js",
+	      "image/zhuanjia.9.png",
+	      "image/skyblue_actionbar_back_btn.png",
+	      "js/layer.js",
+	      "js/mui.js",
+	      "image/jiahao.png",
+	      "image/delect.png",
+	      "image/dup.png",
+	      "image/ktq.png",
+	      "image/orders.png",
+	      "css/mui.css",
+	      "image/skyblue_editpage_image_bg.9.png",
+	      "image/zhuanjias.png",
+	      "image/zan_unpress.png",
+	      "css/lay.ext.css",
+	      "image/ktn.png",
+	      "image/shares_panel_to_qq.png",
+	      "image/logo_qq.png",
+	      "image/load_video.png",
+	      "image/reply_normal.png",
+	      "image/return_last.png",
+	      "image/skyblue_editpage_close.png",
+	      "image/logo_email.png",
+	      "image/skyblue_platform_checked_disabled.png",
+	      "image/thubm_state.png",
+	      "js/layer.ext.js",
+	      "image/skyblue_actionbar_ok_btn.png",
+	      "image/btn_back_nor.9.png",
+	      "image/zan_press.png",
+	      "image/logo_qzone.png",
+	      "image/jianpan.png",
+	      "image/unpress_stars.png",
+	      "image/pic.png",
+	      "image/xlistview_arrow.png",
+	      "js/jquery-1.11.0.js",
+	      "image/sex_women.png",
+	      "image/logo_tencentweibo.png",
+	      "image/huanyings.png",
+	      "image/logo_shortmessage.png",
+	      "image/skyblue_platform_checked.png",
+	      "image/play_center.png",
+	      "image/licainormal.png",
+	      "image/delete.png",
+	      "image/jucaipens.png",
+	      "css/lay.css",
+	      "image/loading.gif",
+	      "main.html",
+	      "image/ic_launcher.png",
+	      "image/press_stars.png",
+	      "image/skyblue_editpage_divider.9.png",
+	      "image/main.gif",
+	      "image/full_normal.png",
+	      "vipService.html",
+	      "startPage.html",
+	      "image/skyblue_editpage_bg.9.png",
+	      "image/v.png",
+	      "image/pause.png",
+	      "image/logo_twitter.png",
+	      "image/small.png"
+	    ]
+	  }
 	},
 	"unpackage": [
 	  "vipService.html",
@@ -1199,6 +1232,7 @@
 	  "js/layer.js",
 	  "js/mui.js",
 	  "js/screenAdapter.js",
-	  "startPage.html"
+	  "startPage.html",
+	  "main.html"
 	]
 }

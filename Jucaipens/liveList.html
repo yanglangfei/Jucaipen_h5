@@ -28,7 +28,7 @@
 				var index = document.getElementById("index");
 				var famousDish = document.getElementById("famousDish");
 				var attentions = document.getElementById("attentions");
-				var getPurshInfoPath='http://192.168.1.86:8080/AccumulateWealth/jucaipen/videoPurshInfo';
+				var getPurshInfoPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoPurseInfo';
 				var styles = {};
 				var extras = {};
 				//获取直播列表信息
@@ -40,7 +40,6 @@
 						timeout: 10000,
 						success: function(data) {
 							load.style.display = 'none';
-							var reginDate = plus.storage.getItem("reginDate");
 							for (var i = 0; i < data.length; i++) {
 								var liveUrl = data[i].liveUrl;
 								var roomFace = data[i].RoomFace;
@@ -52,7 +51,6 @@
 							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
-								var userType=plus.storage.getItem("userType");
 								var face = this.getAttribute('face');
 								// 是否免费试听  0   是     1   否
 								var visit = this.getAttribute("isVisit");
@@ -61,32 +59,18 @@
 								//试听用户等级
 								var visitLeal = this.getAttribute("visitLeal");
 								var uId = plus.storage.getItem("userId");
-								if(userType==2){
-									mui.alert("对不起,您不是当前直播室客户,请您关注公众号:cctvjingang");
-									return ;
-								}
-								if (visit == 0) {
-									//免费
-									intoLiveRoom(lId, face);
-									return;
-								}
 								if (uId <= 0) {
 									//跳转到登录
+									if (visit == 0) {
+										intoLiveRoom(lId, face);
+										return;
+									}
 									plus.nativeUI.confirm("您还没有登录，此房间不允许游客登录!", function(e) {
 										intoLogin();
 									}, "", ['确定']);
 								} else {
-									var isServer = plus.storage.getItem("isServer");
-									var isManager = plus.storage.getItem("isManager");
-									var buyProductId = plus.storage.getItem("buyProductId");
-									if (visit == 1) {
-										if (isServer == 1 || isManager == 1 || buyProductId == visitLeal) {
-											//管理员客服,已购买用户可以进入
-											intoLiveRoom(lId, face);
-											return;
-										}
-										plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {}, "", "确定");
-									}
+									//获取用户的相关信息
+									getPurseInfo(uId, visitDay, visit, visitLeal, lId, face);
 								}
 							});
 						},
@@ -157,7 +141,69 @@
 							}
 						})
 					})
-					//跳转到热门
+					//获取用户购买的相关信息
+				function getPurseInfo(id, visitDay, visit, visitLeal, lId, face) {
+					mui.ajax(getPurshInfoPath, {
+						data: {
+							userId: id
+						},
+						type: 'get',
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							var startDate = data.startDate;
+							var endDate = data.endDate;
+							var productId = data.productId;
+							var managerId = data.isManager;
+							var serviceId = data.isServer;
+							var userType = data.userType;
+							intoWhichPage(endDate, lId, face, visitLeal, visit, serviceId, managerId, productId, userType, visitDay);
+						},
+						error: function(e) {
+						}
+					})
+				}
+				//根据用户信息进入相关的页面
+				function intoWhichPage(endDate, lId, face, visitLeal, visit, isServer, isManager, buyProductId, userType, visitDay) {
+					var isServer = plus.storage.getItem("isServer");
+					var isManager = plus.storage.getItem("isManager");
+					var buyProductId = plus.storage.getItem("buyProductId");
+					var reginDate = plus.storage.getItem('reginDate');
+					var days = chat(reginDate.split('.', 1) + '');
+					//金刚用户
+					if (userType == 2) {
+						mui.alert("对不起,您不是当前直播室客户,请您关注公众号:cctvjingang");
+						return;
+					}
+					//免费直播间  普通用户   －－－看试用期
+					if (visit == 0) {
+						if ((days <= visitDay) || (isServer == 1 || isManager == 1)) {
+							intoLiveRoom(lId, face);
+							return;
+						}
+						mui.toast('试听天数已到期，请联系客服');
+						return ;
+					}
+					if (visit == 1) {
+						if(isServer == 1 || isManager == 1 ){
+							intoLiveRoom(lId, face);
+							return;
+						}
+						if (buyProductId == visitLeal) {
+							//管理员客服,已购买用户可以进入(已购买 需判断是否服务到期)
+							var mint = mintChat(endDate.split('.', 1) + "");
+							if (mint <= 0) {
+								intoLiveRoom(lId, face);
+								return;
+							} else { 
+								mui.toast('您购买的直播已到期，请进行续费');
+								return ;
+							}
+						}
+						plus.nativeUI.alert("您没有此房间的权限，请联系管理员！", function(e) {}, "", "确定");
+					}
+				}
+				//跳转到热门
 				trhreeBoard.addEventListener('tap', function() {
 						mui.openWindow({
 							url: "trhreeBoard.html",
@@ -221,25 +267,25 @@
 
 		<div style="text-align: center;margin-top: 60%;display: none;" id="load">
 			<div class="spinner">
-					<div class="spinner-container container1">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container2">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container3">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
 				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+			</div>
 		</div>
 
 		<footer class="footer">

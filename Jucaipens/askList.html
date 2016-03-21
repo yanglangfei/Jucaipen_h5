@@ -10,8 +10,8 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-		<!--标准mui.css-->
-		<link rel="stylesheet" href="css/mui.min.css">
+		<!--标准mui.css--> 
+		<link rel="stylesheet" href="css/mui.min.css"> 
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script type="text/javascript" src="js/style.js" ></script>
@@ -37,12 +37,13 @@
 				styles.scrollIndicator='none';
 				//隐藏滚动条
 				controlScrollBar(web,styles);
-				loading.style.display='block'; 
 				if (teacherId > 0) {
 					//根据讲师ID获取提问列表
+					loading.style.display='block'; 
 					findByTeacherId(currentPage);
 				} else {
 					//获取全部的提问信息
+					loading.style.display='block'; 
 					findAll(currentPage);
 				}
 				//加载更多数据
@@ -56,7 +57,7 @@
 							findAll(++currentPage);
 						}
 					}
-				})
+				},false)
 				//获取全部提问列表
 				function findAll(p) {
 					var askStr = askList.innerHTML;;
@@ -70,9 +71,7 @@
 						timeout: 10000,
 						success: function(data) {
 							loading.style.display='none';
-							if(loadMore.style.display='block'){
-								loadMore.style.display='none';
-							}
+							loadMore.style.display='none';
 							if(data.length<=0){
 								nodataLay.style.display='block';
 							}else{
@@ -99,7 +98,9 @@
 								ask_gengduo.style.display = 'none';
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍重试');
+						}
 					})
 				}
 				//根据讲师ID获取提问列表
@@ -116,9 +117,7 @@
 						timeout: 10000,
 						success: function(data) {
 							loading.style.display='none';
-							if(loadMore.style.display='block'){
-								loadMore.style.display='none';
-							}
+							loadMore.style.display='none';
 							if(data.length<=0){
 								nodataLay.style.display='block';
 							}else{
@@ -140,7 +139,9 @@
 								ask_gengduo.style.display = 'none';
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				retAnswer.addEventListener("tap", function() {
@@ -155,7 +156,7 @@
 							autoShow:false
 						}
 					})
-				})
+				},false)
 				retAsk.addEventListener("tap", function() {
 					mui.openWindow({
 						url: "askList.html",

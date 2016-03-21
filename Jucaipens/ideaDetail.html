@@ -64,7 +64,6 @@
 					success: function(data) {
 						var myDate = subStr(4, data.insertDate);
 						var body=data.bodys;
-					//	var bs=body.getElementsByTagName('img');
 						teacherName.innerText = data.nickName;
 						leader.innerText = data.level;
 						times.innerText = myDate;
@@ -86,7 +85,7 @@
 								    document.getElementById("imgbox").style.height='200px';
 								    document.getElementById("imgFrame").style.width='100px';
 								    document.getElementById("imgFrame").style.height='200px';
-								    })
+								    },false)
 								} 
 							}
 						}  
@@ -97,17 +96,12 @@
 							vLogo.src = "";
 						}
 					},
-					error: function(e) {}
+					error: function(e) {
+						mui.toast('连接失败,请稍后重试');
+					}
 				})
 				}
-				
-				
-				
 				queryComments(currentPage);
-				
-				
-				
-				
 				//点赞
 				sa_zan.addEventListener("tap", function() {
 						var uId = plus.storage.getItem("userId");
@@ -122,7 +116,7 @@
 							return;
 						}
 						addGoods(uId);
-					})
+					},false)
 					//提交评论信息
 				btn_commen.addEventListener('tap', function() {
 						var uId = plus.storage.getItem('userId');
@@ -143,19 +137,20 @@
 						}
 						if(opType!=1){
 							opType=0;
-								addIdeaComment(opType, uId, id, body,0);
+							var wait=plus.nativeUI.showWaiting('正在提交评论，请稍等...');
+								addIdeaComment(opType, uId, id, body,0,wait);
 						}else{
 							body=body+"//@"+name+":"+lastBody;
-							addIdeaComment(opType, uId, id, body,commId);
+							var wait=plus.nativeUI.showWaiting('正在提交评论，请稍等...');
+							addIdeaComment(opType, uId, id, body,commId,wait);
 						}
-					})
+					},false)
 				
-				document.getElementById("close").onclick=function(){
+				document.getElementById("close").addEventListener('tap',function(){
 					document.getElementById("imgFrame").style.display='none';
-				}
-					//提交评论信息
-				function addIdeaComment(type, uId, iId, body,cId) {
-					console.log(id + " ");
+				},false);
+				//提交评论信息
+				function addIdeaComment(type, uId, iId, body,cId,wait) {
 					mui.ajax(addCommentPath, {
 						data: {
 							commType: type, //  0   评论   1  回复
@@ -168,6 +163,7 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data) {
+							wait.close();
 							if (data.ret_code == 0) {
 								mui.toast('添加评论成功');
 								txt_commen.value = '';
@@ -175,7 +171,10 @@
 								mui.toast(data.err_msg);
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							wait.close();
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//获取评论信息
@@ -224,9 +223,11 @@
 								commId=this.getAttribute("p");
 								opType = 1;
 								txt_commen.placeholder = '回复' + name + ":";
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//设置默认图片

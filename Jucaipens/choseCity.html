@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="js/mui.picker.js"></script>
 		<script type="text/javascript" src="js/mui.poppicker.js"></script>
 		<script type="text/javascript" src="js/city.data-3.js"></script>
-		<script type="text/javascript" charset="UTF-8">
+		<script type="text/javascript" charset="UTF-8"> 
 			mui.init();
 			mui.plusReady(function() {
 				var sure = document.getElementById("sure");
@@ -65,10 +65,7 @@
 								tel: tel
 							}
 						})
-						web.hide();
-						web.close();
-						//mui.back();
-					})
+					},false)
 					//定位
 				locations.addEventListener("tap", function() {
 					var wait = plus.nativeUI.showWaiting();
@@ -82,7 +79,7 @@
 						wait.close();
 						mui.toast(e.message);
 					})
-				})
+				},false)
 			})
 		</script>
 		<style type="text/css">
@@ -230,7 +227,9 @@
 								var jsonStr = eval((proData));
 								proPicker.setData(jsonStr);
 							},
-							error: function(e) {}
+							error: function(e) {
+								mui.toast('获取信息失败，请稍后重试');
+							}
 						})
 					}
 					//获取市信息
@@ -254,7 +253,9 @@
 								var jsonStr = eval((ctyData));
 								ctyPicker.setData(jsonStr);
 							},
-							error: function(e) {}
+							error: function(e) {
+								mui.toast('获取数据失败，请稍后重试');
+							}
 						})
 					}
 					//获取区／县数据
@@ -278,7 +279,9 @@
 								var jsonStr = eval((areaData));
 								areaPicker.setData(jsonStr);
 							},
-							error: function(e) {}
+							error: function(e) {
+								mui.toast('获取数据失败，请稍后重试');
+							}
 						})
 					}
 					//省份逻辑处理

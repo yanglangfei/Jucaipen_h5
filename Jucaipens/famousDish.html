@@ -107,14 +107,16 @@
 										}
 									})
 								}
-							})
+							},false)
 							//获得slider插件对象
 						var gallery = mui('.mui-slider');
 						gallery.slider({
 							interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
 						});
 					},
-					error: function(e) {}
+					error: function(e) {
+						mui.toast('获取数据失败，请稍后重试');
+					}
 				});
 				//热门观点
 				var hotUrl = '';
@@ -147,9 +149,11 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 					//推荐名师
 				var teacherStr = "";
@@ -182,9 +186,11 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 					//名师问答
 				var questionStr = "";
@@ -228,7 +234,7 @@
 									}
 								})
 								return false;
-							})
+							},false)
 							mui("#data-question").on("tap", ".item", function() {
 								var tId = this.getAttribute("id");
 								mui.openWindow({
@@ -242,9 +248,11 @@
 									}
 								})
 								return false;
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 					//获取首页统计数据
 				mui.ajax(sumData, {
@@ -257,7 +265,9 @@
 						ideaCount.innerText = "观点：" + data.ideas + "篇";
 						fans.innerText = "粉丝：" + data.fans + "人";
 					},
-					error: function(e) {}
+					error: function(e) {
+						mui.toast('获取数据失败，请稍后重试');
+					}
 				})
 				dish.addEventListener("tap", function() {
 						mui.openWindow({
@@ -267,7 +277,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//名师问答
 				intoAsk.addEventListener("tap", function() {
 						mui.openWindow({
@@ -277,7 +287,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//投资观点
 				intrial.addEventListener("tap", function() {
 						mui.openWindow({
@@ -287,7 +297,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//推荐名师
 				findTeacher.addEventListener("tap", function() {
 						mui.openWindow({
@@ -297,7 +307,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//进入登录
 				intoLogin.addEventListener("tap", function() {
 						var uId = plus.storage.getItem("userId");
@@ -318,7 +328,7 @@
 								}
 							})
 						}
-					})
+					},false)
 					//跳转到首页
 				index.addEventListener('tap', function() {
 						mui.openWindow({
@@ -331,7 +341,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到热门
 				trhreeBoard.addEventListener('tap', function() {
 						mui.openWindow({
@@ -344,7 +354,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到直播
 				liveList.addEventListener('tap', function() {
 						mui.openWindow({
@@ -357,7 +367,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到名家
 				attentions.addEventListener('tap', function() {
 					mui.openWindow({
@@ -370,7 +380,7 @@
 							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 						}
 					})
-				})
+				},false)
 			})
 		</script>
 

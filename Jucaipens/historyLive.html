@@ -92,7 +92,9 @@
 				}, false);
 						
 					},
-					error: function(e) {}
+					error: function(e) {
+						mui.toast('获取数据失败，请稍后重试');
+					}
 				})
 				
 				//获取视频相关信息
@@ -110,7 +112,9 @@
 						showDate.innerHTML = myDate;
 						plain.innerHTML = data.title;
 					},
-					error: function(e) {}
+					error: function(e) {
+						mui.toast('获取数据失败，请稍后重试');
+					}
 				})
 				btn_send.addEventListener("tap", function() {
 					var uId = plus.storage.getItem("userId");
@@ -125,22 +129,23 @@
 						plus.nativeUI.toast("评论内容不能为空");
 						return false;
 					}
-					addRemarks(uId, id, parentId);
-				})
+					var wait=plus.nativeUI.showWaiting('正在提交评论信息，请稍等...');
+					addRemarks(uId, id, parentId,wait);
+				},false)
 				getLiveComment(currentPage);
 				//加载更多评论信息
 				liveComm_more.addEventListener('tap', function() {
 					if (currentPage < totlePage) {
 						getLiveComment(++currentPage);
 					}
-				})
+				},false)
 				
 				/*
 				 * 发表评论  回复
 				 * typeId  0  新闻评论   1  视频评论
 				 * classId 0  评论       非0  回复
 				 */
-				function addRemarks(uId, nId, cId) {
+				function addRemarks(uId, nId, cId,wait) {
 					mui.ajax(add_remark, {
 						data: {
 							typeId: 1,
@@ -153,6 +158,7 @@
 						type: "get",
 						timeout: 10000,
 						success: function(data) {
+							wait.close();
 							if (data.ret_code == 0) {
 								commBody.value = '';
 								plus.nativeUI.toast("评论发表成功");
@@ -161,6 +167,7 @@
 							}
 						},
 						error: function(e) {
+							wait.close();
 							plus.nativeUI.toast("连接失败");
 						}
 					})

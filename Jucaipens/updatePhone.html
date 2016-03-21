@@ -50,7 +50,8 @@
 						mui.toast("验证码不能为空");
 						return ;
 					}
-					checkPhoneCode(phone.value,vaile.value);
+					var wait=plus.nativeUI.showWaiting('正在修改手机号，请稍等...');
+					checkPhoneCode(phone.value,vaile.value,wait);
 				})
 				
 				
@@ -78,7 +79,7 @@
 				}
 				
 				//验证手机号
-				function checkPhoneCode(tel,code){
+				function checkPhoneCode(tel,code,wait){
 					mui.ajax(updatePhonePath,{
 						data:{
 							userId:uId,
@@ -89,6 +90,7 @@
 						type:"post", 
 						timeout:10000,
 						success: function(data){  
+							wait.close();
 							if(data.ret_code==0){
 								mui.toast("手机号保存成功");
 								mui.openWindow({
@@ -112,6 +114,7 @@
 							}
 						},
 						error: function(e){
+							wait,close();
 							mui.toast("服务器连接失败");
 						}
 					})
@@ -159,6 +162,7 @@
 				height: 50px;
 				background: #bb1121;
 				color: white;
+				border-radius: 8px;
 				font-size: 18px;
 				border: 0px;
 			}

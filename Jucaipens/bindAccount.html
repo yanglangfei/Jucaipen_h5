@@ -86,17 +86,17 @@
 				bindQQ.addEventListener("tap", function() {
 						var type = 0;
 						login(1, type);
-					})
+					},false)
 					//新浪   2
 				bindSina.addEventListener("tap", function() {
 						var type = 2;
 						var id = login(2, type);
-					})
+					},false)
 					//微信   0
 				bindWeixin.addEventListener("tap", function() {
 					var type = 1;
 					var id = login(0, type);
-				})
+				},false)
 
 				function bindAccounts(t, id) {
 					mui.ajax(bindAccount, {
@@ -155,7 +155,9 @@
 								}
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//获取账号openid

@@ -57,7 +57,7 @@
 						}
 					})
 					
-				})
+				},false)
 				communite.addEventListener("tap",function(){
 					mui.openWindow({
 						url:"communite.html",
@@ -71,7 +71,7 @@
 						}
 					})
 					
-				})
+				},false)
 				
 				function findByLiveId(){
 					mui.ajax(livePath, {
@@ -111,6 +111,7 @@
 						}*/
 					},
 					error: function(e) {
+						mui.toast('连接失败，请稍后重试');
 					}
 				})
 				}
@@ -138,6 +139,7 @@
 						todayLive.innerHTML=todayStr;
 					},
 					error: function(e) {
+						mui.toast('连接失败，请稍后重试');
 					}
 				})
 				

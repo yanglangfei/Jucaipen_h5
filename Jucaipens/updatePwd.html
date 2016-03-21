@@ -33,13 +33,14 @@
 						return;
 					}
 					if (txb_newpwd.value == txb_surepwd.value) {
-						updatePawd(uId,txb_oldpwd.value,txb_newpwd.value,txb_surepwd.value);
+						var wait=plus.nativeUI.showWaiting('正在修改密码...');
+						updatePawd(uId,txb_oldpwd.value,txb_newpwd.value,txb_surepwd.value,wait);
 					}else{
 						plus.nativeUI.toast(" 两次密码不一致");
 					}
 				})
 
-				function updatePawd(uId, oldPwd, newPwd, repPwd) {
+				function updatePawd(uId, oldPwd, newPwd, repPwd,wait) {
 					mui.ajax(pwdPath, {
 						data: {
 							userId: uId,
@@ -51,6 +52,7 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							wait.close();
 							if (data.ret_code == 0) {
 								plus.nativeUI.toast("密码修改成功");
 								mui.back();
@@ -59,6 +61,8 @@
 							}
 						},
 						error: function(e) {
+							wait.close();
+							mui.toast('连接失败');
 						}
 					})
 				}
@@ -94,6 +98,7 @@
 				line-height: 20px;
 				color: white;
 				border: 0px;
+				border-radius: 8px;
 				font-size: 15px;
 			}
 			#btn_changeuserpwd:active{

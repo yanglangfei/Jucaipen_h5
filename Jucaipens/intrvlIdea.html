@@ -58,7 +58,7 @@
 							findAll(++currentPage);
 						}
 					}
-				})
+				},false)
 				//获取全部的投资观点
 				function findAll(p) {
 					var ideaStr = intrivlIdea.innerHTML;
@@ -108,9 +108,11 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//根据讲师ID获取投资观点
@@ -164,9 +166,11 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 			})

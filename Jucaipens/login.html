@@ -125,7 +125,7 @@
 					authLogin(2, 2);
 				})
 
-				function otherLogin(t, id) {
+				function otherLogin(t, id,wait) {
 					mui.ajax(otherLoginPath, {
 						data: {
 							accountType: t,
@@ -135,6 +135,7 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							wait.close();
 							if (data.ret_code == 0) {
 								plus.nativeUI.toast("登录成功");
 								//用户ID 
@@ -157,7 +158,8 @@
 							}
 						},
 						error: function(e) {
-							mui.toast('连接异常');
+							wait.close();
+							mui.toast('连接失败，请稍后重试');
 						}
 					})
 				}
@@ -167,13 +169,15 @@
 					if (!s.authResult) {
 						s.login(function(e) {
 							var openId = e.target.authResult.openid;
-							otherLogin(t, openId);
+							var wait=plus.nativeUI.showWaiting('正在登录，请稍后...');
+							otherLogin(t, openId,wait);
 						}, function(e) {
 							plus.nativeUI.toast('登录失败');
 						});
 					} else {
 						var openId = s.authResult.openid;
-						otherLogin(t, openId);
+						var wait=plus.nativeUI.showWaiting('正在登录，请稍后...');
+						otherLogin(t, openId,wait);
 					}
 				}
 				// 注销所有授权登录认证服务
@@ -239,12 +243,14 @@
 			}
 			
 			#login {
+				border-radius: 8px;
 				margin-top: 12px;
 				background: #bd0b19;
 				height: 50px;
 				width: 100%;
 				color: white;
-				font-size: 15px;
+				line-height: 20px;
+				font-size: 18px;
 				border: 0px;
 			}
 			

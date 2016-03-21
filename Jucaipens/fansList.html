@@ -49,7 +49,7 @@
 					loadMore.style.display='block';
 					findFansByTeacher(++currentPage);
 				}
-			})
+			},false)
 			
 			//根据讲师ID获取粉丝列表
 			function  findFansByTeacher(p){
@@ -91,6 +91,7 @@
 					}
 				},
 				error: function(e){
+					mui.toast('获取数据失败，请稍后重试');
 				}
 			})
 			}

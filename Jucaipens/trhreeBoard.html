@@ -80,7 +80,7 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 							//更多新三板
 							mui("#bopard").on("tap","a",function(){
 								var sId = this.getAttribute("sId");
@@ -96,11 +96,13 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 								
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				// 跳转登录界面
@@ -123,7 +125,7 @@
 							}
 						})
 					}
-				})
+				},false)
 				//跳转到首页
 				index.addEventListener('tap', function() {
 						mui.openWindow({
@@ -136,7 +138,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到直播
 				liveList.addEventListener('tap', function() {
 						mui.openWindow({
@@ -149,7 +151,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到关注
 				attentions.addEventListener('tap', function() {
 						mui.openWindow({
@@ -162,7 +164,7 @@
 								aniShow: 'none'//页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到名家
 				famousDish.addEventListener('tap', function() {
 					mui.openWindow({
@@ -175,7 +177,7 @@
 							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 						}
 					})
-				})
+				},false)
 			})
 		</script>
 		<style type="text/css">

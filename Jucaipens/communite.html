@@ -51,7 +51,7 @@
 						loadMore.style.display='block';
 						getRemarkList(++currentPage);
 					}
-				})
+				},false)
 				
 				//获取评论列表
 				function getRemarkList(p) {
@@ -94,8 +94,10 @@
 								getMore.style.display='none';
 							}
 						},
-						error: function(e) {}
-					})
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
+					},false)
 				}
 				today.addEventListener("tap", function() {
 					mui.openWindow({
@@ -109,7 +111,7 @@
 							autoShow: false
 						}
 					})
-				})
+				},false)
 				communit.addEventListener("tap", function() {
 						mui.openWindow({
 							url: "communite.html",
@@ -118,7 +120,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//提交评论信息
 				buttons.addEventListener("tap", function() {
 					var userId = plus.storage.getItem("userId");
@@ -137,8 +139,9 @@
 						plus.nativeUI.toast("交流信息不能为空");
 						return;
 					}
-					addExchangeFN(userId, textareas_val);
-				})
+					var wait=plus.nativeUI.showWaiting('正在提交数据，请稍等...');
+					addExchangeFN(userId, textareas_val,wait);
+				},false)
 
 				function isNull(str) {
 					if (str.length <= 0) {
@@ -147,7 +150,7 @@
 					return str;
 				}
 				//添加交流信息
-				function addExchangeFN(uId, body) {
+				function addExchangeFN(uId, body,wait) {
 					mui.ajax(addExchangePath, {
 						data: {
 							userId: uId,
@@ -158,13 +161,18 @@
 						type: "post",
 						timeout: 10000,
 						success: function(data) {
+							wait.close();
 							if (data.ret_code == 0) {
+								textareas.value='';
 								plus.nativeUI.toast("提交交流信息成功");
 							} else {
 								plus.nativeUI.toast("提交交流信息失败");
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							wait.close();
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 			})

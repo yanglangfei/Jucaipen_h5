@@ -43,7 +43,7 @@
 						loadMore.style.display='block';
 						getDishList(++currentPage);
 					}
-				})
+				},false)
 
 				function getDishList(i) {
 					//获取名师看盘信息
@@ -124,13 +124,12 @@
 										}  
 									},"",array);
 									}
-									
-									
-									
 								}
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 				}
 				//进入直播间

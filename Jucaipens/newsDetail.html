@@ -100,7 +100,11 @@
 						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + subStr(2, data.publishDate);
 						content.innerHTML = data.Bodys;
 					},
-					error: function(e) {}
+					error: function(e) {
+						newsDetail_load.style.display='none';
+						newsInfo.style.display = 'block';
+						mui.toast('获取数据失败');
+					}
 				});
 				//获取相关新闻
 				var relaUrl = "";

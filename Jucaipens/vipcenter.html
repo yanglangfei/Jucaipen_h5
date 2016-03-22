@@ -30,7 +30,7 @@
 				abord.addEventListener("tap", function() {
 					plus.storage.setItem("userId", -1 + "");
 					mui.back();
-				});
+				},false);
 				mui(".mui-table-view").on("tap", ".mui-table-view-cell", function() {
 					var attr = this.getAttribute("id");
 					if (attr == "user") {
@@ -88,7 +88,7 @@
 							}
 						});
 					}
-				});
+				},false);
 			});
 		</script>
 		<style type="text/css">

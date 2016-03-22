@@ -53,16 +53,16 @@
 							}
 						},
 						error: function(e){
-							
+							mui.toast('连接失败，请稍后重试');
 						}
 					});
-				});
+				},false);
 				login.addEventListener("tap", function() {
 					mui.openWindow({
 						url: "login.html",
 						id: "login"
 					});
-				});
+				},false);
 				regin.addEventListener("tap", function() {
 					if (userName.value.length <= 0) {
 						plus.ui.toast("用户名不能为空");
@@ -126,7 +126,7 @@
 							mui.toast('连接失败，请稍后重试');
 						}
 					});
-				});
+				},false);
 			})
 		</script>
 		<style type="text/css">

@@ -135,9 +135,11 @@
 								},
 								createNew: true //重新创建页面
 							})
-						})
+						},false)
 					},
-					error: function(e) {}
+					error: function(e) {
+						mui.toast('获取数据失败，请稍后重试');
+					}
 				});
 				findCommList(currentPage);
 
@@ -207,15 +209,17 @@
 											plus.nativeUI.toast("连接失败");
 										}
 									});
-								});
+								},false);
 								//回复评论
 								mui("#newscommlist").on("tap", "#sp_comm", function() {
 									var name = this.getAttribute("name");
 									var commId = this.getAttribute("class");
 									myInputState(commId, "回复@" + name + "的评论:");
-								})
+								},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					});
 				}
 				//设置默认图片
@@ -250,7 +254,9 @@
 								coll_lab.innerHTML = '收藏';
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//收藏资讯
@@ -290,7 +296,9 @@
 								}
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				li_collect.addEventListener("tap", function() {
@@ -301,7 +309,7 @@
 								url: "login.html",
 								id: "login"
 							})
-							return;
+							return ;
 						}
 						if (isCollected) {
 							//取消收藏
@@ -310,11 +318,11 @@
 							//收藏
 							collectNewsOp(0);
 						}
-					})
+					},false)
 					//弹出评论／回复框
 				inputs.addEventListener("tap", function() {
 					myInputState(0, "想说点什么");
-				});
+				},false);
 				//发表评论，回复
 				btn_sub_comm.addEventListener("tap", function() {
 						if (HiddenFieldId.value.length <= 0) {
@@ -322,7 +330,7 @@
 							return;
 						}
 						remarkNews();
-					})
+					},false)
 					//弹出评论／回复对话框
 				function myInputState(cId, str) {
 					uId = plus.storage.getItem("userId");
@@ -369,7 +377,9 @@
 								plus.nativeUI.toast(data.err_msg);
 							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//获取更多评论信息
@@ -379,20 +389,20 @@
 						moreLoad.style.display = 'block';
 						findCommList(++currentPage);
 					}
-				});
+				},false);
 				//分享点击事件
 				li_share.addEventListener("hold", function() {
 						iv_share.src = 'image/share_press.png';
-					})
+					},false)
 					//分享按钮释放事件
 				li_share.addEventListener("release", function() {
 						iv_share.src = 'image/share_normal.png';
 						mui(".mui-popover").popover('hide');
-					})
+					},false)
 					//分享
 				li_share.addEventListener("tap", function() {
 						updateSerivces();
-					})
+					},false)
 					// 打开分享
 				function shareShow(s) {
 					bhref = false;
@@ -451,16 +461,14 @@
 						href: linkUrl,
 						title: title.innerHTML,
 					}, function() {
-						alert('成功');
-						console.log('s');
+						mui.toast('分享成功');
 					}, function(e) {
-						alert('失败:' + JSON.stringify(e));
-						console.log('e');
+						mui.toast('分享失败');
 					});
 				}
 				li_more.addEventListener("tap", function() {
 					mui(".mui-popover").popover('hide');
-				})
+				},false)
 			})
 		</script>
 

@@ -72,9 +72,11 @@
 									//获取用户的相关信息
 									getPurseInfo(uId, visitDay, visit, visitLeal, lId, face);
 								}
-							});
+							},false);
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 					//进入直播室
 				function intoLiveRoom(liveId, roomFace) {
@@ -127,7 +129,7 @@
 						} else {
 							intoCenter();
 						}
-					})
+					},false)
 					//跳转到首页
 				index.addEventListener('tap', function() {
 						mui.openWindow({
@@ -140,7 +142,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//获取用户购买的相关信息
 				function getPurseInfo(id, visitDay, visit, visitLeal, lId, face) {
 					mui.ajax(getPurshInfoPath, {
@@ -160,6 +162,7 @@
 							intoWhichPage(endDate, lId, face, visitLeal, visit, serviceId, managerId, productId, userType, visitDay);
 						},
 						error: function(e) {
+							
 						}
 					})
 				}
@@ -215,7 +218,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到关注
 				attentions.addEventListener('tap', function() {
 						mui.openWindow({
@@ -228,7 +231,7 @@
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					})
+					},false)
 					//跳转到名家
 				famousDish.addEventListener('tap', function() {
 					mui.openWindow({
@@ -241,7 +244,7 @@
 							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 						}
 					})
-				})
+				},false)
 			})
 		</script>
 	</head>

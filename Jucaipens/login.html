@@ -52,7 +52,7 @@
 							autoShow: false
 						}
 					});
-				});
+				},false);
 				//自给模块登录
 				login.addEventListener("tap", function() {
 						if (account.value.length <= 0) {
@@ -107,23 +107,23 @@
 								plus.nativeUI.toast("连接失败,请稍后重试");
 							}
 						});
-					})
+					},false)
 					//第三方登录
 					//qq登录
 				qq.addEventListener("tap", function() {
 						//获取openID
 						authLogin(0, 1);
-					})
+					},false)
 					//微信登录
 				weixin.addEventListener("tap", function() {
 						//获取openID
 						authLogin(1, 0);
-					})
+					},false)
 					//新浪登录
 				sina.addEventListener("tap", function() {
 					//获取openID
 					authLogin(2, 2);
-				})
+				},false)
 
 				function otherLogin(t, id,wait) {
 					mui.ajax(otherLoginPath, {
@@ -186,9 +186,9 @@
 						var s = authos[i];
 						if (s.authResult) {
 							s.logout(function(e) {
-								alert("注销登录认证成功！");
+								
 							}, function(e) {
-								alert("注销登录认证失败！");
+								
 							});
 						}
 					}
@@ -200,39 +200,39 @@
 				function authUserInfo(i) {
 					var s = authos[i];
 					if (!s.authResult) {
-						alert("未授权登录！");
+						//alert("未授权登录！");
 					} else {
 						s.getUserInfo(function(e) {
-							alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
+						//	alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
 						}, function(e) {
-							alert("获取用户信息失败：" + e.message + " - " + e.code);
+						//	alert("获取用户信息失败：" + e.message + " - " + e.code);
 						});
 					}
 				}
 				//qq登录的按下效果
 				qq.addEventListener("hold", function() {
 					qq.src = 'image/loginqq_press.png';
-				});
+				},false);
 				//QQ登录的释放效果
 				qq.addEventListener('release', function() {
 						qq.src = 'image/loginqq_unpress.png';
-					})
+					},false)
 					//微信登录的按下特效
 				weixin.addEventListener('hold', function() {
 						weixin.src = 'image/weixin_press.png';
-					})
+					},false)
 					//微信登录的释放特效
 				weixin.addEventListener('release', function() {
 						weixin.src = 'image/loginweixins.png';
-					})
+					},false)
 					//新浪登录释放特效
 				sina.addEventListener('hold', function() {
 					sina.src = 'image/loginsina_press.png';
-				})
+				},false)
 				//新浪登录释放的特效
 				sina.addEventListener('release', function() {
 					sina.src = 'image/loginsina_unpress.png';
-				})
+				},false)
 			});
 		</script>
 		<style type="text/css">

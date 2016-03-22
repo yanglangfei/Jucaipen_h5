@@ -90,7 +90,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//进入看盘直播
 				intoLive.addEventListener("tap", function() {
 						mui.openWindow({
@@ -106,7 +106,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//进入投资观点
 				touziIdea.addEventListener("tap", function() {
 						mui.openWindow({
@@ -119,7 +119,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//进入最新提问
 				intoAsk.addEventListener("tap", function() {
 						mui.openWindow({
@@ -133,7 +133,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//进入讲师简介
 				intoIntroduce.addEventListener("tap", function() {
 						mui.openWindow({
@@ -146,7 +146,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//关注讲师
 				attention.addEventListener("tap", function() {
 						var type;
@@ -167,7 +167,7 @@
 							type = 0;
 						}
 						addAttention(type, uId, id);
-					})
+					},false)
 					//咨询名师
 				ask.addEventListener("tap", function() {
 						var uId = plus.storage.getItem('userId');
@@ -191,7 +191,7 @@
 								autoShow: false
 							}
 						})
-					})
+					},false)
 					//签约
 				sign.addEventListener("tap", function() {
 					var uId = plus.storage.getItem('userId');
@@ -215,7 +215,7 @@
 							autoShow: false
 						}
 					})
-				})
+				},false)
 				//获取关注信息
 				function getAtttentionState(tId, uId) {
 					mui.ajax(queryAttentionPath, {
@@ -235,7 +235,9 @@
 								iv_attention.src = 'image/attention.png';
 							} else {}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('连接失败，请稍后重试');
+						}
 					})
 				}
 				//添加/取消 关注
@@ -273,7 +275,7 @@
 							}
 						},
 						error: function(e) {
-							console.log(JSON.stringify(e));
+							mui.toast('连接失败，请稍后重试');
 						}
 					})
 				}

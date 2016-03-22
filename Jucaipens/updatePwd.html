@@ -38,7 +38,7 @@
 					}else{
 						plus.nativeUI.toast(" 两次密码不一致");
 					}
-				})
+				},false)
 
 				function updatePawd(uId, oldPwd, newPwd, repPwd,wait) {
 					mui.ajax(pwdPath, {
@@ -62,7 +62,7 @@
 						},
 						error: function(e) {
 							wait.close();
-							mui.toast('连接失败');
+							mui.toast('连接失败,请稍后重试');
 						}
 					})
 				}

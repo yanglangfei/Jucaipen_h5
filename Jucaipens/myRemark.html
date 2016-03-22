@@ -45,7 +45,7 @@
 						moreLoad.style.display='block';
 						getRemarkInfo(++currentPage);
 					}
-				})
+				},false)
 				//获取我的评论信息
 				function getRemarkInfo(p) {
 					var remarkStr = remarkLay.innerHTML;
@@ -83,7 +83,7 @@
 										autoShow: false
 									}
 								})
-							})
+							},false)
 							if (currentPage < totlePager) {
 								linkmore_p.style.display = 'block';
 							} else {
@@ -91,6 +91,7 @@
 							}
 						},
 						error: function(e) {
+							mui.toast('数据获取失败，请稍后重试');
 						}
 					})
 				}

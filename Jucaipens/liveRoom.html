@@ -52,7 +52,7 @@
 				web.addEventListener('close',function(){
 					console.log('close');
 					sendUserState(1,uId,liveId,isManager,isServer,userName);
-				})
+				},false)
 				//获取视频资源
 				mui.ajax(liveResourcePath, {
 					data: {
@@ -256,7 +256,7 @@
 							return false;
 						}
 						sendMsg(content.value, userName);
-					})
+					},false)
 					//发送消息 
 				function sendMsg(c, uName) {
 					mui.ajax(sendMsgPath, {
@@ -300,10 +300,10 @@
 						dataType:"json",
 						timeout:10000,
 						success: function(data){
-							console.log('see');
+							
 						},
 						error: function(e){
-							console.log('err');
+							
 							
 						}
 					})

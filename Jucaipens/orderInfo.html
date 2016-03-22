@@ -51,12 +51,12 @@
 		 	}else{
 		 		orderDetail.style.display="none";
 		 	}
-		 }) 
+		 },false) 
 		 
 		 //支付订单
 		 pay_btn.addEventListener("tap",function(){
 		 	pay();
-		 })
+		 },false)
 		 
 		 
 		 //支付
@@ -85,6 +85,7 @@
 		 			}
 		 		},
 		 		error: function(e){
+		 			mui.toast('获取数据失败，请稍后重试');
 		 			
 		 		}
 		 	}
@@ -105,7 +106,11 @@
 		 		dataType:"json",
 		 		timeout:10000,
 		 		success: function(data){
-		 			
+		 			if(data.ret_code==0){
+		 				mui.toast('支付状态更新成功');
+		 			}else{
+		 				mui.toast(data.err_msg);
+		 			}
 		 		},
 		 		error: function(e){
 		 			

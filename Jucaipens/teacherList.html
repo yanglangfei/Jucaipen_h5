@@ -44,7 +44,7 @@
 							loadMore.style.display = 'block';
 							findAllTeacher(++currentPage);
 						}
-					})
+					},false)
 					//获取讲师列表信息
 				function findAllTeacher(p) {
 					var teacherStr = teacherLay.innerHTML;
@@ -97,7 +97,7 @@
 											}
 										})
 										return false;
-									})
+									},false)
 									//关注监听
 								mui('#teacherLay').on('tap', '#attention', function() {
 									var tag = this.getAttribute('tag');
@@ -121,7 +121,7 @@
 									}
 									addAttention(type,uId,tag,i[0]);
 									return false;
-								})
+								},false)
 							}
 							if (currentPage < totlePage) {
 								find_gengduo.style.display = 'block';
@@ -143,9 +143,11 @@
 									}
 								})
 								return false;
-							})
+							},false)
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 				}
 				
@@ -166,9 +168,11 @@
 							} else if (data.ret_code == 3) {
 								isAttention = false;
 								//iv_attention.src = 'image/attention.png';
-							} else {}
+							}
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					})
 				}
 				
@@ -210,7 +214,7 @@
 							}
 						},
 						error: function(e) {
-							console.log(JSON.stringify(e));
+							mui.toast('连接失败，请稍后重试');
 						}
 					})
 				}

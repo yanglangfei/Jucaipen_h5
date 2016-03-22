@@ -125,7 +125,9 @@
 							}
 							userLogo.src = images;
 						},
-						error: function(e) {}
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
 					});
 				}
 				//更换头像
@@ -150,7 +152,7 @@
 								getCame();
 							}
 						})
-					})
+					},false)
 					//打开相册
 				function getGrial() {
 					plus.gallery.pick(function(data) {
@@ -178,7 +180,7 @@
 						}
 						uploadLogo(data);
 					}, function(e) {
-						
+						 mui.toast('获取图片失败，请稍后重试');
 					})
 				}
 				//编辑资料按钮
@@ -241,7 +243,7 @@
 							}
 						},
 						error: function(e) {
-							mui.toast("连接服务器失败");
+							mui.toast("连接失败,请稍后重试");
 						}
 					})
 				}
@@ -292,7 +294,7 @@
 							}
 						},
 						error: function(e) {
-							mui.toast("连接服务失败");
+							mui.toast("连接失败,请稍后重试");
 						}
 					})
 				}
@@ -321,7 +323,7 @@
 								sex.innerText = '保密';
 							}
 						})
-					})
+					},false)
 					//跳转到修改手机号
 				btn_send.addEventListener("tap", function() {
 						mui.openWindow({
@@ -340,7 +342,7 @@
 								userLogo:userLogo.src
 							}
 						})
-					})
+					},false)
 				
 				//跳转到城市列表
 				address.addEventListener("tap", function() {
@@ -364,7 +366,7 @@
 								isEdit:editInfo.innerHTML
                           }
 						})
-					})
+					},false)
 			});
 		</script>
 		<style type="text/css">

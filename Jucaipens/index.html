@@ -18,6 +18,9 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				setTimeout(function(){
+					plus.navigator.closeSplashscreen();
+				},2000);
 				var osName = plus.os.name;
 				var styles = {};
 				var screenWidth = plus.screen.resolutionWidth;
@@ -25,6 +28,11 @@
 				var screenWidthDpi = screenWidth * plus.screen.scale;
 				var screenHeightDpi = screenHeight * plus.screen.scale;
 				//console.log(screenWidthDpi + " " + screenHeightDpi);
+				//双击退出应用
+				plus.key.addEventListener('backbutton',function(){
+					alert('back');
+				})
+				
 				//隐藏滚动条
 				styles.scrollIndicator = 'none';
 				controlScrollBar(plus.webview.currentWebview(), styles);
@@ -45,7 +53,6 @@
 					url: "famousDish.html",
 					id: "famousDish"
 				})
-				plus.navigator.closeSplashscreen();
 				var version;
 				var name = plus.os.name;
 				var hei = plus.screen.resolutionHeight;

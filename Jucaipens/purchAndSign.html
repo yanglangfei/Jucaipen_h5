@@ -63,7 +63,7 @@
 							autoShow: false
 						}
 					})
-				})
+				},false)
 				//签约
 				sign_tearcher.addEventListener("tap", function() {
 					mui.openWindow({
@@ -79,26 +79,26 @@
 							autoShow: false
 						}
 					})
-				})
+				},false)
 				//签约  －－月
-				moth.onclick = function() {
+				moth.addEventListener('tap',function(){
 					xianjia.innerText = xianjiaMoth;
 					yuanjia.innerText = yuanjiaMoth;
 					weekStr="1个月";
-				}
+				},false)
 				//签约    －－季度
-				quart.onclick = function() {
+				quart.addEventListener('tap',function(){
 					xianjia.innerText = xianjiaQuart;
 					yuanjia.innerText = yuanjiaQuart;
 					weekStr="1个季度";
-				}
+				},false)
 				//签约   ---年
-				year.onclick = function() {
+				year.addEventListener('tap',function(){
 					xianjia.innerText = xianjiaYear;
 					yuanjia.innerText = yuanjiaYear;
 					weekStr="1年";
-				}
-
+				},false)
+				
 				function queryTxtLivePrice() {
 					mui.ajax(queryPrice, {
 						data: {
@@ -120,6 +120,7 @@
 							year.click();
 						},
 						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
 						}
 					})
 				}

@@ -102,7 +102,7 @@
 	"plus": {
 		"splashscreen": {
 			"autoclose": false,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
-			"waiting": true
+			"waiting": false,"delay":"2"
 		},
 		"allowsInlineMediaPlayback":true,   //允许內连播放
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
@@ -202,7 +202,7 @@
 			"splashscreen": {
 				"ios": {
 					"ipad": {
-						"portrait": "unpackage/res/prologue/start.png",
+						"portrait": "unpackage/res/prologue/start1080x1882.png",
 						"landscape": "unpackage/res/prologue/start.png",
 						"portrait7": "unpackage/res/prologue/start.png",
 						"landscape7": "unpackage/res/prologue/start.png",
@@ -212,20 +212,20 @@
 						"landscape-retina7": "unpackage/res/prologue/start.png"
 					},
 					"iphone": {
-						"default": "unpackage/res/prologue/start.png",
-						"retina55": "unpackage/res/prologue/start.png",
-						"retina47": "unpackage/res/prologue/start.png",
-						"retina40": "unpackage/res/prologue/start.png",
-						"retina35": "unpackage/res/prologue/start.png",
-						"retina55l": "unpackage/res/prologue/start.png"
+						"default": "unpackage/res/prologue/start640x1136.png",
+						"retina55": "unpackage/res/prologue/start640x1136.png",
+						"retina47": "unpackage/res/prologue/start640x1136.png",
+						"retina40": "unpackage/res/prologue/start640x1136.png",
+						"retina35": "unpackage/res/prologue/start640x1136.png",
+						"retina55l": "unpackage/res/prologue/start640x1136.png"
 					}
 				},
 				"android": {
-					"hdpi": "unpackage/res/prologue/start.png",
-					"ldpi": "unpackage/res/prologue/start.png",
-					"mdpi": "unpackage/res/prologue/start.png",
-					"xhdpi": "unpackage/res/prologue/start.png",
-					"xxhdpi": "unpackage/res/prologue/start.png"
+					"hdpi": "unpackage/res/prologue/start640x1136.png",
+					"ldpi": "unpackage/res/prologue/start640x1136.png",
+					"mdpi": "unpackage/res/prologue/start640x1136.png",
+					"xhdpi": "unpackage/res/prologue/start640x1136.png",
+					"xxhdpi": "unpackage/res/prologue/start1080x1882.png"
 				}
 			},
 			"debug": false

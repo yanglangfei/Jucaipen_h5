@@ -38,7 +38,7 @@
 					restSecond=60;
 					setInterval(rest,1000);
 					getPhoneCheckCode(phone.value);
-				})
+				},false)
 				
 				//提交手机号
 				savePhone.addEventListener("tap",function(){
@@ -52,7 +52,7 @@
 					}
 					var wait=plus.nativeUI.showWaiting('正在修改手机号，请稍等...');
 					checkPhoneCode(phone.value,vaile.value,wait);
-				})
+				},false)
 				
 				
 				//获取手机验证码
@@ -73,7 +73,7 @@
 							}
 						},
 						error: function(e){
-							
+							mui.toast('连接失败，请稍后重试');
 						}
 					})
 				}
@@ -115,7 +115,7 @@
 						},
 						error: function(e){
 							wait,close();
-							mui.toast("服务器连接失败");
+							mui.toast("连接失败,请稍后重试");
 						}
 					})
 					

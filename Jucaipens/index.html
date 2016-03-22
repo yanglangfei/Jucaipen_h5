@@ -29,10 +29,16 @@
 				var screenHeightDpi = screenHeight * plus.screen.scale;
 				//console.log(screenWidthDpi + " " + screenHeightDpi);
 				//双击退出应用
+				var preTime = 0;
 				plus.key.addEventListener('backbutton',function(){
-					alert('back');
+					var now = new Date().getTime();
+					if(now-preTime>2000){
+						preTime = now;
+                         mui.toast('再按一次退出应用');
+					}else{
+						plus.runtime.quit();
+					}
 				})
-				
 				//隐藏滚动条
 				styles.scrollIndicator = 'none';
 				controlScrollBar(plus.webview.currentWebview(), styles);

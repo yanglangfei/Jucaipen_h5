@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <!--
+	<!--
   	作者：185601452@qq.com
   	时间：2016-03-11
   	描述：名家
   -->
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -12,384 +13,16 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-			<link rel="stylesheet" href="css/loadAnim1.css" />
+		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				//预加载名师看盘信息
-				var dishPage = mui.preload({
-					url: "dishList.html",
-					id: "dishList"
-				})
-				//与加载找名家
-				var teacherListPage = mui.preload({
-					url: "teacherList.html",
-					id: "teacherList"
-				})
-				var page = document.getElementById('pager');
-				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
-				var teacherList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
-				var teacherQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion";
-				var sumData = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/indexStatisticsData";
-				var hotIdeas = document.getElementById("data-hotIdeas");
-				var intoLogin = document.getElementById("pageTop1_show_login_link");
-				var famousList = document.getElementById("famousList");
-				var index = document.getElementById("index");
-				var trhreeBoard = document.getElementById("trhreeBoard");
-				var question = document.getElementById("data-question");
-				var renqi = document.getElementById("renqi");
-				var answerCount = document.getElementById("answerCount");
-				var ideaCount = document.getElementById("ideaCount");
-				var fans = document.getElementById("fans");
-				var dish = document.getElementById("dish");
-				var attentions = document.getElementById("attentions");
-				var intoAsk = document.getElementById("intoAsk");
-				var intrial = document.getElementById("intrialIdea");
-				var findTeacher = document.getElementById("findTeacher");
-				var liveList = document.getElementById("liveList");
-				var natives = document.getElementById("native");
-				var remen_banner = document.getElementById("remen_banner");
-				var mingshi_banner = document.getElementById("mingshi_banner");
-				var wenda_banner = document.getElementById("wenda_banner");
-				var fad_load = document.getElementById("fad_load");
-				var styles={};
-				styles.scrollIndicator='none';
-				controlScrollBar(plus.webview.currentWebview(),styles);
-				fad_load.style.display = 'block';
-				//获取广告
-				var url = "";
-				mui.ajax(queryAdice, {
-					data: {
-						type: 1
-					},
-					dataType: 'json',
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						natives.style.display = 'block';
-						fad_load.style.display = 'none';
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
-						for (var i = 0; i < data.length; i++) {
-							var imageUrl = data[i].imageUrl;
-							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id=" + data[i].id + " /></a></div>";
-						}
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id=" + data[0].id + " /></a></div>";
-						page.innerHTML = url;
-						mui("#pager").on("tap", "img", function() {
-								var id = this.getAttribute("id");
-								if (id == 1) {
-									//股权投资
-								} else if (id == 2) {
-									//证券教学
-									mui.openWindow({
-										url: "liveRoom.html",
-										id: "liveRoom",
-										extras: {
-											liveId: 1
-										},
-										waiting: {
-											autoShow: false
-										}
-									})
-								} else if (id == 3) {
-									//新三板
-									mui.openWindow({
-										url: "trhreeBoard.html",
-										id: "trhreeBoard",
-										waiting: {
-											autoShow: false
-										}
-									})
-								}
-							},false)
-							//获得slider插件对象
-						var gallery = mui('.mui-slider');
-						gallery.slider({
-							interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
-						});
-					},
-					error: function(e) {
-						mui.toast('获取数据失败，请稍后重试');
-					}
-				});
-				//热门观点
-				var hotUrl = '';
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList", {
-						data: {
-							whichPage: 0,
-						},
-						dataType: 'json',
-						type: 'post',
-						timeout: 10000,
-						success: function(data) {
-							fad_load.style.display = 'none';
-							if (data.length > 0) {
-								remen_banner.style.display = 'block';
-							}
-							for (var i = 0; i < data.length; i++) {
-								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
-							}
-							hotIdeas.innerHTML = hotUrl;
-							mui("#data-hotIdeas").on("tap", "li", function() {
-								var iId = this.getAttribute("id");
-								mui.openWindow({
-									url: "ideaDetail.html",
-									id: "ideaDetail",
-									extras: {
-										ideaId: iId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-						},
-						error: function(e) {
-							mui.toast('获取数据失败，请稍后重试');
-						}
-					})
-					//推荐名师
-				var teacherStr = "";
-				mui.ajax(teacherList, {
-						data: {
-							whichPage: 0
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							fad_load.style.display = 'none';
-							if (data.length > 0) {
-								mingshi_banner.style.display = 'block';
-							}
-							for (var i = 0; i < data.length; i++) {
-								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
-								teacherStr = teacherStr + "  <div id=" + data[i].id + " class='item'><a><span><img src=" + data[i].headFace + "></span></a><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
-							}
-							famousList.innerHTML = teacherStr;
-							mui("#famousList").on("tap", ".item", function() {
-								var tId = this.getAttribute("id");
-								mui.openWindow({
-									url: "teacherDetail.html",
-									id: "teacherDetail",
-									extras: {
-										teacherId: tId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-						},
-						error: function(e) {
-							mui.toast('获取数据失败，请稍后重试');
-						}
-					})
-					//名师问答
-				var questionStr = "";
-				mui.ajax(teacherQuestion, {
-						data: {
-							whichPage: 0
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							fad_load.style.display = 'none';
-							if (data.length > 0) {
-								wenda_banner.style.display = 'block';
-							}
-							for (var i = 0; i < data.length; i++) {
-								questionStr = questionStr + "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" + data[i].headFace + "></span></a><div class='name'><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
-							}
-							question.innerHTML = questionStr;
-							mui("#data-question").on("tap", ".ask", function() {
-								var tId = this.getAttribute("t");
-								var uId = plus.storage.getItem('userId');
-								if (uId <= 0) {
-									mui.openWindow({
-										url: "login.html",
-										id: "login",
-										waiting: {
-											autoShow: false
-										}
-									})
-									return false;
-								}
-								mui.openWindow({
-									url: "askQuestion.html",
-									id: "askQuestion",
-									extras: {
-										teacherId: tId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-								return false;
-							},false)
-							mui("#data-question").on("tap", ".item", function() {
-								var tId = this.getAttribute("id");
-								mui.openWindow({
-									url: "teacherDetail.html",
-									id: "teacherDetail",
-									extras: {
-										teacherId: tId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-								return false;
-							},false)
-						},
-						error: function(e) {
-							mui.toast('获取数据失败，请稍后重试');
-						}
-					})
-					//获取首页统计数据
-				mui.ajax(sumData, {
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						renqi.innerText = "人气：" + (data.renQi / 10000).toFixed(1) + "万人";
-						answerCount.innerText = "回答:" + data.answerCount + "个";
-						ideaCount.innerText = "观点：" + data.ideas + "篇";
-						fans.innerText = "粉丝：" + data.fans + "人";
-					},
-					error: function(e) {
-						mui.toast('获取数据失败，请稍后重试');
-					}
-				})
-				dish.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "dishList.html",
-							id: "dishList",
-							waiting: {
-								autoShow: false
-							}
-						})
-					},false)
-					//名师问答
-				intoAsk.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "answerList.html",
-							id: "answerList",
-							waiting: {
-								autoShow: false
-							}
-						})
-					},false)
-					//投资观点
-				intrial.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "intrvlIdea.html",
-							id: "intrvlIdea",
-							waiting: {
-								autoShow: false
-							}
-						})
-					},false)
-					//推荐名师
-				findTeacher.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "teacherList.html",
-							id: "teacherList",
-							waiting: {
-								autoShow: false
-							}
-						})
-					},false)
-					//进入登录
-				intoLogin.addEventListener("tap", function() {
-						var uId = plus.storage.getItem("userId");
-						if (uId <= 0) {
-							mui.openWindow({
-								url: "login.html",
-								id: "login",
-								waiting: {
-									autoShow: false
-								}
-							})
-						} else {
-							mui.openWindow({
-								url: "vipcenter.html",
-								id: "vipcenter",
-								waiting: {
-									autoShow: false
-								}
-							})
-						}
-					},false)
-					//跳转到首页
-				index.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "index.html",
-							id: "index",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到热门
-				trhreeBoard.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "trhreeBoard.html",
-							id: "trhreeBoard",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到直播
-				liveList.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "liveList.html",
-							id: "liveList",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到名家
-				attentions.addEventListener('tap', function() {
-					mui.openWindow({
-						url: "attention.html",
-						id: "attention",
-						waiting: {
-							autoShow: false
-						},
-						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-						}
-					})
-				},false)
-			})
-		</script>
-
 		<style type="text/css">
 			.mj_menu {
 				width: 100%;
 				float: left;
 			}
-			
 			.mj_menu a p {
 				display: block;
 				float: left;
@@ -558,25 +191,25 @@
 
 		<div style="text-align: center;margin-top: 60%;display: none;" id="fad_load">
 			<div class="spinner">
-					<div class="spinner-container container1">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container2">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container3">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
 				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+			</div>
 		</div>
 
 		<footer class="footer">
@@ -592,6 +225,373 @@
 				</div>
 			</div>
 		</footer>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				//预加载名师看盘信息
+				var dishPage = mui.preload({
+						url: "dishList.html",
+						id: "dishList"
+					})
+					//与加载找名家
+				var teacherListPage = mui.preload({
+					url: "teacherList.html",
+					id: "teacherList"
+				})
+				var page = document.getElementById('pager');
+				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
+				var teacherList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
+				var teacherQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion";
+				var sumData = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/indexStatisticsData";
+				var hotIdeas = document.getElementById("data-hotIdeas");
+				var intoLogin = document.getElementById("pageTop1_show_login_link");
+				var famousList = document.getElementById("famousList");
+				var index = document.getElementById("index");
+				var trhreeBoard = document.getElementById("trhreeBoard");
+				var question = document.getElementById("data-question");
+				var renqi = document.getElementById("renqi");
+				var answerCount = document.getElementById("answerCount");
+				var ideaCount = document.getElementById("ideaCount");
+				var fans = document.getElementById("fans");
+				var dish = document.getElementById("dish");
+				var attentions = document.getElementById("attentions");
+				var intoAsk = document.getElementById("intoAsk");
+				var intrial = document.getElementById("intrialIdea");
+				var findTeacher = document.getElementById("findTeacher");
+				var liveList = document.getElementById("liveList");
+				var natives = document.getElementById("native");
+				var remen_banner = document.getElementById("remen_banner");
+				var mingshi_banner = document.getElementById("mingshi_banner");
+				var wenda_banner = document.getElementById("wenda_banner");
+				var fad_load = document.getElementById("fad_load");
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				controlScrollBar(plus.webview.currentWebview(), styles);
+				fad_load.style.display = 'block';
+				//获取广告
+				var url = "";
+				mui.ajax(queryAdice, {
+					data: {
+						type: 1
+					},
+					dataType: 'json',
+					type: "get",
+					timeout: 10000,
+					success: function(data) {
+						natives.style.display = 'block';
+						fad_load.style.display = 'none';
+						url += "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
+						for (var i = 0; i < data.length; i++) {
+							var imageUrl = data[i].imageUrl;
+							url += "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id=" + data[i].id + " /></a></div>";
+						}
+						url += "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id=" + data[0].id + " /></a></div>";
+						page.innerHTML = url;
+						mui("#pager").on("tap", "img", function() {
+								var id = this.getAttribute("id");
+								if (id == 1) {
+									//股权投资
+								} else if (id == 2) {
+									//证券教学
+									mui.openWindow({
+										url: "liveRoom.html",
+										id: "liveRoom",
+										extras: {
+											liveId: 1
+										},
+										waiting: {
+											autoShow: false
+										}
+									})
+								} else if (id == 3) {
+									//新三板
+									mui.openWindow({
+										url: "trhreeBoard.html",
+										id: "trhreeBoard",
+										waiting: {
+											autoShow: false
+										}
+									})
+								}
+							}, false)
+							//获得slider插件对象
+						var gallery = mui('.mui-slider');
+						gallery.slider({
+							interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+						});
+					},
+					error: function(xhr,type,e) {
+						mui.toast('获取数据失败，请稍后重试:'+type);
+					}
+				});
+				//热门观点
+				var hotUrl = '';
+				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList", {
+						data: {
+							whichPage: 0,
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function(data) {
+							fad_load.style.display = 'none';
+							if (data.length > 0) {
+								remen_banner.style.display = 'block';
+							}
+							for (var i = 0; i < data.length; i++) {
+								var body = data[i].bodys.replace(/<[^>]+>/g, "");
+								hotUrl += "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 40px;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+							}
+							hotIdeas.innerHTML = hotUrl;
+							mui("#data-hotIdeas").on("tap", "li", function() {
+								var iId = this.getAttribute("id");
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: iId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					})
+					//推荐名师
+				var teacherStr = "";
+				mui.ajax(teacherList, {
+						data: {
+							whichPage: 0
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							fad_load.style.display = 'none';
+							if (data.length > 0) {
+								mingshi_banner.style.display = 'block';
+							}
+							for (var i = 0; i < data.length; i++) {
+								var intro = data[i].introduce.replace(/<[^>]+>/g, "");
+								teacherStr += "  <div id=" + data[i].id + " class='item'><a><span><img src=" + data[i].headFace + "></span></a><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em><a> <p id='introduce' style='height: 40px;overflow: hidden;'>" + intro + "</p>" + "</a> </div>";
+							}
+							famousList.innerHTML = teacherStr;
+							mui("#famousList").on("tap", ".item", function() {
+								var tId = this.getAttribute("id");
+								mui.openWindow({
+									url: "teacherDetail.html",
+									id: "teacherDetail",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					})
+					//名师问答
+				var questionStr = "";
+				mui.ajax(teacherQuestion, {
+						data: {
+							whichPage: 0
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							fad_load.style.display = 'none';
+							if (data.length > 0) {
+								wenda_banner.style.display = 'block';
+							}
+							for (var i = 0; i < data.length; i++) {
+								questionStr += "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" + data[i].headFace + "></span></a><div class='name'><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+							}
+							question.innerHTML = questionStr;
+							mui("#data-question").on("tap", ".ask", function() {
+								var tId = this.getAttribute("t");
+								var uId = plus.storage.getItem('userId');
+								if (uId <= 0) {
+									mui.openWindow({
+										url: "login.html",
+										id: "login",
+										waiting: {
+											autoShow: false
+										}
+									})
+									return false;
+								}
+								mui.openWindow({
+									url: "askQuestion.html",
+									id: "askQuestion",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+								return false;
+							}, false)
+							mui("#data-question").on("tap", ".item", function() {
+								var tId = this.getAttribute("id");
+								mui.openWindow({
+									url: "teacherDetail.html",
+									id: "teacherDetail",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+								return false;
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					})
+					//获取首页统计数据
+				mui.ajax(sumData, {
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						renqi.innerText = "人气：" + (data.renQi / 10000).toFixed(1) + "万人";
+						answerCount.innerText = "回答:" + data.answerCount + "个";
+						ideaCount.innerText = "观点：" + data.ideas + "篇";
+						fans.innerText = "粉丝：" + data.fans + "人";
+					},
+					error: function(xhr,type,e) {
+						mui.toast('获取数据失败，请稍后重试:'+type);
+					}
+				})
+				dish.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "dishList.html",
+							id: "dishList",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//名师问答
+				intoAsk.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "answerList.html",
+							id: "answerList",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//投资观点
+				intrial.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "intrvlIdea.html",
+							id: "intrvlIdea",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//推荐名师
+				findTeacher.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "teacherList.html",
+							id: "teacherList",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//进入登录
+				intoLogin.addEventListener("tap", function() {
+						var uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+						} else {
+							mui.openWindow({
+								url: "vipcenter.html",
+								id: "vipcenter",
+								waiting: {
+									autoShow: false
+								}
+							})
+						}
+					}, false)
+					//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到热门
+				trhreeBoard.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "trhreeBoard.html",
+							id: "trhreeBoard",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到直播
+				liveList.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "liveList.html",
+							id: "liveList",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到名家
+				attentions.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "attention.html",
+						id: "attention",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				}, false)
+			})
+		</script>
 	</body>
 
 </html>

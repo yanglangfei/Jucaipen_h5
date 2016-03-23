@@ -195,13 +195,13 @@
 					var proDataPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
 					var ctyDatapath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
 					var areaDataPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
-					var sure = document.getElementById("sure");
-					var proPickerButton = document.getElementById('pro');
-					var provinceLay = document.getElementById("province");
-					var adrButton = document.getElementById("adr");
-					var areaLay = document.getElementById("county");
-					var ctyButton = document.getElementById("cty");
-					var cityLay = document.getElementById("city");
+					var sure = doc.getElementById("sure");
+					var proPickerButton = doc.getElementById('pro');
+					var provinceLay = doc.getElementById("province");
+					var adrButton = doc.getElementById("adr");
+					var areaLay = doc.getElementById("county");
+					var ctyButton = doc.getElementById("cty");
+					var cityLay = doc.getElementById("city");
 					var proPicker = new $.PopPicker();
 					var ctyPicker = new $.PopPicker();
 					var areaPicker = new $.PopPicker();
@@ -219,16 +219,16 @@
 							success: function(data) {
 								for (var i = 0; i < data.length; i++) {
 									if (i < data.length - 1) {
-										proData = proData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+										proData += "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
 									} else {
-										proData = proData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+										proData += "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
 									}
 								}
 								var jsonStr = eval((proData));
 								proPicker.setData(jsonStr);
 							},
-							error: function(e) {
-								mui.toast('获取信息失败，请稍后重试');
+							error: function(xhr,type,e) {
+								mui.toast('获取信息失败，请稍后重试:'+type);
 							}
 						})
 					}
@@ -245,16 +245,16 @@
 							success: function(data) {
 								for (var i = 0; i < data.length; i++) {
 									if (i < data.length - 1) {
-										ctyData = ctyData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+										ctyData +="{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
 									} else {
-										ctyData = ctyData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+										ctyData +="{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
 									}
 								}
 								var jsonStr = eval((ctyData));
 								ctyPicker.setData(jsonStr);
 							},
-							error: function(e) {
-								mui.toast('获取数据失败，请稍后重试');
+							error: function(xhr,type,e) {
+								mui.toast('获取数据失败，请稍后重试:'+type);
 							}
 						})
 					}
@@ -271,16 +271,16 @@
 							success: function(data) {
 								for (var i = 0; i < data.length; i++) {
 									if (i < data.length - 1) {
-										areaData = areaData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+										areaData += "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
 									} else {
-										areaData = areaData + "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+										areaData += "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
 									}
 								}
 								var jsonStr = eval((areaData));
 								areaPicker.setData(jsonStr);
 							},
-							error: function(e) {
-								mui.toast('获取数据失败，请稍后重试');
+							error: function(xhr,type,e) {
+								mui.toast('获取数据失败，请稍后重试:'+type);
 							}
 						})
 					}

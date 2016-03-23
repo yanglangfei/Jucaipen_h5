@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -16,166 +17,12 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var newsListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
-				var typeLay = document.getElementById("typeLay");
-				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
-				var loading = document.getElementById("loaging");
-				var index = document.getElementById("index");
-				var trhreeBoard = document.getElementById("trhreeBoard");
-				var liveList = document.getElementById("liveList");
-				var famousDish = document.getElementById("famousDish");
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(plus.webview.currentWebview(),styles);
-				//获取分类信息
-				var str = typeLay.innerHTML;
-				loading.style.display = 'block';
-				mui.ajax(newsListPath, {
-						type: "post",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loading.style.display = 'none';
-							for (var i = 0; i < data.length; i++) {
-								var typeName = data[i].name;
-								var item = data[i].item;
-								str = str + "<div class='xiangmu_t'><h3>" + typeName + "</h3><a id='mo' sId=" + data[i].smallId 
-								+ " bId=" + data[i].bigId + " style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
-								for (var j = 0; j < item.length; j++) {
-									var title = item[j].title;
-									var id = item[j].id;
-									var desc = item[j].desc;
-									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>"
-									+ "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
-								}
-								str = str + "</ul></div>";
-								typeLay.innerHTML = str;
-							}
-							typeLay.innerHTML = str;
-							if(data.length>0){
-								mui(".layer").on("tap", "li", function() {
-								var id = this.getAttribute("id");
-								mui.openWindow({
-									url: "newsDetail.html",
-									id: "newsDetail",
-									extras: {
-										newsId: id
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-							mui("#typeLay").on("tap", "#mo", function() {
-								var sId = this.getAttribute("sId");
-								var bId = this.getAttribute("bId");
-								mui.openWindow({
-									url: "news/moreNews.html",
-									id: "moreNews",
-									extras: {
-										bigId: bId,
-										smallId: sId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-					//进入登录界面
-				pageTop1_show_login_link.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-					} else {
-						mui.openWindow({
-							url: "vipcenter.html",
-							id: "vipcenter",
-							waiting: {
-								autoShow: false
-							}
-						})
-					}
-				},false)
-				//跳转到首页
-				index.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "index.html",
-							id: "index",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到热门
-				trhreeBoard.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "trhreeBoard.html",
-							id: "trhreeBoard",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到直播
-				liveList.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "liveList.html",
-							id: "liveList",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到名家
-				famousDish.addEventListener('tap', function() {
-					mui.openWindow({
-						url: "famousDish.html",
-						id: "famousDish",
-						waiting: {
-							autoShow: false
-						},
-						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-						}
-					})
-				},false)
-			})
-		</script>
+		<script type="text/javascript" src="js/style.js"></script>
 	</head>
 
 	<body>
-
 		<div class="wrapper">
 			<!------------头部--------------->
-
 			<header class="header">
 				<div class="head">
 					<div id="pageTop1_show_login_link" class="denglu"> <a><i><img src="image/unlogin.png" /></i><em></em></a></div>
@@ -231,6 +78,158 @@
 				</div>
 			</div>
 		</footer>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var newsListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
+				var doc=document;
+				var typeLay = doc.getElementById("typeLay");
+				var pageTop1_show_login_link = doc.getElementById("pageTop1_show_login_link");
+				var loading = doc.getElementById("loaging");
+				var index = doc.getElementById("index");
+				var trhreeBoard = doc.getElementById("trhreeBoard");
+				var liveList = doc.getElementById("liveList");
+				var famousDish = doc.getElementById("famousDish");
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(plus.webview.currentWebview(), styles);
+				//获取分类信息
+				var str = typeLay.innerHTML;
+				loading.style.display = 'block';
+				mui.ajax(newsListPath, {
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							for (var i = 0; i < data.length; i++) {
+								var typeName = data[i].name;
+								var item = data[i].item;
+								str += "<div class='xiangmu_t'><h3>" + typeName + "</h3><a id='mo' sId=" + data[i].smallId + " bId=" + data[i].bigId + " style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
+								for (var j = 0; j < item.length; j++) {
+									var title = item[j].title;
+									var id = item[j].id;
+									var desc = item[j].desc;
+									str += "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+								}
+								str += "</ul></div>";
+								typeLay.innerHTML = str;
+							}
+							typeLay.innerHTML = str;
+							if (data.length > 0) {
+								mui(".layer").on("tap", "li", function() {
+									var id = this.getAttribute("id");
+									mui.openWindow({
+										url: "newsDetail.html",
+										id: "newsDetail",
+										extras: {
+											newsId: id
+										},
+										waiting: {
+											autoShow: false
+										}
+									})
+								}, false)
+								mui("#typeLay").on("tap", "#mo", function() {
+									var sId = this.getAttribute("sId");
+									var bId = this.getAttribute("bId");
+									mui.openWindow({
+										url: "news/moreNews.html",
+										id: "moreNews",
+										extras: {
+											bigId: bId,
+											smallId: sId
+										},
+										waiting: {
+											autoShow: false
+										}
+									})
+								}, false)
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+					//进入登录界面
+				pageTop1_show_login_link.addEventListener("tap", function() {
+						var uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+						} else {
+							mui.openWindow({
+								url: "vipcenter.html",
+								id: "vipcenter",
+								waiting: {
+									autoShow: false
+								}
+							})
+						}
+					}, false)
+					//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到热门
+				trhreeBoard.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "trhreeBoard.html",
+							id: "trhreeBoard",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到直播
+				liveList.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "liveList.html",
+							id: "liveList",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到名家
+				famousDish.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "famousDish.html",
+						id: "famousDish",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				}, false)
+			})
+		</script>
 	</body>
 
 </html>

@@ -6,84 +6,81 @@
     	时间：2016-02-04
     	描述：消息中心️
     -->
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/mui.min.js" ></script>
-		<script type="text/javascript">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function(){
-				var getInfoPath="http://121.40.227.121:8080/AccumulateWealth/accumulate/infoCenter";
-				var uId=plus.storage.getItem('userId');
-				var noDataLay=document.getElementById("layer-nodata");
-				var currentPage=1;
-				getInfo(currentPage);
-				//获取个人消息
-				function getInfo(p){
-					mui.ajax(getInfoPath,{
-						data:{
-							userId:uId,
-							pager:p
-						},
-						dataType:"json",
-						type:"post",
-						timeout:10000,
-						success: function(data){
-							if(data.length>0){
-								
-							}else{
-								noDataLay.style.display='block';
-							}
-						},
-						error: function(e){
-							mui.toast('获取数据失败，请稍后重试');
-							
-						}
-					})
-				}
-				
-				
-			})
-		</script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
 		<title>
 
 		</title>
 		<style type="text/css">
-			.user_bodybg{
+			.user_bodybg {
 				background: #efeff4;
 			}
-			 
 		</style>
 	</head>
 
 	<body class="user_bodybg">
-			<div class="wrapper">
-				<!------------头部--------------->
+		<div class="wrapper">
+			<!------------头部--------------->
 
-				<header class="header">
-					<div class="head">
-						<div class="denglu1 mui-action-back">
-							<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-						</div>
-						<div class="logo1 mui-action-back" >
-							<span style="margin-top:0.2rem;">消息中心</span>
-						</div>
+			<header class="header">
+				<div class="head">
+					<div class="denglu1 mui-action-back">
+						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
-				</header>
-				<!------------账户资料------------->
-				<div class="userbody">
-					<p class="more"><a  class="linkmore" id="moreInfo" style="display: none;background: #e8e8e8;">查看更多>></a></p>
+					<div class="logo1 mui-action-back">
+						<span style="margin-top:0.2rem;">消息中心</span>
+					</div>
 				</div>
-				<!------------底部定位层---------->
-				<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label> 
-				</div>
-
+			</header>
+			<!------------账户资料------------->
+			<div class="userbody">
+				<p class="more"><a class="linkmore" id="moreInfo" style="display: none;background: #e8e8e8;">查看更多>></a></p>
 			</div>
+			<!------------底部定位层---------->
+			<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+				<label style="font-size: 25px;">暂无数据</label>
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var getInfoPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/infoCenter";
+				var uId = plus.storage.getItem('userId');
+				var noDataLay = document.getElementById("layer-nodata");
+				var currentPage = 1;
+				getInfo(currentPage);
+				//获取个人消息
+				function getInfo(p) {
+					mui.ajax(getInfoPath, {
+						data: {
+							userId: uId,
+							pager: p
+						},
+						dataType: "json",
+						type: "post",
+						timeout: 10000,
+						success: function(data) {
+							if (data.length > 0) {
+							} else {
+								noDataLay.style.display = 'block';
+							}
+						},
+						error: function(e) {
+							mui.toast('获取数据失败，请稍后重试');
+						}
+					})
+				}
+			})
+		</script>
 	</body>
 
 </html>

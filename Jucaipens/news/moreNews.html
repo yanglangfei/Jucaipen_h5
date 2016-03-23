@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -8,80 +9,7 @@
 		<link href="../css/tuch.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
-		<script type="text/javascript" src="../js/style.js" ></script>
-		<script type="text/javascript">
-			mui.init({ 
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var moreNews = "http://121.40.227.121:8080/AccumulateWealth/accumulate/tapeAnalysis";
-				var more = document.getElementById("moreNews");
-				var web = plus.webview.currentWebview();
-				var loadNews = document.getElementById("loadNews");
-				var smallId = web.smallId;
-				var bigId = web.bigId;
-				var totlePage;
-				var loadMore=document.getElementById("loadMore");
-				var currentPage = 1;
-				var styles={};
-				styles.scrollIndicator='none';
-				controlScrollBar(web,styles);
-				findNews(currentPage);
-				loadNews.style.display = 'block';
-				//获取更多新闻
-				more.addEventListener("tap", function() {
-					more.style.display='none';
-					if (currentPage < totlePage) {
-						findNews(++currentPage);
-						loadMore.style.display='block';
-					}
-				})
-				//获取所有私募动态
-				function findNews(p) {
-					var layStr = newsLay.innerHTML;
-					mui.ajax(moreNews, {
-						data: {
-							bigId: bigId,
-							smallId: smallId,
-							pager: p
-						},
-						type: 'get',
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loadNews.style.display = 'none';
-							if(loadMore.style.display='block'){
-								loadMore.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[i].totlePager;
-								layStr = layStr + "<li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
-							}
-							newsLay.innerHTML = layStr;
-							if (currentPage < totlePage) {
-								more.style.display = 'block';
-							} else {
-								more.style.display = 'none';
-							}
-							mui("#newsLay").on("tap", "li", function() {
-								var id = this.getAttribute("id");
-								mui.openWindow({
-									url: "../newsDetail.html",
-									id: "newsDetail",
-									extras: {
-										newsId: id
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							})
-						},
-						error: function(e) {}
-					})
-				}
-			})
-		</script>
+		<script type="text/javascript" src="../js/style.js"></script>
 		<title>
 		</title>
 	</head>
@@ -115,22 +43,92 @@
 							</ul>
 							<div>
 								<p><a class="linkmore" id="moreNews" style="display: none;">查看更多>></a></p>
-								<img src="../image/loading-0.gif" style="display:none;margin: auto;"  id="loadMore"/>
+								<img src="../image/loading-0.gif" style="display:none;margin: auto;" id="loadMore" />
 							</div>
 						</div>
 					</div>
-					<!------------------------私募股权知识------------------------->
-
 				</div>
 			</div>
-
-			<!------------底部定位层---------->
 		</div>
-
 		<div style="text-align: center;margin-top: 60%;display: none;" id="loadNews">
 			<img src="../image/loading-0.gif" />
-
 		</div>
+
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var moreNews = "http://121.40.227.121:8080/AccumulateWealth/accumulate/tapeAnalysis";
+				var more = document.getElementById("moreNews");
+				var web = plus.webview.currentWebview();
+				var loadNews = document.getElementById("loadNews");
+				var smallId = web.smallId;
+				var bigId = web.bigId;
+				var totlePage;
+				var loadMore = document.getElementById("loadMore");
+				var currentPage = 1;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				controlScrollBar(web, styles);
+				findNews(currentPage);
+				loadNews.style.display = 'block';
+				//获取更多新闻
+				more.addEventListener("tap", function() {
+						more.style.display = 'none';
+						if (currentPage < totlePage) {
+							findNews(++currentPage);
+							loadMore.style.display = 'block';
+						}
+					})
+					//获取所有私募动态
+				function findNews(p) {
+					var layStr = newsLay.innerHTML;
+					mui.ajax(moreNews, {
+						data: {
+							bigId: bigId,
+							smallId: smallId,
+							pager: p
+						},
+						type: 'get',
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loadNews.style.display = 'none';
+							if (loadMore.style.display = 'block') {
+								loadMore.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePager;
+								layStr += "<li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
+							}
+							newsLay.innerHTML = layStr;
+							if (currentPage < totlePage) {
+								more.style.display = 'block';
+							} else {
+								more.style.display = 'none';
+							}
+							mui("#newsLay").on("tap", "li", function() {
+								var id = this.getAttribute("id");
+								mui.openWindow({
+									url: "../newsDetail.html",
+									id: "newsDetail",
+									extras: {
+										newsId: id
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							})
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
 
 	</body>
 

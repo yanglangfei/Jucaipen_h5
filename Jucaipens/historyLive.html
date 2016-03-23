@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<!--
+	<!--
 	作者：185601452@qq.com
 	时间：2016-03-11
 	描述：线下会场
 -->
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -12,270 +13,8 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-			mui.plusReady(function() {
-				var web = plus.webview.currentWebview();
-				var get_video = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
-				var getVideoInfo = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoDetaile";
-				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
-				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
-				var addGoodPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood';
-				var video = document.getElementById("video");
-				var teach = document.getElementById("teachInfo");
-				var commBody = document.getElementById("commMsg");
-				var video_comment = document.getElementById("video-comment");
-				var videoTitle = document.getElementById("show_Video_title");
-				var hitCount = document.getElementById("show_Video_hitCount");
-				var showDate = document.getElementById("show_Video_InsertDate");
-				var commList = document.getElementById("page_commenlist");
-				var plain = document.getElementById("plain");
-				var liveComm_more = document.getElementById("liveComm_more");
-				var currentPage = 1;
-				var respStr;
-				var parentId;
-				var totlePage;
-				var isLand;
-				var btn_send = document.getElementById("btn_send");
-				var commCount = document.getElementById("show_Video_CommCount");
-				var id = web.liveId;
-				var styles={};
-				styles.scrollIndicator='none';
-				controlScrollBar(web,styles);
-				if (id <= 0) {
-					return;
-				}
-				//获取视频资源
-				mui.ajax(get_video, {
-					data: {
-						typeId: 1,
-						id: id
-					},
-					dataType: "json",
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						video.src = data.videoUrl;
-						//判断是否全屏
-				document.addEventListener('fullscreenchange', function() {
-					if (!isLand) {
-						isLand = true;
-						plus.screen.lockOrientation('landscape-primary');
-					} else {
-						isLand = false;
-						plus.screen.unlockOrientation();
-					}
-				}, false);
-				document.addEventListener('mozfullscreenchange', function() {
-					if (!isLand) {
-						isLand = true;
-						document.mozRequestFullScreen();
-						plus.screen.lockOrientation('landscape-primary');
-					} else {
-						isLand = false;
-						document.mozCancelFullScreen();
-						plus.screen.unlockOrientation();
-					}
-				}, false); 
-				document.addEventListener('webkitfullscreenchange', function() {
-					if (!isLand) {
-						isLand = true;
-						document.webkitRequestFullScreen();
-						plus.screen.lockOrientation('landscape-primary');
-					} else {
-						isLand = false;
-						document.webkitCancelFullScreen();
-						plus.screen.unlockOrientation();
-					}
-				}, false);
-						
-					},
-					error: function(e) {
-						mui.toast('获取数据失败，请稍后重试');
-					}
-				})
-				
-				//获取视频相关信息
-				mui.ajax(getVideoInfo, {
-					data: {
-						videoId: id
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						var myDate = subStr(2, data.insertDate);
-						videoTitle.innerHTML = data.title;
-						hitCount.innerHTML = data.hitCount;
-						showDate.innerHTML = myDate;
-						plain.innerHTML = data.title;
-					},
-					error: function(e) {
-						mui.toast('获取数据失败，请稍后重试');
-					}
-				})
-				btn_send.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login"
-						})
-						return false;
-					}
-					if (commBody.value.length <= 0) {
-						plus.nativeUI.toast("评论内容不能为空");
-						return false;
-					}
-					var wait=plus.nativeUI.showWaiting('正在提交评论信息，请稍等...');
-					addRemarks(uId, id, parentId,wait);
-				},false)
-				getLiveComment(currentPage);
-				//加载更多评论信息
-				liveComm_more.addEventListener('tap', function() {
-					if (currentPage < totlePage) {
-						getLiveComment(++currentPage);
-					}
-				},false)
-				
-				/*
-				 * 发表评论  回复
-				 * typeId  0  新闻评论   1  视频评论
-				 * classId 0  评论       非0  回复
-				 */
-				function addRemarks(uId, nId, cId,wait) {
-					mui.ajax(add_remark, {
-						data: {
-							typeId: 1,
-							userId: uId,
-							classId: cId,
-							newsId: nId,
-							bodys: commBody.value + respStr
-						},
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							wait.close();
-							if (data.ret_code == 0) {
-								commBody.value = '';
-								plus.nativeUI.toast("评论发表成功");
-							} else {
-								plus.nativeUI.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							wait.close();
-							plus.nativeUI.toast("连接失败");
-						}
-					})
-				}
-
-				function getLiveComment(p) {
-					//获取评论列表
-					var commUrl = "";
-					mui.ajax(querry_comm, {
-						data: {
-							typeId: 1,
-							id: id,
-							pager: p
-						},
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							commCount.innerHTML = "共" + data.length + "条";
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[i].totlePage;
-								var myDate = subStr(1, data[i].insertDate);
-								var logo = data[i].userLogo;
-								var body = data[i].body;
-								if (logo.indexOf('121.40.227.121') > 0) {
-									//app 头像
-									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
-								}
-								commUrl = commUrl + " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" 
-								+ " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good' tag=" 
-								+ data[i].id + "><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em >" + data[i].goodCount + "</em></a></span>" 
-								+ "  <span class='comm' tag=" + data[i].id + " ns=" + data[i].userName + " bs=" + body + "><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>"
-								+ " </h4><span class='bodys' >" + body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>";
-							}
-							commList.innerHTML = commUrl;
-							if (currentPage < totlePage) {
-								liveComm_more.style.display = 'block';
-							} else {
-								liveComm_more.style.display = 'none';
-							}
-							//评论图片处理
-							if (body != null) {
-								var imgs = document.getElementsByTagName("img");
-								for (var i = 0; i < imgs.length; i++) {
-									if (imgs[i].src.indexOf('gif') > 0) {
-										imgs[i].style.width = '28px';
-										imgs[i].style.height = '28px';
-									}
-								}
-							}
-							if (data.length > 0) {
-								//点赞
-								mui("#page_commenlist").on('tap', '.good', function() {
-										var usId = plus.storage.getItem('userId');
-										var coId = this.getAttribute('tag');
-										if (usId <= 0) {
-											mui.openWindow({
-												url: "login.html",
-												id: "login"
-											})
-											return false;
-										}
-										addGoods(usId, coId);
-									})
-									//回复
-								mui("#page_commenlist").on('tap', '.comm', function() {
-									parentId = this.getAttribute('tag');
-									var name = this.getAttribute('ns');
-									var body = this.getAttribute('bs');
-									respStr = "//@" + name + ":" + body;
-									commBody.placeholder = "回复" + name + "的评论：";
-								})
-							}
-						},
-						error: function(e) {}
-					})
-				}
-				//点赞
-				function addGoods(usId, coId) {
-					mui.ajax(addGoodPath, {
-						data: {
-							userId: usId,
-							commId: coId
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code == 0) {
-								mui.toast('点赞成功');
-							} else {
-								mui.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-						}
-					})
-				}
-				//绑定默认图片
-				function isNull(str) {
-					if (str.length <= 0 || str == null) {
-						return 'image/head.png';
-					}
-					return str;
-				}
-			})
-		</script>
-
 		<style type="text/css">
 			html {
 				overflow-x: hidden;
@@ -408,6 +147,264 @@
 			</div>
 
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var get_video = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
+				var getVideoInfo = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoDetaile";
+				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
+				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
+				var addGoodPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood';
+				var video = document.getElementById("video");
+				var teach = document.getElementById("teachInfo");
+				var commBody = document.getElementById("commMsg");
+				var video_comment = document.getElementById("video-comment");
+				var videoTitle = document.getElementById("show_Video_title");
+				var hitCount = document.getElementById("show_Video_hitCount");
+				var showDate = document.getElementById("show_Video_InsertDate");
+				var commList = document.getElementById("page_commenlist");
+				var plain = document.getElementById("plain");
+				var liveComm_more = document.getElementById("liveComm_more");
+				var currentPage = 1;
+				var respStr;
+				var parentId;
+				var totlePage;
+				var isLand;
+				var btn_send = document.getElementById("btn_send");
+				var commCount = document.getElementById("show_Video_CommCount");
+				var id = web.liveId;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				controlScrollBar(web, styles);
+				if (id <= 0) {
+					return;
+				}
+				//获取视频资源
+				mui.ajax(get_video, {
+						data: {
+							typeId: 1,
+							id: id
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							video.src = data.videoUrl;
+							//判断是否全屏
+							document.addEventListener('fullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									plus.screen.unlockOrientation();
+								}
+							}, false);
+							document.addEventListener('mozfullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									document.mozRequestFullScreen();
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									document.mozCancelFullScreen();
+									plus.screen.unlockOrientation();
+								}
+							}, false);
+							document.addEventListener('webkitfullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									document.webkitRequestFullScreen();
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									document.webkitCancelFullScreen();
+									plus.screen.unlockOrientation();
+								}
+							}, false);
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					})
+					//获取视频相关信息
+				mui.ajax(getVideoInfo, {
+					data: {
+						videoId: id
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						var myDate = subStr(2, data.insertDate);
+						videoTitle.innerHTML = data.title;
+						hitCount.innerHTML = data.hitCount;
+						showDate.innerHTML = myDate;
+						plain.innerHTML = data.title;
+					},
+					error: function(xhr,type,e) {
+						mui.toast('获取数据失败，请稍后重试:'+type);
+					}
+				})
+				btn_send.addEventListener("tap", function() {
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+						return false;
+					}
+					if (commBody.value.length <= 0) {
+						plus.nativeUI.toast("评论内容不能为空");
+						return false;
+					}
+					var wait = plus.nativeUI.showWaiting('正在提交评论信息，请稍等...');
+					addRemarks(uId, id, parentId, wait);
+				}, false)
+				getLiveComment(currentPage);
+				//加载更多评论信息
+				liveComm_more.addEventListener('tap', function() {
+						if (currentPage < totlePage) {
+							getLiveComment(++currentPage);
+						}
+					}, false)
+					/*
+					 * 发表评论  回复
+					 * typeId  0  新闻评论   1  视频评论
+					 * classId 0  评论       非0  回复
+					 */
+				function addRemarks(uId, nId, cId, wait) {
+					mui.ajax(add_remark, {
+						data: {
+							typeId: 1,
+							userId: uId,
+							classId: cId,
+							newsId: nId,
+							bodys: commBody.value + respStr
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							wait.close();
+							if (data.ret_code == 0) {
+								commBody.value = '';
+								plus.nativeUI.toast("评论发表成功");
+							} else {
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							wait.close();
+							plus.nativeUI.toast("连接失败:"+type);
+						}
+					})
+				}
+
+				function getLiveComment(p) {
+					//获取评论列表
+					var commUrl = "";
+					mui.ajax(querry_comm, {
+						data: {
+							typeId: 1,
+							id: id,
+							pager: p
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							commCount.innerHTML = "共" + data.length + "条";
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								var myDate = subStr(1, data[i].insertDate);
+								var logo = data[i].userLogo;
+								var body = data[i].body;
+								if (logo.indexOf('121.40.227.121') > 0) {
+									//app 头像
+									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
+								}
+								commUrl += " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" + " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good' tag=" + data[i].id + "><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em >" + data[i].goodCount + "</em></a></span>" + "  <span class='comm' tag=" + data[i].id + " ns=" + data[i].userName + " bs=" + body + "><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>";
+							}
+							commList.innerHTML = commUrl;
+							if (currentPage < totlePage) {
+								liveComm_more.style.display = 'block';
+							} else {
+								liveComm_more.style.display = 'none';
+							}
+							//评论图片处理
+							if (body != null) {
+								var imgs = document.getElementsByTagName("img");
+								for (var i = 0; i < imgs.length; i++) {
+									if (imgs[i].src.indexOf('gif') > 0) {
+										imgs[i].style.width = '28px';
+										imgs[i].style.height = '28px';
+									}
+								}
+							}
+							if (data.length > 0) {
+								//点赞
+								mui("#page_commenlist").on('tap', '.good', function() {
+										var usId = plus.storage.getItem('userId');
+										var coId = this.getAttribute('tag');
+										if (usId <= 0) {
+											mui.openWindow({
+												url: "login.html",
+												id: "login"
+											})
+											return false;
+										}
+										addGoods(usId, coId);
+									})
+									//回复
+								mui("#page_commenlist").on('tap', '.comm', function() {
+									parentId = this.getAttribute('tag');
+									var name = this.getAttribute('ns');
+									var body = this.getAttribute('bs');
+									respStr = "//@" + name + ":" + body;
+									commBody.placeholder = "回复" + name + "的评论：";
+								})
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//点赞
+				function addGoods(usId, coId) {
+					mui.ajax(addGoodPath, {
+						data: {
+							userId: usId,
+							commId: coId
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								mui.toast('点赞成功');
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//绑定默认图片
+				function isNull(str) {
+					if (str.length <= 0 || str == null) {
+						return 'image/head.png';
+					}
+					return str;
+				}
+			})
+		</script>
 
 	</body>
 

@@ -13,171 +13,8 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var commPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
-				var addExchangePath = "http://192.168.1.86:8080/AccumulateWealth/jucaipen/addExChange";
-				var commLay = document.getElementById("commLay");
-				var today = document.getElementById("today");
-				var communit = document.getElementById("communit");
-				var commTitle = document.getElementById("commTitle");
-				var buttons = document.getElementById("button");
-				var getMore = document.getElementById("getMore-comm");
-				var textareas = document.getElementById("textarea");
-				var loading = document.getElementById("loading");
-				var loadMore = document.getElementById("loadMore");
-				var getMore = document.getElementById("getMore-comm");
-				var nodataLay=document.getElementById("layer-nodata");
-				var web = plus.webview.currentWebview();
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				var title = web.title;
-				var liveId = web.liveId;
-				var currentPage=1;
-				var totlePage;
-				commTitle.innerHTML = title + "直播室";
-				loading.style.display = 'block';
-				getRemarkList(currentPage);
-				getMore.addEventListener("tap",function(){
-					getMore.style.display='none';
-					if(currentPage<totlePage){
-						loadMore.style.display='block';
-						getRemarkList(++currentPage);
-					}
-				},false)
-				
-				//获取评论列表
-				function getRemarkList(p) {
-					var commStr = commLay.innerHTML;
-					mui.ajax(commPath, {
-						data: {
-							liveId: liveId,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loading.style.display = 'none';
-							if(loadMore.style.display='block'){
-								loadMore.style.display='none';
-							}
-							if(data.length<=0){
-								nodataLay.style.display='block';
-							}else{
-								nodataLay.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage=data[0].totlePage;
-								var myDate = subStr(1, data[i].insertDate);
-								var logo = data[i].userLogo;
-								if (logo.indexOf('121.40.227.121') > 0) {
-									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
-								}
-								commStr = commStr + "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" 
-								+ isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name' style='margin-left:15px;'>"
-								+ data[i].userName + "</span><span class='u_date' style='margin-left:15px;'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user' index="
-								+data[i].id+" un="+data[i].userName+"  bs="+data[i].bodys+"></a>" + "</div><div class='bodys' style='margin-top:5px;'>" 
-								+ data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
-							}
-							commLay.innerHTML = commStr;
-							if(currentPage<totlePage){
-								getMore.style.display='block';
-							}else{
-								getMore.style.display='none';
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					},false)
-				}
-				today.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "txtLive.html",
-						id: "txtLive",
-						extras: {
-							liveId: liveId,
-							title: title
-						},
-						waiting: {
-							autoShow: false
-						}
-					})
-				},false)
-				communit.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "communite.html",
-							id: "communite",
-							waiting: {
-								autoShow: false
-							}
-						})
-					},false)
-					//提交评论信息
-				buttons.addEventListener("tap", function() {
-					var userId = plus.storage.getItem("userId");
-					if (userId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-						return;
-					}
-					var textareas_val = textareas.value;
-					if (textareas_val.length <= 0) {
-						plus.nativeUI.toast("交流信息不能为空");
-						return;
-					}
-					var wait=plus.nativeUI.showWaiting('正在提交数据，请稍等...');
-					addExchangeFN(userId, textareas_val,wait);
-				},false)
-
-				function isNull(str) {
-					if (str.length <= 0) {
-						str = "image/jucaipen.png"
-					}
-					return str;
-				}
-				//添加交流信息
-				function addExchangeFN(uId, body,wait) {
-					mui.ajax(addExchangePath, {
-						data: {
-							userId: uId,
-							liveId: liveId,
-							bodys:body
-						},
-						dataType: "json",
-						type: "post",
-						timeout: 10000,
-						success: function(data) {
-							wait.close();
-							if (data.ret_code == 0) {
-								textareas.value='';
-								plus.nativeUI.toast("提交交流信息成功");
-							} else {
-								plus.nativeUI.toast("提交交流信息失败");
-							}
-						},
-						error: function(e) {
-							wait.close();
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-			})
-		</script>
-
 		<style type="text/css">
 			#textarea {
 				height: 2rem;
@@ -260,6 +97,164 @@
 			</div>
 
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var commPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/communicationInfo";
+				var addExchangePath = "http://192.168.1.86:8080/AccumulateWealth/jucaipen/addExChange";
+				var commLay = document.getElementById("commLay");
+				var today = document.getElementById("today");
+				var communit = document.getElementById("communit");
+				var commTitle = document.getElementById("commTitle");
+				var buttons = document.getElementById("button");
+				var getMore = document.getElementById("getMore-comm");
+				var textareas = document.getElementById("textarea");
+				var loading = document.getElementById("loading");
+				var loadMore = document.getElementById("loadMore");
+				var getMore = document.getElementById("getMore-comm");
+				var nodataLay = document.getElementById("layer-nodata");
+				var web = plus.webview.currentWebview();
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				var title = web.title;
+				var liveId = web.liveId;
+				var currentPage = 1;
+				var totlePage;
+				commTitle.innerHTML = title + "直播室";
+				loading.style.display = 'block';
+				getRemarkList(currentPage);
+				getMore.addEventListener("tap", function() {
+					getMore.style.display = 'none';
+					if (currentPage < totlePage) {
+						loadMore.style.display = 'block';
+						getRemarkList(++currentPage);
+					}
+				}, false)
+				//获取评论列表
+				function getRemarkList(p) {
+					var commStr = commLay.innerHTML;
+					mui.ajax(commPath, {
+						data: {
+							liveId: liveId,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							if (loadMore.style.display = 'block') {
+								loadMore.style.display = 'none';
+							}
+							if (data.length <= 0) {
+								nodataLay.style.display = 'block';
+							} else {
+								nodataLay.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
+								var myDate = subStr(1, data[i].insertDate);
+								var logo = data[i].userLogo;
+								if (logo.indexOf('121.40.227.121') > 0) {
+									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
+								}
+								commStr += "<div class='item' style='margin-left:8px;'>" + "<div class='userhead'><img style='width:50px;height:50px;' src=" + isNull(logo) + "></div>" + "<div class='content'><div class='u_name_face'><span class='u_name' style='margin-left:15px;'>" + data[i].userName + "</span><span class='u_date' style='margin-left:15px;'>" + myDate + "</span></div>" + "<div class='u_re'><a class='Reply_user' index=" + data[i].id + " un=" + data[i].userName + "  bs=" + data[i].bodys + "></a>" + "</div><div class='bodys' style='margin-top:5px;'>" + data[i].bodys + "</div><div class='huifu_185'></div></div></div>";
+							}
+							commLay.innerHTML = commStr;
+							if (currentPage < totlePage) {
+								getMore.style.display = 'block';
+							} else {
+								getMore.style.display = 'none';
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					}, false)
+				}
+				today.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "txtLive.html",
+						id: "txtLive",
+						extras: {
+							liveId: liveId,
+							title: title
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				}, false)
+				communit.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "communite.html",
+							id: "communite",
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//提交评论信息
+				buttons.addEventListener("tap", function() {
+					var userId = plus.storage.getItem("userId");
+					if (userId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
+						})
+						return;
+					}
+					var textareas_val = textareas.value;
+					if (textareas_val.length <= 0) {
+						plus.nativeUI.toast("交流信息不能为空");
+						return;
+					}
+					var wait = plus.nativeUI.showWaiting('正在提交数据，请稍等...');
+					addExchangeFN(userId, textareas_val, wait);
+				}, false)
+
+				function isNull(str) {
+					if (str.length <= 0) {
+						str = "image/jucaipen.png"
+					}
+					return str;
+				}
+				//添加交流信息
+				function addExchangeFN(uId, body, wait) {
+					mui.ajax(addExchangePath, {
+						data: {
+							userId: uId,
+							liveId: liveId,
+							bodys: body
+						},
+						dataType: "json",
+						type: "post",
+						timeout: 10000,
+						success: function(data) {
+							wait.close();
+							if (data.ret_code == 0) {
+								textareas.value = '';
+								plus.nativeUI.toast("提交交流信息成功");
+							} else {
+								plus.nativeUI.toast("提交交流信息失败");
+							}
+						},
+						error: function(xhr,type,e) {
+							wait.close();
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
 	</body>
 
 </html>

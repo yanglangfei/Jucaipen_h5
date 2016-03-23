@@ -13,255 +13,9 @@
 		</title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
-		<!--标准mui.css-->
-		<script type="text/javascript">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var ideaDetail = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaDetaile";
-				var commListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/ideaCommList";
-				var addGoodPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaGoods";
-				var addCommentPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addIdeaComm";
-				var teacherName = document.getElementById("teacherName");
-				var leader = document.getElementById("leader");
-				var times = document.getElementById("time");
-				var titles = document.getElementById("titles");
-				var ideaBody = document.getElementById("ideaBody");
-				var goodsAdd = document.getElementById("goodsAdd");
-				var teacherLogo = document.getElementById("teacherLogo");
-				var vLogo = document.getElementById("vLogo");
-				var zan = document.getElementById("sa_zan");
-				var btn_commen = document.getElementById("btn_commen");
-				var web = plus.webview.currentWebview();
-				var log_commen_list = document.getElementById("commList");
-				var txt_commen = document.getElementById("txt_commen");
-				var id = web.ideaId;
-				var totlePage;
-				var currentPage = 1;
-				var opType;
-				var commId;
-				var lastBody;
-				var name;
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-			    getIdeaDetails();
-				
-				//获取热门观点详细信息
-				function getIdeaDetails(){
-					mui.ajax(ideaDetail, {
-					data: {
-						ideaId: id
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						var myDate = subStr(4, data.insertDate);
-						var body=data.bodys;
-						teacherName.innerText = data.nickName;
-						leader.innerText = data.level;
-						times.innerText = myDate;
-						titles.innerText = data.title;
-						ideaBody.innerHTML = body;
-						goodsAdd.innerText = data.goods;
-						teacherLogo.src = data.headFace;
-						if(body!=null&&body.length>0){
-							var bs=document.getElementsByTagName('img');
-							for(var i=0;i<bs.length;i++){
-								if(bs[i].src.indexOf("attached")>0){
-									var u=bs[i].src.replace('file://',"http://live.jucaipen.com");
-									bs[i].src=u;
-								    bs[i].style.width='100%';
-								    bs[i].addEventListener('tap',function(){
-								    	 document.getElementById("imgFrame").style.display = "block";
-                                     document.getElementById("imgbox").innerHTML = "<img src='" + this.getAttribute("src") + "' />";
-								    document.getElementById("imgbox").style.width='100px';
-								    document.getElementById("imgbox").style.height='200px';
-								    document.getElementById("imgFrame").style.width='100px';
-								    document.getElementById("imgFrame").style.height='200px';
-								    },false)
-								} 
-							}
-						}  
-						var isV = data.isV;
-						if (isV == 0) {
-							vLogo.src = "image/v1.png";
-						} else {
-							vLogo.src = "";
-						}
-					},
-					error: function(e) {
-						mui.toast('连接失败,请稍后重试');
-					}
-				})
-				}
-				queryComments(currentPage);
-				//点赞
-				sa_zan.addEventListener("tap", function() {
-						var uId = plus.storage.getItem("userId");
-						if (uId <= 0) {
-							mui.openWindow({
-								url: "login.html",
-								id: "login",
-								waiting: {
-									autoShow: false
-								}
-							})
-							return;
-						}
-						addGoods(uId);
-					},false)
-					//提交评论信息
-				btn_commen.addEventListener('tap', function() {
-						var uId = plus.storage.getItem('userId');
-						var body=txt_commen.value;
-						if (uId <= 0) {
-							mui.openWindow({
-								url: "login.html",
-								id: "login",
-								waiting: {
-									autoShow: false
-								}
-							})
-							return;
-						}
-						if (body.length <= 0) {
-							mui.toast('评论内容不能为空');
-							return;
-						}
-						if(opType!=1){
-							opType=0;
-							var wait=plus.nativeUI.showWaiting('正在提交评论，请稍等...');
-								addIdeaComment(opType, uId, id, body,0,wait);
-						}else{
-							body=body+"//@"+name+":"+lastBody;
-							var wait=plus.nativeUI.showWaiting('正在提交评论，请稍等...');
-							addIdeaComment(opType, uId, id, body,commId,wait);
-						}
-					},false)
-				
-				document.getElementById("close").addEventListener('tap',function(){
-					document.getElementById("imgFrame").style.display='none';
-				},false);
-				//提交评论信息
-				function addIdeaComment(type, uId, iId, body,cId,wait) {
-					mui.ajax(addCommentPath, {
-						data: {
-							commType: type, //  0   评论   1  回复
-							userId: uId,
-							ideaId: iId,
-							commBodys: body,
-							commId: cId
-						},
-						dataType: "json",
-						type: 'post',
-						timeout: 10000,
-						success: function(data) {
-							wait.close();
-							if (data.ret_code == 0) {
-								mui.toast('添加评论成功');
-								txt_commen.value = '';
-							} else {
-								mui.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							wait.close();
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				//获取评论信息
-				function queryComments(p) {
-					var commStr = log_commen_list.innerHTML;
-					mui.ajax(commListPath, {
-						data: {
-							ideaId: id,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[0].totlePage;
-								var myDate = subStr(1, data[i].insertDate);
-								var face = data[i].faceImage;
-								var body = data[i].commBody;
-								if (body.indexOf("<em class='us'>") > 0) {
-									body = body.replace("<em class='us'>", "");
-								}
-								if (body.indexOf("</em>") > 0) {
-									body = body.replace("</em>", "");
-								}
-								if (body.indexOf("div><br></div>") > 0) {
-									body = body.replace("div><br></div>", "");
-								}
-								if (face.indexOf('121.40.227.121') > 0) {
-									face = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + face;
-								}
-								commStr = commStr + "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'>"
-								+ "<img src="
-								+ isNull(face) + " style='float: left;margin-right: 10%;text-align: right;width:50px;height:50px;border-radius: 50px;'></span>"
-								+ "<h4 style='display: block;float: left;font-size: 1rem;font-weight:normal;width: 40%;margin-left:10px;' >"
-								+ data[i].userName + "</h4>" + "<em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img name=" + data[i].userName
-								+ " id='reply' content='" + body + "'  p="+data[i].commId+" src='image/response.png' style='float:left;margin-right:10px;text-align:right;width:1.2rem;' >" 
-								+ "</em><p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;margin-left:10px;'>"
-								+ myDate + "</p><div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;' >" + data[i].commBody + "</div></div>";
-							}
-							log_commen_list.innerHTML = commStr;
-							mui(".log_commen_list").on("tap", '#reply', function() {
-								//回复评论 
-								name = this.getAttribute('name')
-								lastBody = this.getAttribute('content');
-								commId=this.getAttribute("p");
-								opType = 1;
-								txt_commen.placeholder = '回复' + name + ":";
-							},false)
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				//设置默认图片
-				function isNull(str) {
-					if (str.length <= 0 || str == null) {
-						return 'image/head.png';
-					}
-					return str;
-				}
-				//点赞
-				function addGoods(uId) {
-					mui.ajax(addGoodPath, {
-						data: {
-							userId: uId,
-							ideaId: id
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code == 0) {
-								plus.nativeUI.toast("点赞成功");
-							} else {
-								plus.nativeUI.toast("点赞失败");
-							}
-						},
-						error: function(e) {
-							plus.nativeUI.toast("连接失败");
-						}
-					})
-				}
-			})
-		</script>
-
 		<style type="text/css">
 			.showarticletit {
 				width: 100%;
@@ -443,11 +197,12 @@
 			.tit {
 				margin-top: 50px;
 			}
-			#imgFrame{
-				position:absolute; 
-				 z-index:1000; 
-				 display:none;
-				 top: 50px;
+			
+			#imgFrame {
+				position: absolute;
+				z-index: 1000;
+				display: none;
+				top: 50px;
 			}
 		</style>
 
@@ -524,8 +279,243 @@
 					<input type="button" name="button" id="btn_commen" class="def" value="发表" />
 				</div>
 			</div>
-			<!------------底部定位层---------->
 		</div>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var ideaDetail = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaDetaile";
+				var commListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/ideaCommList";
+				var addGoodPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaGoods";
+				var addCommentPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addIdeaComm";
+				var teacherName = document.getElementById("teacherName");
+				var leader = document.getElementById("leader");
+				var times = document.getElementById("time");
+				var titles = document.getElementById("titles");
+				var ideaBody = document.getElementById("ideaBody");
+				var goodsAdd = document.getElementById("goodsAdd");
+				var teacherLogo = document.getElementById("teacherLogo");
+				var vLogo = document.getElementById("vLogo");
+				var zan = document.getElementById("sa_zan");
+				var btn_commen = document.getElementById("btn_commen");
+				var web = plus.webview.currentWebview();
+				var log_commen_list = document.getElementById("commList");
+				var txt_commen = document.getElementById("txt_commen");
+				var id = web.ideaId;
+				var totlePage;
+				var currentPage = 1;
+				var opType;
+				var commId;
+				var lastBody;
+				var name;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				getIdeaDetails();
+				//获取热门观点详细信息
+				function getIdeaDetails() {
+					mui.ajax(ideaDetail, {
+						data: {
+							ideaId: id
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							var myDate = subStr(4, data.insertDate);
+							var body = data.bodys;
+							teacherName.innerText = data.nickName;
+							leader.innerText = data.level;
+							times.innerText = myDate;
+							titles.innerText = data.title;
+							ideaBody.innerHTML = body;
+							goodsAdd.innerText = data.goods;
+							teacherLogo.src = data.headFace;
+							if (body != null && body.length > 0) {
+								var bs = document.getElementsByTagName('img');
+								for (var i = 0; i < bs.length; i++) {
+									if (bs[i].src.indexOf("attached") > 0) {
+										var u = bs[i].src.replace('file://', "http://live.jucaipen.com");
+										bs[i].src = u;
+										bs[i].style.width = '100%';
+										bs[i].addEventListener('tap', function() {
+											document.getElementById("imgFrame").style.display = "block";
+											document.getElementById("imgbox").innerHTML = "<img src='" + this.getAttribute("src") + "' />";
+											document.getElementById("imgbox").style.width = '100px';
+											document.getElementById("imgbox").style.height = '200px';
+											document.getElementById("imgFrame").style.width = '100px';
+											document.getElementById("imgFrame").style.height = '200px';
+										}, false)
+									}
+								}
+							}
+							var isV = data.isV;
+							if (isV == 0) {
+								vLogo.src = "image/v1.png";
+							} else {
+								vLogo.src = "";
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败:'+type);
+						}
+					})
+				}
+				queryComments(currentPage);
+				//点赞
+				sa_zan.addEventListener("tap", function() {
+						var uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+							return;
+						}
+						addGoods(uId);
+					}, false)
+					//提交评论信息
+				btn_commen.addEventListener('tap', function() {
+					var uId = plus.storage.getItem('userId');
+					var body = txt_commen.value;
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
+						})
+						return;
+					}
+					if (body.length <= 0) {
+						mui.toast('评论内容不能为空');
+						return;
+					}
+					if (opType != 1) {
+						opType = 0;
+						var wait = plus.nativeUI.showWaiting('正在提交评论，请稍等...');
+						addIdeaComment(opType, uId, id, body, 0, wait);
+					} else {
+						body = body + "//@" + name + ":" + lastBody;
+						var wait = plus.nativeUI.showWaiting('正在提交评论，请稍等...');
+						addIdeaComment(opType, uId, id, body, commId, wait);
+					}
+				}, false)
+				document.getElementById("close").addEventListener('tap', function() {
+					document.getElementById("imgFrame").style.display = 'none';
+				}, false);
+				//提交评论信息
+				function addIdeaComment(type, uId, iId, body, cId, wait) {
+					mui.ajax(addCommentPath, {
+						data: {
+							commType: type, //  0   评论   1  回复
+							userId: uId,
+							ideaId: iId,
+							commBodys: body,
+							commId: cId
+						},
+						dataType: "json",
+						type: 'post',
+						timeout: 10000,
+						success: function(data) {
+							wait.close();
+							if (data.ret_code == 0) {
+								mui.toast('添加评论成功');
+								txt_commen.value = '';
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							wait.close();
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//获取评论信息
+				function queryComments(p) {
+					var commStr = log_commen_list.innerHTML;
+					mui.ajax(commListPath, {
+						data: {
+							ideaId: id,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
+								var myDate = subStr(1, data[i].insertDate);
+								var face = data[i].faceImage;
+								var body = data[i].commBody;
+								if (body.indexOf("<em class='us'>") > 0) {
+									body = body.replace("<em class='us'>", "");
+								}
+								if (body.indexOf("</em>") > 0) {
+									body = body.replace("</em>", "");
+								}
+								if (body.indexOf("div><br></div>") > 0) {
+									body = body.replace("div><br></div>", "");
+								}
+								if (face.indexOf('121.40.227.121') > 0) {
+									face = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + face;
+								}
+								commStr += "<div class='item' style='background: #FFF;float: left;width: 100%;border-bottom: 1px solid #EDEDED;padding: 10px 10px 20% 10px;'><span style='float: left;width: 15%;'>" + "<img src=" + isNull(face) + " style='float: left;margin-right: 10%;text-align: right;width:50px;height:50px;border-radius: 50px;'></span>" + "<h4 style='display: block;float: left;font-size: 1rem;font-weight:normal;width: 40%;margin-left:10px;' >" + data[i].userName + "</h4>" + "<em class='commhuifu' style='float: right;text-align: right;width: 1.5rem;line-height: 2rem;'><img name=" + data[i].userName + " id='reply' content='" + body + "'  p=" + data[i].commId + " src='image/response.png' style='float:left;margin-right:10px;text-align:right;width:1.2rem;' >" + "</em><p class='date' style='color: #999;display: block;float: left;width: 60%;font-size: 0.9rem;margin-left:10px;'>" + myDate + "</p><div class='commen_con' id='hf_74' style='width: 98%;float: left;font-size: 0.9rem;color: #666;margin-left: 15%;' >" + data[i].commBody + "</div></div>";
+							}
+							log_commen_list.innerHTML = commStr;
+							mui(".log_commen_list").on("tap", '#reply', function() {
+								//回复评论 
+								name = this.getAttribute('name')
+								lastBody = this.getAttribute('content');
+								commId = this.getAttribute("p");
+								opType = 1;
+								txt_commen.placeholder = '回复' + name + ":";
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//设置默认图片
+				function isNull(str) {
+					if (str.length <= 0 || str == null) {
+						return 'image/head.png';
+					}
+					return str;
+				}
+				//点赞
+				function addGoods(uId) {
+					mui.ajax(addGoodPath, {
+						data: {
+							userId: uId,
+							ideaId: id
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								plus.nativeUI.toast("点赞成功");
+							} else {
+								plus.nativeUI.toast("点赞失败");
+							}
+						},
+						error: function(xhr,type,e) {
+							plus.nativeUI.toast("连接失败:"+type);
+						}
+					})
+				}
+			})
+		</script>
+
 	</body>
 
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head id="Head1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -12,105 +13,13 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var button = document.getElementById("button");
-				var askQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askQuestion";
-				var getTypePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryAskClass";
-				var textfield = document.getElementById("textfield");
-				var choseType=document.getElementById("choseType");
-				var web = plus.webview.currentWebview();
-				var teacherId = web.teacherId;
-				var typeId;
-				//提交咨询数据
-				button.addEventListener("tap", function() {
-					var ques = textfield.value;
-					var userId = plus.storage.getItem("userId");
-					if (userId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-						return;
-					}
-					typeId=choseType.options[choseType.options.selectedIndex].value;
-					if(typeId<=0){
-						mui.toast('请选择分类');
-						return ;
-					}
-					
-					if (ques.length <= 0) {
-						plus.nativeUI.toast('提问内容不能为空');
-						return;
-					}
-					var wait=plus.nativeUI.showWaiting('正在提交信息，请稍等...');
-					submitAskInfo(wait);
-					
-				})
-				
-				//提交咨询信息
-				function submitAskInfo(wait){
-					mui.ajax(askQuestion, {
-						data: {
-							questionType: typeId,
-							userId: userId,
-							askBodys: ques,
-							teacherId: teacherId
-						},
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							wait.close();
-							if (data.ret_code == 0) {
-								plus.nativeUI.toast("咨询问题提交成功");
-								plus.back();
-							} else {
-								plus.nativeUI.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							wait.close();
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				
-				
-				getTypeInfo();
-				//获取提问分类信息
-				function getTypeInfo(){
-					var typeStr="<option value="+(-1)+">请选择分类</option>";
-					mui.ajax(getTypePath,{
-						type:"get",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							for(var i=0;i<data.length;i++){
-								typeStr=typeStr+"<option value="+data[i].classId+">"+data[i].askName+"</option>";
-							}
-							choseType.innerHTML=typeStr;
-						},
-						error: function(e){
-							mui.toast('数据获取失败,请稍后重试');
-						} 
-					})
-				}
-			})
-		</script>
-		
 		<style type="text/css">
-			#button{ 
+			#button {
 				border: 0px;
 				border-radius: 8px;
 			}
-			#button:active{
+			
+			#button:active {
 				background: #CC3300;
 			}
 		</style>
@@ -148,8 +57,95 @@
 				<div class="ask_btn">
 					<input id="button" type="button" value="立即咨询" />
 				</div>
-				<!--------名家问答结束---------->
-				<!------------底部定位层---------->
+
+				<script type="text/javascript" charset="UTF-8">
+					mui.init({
+						swipeBack: true //启用右滑关闭功能
+					});
+					mui.plusReady(function() {
+						var doc=document;
+						var button = doc.getElementById("button");
+						var askQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askQuestion";
+						var getTypePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryAskClass";
+						var textfield = doc.getElementById("textfield");
+						var choseType = doc.getElementById("choseType");
+						var web = plus.webview.currentWebview();
+						var teacherId = web.teacherId;
+						var typeId;
+						//提交咨询数据
+						button.addEventListener("tap", function() {
+							var ques = textfield.value;
+							var userId = plus.storage.getItem("userId");
+							if (userId <= 0) {
+								mui.openWindow({
+									url: "login.html",
+									id: "login",
+									waiting: {
+										autoShow: false
+									}
+								})
+								return;
+							}
+							typeId = choseType.options[choseType.options.selectedIndex].value;
+							if (typeId <= 0) {
+								mui.toast('请选择分类');
+								return;
+							}
+							if (ques.length <= 0) {
+								plus.nativeUI.toast('提问内容不能为空');
+								return;
+							}
+							var wait = plus.nativeUI.showWaiting('正在提交信息，请稍等...');
+							submitAskInfo(wait);
+						})
+						//提交咨询信息
+						function submitAskInfo(wait) {
+							mui.ajax(askQuestion, {
+								data: {
+									questionType: typeId,
+									userId: userId,
+									askBodys: ques,
+									teacherId: teacherId
+								},
+								dataType: "json",
+								type: "get",
+								timeout: 10000,
+								success: function(data) {
+									wait.close();
+									if (data.ret_code == 0) {
+										plus.nativeUI.toast("咨询问题提交成功");
+										plus.back();
+									} else {
+										plus.nativeUI.toast(data.err_msg);
+									}
+								},
+								error: function(xhr,type,e) {
+									wait.close();
+									mui.toast('连接失败，请稍后重试:'+type);
+								}
+							})
+						}
+						getTypeInfo();
+						//获取提问分类信息
+						function getTypeInfo() {
+							var typeStr = "<option value=" + (-1) + ">请选择分类</option>";
+							mui.ajax(getTypePath, {
+								type: "get",
+								dataType: "json",
+								timeout: 10000,
+								success: function(data) {
+									for (var i = 0; i < data.length; i++) {
+										typeStr += "<option value=" + data[i].classId + ">" + data[i].askName + "</option>";
+									}
+									choseType.innerHTML = typeStr;
+								},
+								error: function(xhr,type,e) {
+									mui.toast('数据获取失败,请稍后重试:'+type);
+								}
+							})
+						}
+					})
+				</script>
 
 			</div>
 		</div>

@@ -8,73 +8,13 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" src="js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var txb_oldpwd = document.getElementById("txb_oldpwd");
-				var txb_newpwd = document.getElementById("txb_newpwd");
-				var txb_surepwd = document.getElementById("txb_surepwd");
-				var btn_changeuserpwd = document.getElementById("btn_changeuserpwd");
-				var pwdPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
-				// 修改密码
-				btn_changeuserpwd.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login"
-						})
-						return;
-					}
-					if (txb_oldpwd.value.length <= 0 || txb_newpwd.value.length <= 0 || txb_surepwd.value.length <= 0) {
-						plus.nativeUI.toast("密码不能为空");
-						return;
-					}
-					if (txb_newpwd.value == txb_surepwd.value) {
-						var wait=plus.nativeUI.showWaiting('正在修改密码...');
-						updatePawd(uId,txb_oldpwd.value,txb_newpwd.value,txb_surepwd.value,wait);
-					}else{
-						plus.nativeUI.toast(" 两次密码不一致");
-					}
-				},false)
-
-				function updatePawd(uId, oldPwd, newPwd, repPwd,wait) {
-					mui.ajax(pwdPath, {
-						data: {
-							userId: uId,
-							oldPwd: oldPwd,
-							newPwd: newPwd,
-							repPwd: repPwd
-						},
-						type: "post",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							wait.close();
-							if (data.ret_code == 0) {
-								plus.nativeUI.toast("密码修改成功");
-								mui.back();
-							} else {
-								plus.nativeUI.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							wait.close();
-							mui.toast('连接失败,请稍后重试');
-						}
-					})
-				}
-			})
-		</script>
 		<title></title>
 		<style type="text/css">
 			.mui-content {
 				margin: 60px 15px 0 15px;
 			}
 			
-			.mui-input-group .mui-input-row input{
+			.mui-input-group .mui-input-row input {
 				border: 1px solid #E0E0E0;
 				font-size: 1rem;
 				border-radius: 0.25rem;
@@ -90,7 +30,8 @@
 				font-size: 1rem;
 				font-weight: normal;
 			}
-			#btn_changeuserpwd{
+			
+			#btn_changeuserpwd {
 				width: 100%;
 				margin-top: 15px;
 				background: #bb1121;
@@ -101,7 +42,8 @@
 				border-radius: 8px;
 				font-size: 15px;
 			}
-			#btn_changeuserpwd:active{
+			
+			#btn_changeuserpwd:active {
 				background: #CC3300;
 				height: 50px;
 				border: 0px;
@@ -137,10 +79,69 @@
 					<label>确认密码</label>
 					<input type="password" class="mui-input-clear" placeholder="请输入确认密码" id="txb_surepwd">
 				</div>
-				<button  id="btn_changeuserpwd" class="mui-btn mui-btn-block" type="button">修改密码</button>
+				<button id="btn_changeuserpwd" class="mui-btn mui-btn-block" type="button">修改密码</button>
 			</form>
 		</div>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var txb_oldpwd = document.getElementById("txb_oldpwd");
+				var txb_newpwd = document.getElementById("txb_newpwd");
+				var txb_surepwd = document.getElementById("txb_surepwd");
+				var btn_changeuserpwd = document.getElementById("btn_changeuserpwd");
+				var pwdPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
+				// 修改密码
+				btn_changeuserpwd.addEventListener("tap", function() {
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+						return;
+					}
+					if (txb_oldpwd.value.length <= 0 || txb_newpwd.value.length <= 0 || txb_surepwd.value.length <= 0) {
+						plus.nativeUI.toast("密码不能为空");
+						return;
+					}
+					if (txb_newpwd.value == txb_surepwd.value) {
+						var wait = plus.nativeUI.showWaiting('正在修改密码...');
+						updatePawd(uId, txb_oldpwd.value, txb_newpwd.value, txb_surepwd.value, wait);
+					} else {
+						plus.nativeUI.toast(" 两次密码不一致");
+					}
+				}, false)
 
+				function updatePawd(uId, oldPwd, newPwd, repPwd, wait) {
+					mui.ajax(pwdPath, {
+						data: {
+							userId: uId,
+							oldPwd: oldPwd,
+							newPwd: newPwd,
+							repPwd: repPwd
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							wait.close();
+							if (data.ret_code == 0) {
+								plus.nativeUI.toast("密码修改成功");
+								mui.back();
+							} else {
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							wait.close();
+							mui.toast('连接失败,请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
 	</body>
 
 </html>

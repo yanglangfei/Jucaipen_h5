@@ -10,6 +10,48 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/mui.min.js"></script>
+		<style type="text/css">
+			.mui-content div {
+				margin-top: 50px;
+			}
+			
+			.mui-pull-right {
+				color: #0033FF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="head">
+				<div class="denglu1 mui-action-back">
+					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
+				</div>
+				<div class="logo1 mui-action-back">
+					<span style="margin-top:0.2rem;">账号绑定</span>
+				</div>
+			</div>
+		</header>
+		<div class="mui-content">
+
+			<div class="item1" style="margin-top: 100px;">
+				<img src="image/qq.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
+				<label style="line-height: 50px;margin-left: 20%;" id="qq-state">未绑定</label>
+				<label class="mui-pull-right" style="line-height: 50px;margin-right: 20px;" id="bind-qq">快速绑定</label>
+
+			</div>
+			<div class="item2">
+				<img src="image/weixin.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
+				<label style="line-height: 50px;margin-left: 20%;" id="weixin-state">未绑定</label>
+				<label class="mui-pull-right" style="line-height: 50px;margin-right: 20px;" id="bind-weixin">快速绑定</label>
+			</div>
+			<div class="item3">
+				<img src="image/logo_sinaweibo.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
+				<label style="line-height: 50px;margin-left: 20%;" id="sina-state">未绑定</label>
+				<label class="mui-pull-right" style="line-height: 50px;margin-right: 20px;" id="bind-sina">快速绑定</label>
+			</div>
+		</div>
+
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -23,12 +65,13 @@
 					function(e) {}, false);
 			})
 			mui.plusReady(function() {
-				var bindQQ = document.getElementById("bind-qq");
-				var bindWeixin = document.getElementById("bind-weixin");
-				var bindSina = document.getElementById("bind-sina");
-				var qqState = document.getElementById("qq-state");
-				var weixinState = document.getElementById("weixin-state");
-				var sinaState = document.getElementById("sina-state");
+				var doc=document;
+				var bindQQ = doc.getElementById("bind-qq");
+				var bindWeixin = doc.getElementById("bind-weixin");
+				var bindSina = doc.getElementById("bind-sina");
+				var qqState = doc.getElementById("qq-state");
+				var weixinState = doc.getElementById("weixin-state");
+				var sinaState = doc.getElementById("sina-state");
 				var bindList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountList";
 				var bindAccount = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updateOtherAccount";
 				var uId = plus.storage.getItem("userId");
@@ -79,24 +122,26 @@
 								}
 							}
 						},
-						error: function(e) {}
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
 					})
 				}
 				//绑定账号  1
 				bindQQ.addEventListener("tap", function() {
 						var type = 0;
 						login(1, type);
-					},false)
+					}, false)
 					//新浪   2
 				bindSina.addEventListener("tap", function() {
 						var type = 2;
 						var id = login(2, type);
-					},false)
+					}, false)
 					//微信   0
 				bindWeixin.addEventListener("tap", function() {
 					var type = 1;
 					var id = login(0, type);
-				},false)
+				}, false)
 
 				function bindAccounts(t, id) {
 					mui.ajax(bindAccount, {
@@ -109,20 +154,20 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							if (id!=null&&id.replace(/(^\s*)|(\s*$)/g,"").length > 0) {
+							if (id != null && id.replace(/(^\s*)|(\s*$)/g, "").length > 0) {
 								//绑定账号
 								if (data.ret_code == 0) {
-									if (t == 0&&!isQQBind) {
+									if (t == 0 && !isQQBind) {
 										isQQBind = true;
 										qqState.innerHTML = "已绑定";
 										bindQQ.innerHTML = '解除绑定';
 										plus.nativeUI.toast("QQ绑定成功");
-									} else if (t == 1&&!isWeixinBind) {
+									} else if (t == 1 && !isWeixinBind) {
 										isWeixinBind = true;
 										weixinState.innerHTML = '已绑定';
 										bindWeixin.innerHTML = '解除绑定';
 										plus.nativeUI.toast("微信绑定成功");
-									} else if (t == 2&&!isSinaBind) {
+									} else if (t == 2 && !isSinaBind) {
 										isSinaBind = true;
 										sinaState.innerHTML = '已绑定';
 										bindWeixin.innerHTML = '解除绑定';
@@ -155,8 +200,8 @@
 								}
 							}
 						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
 						}
 					})
 				}
@@ -167,71 +212,28 @@
 					if (!a.authResult) {
 						a.login(function(s) {
 							openId = s.target.authResult.openid;
-					         bindAccounts(type, openId);
+							bindAccounts(type, openId);
 						}, function(e) {
-						mui.toast('获取QQ授权失败:'+JSON.stringify(e));
+							mui.toast('获取QQ授权失败:' + JSON.stringify(e));
 						})
 					} else {
 						//已经登录
 						openId = a.authResult.openid;
-					    bindAccounts(type, openId);
+						bindAccounts(type, openId);
 					}
 					if (type == 0 && isQQBind) {
 						openId = "";
-					     bindAccounts(type, openId);
+						bindAccounts(type, openId);
 					} else if (type == 1 && isWeixinBind) {
 						openId = "";
-					     bindAccounts(type, openId);
+						bindAccounts(type, openId);
 					} else if (type == 2 && isSinaBind) {
 						openId = "";
-					     bindAccounts(type, openId);
+						bindAccounts(type, openId);
 					}
-					
 				}
 			})
 		</script>
-		<style type="text/css">
-			.mui-content div {
-				margin-top: 50px;
-			}
-			
-			.mui-pull-right {
-				color: #0033FF;
-			}
-		</style>
-	</head>
-
-	<body>
-		<header class="header">
-			<div class="head">
-				<div class="denglu1 mui-action-back">
-					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
-				</div>
-				<div class="logo1 mui-action-back">
-					<span style="margin-top:0.2rem;">账号绑定</span>
-				</div>
-			</div>
-		</header>
-		<div class="mui-content">
-
-			<div class="item1" style="margin-top: 100px;">
-				<img src="image/qq.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
-				<label style="line-height: 50px;margin-left: 20%;" id="qq-state">未绑定</label>
-				<label class="mui-pull-right" style="line-height: 50px;margin-right: 20px;" id="bind-qq">快速绑定</label>
-
-			</div>
-			<div class="item2">
-				<img src="image/weixin.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
-				<label style="line-height: 50px;margin-left: 20%;" id="weixin-state">未绑定</label>
-				<label class="mui-pull-right" style="line-height: 50px;margin-right: 20px;" id="bind-weixin">快速绑定</label>
-			</div>
-			<div class="item3">
-				<img src="image/logo_sinaweibo.png" style="width: 50px; height: 50px;float: left;margin-left: 20px;" />
-				<label style="line-height: 50px;margin-left: 20%;" id="sina-state">未绑定</label>
-				<label class="mui-pull-right" style="line-height: 50px;margin-right: 20px;" id="bind-sina">快速绑定</label>
-			</div>
-
-		</div>
 
 	</body>
 

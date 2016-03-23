@@ -13,246 +13,7 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var web = plus.webview.currentWebview();
-				var teacherId = web.teacherId;
-				var answerList = document.getElementById("answerList");
-				var allQuestionPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion';
-				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/answerForTeacher";
-				var intoAnswer = document.getElementById("intoAnswer");
-				var intoAsk = document.getElementById("intoAsk");
-				var getMore = document.getElementById("da_gengduo");
-				var loading=document.getElementById("loading");
-				var loadNMore=document.getElementById("loadNMore");
-				var nodataLay=document.getElementById("layer-nodata");
-				var totlePage; 
-				var currentPage = 1;
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				loading.style.display='block';
-				if (teacherId > 0) {
-					//根据讲师ID获取回答列表
-					findByTeacherId();
-				} else {
-					//获取所有的回答列表
-					findAll(currentPage);
-				}
-
-				function findAll(p) {
-					//获取所有的最新回答信息
-					var questionStr = "";
-					mui.ajax(allQuestionPath, {
-						data: {
-							whichPage: 1,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loading.style.display='none';
-							loadNMore.style.display='none';
-							if(data.length<=0){
-								nodataLay.style.display='block';
-							}else{
-								nodataLay.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[i].totlePage;
-								questionStr = questionStr + "<div id="+data[i].teacherId+" class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src="
-								+ data[i].headFace + "></span></a><div class='name'>" + "<a><h4>"
-								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" 
-								+ data[i].level + "</em></div><a class='ask' id='ask' tag="+data[i].teacherId+">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
-								+ data[i].askName + ":</a>" + "<a style='color: #666'>"
-								+ data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
-							}
-							answerList.innerHTML = questionStr;
-							if (currentPage < totlePage) {
-								getMore.style.display = 'block';
-							} else {
-								getMore.style.display = 'none';
-							}
-							if(data.length>0){
-								//进入讲师详细信息列表
-								mui("#answerList").on("tap",'.item',function(){
-									var tId=this.getAttribute('id');
-									mui.openWindow({
-										url:"teacherDetail.html",
-										id:"teacherDetail",
-										 waiting:{
-                                           autoShow:false
-                                          },
-                                          extras:{
-                                          	teacherId:tId
-                                          }
-									})
-									return false;
-								})
-								//咨询讲师
-								mui("#answerList").on('tap','#ask',function(){
-									var tId=this.getAttribute('tag');
-									var uId=plus.storage.getItem('userId');
-									if(uId<=0){
-										mui.openWindow({
-											url:"login.html",
-											id:"login",
-											 waiting:{
-                                              autoShow:false
-                                              }
-										})
-										return false;
-									}
-									mui.openWindow({
-										url:"askQuestion.html",
-										id:"askQuestion",
-										extras:{
-                                          	teacherId:tId
-                                         },
-                                          waiting:{
-                                           autoShow:false
-                                          }
-									})
-									return false;
-								})
-							}
-						},
-						error: function(e) {
-							loading.style.display='none';
-							loadNMore.style.display='none';
-							mui.toast('连接异常');
-							
-						}
-					})
-				}
-				//获取更多
-				getMore.addEventListener("tap", function() {
-					getMore.style.display='none';
-					if (currentPage < totlePage) {
-						loadNMore.style.display='block';
-						if (teacherId > 0) {
-							findByTeacherId();
-						} else {
-							findAll(++currentPage);
-						}
-					}
-				})
-
-				function findByTeacherId() {
-					//获取所有的最新回答信息
-					var questionStr = "";
-					mui.ajax(byTeacherPath, {
-						data: {
-							teacherId: teacherId,
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loading.style.display='none';
-							loadNMore.style.display='none';
-							if(data.length<=0){
-								nodataLay.style.display='block';
-							}else{
-								nodataLay.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[i].totlePage;
-								questionStr = questionStr + "<div id="+data[i].teacherId+" class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src="
-								+ data[i].headFace + "></span></a><div class='name'>" + "<a><h4>"
-								+ data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" 
-								+ data[i].level + "</em></div><a class='ask' id='ask' tag="+data[i].teacherId+">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
-								+ data[i].askName + ":</a>" + "<a style='color: #666'>"
-								+ data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>";
-							}
-							answerList.innerHTML = questionStr;
-							if (currentPage < totlePage) {
-								getMore.style.display = 'block';
-							} else {
-								getMore.style.display = 'none';
-							}
-							
-								//进入讲师详细信息列表
-								mui("#answerList").on("tap",'.item',function(){
-									var tId=this.getAttribute('id');
-									mui.openWindow({
-										url:"teacherDetail.html",
-										id:"teacherDetail",
-										 waiting:{
-                                           autoShow:false
-                                          },
-                                          extras:{
-                                          	teacherId:tId
-                                          }
-									})
-									return false;
-								})
-								//咨询讲师
-								mui("#answerList").on('tap','#ask',function(){
-									var tId=this.getAttribute('tag');
-									var uId=plus.storage.getItem('userId');
-									if(uId<=0){
-										mui.openWindow({
-											url:"login.html",
-											id:"login",
-											 waiting:{
-                                              autoShow:false
-                                              }
-										})
-										return false;
-									}
-									mui.openWindow({
-										url:"askQuestion.html",
-										id:"askQuestion",
-										extras:{
-                                          	teacherId:tId
-                                         },
-                                          waiting:{
-                                           autoShow:false
-                                          }
-									})
-									return false;
-								})
-							
-						},
-						error: function(e) {
-							loading.style.display='none';
-							loadNMore.style.display='none';
-							mui.toast('err');
-						}
-					})
-				}
-				intoAnswer.addEventListener("tap", function() {
-					console.log("me");
-					mui.openWindow({
-						url: "answerList.html",
-						id: "answerList",
-						waiting: {
-							autoShow: false
-						}
-					})
-				})
-				intoAsk.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "askList.html",
-						id: "askList",
-						extras: {
-							teacherId: teacherId
-						},
-						waiting: {
-							autoShow: false
-						}
-					})
-				})
-			})
-		</script>
-
+		<script type="text/javascript" src="js/style.js"></script>
 	</head>
 
 	<body>
@@ -287,7 +48,7 @@
 			</div>
 			<div class="linkmore">
 				<a id="da_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
-				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadNMore"/>
+				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadNMore" />
 			</div>
 
 			<!------------底部定位层---------->
@@ -313,13 +74,238 @@
 					</div>
 				</div>
 			</div>
-			
-			
-		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label>
-				</div>
+
+			<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+				<label style="font-size: 25px;">暂无数据</label>
+			</div>
 
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var teacherId = web.teacherId;
+				var doc=document;
+				var answerList = doc.getElementById("answerList");
+				var allQuestionPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion';
+				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/answerForTeacher";
+				var intoAnswer = doc.getElementById("intoAnswer");
+				var intoAsk = doc.getElementById("intoAsk");
+				var getMore = doc.getElementById("da_gengduo");
+				var loading = doc.getElementById("loading");
+				var loadNMore = doc.getElementById("loadNMore");
+				var nodataLay = doc.getElementById("layer-nodata");
+				var totlePage;
+				var currentPage = 1;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				loading.style.display = 'block';
+				if (teacherId > 0) {
+					//根据讲师ID获取回答列表
+					findByTeacherId();
+				} else {
+					//获取所有的回答列表
+					findAll(currentPage);
+				}
+
+				function findAll(p) {
+					//获取所有的最新回答信息
+					var questionStr = "";
+					mui.ajax(allQuestionPath, {
+						data: {
+							whichPage: 1,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							loadNMore.style.display = 'none';
+							if (data.length <= 0) {
+								nodataLay.style.display = 'block';
+							} else {
+								nodataLay.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								questionStr += "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' id='ask' tag=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+							}
+							answerList.innerHTML = questionStr;
+							if (currentPage < totlePage) {
+								getMore.style.display = 'block';
+							} else {
+								getMore.style.display = 'none';
+							}
+							if (data.length > 0) {
+								//进入讲师详细信息列表
+								mui("#answerList").on("tap", '.item', function() {
+										var tId = this.getAttribute('id');
+										mui.openWindow({
+											url: "teacherDetail.html",
+											id: "teacherDetail",
+											waiting: {
+												autoShow: false
+											},
+											extras: {
+												teacherId: tId
+											}
+										})
+										return false;
+									})
+									//咨询讲师
+								mui("#answerList").on('tap', '#ask', function() {
+									var tId = this.getAttribute('tag');
+									var uId = plus.storage.getItem('userId');
+									if (uId <= 0) {
+										mui.openWindow({
+											url: "login.html",
+											id: "login",
+											waiting: {
+												autoShow: false
+											}
+										})
+										return false;
+									}
+									mui.openWindow({
+										url: "askQuestion.html",
+										id: "askQuestion",
+										extras: {
+											teacherId: tId
+										},
+										waiting: {
+											autoShow: false
+										}
+									})
+									return false;
+								})
+							}
+						},
+						error: function(xhr,type,e) {
+							loading.style.display = 'none';
+							loadNMore.style.display = 'none';
+							mui.toast('连接异常:'+type);
+						}
+					})
+				}
+				//获取更多
+				getMore.addEventListener("tap", function() {
+					getMore.style.display = 'none';
+					if (currentPage < totlePage) {
+						loadNMore.style.display = 'block';
+						if (teacherId > 0) {
+							findByTeacherId();
+						} else {
+							findAll(++currentPage);
+						}
+					}
+				})
+
+				function findByTeacherId() {
+					//获取所有的最新回答信息
+					var questionStr = "";
+					mui.ajax(byTeacherPath, {
+						data: {
+							teacherId: teacherId,
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							loadNMore.style.display = 'none';
+							if (data.length <= 0) {
+								nodataLay.style.display = 'block';
+							} else {
+								nodataLay.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								questionStr += "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' id='ask' tag=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>";
+							}
+							answerList.innerHTML = questionStr;
+							if (currentPage < totlePage) {
+								getMore.style.display = 'block';
+							} else {
+								getMore.style.display = 'none';
+							}
+							//进入讲师详细信息列表
+							mui("#answerList").on("tap", '.item', function() {
+									var tId = this.getAttribute('id');
+									mui.openWindow({
+										url: "teacherDetail.html",
+										id: "teacherDetail",
+										waiting: {
+											autoShow: false
+										},
+										extras: {
+											teacherId: tId
+										}
+									})
+									return false;
+								})
+								//咨询讲师
+							mui("#answerList").on('tap', '#ask', function() {
+								var tId = this.getAttribute('tag');
+								var uId = plus.storage.getItem('userId');
+								if (uId <= 0) {
+									mui.openWindow({
+										url: "login.html",
+										id: "login",
+										waiting: {
+											autoShow: false
+										}
+									})
+									return false;
+								}
+								mui.openWindow({
+									url: "askQuestion.html",
+									id: "askQuestion",
+									extras: {
+										teacherId: tId
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+								return false;
+							})
+						},
+						error: function(xhr,type,e) {
+							loading.style.display = 'none';
+							loadNMore.style.display = 'none';
+							mui.toast('连接异常:'+type);
+						}
+					})
+				}
+				intoAnswer.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "answerList.html",
+						id: "answerList",
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
+				intoAsk.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "askList.html",
+						id: "askList",
+						extras: {
+							teacherId: teacherId
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
+			})
+		</script>
 
 	</body>
 

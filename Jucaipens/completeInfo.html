@@ -13,121 +13,6 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var web = plus.webview.currentWebview();
-				var teacherId = web.teacherId;
-				var txt_name = document.getElementById("txt_name");
-				var txt_iphone = document.getElementById("txt_iphone");
-				var txt_code = document.getElementById("txt_code");
-				var btn_code = document.getElementById("btn_code");
-				var info_sunmit = document.getElementById("info_sunmit");
-				var getCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
-				var checkCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/checkMobileCode";
-				var restSecond;
-				//获取验证码
-				btn_code.addEventListener("tap", function() {
-						var txt_iphone_value = txt_iphone.value;
-						if (txt_iphone_value.length <= 10) {
-							plus.nativeUI.toast("手机号不正确");
-							return;
-						}
-						restSecond=60;
-					    setInterval(rest,1000);
-						mui.ajax(getCodePath, {
-							data: {
-								telPhone: txt_iphone_value,
-								msgId:1
-							},
-							type: 'get',
-							dataType: "json",
-							timeout: 10000,
-							success: function(data) {
-								if (data.ret_code != 0) {
-									plus.nativeUI.toast(data.err_msg);
-								}else{
-									plus.nativeUI.toast(data.err_msg);
-								}
-							},
-							error: function(e) {
-								mui.toast('连接失败，请稍后重试');
-							}
-						})
-					},false)
-				
-				//获取手机验证码 按钮文字
-				function rest(){
-					if(restSecond>0){
-						btn_code.disabled='disabled';
-					btn_code.value=(restSecond--)+"秒后重新发送";
-					}else{
-						btn_code.disabled='';
-						btn_code.value="获取验证码";
-					}
-				}
-				
-				
-					//提交个人信息
-				info_sunmit.addEventListener("tap", function() {
-					var txt_name_value = txt_name.value;
-					var txt_iphone_value = txt_iphone.value;
-					var txt_code_value = txt_code.value;
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-						return;
-					}
-					if (txt_name_value.length <= 0) {
-						plus.nativeUI.toast("姓名不能为空");
-						return;
-					}
-					if (txt_iphone_value.length <= 10) {
-						plus.nativeUI.toast("手机号不符合要求");
-						return;
-					}
-					if (txt_code_value.length <= 0) {
-						plus.nativeUI.toast("验证码不能为空");
-						return;
-					}
-					var wait=plus.nativeUI.showWaiting('正在提交数据，请稍等...');
-					mui.ajax(checkCodePath, {
-						data: {
-							trueName: txt_name_value,
-							userId: uId,
-							telPhone: txt_iphone_value,
-							actionCode: txt_code_value,
-							qsName: "海通",
-							teacherId: teacherId
-						},
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							wait.close();
-							if (data.ret_code == 0) {
-								plus.nativeUI.toast("提交成功");
-							} else {
-								plus.nativeUI.toast(data.err_code);
-							}
-						},
-						error: function(e) {
-							wait.close();
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				},false)
-			})
-		</script>
-
 		<style>
 			.informations {
 				margin-top: 60px;
@@ -202,6 +87,118 @@
 				</li>
 			</ul>
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var teacherId = web.teacherId;
+				var txt_name = document.getElementById("txt_name");
+				var txt_iphone = document.getElementById("txt_iphone");
+				var txt_code = document.getElementById("txt_code");
+				var btn_code = document.getElementById("btn_code");
+				var info_sunmit = document.getElementById("info_sunmit");
+				var getCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
+				var checkCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/checkMobileCode";
+				var restSecond;
+				//获取验证码
+				btn_code.addEventListener("tap", function() {
+					var txt_iphone_value = txt_iphone.value;
+					if (txt_iphone_value.length <= 10) {
+						plus.nativeUI.toast("手机号不正确");
+						return;
+					}
+					restSecond = 60;
+					setInterval(rest, 1000);
+					mui.ajax(getCodePath, {
+						data: {
+							telPhone: txt_iphone_value,
+							msgId: 1
+						},
+						type: 'get',
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code != 0) {
+								plus.nativeUI.toast(data.err_msg);
+							} else {
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}, false)
+				//获取手机验证码 按钮文字
+				function rest() {
+					if (restSecond > 0) {
+						btn_code.disabled = 'disabled';
+						btn_code.value = (restSecond--) + "秒后重新发送";
+					} else {
+						btn_code.disabled = '';
+						btn_code.value = "获取验证码";
+					}
+				}
+				//提交个人信息
+				info_sunmit.addEventListener("tap", function() {
+					var txt_name_value = txt_name.value;
+					var txt_iphone_value = txt_iphone.value;
+					var txt_code_value = txt_code.value;
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login",
+							waiting: {
+								autoShow: false
+							}
+						})
+						return;
+					}
+					if (txt_name_value.length <= 0) {
+						plus.nativeUI.toast("姓名不能为空");
+						return;
+					}
+					if (txt_iphone_value.length <= 10) {
+						plus.nativeUI.toast("手机号不符合要求");
+						return;
+					}
+					if (txt_code_value.length <= 0) {
+						plus.nativeUI.toast("验证码不能为空");
+						return;
+					}
+					var wait = plus.nativeUI.showWaiting('正在提交数据，请稍等...');
+					mui.ajax(checkCodePath, {
+						data: {
+							trueName: txt_name_value,
+							userId: uId,
+							telPhone: txt_iphone_value,
+							actionCode: txt_code_value,
+							qsName: "海通",
+							teacherId: teacherId
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							wait.close();
+							if (data.ret_code == 0) {
+								plus.nativeUI.toast("提交成功");
+							} else {
+								plus.nativeUI.toast(data.err_code);
+							}
+						},
+						error: function(xhr,type,e) {
+							wait.close();
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}, false)
+			})
+		</script>
 	</body>
 
 </html>

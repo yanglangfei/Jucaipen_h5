@@ -13,14 +13,157 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script type="text/javascript" src="js/netUtils.js"></script>
 		<script src="js/mui.min.js"></script>
+		<style type="text/css">
+			.mui-slider {
+				margin-top: 40px;
+			}
+			.nav {
+				display: none;
+			}
+			#board-banner {
+				display: none;
+			}
+			#live-banner {
+				display: none;
+			}
+			#attention-banner {
+				display: none;
+			}
+			#idea-banner {
+				display: none;
+			}
+		</style>
+
+	</head>
+
+	<body scroll="no" style="overflow-y: hidden;">
+
+		<div class="wrapper">
+			<!------------头部--------------->
+
+			<header class="header">
+				<div class="head">
+					<div id="pageTop1_show_login_link" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em></em></a></div>
+					<div class="logo">
+						<a><img src="image/jucai.png" /></a>
+					</div>
+				</div>
+			</header>
+			<!------------首页轮播图---------->
+			<div class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop" id="pager">
+					<!--广告-->
+				</div>
+			</div>
+			<!------------导航---------->
+			<nav class="nav" id="navition">
+				<div class="page_menu">
+					<ul>
+						<li><a id="lList"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
+						<li><a id="fDish"><span><img src="image/class_index.png"></span><h4>名家看市</h4></a></li>
+						<li><a id="tBoard"><span><img src="image/licai_index.png"></span><h4>热门投资</h4></a></li>
+						<li><a id="ation"><span><img src="image/fince_index.png"></span><h4>特别关注</h4></a></li>
+					</ul>
+				</div>
+			</nav>
+			<!------------居中部分---------->
+			<div class="middle">
+				<div class="middlecenter">
+					<!----新三板------->
+					<div class="zhishi" id="board-banner">
+						<div class="licai_top">
+							<h3>新三板</h3>
+							<a href="trhreeBoard.html">更多</a>
+						</div>
+						<div class="yaowen_b">
+							<ul id="data-threeboard">
+							</ul>
+						</div>
+					</div>
+					<!------------直播回顾---------->
+					<div class="zhibohuigu" id="live-banner">
+						<div class="zhibohuigu_top">
+							<h3>直播回顾</h3>
+
+						</div>
+						<div class="zhibohuigu_mian">
+							<ul style="list-style: none;" id="data-live">
+							</ul>
+						</div>
+					</div>
+					<!------------财经栏目---------->
+					<div class="caijing" id="attention-banner">
+						<div class="licai_top">
+							<h3>特别关注</h3>
+							<a href="attention.html">更多</a>
+						</div>
+						<div class="caijing_mian">
+							<ul id="data-attention">
+							</ul>
+						</div>
+					</div>
+					<!------------热门观点---------->
+					<div class="remengd" style="background:none" id="idea-banner">
+						<div class="licai_top" style="margin-bottom:0.4rem;">
+							<h3>热门观点</h3>
+							<a href="intrvlIdea.html">更多</a>
+						</div>
+						<div class="yaowen_b">
+							<ul id="data-hotidea">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div style="text-align: center;margin-top: 60%;display: none;" id="load_index">
+				<div class="spinner">
+					<div class="spinner-container container1">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+					<div class="spinner-container container2">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+					<div class="spinner-container container3">
+						<div class="circle1"></div>
+						<div class="circle2"></div>
+						<div class="circle3"></div>
+						<div class="circle4"></div>
+					</div>
+				</div>
+			</div>
+
+			<!------------底部定位层---------->
+
+			<footer class="footer">
+				<div class="foot">
+					<div class="footcenter">
+						<ul style="height: 60px;">
+							<li><a><span><img src="image/indexpress.png" style="width: 50px;height: 50px;"/></span></a></li>
+							<li><a id="threeBoard"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
+							<li><a id="liveList"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;" /></span></a></li>
+							<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+							<li><a id="famousDish"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+		</div>
+
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				setTimeout(function(){
+				setTimeout(function() {
 					plus.navigator.closeSplashscreen();
-				},2000);
+				}, 500);
 				var osName = plus.os.name;
 				var styles = {};
 				var screenWidth = plus.screen.resolutionWidth;
@@ -30,16 +173,16 @@
 				//console.log(screenWidthDpi + " " + screenHeightDpi);
 				//双击退出应用
 				var preTime = 0;
-				plus.key.addEventListener('backbutton',function(){
-					var now = new Date().getTime();
-					if(now-preTime>2000){
-						preTime = now;
-                         mui.toast('再按一次退出应用');
-					}else{
-						plus.runtime.quit();
-					}
-				})
-				//隐藏滚动条
+				plus.key.addEventListener('backbutton', function() {
+						var now = new Date().getTime();
+						if (now - preTime > 2000) {
+							preTime = now;
+							mui.toast('再按一次退出应用');
+						} else {
+							plus.runtime.quit();
+						}
+					})
+					//隐藏滚动条
 				styles.scrollIndicator = 'none';
 				controlScrollBar(plus.webview.currentWebview(), styles);
 				//预加载主页面
@@ -65,29 +208,30 @@
 				var width = plus.screen.resolutionWidth;
 				var hDpi = hei * plus.screen.scale;
 				var wDpi = width * plus.screen.scale;
+				var doc=document;
 				var getVersionPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/updateVersion";
 				var dowLoadPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downLoadApk";
-				var page = document.getElementById('pager');
+				var page = doc.getElementById('pager');
 				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
-				var live = document.getElementById("data-live");
-				var board = document.getElementById("data-threeboard");
-				var attention = document.getElementById("data-attention");
-				var hotIdea = document.getElementById('data-hotidea');
-				var intoLogin = document.getElementById("loginState");
-				var threeBoard = document.getElementById("threeBoard");
-				var liveList = document.getElementById("liveList");
-				var attentions = document.getElementById("attentions");
-				var famousDish = document.getElementById("famousDish");
-				var lList = document.getElementById("lList");
-				var fDish = document.getElementById("fDish");
-				var tBoard = document.getElementById("tBoard");
-				var ation = document.getElementById("ation");
-				var nav = document.getElementById("navition");
-				var board_banner = document.getElementById("board-banner");
-				var live_banner = document.getElementById("live-banner");
-				var attention_banner = document.getElementById("attention-banner");
-				var idea_banner = document.getElementById("idea-banner");
-				var load_index = document.getElementById("load_index");
+				var live = doc.getElementById("data-live");
+				var board = doc.getElementById("data-threeboard");
+				var attention = doc.getElementById("data-attention");
+				var hotIdea = doc.getElementById('data-hotidea');
+				var intoLogin = doc.getElementById("loginState");
+				var threeBoard = doc.getElementById("threeBoard");
+				var liveList = doc.getElementById("liveList");
+				var attentions = doc.getElementById("attentions");
+				var famousDish = doc.getElementById("famousDish");
+				var lList = doc.getElementById("lList");
+				var fDish = doc.getElementById("fDish");
+				var tBoard = doc.getElementById("tBoard");
+				var ation = doc.getElementById("ation");
+				var nav = doc.getElementById("navition");
+				var board_banner = doc.getElementById("board-banner");
+				var live_banner = doc.getElementById("live-banner");
+				var attention_banner = doc.getElementById("attention-banner");
+				var idea_banner = doc.getElementById("idea-banner");
+				var load_index = doc.getElementById("load_index");
 				load_index.style.display = 'block';
 				var styles = {};
 				var extras = {};
@@ -107,22 +251,24 @@
 									mui.confirm("有新版本可更新", "更新提示", ["确定", "取消"], function(e) {
 										if (e.index == 0) {
 											//更新版本
-											var wait=plus.nativeUI.showWaiting("正在更新安装包");
-											downLoadApk(apkUrl,wait);
-										}else{
+											var wait = plus.nativeUI.showWaiting("正在更新安装包");
+											downLoadApk(apkUrl, wait);
+										} else {
 											//downLoadApk(apkUrl,'');
 										}
 									})
 								}
 							}
 						},
-						error: function(e) {}
+						error: function(xhr,type,e) {
+							mui.toast('连接异常:'+type);
+						}
 					})
 				}
 				/*
 				 * 下载需要更新的apk
 				 */
-				function downLoadApk(downPath,wait) {
+				function downLoadApk(downPath, wait) {
 					var task = plus.downloader.createDownload(dowLoadPath + "?fileName=" + downPath, {}, function(d, state) {
 						if (state == 200) {
 							wait.close();
@@ -131,7 +277,7 @@
 							plus.runtime.install(filePath, {}, function(d) {
 								console.log(JSON.stringify(d));
 							}, function(e) {
-								console.log(e.message); 
+								console.log(e.message);
 							});
 						} else {
 							mui.toast('版本号获取失败');
@@ -151,12 +297,12 @@
 					success: function(data) {
 						load_index.style.display = 'none';
 						nav.style.display = 'block';
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
+						url += "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[data.length - 1].imageUrl + " id=" + data[data.length - 1].id + " /></a></div>";
 						for (var i = 0; i < data.length; i++) {
 							var imageUrl = data[i].imageUrl;
-							url = url + "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id=" + data[i].id + " /></a></div>";
+							url += "<div class='mui-slider-item'><a href='#'><img src=" + imageUrl + " id=" + data[i].id + " /></a></div>";
 						}
-						url = url + "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id=" + data[0].id + " /></a></div>";
+						url += "<div class='mui-slider-item mui-slider-item-duplicate'><a href='#'><img src=" + data[0].imageUrl + " id=" + data[0].id + " /></a></div>";
 						page.innerHTML = url;
 						mui("#pager").on("tap", "img", function() {
 								var id = this.getAttribute("id");
@@ -184,14 +330,16 @@
 										}
 									})
 								}
-							},false)
+							}, false)
 							//设置广告自动轮询
 						var gallery = mui(".mui-slider");
 						gallery.slider({
 							interval: 2000
 						});
 					},
-					error: function(e) {}
+					error: function(xhr,type,e) {
+						mui.toast('连接异常:'+type);
+					}
 				});
 				var liveUrl = '';
 				//直播回顾
@@ -205,7 +353,7 @@
 							live_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							liveUrl = liveUrl + "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
+							liveUrl += "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
 						}
 						live.innerHTML = liveUrl;
 						mui("#data-live").on("tap", "li", function() {
@@ -230,7 +378,9 @@
 							}
 						})
 					},
-					error: function(e) {}
+					error: function(xhr,type,e) {
+						mui.toast('连接异常：'+type);
+					}
 				});
 				var three_board = '';
 				//新三板
@@ -247,7 +397,7 @@
 							board_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							three_board = three_board + "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
+							three_board += "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
 						}
 						board.innerHTML = three_board;
 						mui("#data-threeboard").on("tap", "li", function() {
@@ -264,7 +414,9 @@
 							})
 						})
 					},
-					error: function(e) {}
+					error: function(xhr,type,e) {
+						mui.toast('连接异常：'+type);
+					}
 				});
 				//特别关注
 				var attentionUrl = '';
@@ -281,7 +433,7 @@
 							attention_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							attentionUrl = attentionUrl + " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
+							attentionUrl += " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
 						}
 						attention.innerHTML = attentionUrl;
 						mui("#data-attention").on("tap", "li", function() {
@@ -298,7 +450,9 @@
 							})
 						})
 					},
-					error: function(e) {}
+					error: function(xhr,type,e) {
+						mui.toast('连接异常：'+type);
+					}
 				});
 				//热门观点
 				var hotUrl = '';
@@ -316,7 +470,7 @@
 							}
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl = hotUrl + "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+								hotUrl += "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
 							}
 							hotIdea.innerHTML = hotUrl;
 							mui("#data-hotidea").on("tap", "li", function() {
@@ -333,7 +487,9 @@
 								})
 							})
 						},
-						error: function(e) {}
+						error: function(xhr,type,e) {
+							mui.toast('连接异常:'+type);
+						}
 					})
 					//进入登录页面
 				intoLogin.addEventListener("tap", function() {
@@ -462,154 +618,6 @@
 				})
 			})
 		</script>
-
-		<style type="text/css">
-			.mui-slider {
-				margin-top: 40px;
-			}
-			
-			.nav {
-				display: none;
-			}
-			
-			#board-banner {
-				display: none;
-			}
-			
-			#live-banner {
-				display: none;
-			}
-			
-			#attention-banner {
-				display: none;
-			}
-			
-			#idea-banner {
-				display: none;
-			}
-		</style>
-
-	</head>
-
-	<body scroll="no" style="overflow-y: hidden;">
-
-		<div class="wrapper">
-			<!------------头部--------------->
-
-			<header class="header">
-				<div class="head">
-					<div id="pageTop1_show_login_link" class="denglu"> <a id="loginState"><i><img src="image/unlogin.png" /></i><em></em></a></div>
-					<div class="logo">
-						<a><img src="image/jucai.png" /></a>
-					</div>
-				</div>
-			</header>
-			<!------------首页轮播图---------->
-			<div class="mui-slider">
-				<div class="mui-slider-group mui-slider-loop" id="pager">
-					<!--广告-->
-				</div>
-			</div>
-			<!------------导航---------->
-			<nav class="nav" id="navition">
-				<div class="page_menu">
-					<ul>
-						<li><a id="lList"><span><img src="image/live_index.png"></span><h4>直播互动</h4></a></li>
-						<li><a id="fDish"><span><img src="image/class_index.png"></span><h4>名家看市</h4></a></li>
-						<li><a id="tBoard"><span><img src="image/licai_index.png"></span><h4>热门投资</h4></a></li>
-						<li><a id="ation"><span><img src="image/fince_index.png"></span><h4>特别关注</h4></a></li>
-					</ul>
-				</div>
-			</nav>
-			<!------------居中部分---------->
-			<div class="middle">
-				<div class="middlecenter">
-					<!----新三板------->
-					<div class="zhishi" id="board-banner">
-						<div class="licai_top">
-							<h3>新三板</h3>
-							<a href="trhreeBoard.html">更多</a>
-						</div>
-						<div class="yaowen_b">
-							<ul id="data-threeboard">
-							</ul>
-						</div>
-					</div>
-					<!------------直播回顾---------->
-					<div class="zhibohuigu" id="live-banner">
-						<div class="zhibohuigu_top">
-							<h3>直播回顾</h3>
-
-						</div>
-						<div class="zhibohuigu_mian">
-							<ul style="list-style: none;" id="data-live">
-							</ul>
-						</div>
-					</div>
-					<!------------财经栏目---------->
-					<div class="caijing" id="attention-banner">
-						<div class="licai_top">
-							<h3>特别关注</h3>
-							<a href="attention.html">更多</a>
-						</div>
-						<div class="caijing_mian">
-							<ul id="data-attention">
-							</ul>
-						</div>
-					</div>
-					<!------------热门观点---------->
-					<div class="remengd" style="background:none" id="idea-banner">
-						<div class="licai_top" style="margin-bottom:0.4rem;">
-							<h3>热门观点</h3>
-							<a href="intrvlIdea.html">更多</a>
-						</div>
-						<div class="yaowen_b">
-							<ul id="data-hotidea">
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div style="text-align: center;margin-top: 60%;display: none;" id="load_index">
-				<div class="spinner">
-					<div class="spinner-container container1">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container2">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container3">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-				</div>
-			</div>
-
-			<!------------底部定位层---------->
-
-			<footer class="footer">
-				<div class="foot">
-					<div class="footcenter">
-						<ul style="height: 60px;">
-							<li><a><span><img src="image/indexpress.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a id="threeBoard"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a id="liveList"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;" /></span></a></li>
-							<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-							<li><a id="famousDish"><span><img src="image/classnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
-						</ul>
-					</div>
-				</div>
-			</footer>
-		</div>
 	</body>
 
 </html>

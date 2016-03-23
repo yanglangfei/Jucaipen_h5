@@ -15,147 +15,14 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var livePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/todayIdeas";
-				var web = plus.webview.currentWebview();
-				var typeId=web.querryType;
-				var nodata=document.getElementById("layer-nodata");
-				var liveTitle = document.getElementById("liveTitle");
-				var todayLive=document.getElementById("todatLive");
-				var today=document.getElementById("toady");
-				var communite=document.getElementById("communite");
-				var loading=document.getElementById("loading");
-				var image_box=document.getElementById("image-box");
-				var title = web.title; 
-				var liveId=web.liveId;
-				liveTitle.innerText = title + "直播室";
-				//获取今日直播信息
-				var todayStr="";
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				loading.style.display='block';
-				if(typeId==0){
-					findByLiveId();
-				}else{
-					findByTeacherId();
-				}
-			
-				today.addEventListener("tap",function(){
-					mui.openWindow({
-						url:"txtLive.html",
-						id:"txtLive",
-						waiting:{
-							autoShow:false
-						}
-					})
-					
-				},false)
-				communite.addEventListener("tap",function(){
-					mui.openWindow({
-						url:"communite.html",
-						id:"communite",
-						extras:{
-							liveId:liveId,
-							title:title
-						},
-						waiting:{
-							autoShow:false
-						}
-					})
-					
-				},false)
-				
-				function findByLiveId(){
-					mui.ajax(livePath, {
-					data: {
-						querryType: typeId,
-						liveId: web.liveId,
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						loading.style.display='none';
-						if(data.length<=0){
-							nodata.style.display='block';
-						}else{
-							nodata.style.display='none';
-						}
-						for(var i=0;i<data.length;i++){
-							var myDate=subStr(1,data[i].insertDate);
-							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>"+myDate+"</span></li>"
-					        +"</ul><div class='content'><div id='body'>"+data[i].bodys+"</div><div><br></div></div></div>";
-						}
-						todayLive.innerHTML=todayStr;
-						/*if(data.length>0){
-							var imags=document.getElementsByTagName('img');
-							for(var i=0;i<imags.length;i++){
-									    imags[i].addEventListener('tap',function(){
-										var src=this.getAttribute('src');
-										image_box.style.display='block';
-										image_box.innerHTML="<img src="+src+"></img>";
-										image_box.style.display='block';
-										image_box.style.height='100%';
-										image_box.style.width='100%';
-									})
-							}
-							
-						}*/
-					},
-					error: function(e) {
-						mui.toast('连接失败，请稍后重试');
-					}
-				})
-				}
-				function findByTeacherId(){
-					mui.ajax(livePath, {
-					data: {
-						querryType: typeId,
-						teacherId: web.teacherId,
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						loading.style.display='none';
-						if(data.length<=0){
-							nodata.style.display='block';
-						}else{
-							nodata.style.display='none';
-						}
-						for(var i=0;i<data.length;i++){
-							var myDate=subStr(1,data[i].insertDate);
-							todayStr=todayStr+"<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>"+myDate+"</span></li>"
-					+"</ul><div class='content'><div>"+data[i].bodys+"</div><div><br></div></div></div>";
-						}
-						todayLive.innerHTML=todayStr;
-					},
-					error: function(e) {
-						mui.toast('连接失败，请稍后重试');
-					}
-				})
-				
-					
-				}
-				
-				
-				
-			})
-		</script>
+		<script type="text/javascript" src="js/style.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<style type="text/css">
-			#image-box{
-				 position:absolute; 
-				 z-index:1000; 
-				 display:block;
-				 top: 50px;
+			#image-box {
+				position: absolute;
+				z-index: 1000;
+				display: block;
+				top: 50px;
 			}
 		</style>
 	</head>
@@ -174,28 +41,22 @@
 					</div>
 				</div>
 			</header>
-			
-			
-		
-			
-			
+
 			<!------------居中部分---------->
 			<div class="ask_type">
-				<a id="toady"   class="def">今日观点</a>
+				<a id="toady" class="def">今日观点</a>
 				<a id="communite">交流区</a>
 			</div>
-			
-			
-			
+
 			<!------------热门观点开始---------->
 			<div class="liveimglist" id="todatLive">
 			</div>
-			
+
 			<div id="image-box">
-			   
-		    </div>
+
+			</div>
 			<!--------热门观点结束---------->
-			
+
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<div class="spinner">
 					<div class="spinner-container container1">
@@ -218,21 +79,124 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
-		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label>
-				</div>
-				
+
+			<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+				<label style="font-size: 25px;">暂无数据</label>
+			</div>
+
 			<!------------底部定位层---------->
 		</div>
-		
-		
-		
-		
-		
-		
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var livePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/todayIdeas";
+				var web = plus.webview.currentWebview();
+				var typeId = web.querryType;
+				var nodata = document.getElementById("layer-nodata");
+				var liveTitle = document.getElementById("liveTitle");
+				var todayLive = document.getElementById("todatLive");
+				var today = document.getElementById("toady");
+				var communite = document.getElementById("communite");
+				var loading = document.getElementById("loading");
+				var image_box = document.getElementById("image-box");
+				var title = web.title;
+				var liveId = web.liveId;
+				liveTitle.innerText = title + "直播室";
+				//获取今日直播信息
+				var todayStr = "";
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				loading.style.display = 'block';
+				if (typeId == 0) {
+					findByLiveId();
+				} else {
+					findByTeacherId();
+				}
+				today.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "txtLive.html",
+						id: "txtLive",
+						waiting: {
+							autoShow: false
+						}
+					})
+				}, false)
+				communite.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "communite.html",
+						id: "communite",
+						extras: {
+							liveId: liveId,
+							title: title
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				}, false)
+
+				function findByLiveId() {
+					mui.ajax(livePath, {
+						data: {
+							querryType: typeId,
+							liveId: web.liveId,
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							if (data.length <= 0) {
+								nodata.style.display = 'block';
+							} else {
+								nodata.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								var myDate = subStr(1, data[i].insertDate);
+								todayStr += "<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>" + myDate + "</span></li>" + "</ul><div class='content'><div id='body'>" + data[i].bodys + "</div><div><br></div></div></div>";
+							}
+							todayLive.innerHTML = todayStr;
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+
+				function findByTeacherId() {
+					mui.ajax(livePath, {
+						data: {
+							querryType: typeId,
+							teacherId: web.teacherId,
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							if (data.length <= 0) {
+								nodata.style.display = 'block';
+							} else {
+								nodata.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								var myDate = subStr(1, data[i].insertDate);
+								todayStr += "<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>" + myDate + "</span></li>" + "</ul><div class='content'><div>" + data[i].bodys + "</div><div><br></div></div></div>";
+							}
+							todayLive.innerHTML = todayStr;
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
+
 	</body>
 
 </html>

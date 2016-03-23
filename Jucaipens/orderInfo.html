@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -11,117 +12,7 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 
 		<script src="js/mui.min.js"></script>
-        <script src="js/castapp.js"></script>		
-		
-		<script type="text/javascript" charset="UTF-8">
-		mui.init({
-			swipeBack:true //启用右滑关闭功能
-		});
-		castapp.init(null,"con");
-		mui.plusReady(function(){
-		 var pay_btn=document.getElementById("pay_btn");	
-		 var newTab=document.getElementById("newTab");
-		  var pay_order_detail=document.getElementById("pay_order_detail");
-		  var pay_order_zb=document.getElementById("pay_order_zb");
-		  var pay_money_zb=document.getElementById("pay_money_zb");
-		  var perPrice=document.getElementById("perPrice");
-		  var nowPrice=document.getElementById("nowPrice");
-		  var orderDetail=document.getElementById("orderDetail");
-		  var orderCodePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/getOrderCode";
-		  var submitPath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/payOrder";
-		  var title=document.getElementById("title");
-		  var week=document.getElementById("week");
-		  var web=plus.webview.currentWebview();
-		  var xianjia=web.money;
-		  var title_vel=web.title;
-		  pay_money_zb.innerText=xianjia;
-		  title.innerText=title_vel;
-		  var yuanjia=web.perPrice;
-		  var weekStr=web.week;
-		  getOrderCode();
-		  week.innerText=weekStr;
-		  perPrice.innerHTML=yuanjia;
-		  nowPrice.innerHTML=xianjia;
-		  
-		 
-		 //展示订单详细表
-		 newTab.addEventListener("tap",function(){
-		 	if(orderDetail.style.display=="none"){
-		 		orderDetail.style.display="block";
-		 	}else{
-		 		orderDetail.style.display="none";
-		 	}
-		 },false) 
-		 
-		 //支付订单
-		 pay_btn.addEventListener("tap",function(){
-		 	pay();
-		 },false)
-		 
-		 
-		 //支付
-		 function pay(){
-		 	castapp.pay({
-		 		name:title_vel,
-		 		appid:"2016012910445842877",
-		 		appkey:"feyijh0uxnmobvclqdps",
-		 		type:"alipay",
-		 		money:xianjia.replace("¥",""),
-		 		succFn:function(){
-		 			//订单支付成功处理
-		 			submitService();
-		 		}
-		 	})
-		 }
-		 //获取订单号
-		 function getOrderCode(){
-		 	mui.ajax(orderCodePath,{
-		 		type:"post",
-		 		dataType:"json",
-		 		timeout:10000,
-		 		success: function(data){
-		 			if(data.ret_code==0){
-		 				pay_order_zb.innerText=data.err_msg;
-		 			}
-		 		},
-		 		error: function(e){
-		 			mui.toast('获取数据失败，请稍后重试');
-		 			
-		 		}
-		 	}
-		 )}
-		 
-		 
-		 
-		 
-		 //提交订单到服务器
-		 function submitService(){
-		 	var userId=plus.storage.getItem("userId");
-		 	mui.ajax(submitPath,{
-		 		data:{
-		 			orderCode:pay_order_zb.innerText,
-		 			userId:userId
-		 		},
-		 		type:"post",
-		 		dataType:"json",
-		 		timeout:10000,
-		 		success: function(data){
-		 			if(data.ret_code==0){
-		 				mui.toast('支付状态更新成功');
-		 			}else{
-		 				mui.toast(data.err_msg);
-		 			}
-		 		},
-		 		error: function(e){
-		 			
-		 		}
-		 	})
-		 }
-			
-			
-		})
-		
-		</script>
+		<script src="js/castapp.js"></script>
 		<style type="text/css">
 			.paybody {
 				margin-top: 50px;
@@ -255,14 +146,17 @@
 				width: 90%;
 				margin: 0px auto;
 			}
-			#title{
+			
+			#title {
 				font-size: 12px;
 			}
-			.pay li img{
+			
+			.pay li img {
 				width: 50px;
 				height: 50px;
 			}
-			.pay li{
+			
+			.pay li {
 				list-style: none;
 				float: left;
 				margin: 10px;
@@ -276,7 +170,7 @@
 				<div class="denglu1 mui-action-back">
 					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
-				<div class="logo1 mui-action-back" style="margin-top:0.2rem;" >
+				<div class="logo1 mui-action-back" style="margin-top:0.2rem;">
 					<span>购买直播或签约</span>
 				</div>
 			</div>
@@ -313,13 +207,109 @@
 				</div>
 				<br/><br/><br/>
 				<div class="pay_button">
-					<input type="button" id="pay_btn"  value="立即支付">
+					<input type="button" id="pay_btn" value="立即支付">
 				</div>
 				<div class="clr"></div>
 			</div>
 			<div class="footer"></div>
 			<div class="clr"></div>
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			castapp.init(null, "con");
+			mui.plusReady(function() {
+				var pay_btn = document.getElementById("pay_btn");
+				var newTab = document.getElementById("newTab");
+				var pay_order_detail = document.getElementById("pay_order_detail");
+				var pay_order_zb = document.getElementById("pay_order_zb");
+				var pay_money_zb = document.getElementById("pay_money_zb");
+				var perPrice = document.getElementById("perPrice");
+				var nowPrice = document.getElementById("nowPrice");
+				var orderDetail = document.getElementById("orderDetail");
+				var orderCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/getOrderCode";
+				var submitPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/payOrder";
+				var title = document.getElementById("title");
+				var week = document.getElementById("week");
+				var web = plus.webview.currentWebview();
+				var xianjia = web.money;
+				var title_vel = web.title;
+				pay_money_zb.innerText = xianjia;
+				title.innerText = title_vel;
+				var yuanjia = web.perPrice;
+				var weekStr = web.week;
+				getOrderCode();
+				week.innerText = weekStr;
+				perPrice.innerHTML = yuanjia;
+				nowPrice.innerHTML = xianjia;
+				//展示订单详细表
+				newTab.addEventListener("tap", function() {
+					if (orderDetail.style.display == "none") {
+						orderDetail.style.display = "block";
+					} else {
+						orderDetail.style.display = "none";
+					}
+				}, false)
+				//支付订单
+				pay_btn.addEventListener("tap", function() {
+					pay();
+				}, false)
+				//支付
+				function pay() {
+					castapp.pay({
+						name: title_vel,
+						appid: "2016012910445842877",
+						appkey: "feyijh0uxnmobvclqdps",
+						type: "alipay",
+						money: xianjia.replace("¥", ""),
+						succFn: function() {
+							//订单支付成功处理
+							submitService();
+						}
+					})
+				}
+				//获取订单号
+				function getOrderCode() {
+					mui.ajax(orderCodePath, {
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								pay_order_zb.innerText = data.err_msg;
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//提交订单到服务器
+				function submitService() {
+					var userId = plus.storage.getItem("userId");
+					mui.ajax(submitPath, {
+						data: {
+							orderCode: pay_order_zb.innerText,
+							userId: userId
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								mui.toast('支付状态更新成功');
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+						}
+					})
+				}
+			})
+		</script>
 	</body>
 
 </html>

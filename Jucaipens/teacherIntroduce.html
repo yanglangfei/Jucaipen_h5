@@ -10,24 +10,12 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-			<!--标准mui.css-->
+		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-		 mui.init({
-		 	swipeBack:true //启用右滑关闭功能
-		 });
-		 mui.plusReady(function(){
-		 	var introduceLay=document.getElementById("introduceLay");
-		 	var web=plus.webview.currentWebview();
-		 	introduceLay.innerHTML=web.introduce;
-		 })
-		
-		</script>
 	</head>
 
 	<body>
-
 		<header class="header">
 			<div class="head">
 				<div class="denglu1 mui-action-back">
@@ -38,9 +26,19 @@
 				</div>
 			</div>
 		</header>
-			<div class="content_01" id="introduceLay">
-				
-			</div>
+		<div class="content_01" id="introduceLay">
+		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var introduceLay = document.getElementById("introduceLay");
+				var web = plus.webview.currentWebview();
+				introduceLay.innerHTML = web.introduce;
+			})
+		</script>
 	</body>
 
 </html>

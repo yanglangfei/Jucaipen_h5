@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<!--
+	<!--
 	作者：185601452@qq.com
 	时间：2016-03-11
 	描述：直播间
 -->
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -15,302 +16,7 @@
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript">
-			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var web = plus.webview.currentWebview();
-				var chatLay = document.getElementById("chatLay");
-				var liveResourcePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
-				var topIdPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getTopId";
-				var getChatMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getlist";
-				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
-				var changeState="http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
-				var uId = plus.storage.getItem("userId");
-				var liveId = web.liveId;
-				var isLand;
-				var topId;
-				var isNormal;
-				var roomFace = web.face;
-				var isManager = plus.storage.getItem("isManager");
-				var isServer = plus.storage.getItem("isServer");
-				var userName = plus.storage.getItem("userName");
-				var bd = document.getElementById("bd");
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				if (isServer == 1 || isManager == 1) {
-					isNormal = 1;
-				} else {
-					isNormal = 1;
-				}
-				//msType,fromId,roomId,managerId,serverId,userName
-				sendUserState(0,uId,liveId,isManager,isServer,userName);
-				web.addEventListener('close',function(){
-					console.log('close');
-					sendUserState(1,uId,liveId,isManager,isServer,userName);
-				},false)
-				//获取视频资源
-				mui.ajax(liveResourcePath, {
-					data: {
-						id: liveId,
-						typeId: 0
-					},
-					type: "get",
-					dataType: "json",
-					timeout: 10000,
-					success: function(data) {
-						var videoUrl;
-						if (data.videoUrl.indexOf('yyscene') > 0) {
-							bd.style.background = '#AAAAAA';
-						} else {
-							videoUrl = "<embed width='100%' height='100%' id='live'   src="
-							+ data.videoUrl + " webkit-playsinline ></embed>";
-							bd.innerHTML = videoUrl;
-							var live = document.getElementById("live");
-							//判断是否全屏
-							document.addEventListener('fullscreenchange', function() {
-								if (!isLand) {
-									isLand = true; 
-									plus.screen.lockOrientation('landscape-primary');
-								} else {
-									isLand = false;
-									plus.screen.unlockOrientation();
-								}
-							}, false);
-							document.addEventListener('mozfullscreenchange', function() {
-								if (!isLand) {
-									isLand = true;
-									document.mozRequestFullScreen();
-									plus.screen.lockOrientation('landscape-primary');
-								} else {
-									isLand = false;
-									document.mozCancelFullScreen();
-									plus.screen.unlockOrientation();
-								}
-							}, false);
-							document.addEventListener('webkitfullscreenchange', function() {
-								if (!isLand) {
-									isLand = true;
-									document.webkitRequestFullScreen();
-									plus.screen.lockOrientation('landscape-primary');
-								} else {
-									isLand = false;
-									document.webkitCancelFullScreen();
-									plus.screen.unlockOrientation();
-								}
-							}, false);
-						}
-					},
-					error: function(e) {
-						mui.toast('连接失败');
-					}
-				})
-
-				function getMsgForEver() {
-					setInterval(function() {
-						var content = chatLay.innerHTML;
-						mui.ajax(getChatMsgPath, {
-							data: {
-								topId: topId,
-								roomid: liveId,
-								userId: uId,
-								isServer: isNormal
-							},
-							dataType: "json",
-							type: "post",
-							success: function(data) {
-								if (data.length > 0) {
-									topId = data[data.length - 1].Id + 1;
-									for (var i = 0; i < data.length; i++) {
-										var myDate = subStr(5, data[i].SendDate);
-										if (data[i].SendManager == 1) {
-											//管理员
-											headLogo = 'image/guan.png';
-										} else {
-											//普通用户
-											headLogo = 'image/normalUser.png';
-										}
-										if (data[i].SendServiceId == 1) {
-											//客服
-										} else {
-											//非客服
-										}
-										content = content + "<li><span id='chat-time'>"
-										+ myDate + "</span><span id='sp_head'>"
-										+ "<img src=" + headLogo + " id='iv_head'/>" 
-										+ "</span><span id='chat-name'>" + data[i].SendUserName
-										+ "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
-									}
-									chatLay.innerHTML = content;
-									if (content != null) {
-										var imgs = document.getElementsByTagName("img");
-										for (var i = 0; i < imgs.length; i++) {
-											if (imgs[i].src.indexOf('gif') > 0) {
-												imgs[i].style.width = '25px';
-												imgs[i].style.height = '25px';
-												continue;
-											}
-											if (imgs[i].src.indexOf('img.jucaipen.com') > 0) {
-												imgs[i].style.width = '50%';
-											}
-										}
-									}
-									mui.scrollTo(document.body.scrollHeight, 100);
-								}
-							},
-							error: function(e) {
-								mui.toast('连接失败');
-							}
-						})
-					}, 5000);
-				}
-				getTopId(isManager, liveId, isServer);
-				//获取最近倒数第十条消息ID
-				function getTopId(isManager, roomId, isServer) {
-					mui.ajax(topIdPath, {
-						data: {
-							userType: isManager,
-							topCount: 10,
-							roomId: roomId,
-							isServer: isServer
-						},
-						dataType: "json",
-						type: "post",
-						success: function(data) {
-							topId = JSON.stringify(data);
-							getChatMessaged();
-						},
-						error: function(e) {
-							mui.toast('连接失败');
-						}
-					})
-				}
-
-				function getChatMessaged() {
-					var content = chatLay.innerHTML;
-					mui.ajax(getChatMsgPath, {
-						data: {
-							topId: topId,
-							roomid: liveId,
-							userId: uId,
-							isServer: isNormal
-						},
-						dataType: "json",
-						type: "post",
-						success: function(data) {
-							if (data.length > 0) {
-								topId = data[data.length - 1].Id + 1;
-								for (var i = 0; i < data.length; i++) {
-									var myDate = subStr(5, data[i].SendDate);
-									var headLogo;
-									if (data[i].SendManager == 1) {
-										//管理员
-										headLogo = 'image/guan.png';
-									} else {
-										//普通用户
-										headLogo = 'image/normalUser.png';
-									}
-									if (data[i].SendServiceId == 1) {
-										//客服
-									} else {
-										//非客服
-									}
-									content = content + "<li ><span id='chat-time'>" + myDate 
-									+ "</span><span id='sp_head'>" + "<img src=" + headLogo 
-									+ " id='iv_head'/>" + "</span><span id='chat-name'>" 
-									+ data[i].SendUserName + "</span>" + "<span id='chat-content'>"
-									+ data[i].MessBody + "</span></li>";
-								}
-								chatLay.innerHTML = content;
-								if (content != null) {
-									var imgs = document.getElementsByTagName("img");
-									for (var i = 0; i < imgs.length; i++) {
-										if (imgs[i].src.indexOf('gif') > 0) {
-											imgs[i].style.width = '25px';
-											imgs[i].style.height = '25px';
-											continue;
-										}
-										if (imgs[i].src.indexOf('img.jucaipen.com') > 0) {
-											imgs[i].style.width = '50%';
-										}
-									}
-								}
-								mui.scrollTo(document.body.scrollHeight, 100);
-							}
-							getMsgForEver();
-						},
-						error: function(e) {
-							mui.toast('连接失败');
-						}
-					})
-				}
-				var btn_send = document.getElementById("btn-send");
-				var content = document.getElementById("msg-content");
-				btn_send.addEventListener('tap', function() {
-						if (content.value.length <= 0) {
-							mui.toast('发送消息不能为空');
-							return false;
-						}
-						sendMsg(content.value, userName);
-					},false)
-					//发送消息 
-				function sendMsg(c, uName) {
-					mui.ajax(sendMsgPath, {
-						data: {
-							msgcontent: c,
-							sendusername: uName,
-							SendUserId: uId,
-							roomid: liveId
-						},
-						type: "post",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.Result) {
-								mui.toast('发送成功');
-								content.value = '';
-							} else {
-								mui.toast(data.Msg);
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败');
-						}
-					})
-				}
-				//向服务端发送在线状态
-				function sendUserState(msgType,fromId,roomId,managerId,serverId,userName){
-					var param={
-						msgType:msgType,
-						fromUser:fromId,
-						roomId:roomId,
-						isManager:managerId,
-						isServer:serverId,
-						userName:userName
-					};
-					mui.ajax(changeState,{
-						data:{
-							messageObject:JSON.stringify(param)
-						},
-						type:"get",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							
-						},
-						error: function(e){
-							
-							
-						}
-					})
-				}
-			})
-		</script>
-
+		<script type="text/javascript" src="js/style.js"></script>
 		<style type="text/css">
 			.pagebody {
 				margin: 10px;
@@ -404,8 +110,291 @@
 					<button type="button" class="mui-btn" style="background: #bb1121;width: 100%;color: white;height: 100%;font-size: 20px;" id="btn-send">发送</button>
 				</div>
 			</div>
-
 		</div>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var web = plus.webview.currentWebview();
+				var chatLay = document.getElementById("chatLay");
+				var liveResourcePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
+				var topIdPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getTopId";
+				var getChatMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getlist";
+				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
+				var changeState = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
+				var uId = plus.storage.getItem("userId");
+				var liveId = web.liveId;
+				var isLand;
+				var topId;
+				var isNormal;
+				var roomFace = web.face;
+				var isManager = plus.storage.getItem("isManager");
+				var isServer = plus.storage.getItem("isServer");
+				var userName = plus.storage.getItem("userName");
+				var bd = document.getElementById("bd");
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				if (isServer == 1 || isManager == 1) {
+					isNormal = 1;
+				} else {
+					isNormal = 1;
+				}
+				//msType,fromId,roomId,managerId,serverId,userName
+				sendUserState(0, uId, liveId, isManager, isServer, userName);
+				web.addEventListener('close', function() {
+						console.log('close');
+						sendUserState(1, uId, liveId, isManager, isServer, userName);
+					}, false)
+					//获取视频资源
+				mui.ajax(liveResourcePath, {
+					data: {
+						id: liveId,
+						typeId: 0
+					},
+					type: "get",
+					dataType: "json",
+					timeout: 10000,
+					success: function(data) {
+						var videoUrl;
+						if (data.videoUrl.indexOf('yyscene') > 0) {
+							bd.style.background = '#AAAAAA';
+						} else {
+							videoUrl = "<embed width='100%' height='100%' id='live'   src=" + data.videoUrl + " webkit-playsinline ></embed>";
+							bd.innerHTML = videoUrl;
+							var live = document.getElementById("live");
+							//判断是否全屏
+							document.addEventListener('fullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									plus.screen.unlockOrientation();
+								}
+							}, false);
+							document.addEventListener('mozfullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									document.mozRequestFullScreen();
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									document.mozCancelFullScreen();
+									plus.screen.unlockOrientation();
+								}
+							}, false);
+							document.addEventListener('webkitfullscreenchange', function() {
+								if (!isLand) {
+									isLand = true;
+									document.webkitRequestFullScreen();
+									plus.screen.lockOrientation('landscape-primary');
+								} else {
+									isLand = false;
+									document.webkitCancelFullScreen();
+									plus.screen.unlockOrientation();
+								}
+							}, false);
+						}
+					},
+					error: function(xhr,type,e) {
+						mui.toast('连接失败:'+type);
+					}
+				})
+
+				function getMsgForEver() {
+					setInterval(function() {
+						var content = chatLay.innerHTML;
+						mui.ajax(getChatMsgPath, {
+							data: {
+								topId: topId,
+								roomid: liveId,
+								userId: uId,
+								isServer: isNormal
+							},
+							dataType: "json",
+							type: "post",
+							success: function(data) {
+								if (data.length > 0) {
+									topId = data[data.length - 1].Id + 1;
+									for (var i = 0; i < data.length; i++) {
+										var myDate = subStr(5, data[i].SendDate);
+										if (data[i].SendManager == 1) {
+											//管理员
+											headLogo = 'image/guan.png';
+										} else {
+											//普通用户
+											headLogo = 'image/normalUser.png';
+										}
+										if (data[i].SendServiceId == 1) {
+											//客服
+										} else {
+											//非客服
+										}
+										content += "<li><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+									}
+									chatLay.innerHTML = content;
+									if (content != null) {
+										var imgs = document.getElementsByTagName("img");
+										for (var i = 0; i < imgs.length; i++) {
+											if (imgs[i].src.indexOf('gif') > 0) {
+												imgs[i].style.width = '25px';
+												imgs[i].style.height = '25px';
+												continue;
+											}
+											if (imgs[i].src.indexOf('img.jucaipen.com') > 0) {
+												imgs[i].style.width = '50%';
+											}
+										}
+									}
+									mui.scrollTo(document.body.scrollHeight, 100);
+								}
+							},
+							error: function(xhr,type,e) {
+								mui.toast('连接失败:'+type);
+							}
+						})
+					}, 5000);
+				}
+				getTopId(isManager, liveId, isServer);
+				//获取最近倒数第十条消息ID
+				function getTopId(isManager, roomId, isServer) {
+					mui.ajax(topIdPath, {
+						data: {
+							userType: isManager,
+							topCount: 10,
+							roomId: roomId,
+							isServer: isServer
+						},
+						dataType: "json",
+						type: "post",
+						success: function(data) {
+							topId = JSON.stringify(data);
+							getChatMessaged();
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败:'+type);
+						}
+					})
+				}
+
+				function getChatMessaged() {
+					var content = chatLay.innerHTML;
+					mui.ajax(getChatMsgPath, {
+						data: {
+							topId: topId,
+							roomid: liveId,
+							userId: uId,
+							isServer: isNormal
+						},
+						dataType: "json",
+						type: "post",
+						success: function(data) {
+							if (data.length > 0) {
+								topId = data[data.length - 1].Id + 1;
+								for (var i = 0; i < data.length; i++) {
+									var myDate = subStr(5, data[i].SendDate);
+									var headLogo;
+									if (data[i].SendManager == 1) {
+										//管理员
+										headLogo = 'image/guan.png';
+									} else {
+										//普通用户
+										headLogo = 'image/normalUser.png';
+									}
+									if (data[i].SendServiceId == 1) {
+										//客服
+									} else {
+										//非客服
+									}
+									content += "<li ><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+								}
+								chatLay.innerHTML = content;
+								if (content != null) {
+									var imgs = document.getElementsByTagName("img");
+									for (var i = 0; i < imgs.length; i++) {
+										if (imgs[i].src.indexOf('gif') > 0) {
+											imgs[i].style.width = '25px';
+											imgs[i].style.height = '25px';
+											continue;
+										}
+										if (imgs[i].src.indexOf('img.jucaipen.com') > 0) {
+											imgs[i].style.width = '50%';
+										}
+									}
+								}
+								mui.scrollTo(document.body.scrollHeight, 100);
+							}
+							getMsgForEver();
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败:'+type);
+						}
+					})
+				}
+				var btn_send = document.getElementById("btn-send");
+				var content = document.getElementById("msg-content");
+				btn_send.addEventListener('tap', function() {
+						if (content.value.length <= 0) {
+							mui.toast('发送消息不能为空');
+							return false;
+						}
+						sendMsg(content.value, userName);
+					}, false)
+					//发送消息 
+				function sendMsg(c, uName) {
+					mui.ajax(sendMsgPath, {
+						data: {
+							msgcontent: c,
+							sendusername: uName,
+							SendUserId: uId,
+							roomid: liveId
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.Result) {
+								mui.toast('发送成功');
+								content.value = '';
+							} else {
+								mui.toast(data.Msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败:'+type);
+						}
+					})
+				}
+				//向服务端发送在线状态
+				function sendUserState(msgType, fromId, roomId, managerId, serverId, userName) {
+					var param = {
+						msgType: msgType,
+						fromUser: fromId,
+						roomId: roomId,
+						isManager: managerId,
+						isServer: serverId,
+						userName: userName
+					};
+					mui.ajax(changeState, {
+						data: {
+							messageObject: JSON.stringify(param)
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+						},
+						error: function(xhr,type,e) {
+							
+						}
+					})
+				}
+			})
+		</script>
+
 	</body>
 
 </html>

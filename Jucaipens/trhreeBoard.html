@@ -8,178 +8,13 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script src="js/mingjia.js" type="text/javascript"></script>
 		<title></title>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var styles={};
-				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoardIndex";
-				var board = document.getElementById("bopard");
-				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
-				var load = document.getElementById("load");
-				var areaLoad = document.getElementById("areaLoad");
-				var famousDish = document.getElementById("famousDish");
-				var attentions = document.getElementById("attentions");
-				var liveList = document.getElementById("liveList");
-				var index = document.getElementById("index");
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(plus.webview.currentWebview(),styles);
-				findThreeBoard();
-				load.style.display = 'block';
-
-				function findThreeBoard() {
-					//获取新三板列表
-					var str=board.innerHTML;
-					mui.ajax(threeBoard, {
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							load.style.display = 'none';
-							for(var i=0;i<data.length;i++){
-								var smallId=data[i].smallId;
-								var bigId=data[i].bigId;
-								var typeName=data[i].name;
-								var item=data[i].item;
-								str = str + "<div class='xiangmu_t' id='more-lay'><h3>" + typeName 
-								+ "</h3><a sId=" + data[i].smallId
-								+ " bId=" + data[i].bigId 
-								+ " style='color:#4f4f4f;' id='more-ns'>更多</a></div><div class='yaowen_b'><ul class='lay-board'>";
-							    for(var j=0;j<item.length;j++){
-							    	var title = item[j].title;
-									var id = item[j].id;
-									var desc = item[j].desc;
-									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>"
-									+ "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
-							    }
-							    str = str + "</ul></div>";
-								board.innerHTML = str;
-							}
-							board.innerHTML = str;
-							if(data.length>0){
-								//进入新三板详细页面
-								mui(".lay-board").on("tap", "li", function() {
-								var nId = this.getAttribute("id");
-								mui.openWindow({
-									url: "newsDetail.html",
-									id: "newsDetail",
-									extras: {
-										newsId: nId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-							//更多新三板
-							mui("#bopard").on("tap","a",function(){
-								var sId = this.getAttribute("sId");
-								var bId = this.getAttribute("bId");
-								mui.openWindow({
-									url: "news/moreNews.html",
-									id: "moreNews",
-									extras: {
-										bigId: bId,
-										smallId: sId
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-								
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				// 跳转登录界面
-				pageTop1_show_login_link.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-					} else {
-						mui.openWindow({
-							url: "vipcenter.html",
-							id: "vipcenter",
-							waiting: {
-								autoShow: false
-							}
-						})
-					}
-				},false)
-				//跳转到首页
-				index.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "index.html",
-							id: "index",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到直播
-				liveList.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "livelist.html",
-							id: "livelist",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到关注
-				attentions.addEventListener('tap', function() {
-						mui.openWindow({
-							url: "attention.html",
-							id: "attention",
-							waiting: {
-								autoShow: false
-							},
-							show: {
-								aniShow: 'none'//页面显示动画，默认为”slide-in-right“；
-							}
-						})
-					},false)
-					//跳转到名家
-				famousDish.addEventListener('tap', function() {
-					mui.openWindow({
-						url: "famousDish.html",
-						id: "famousDish",
-						waiting: {
-							autoShow: false
-						},
-						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
-						}
-					})
-				},false)
-			})
-		</script>
 		<style type="text/css">
 			.lcxms {
 				margin-top: 50px;
@@ -215,25 +50,25 @@
 
 		<div style="text-align: center;margin-top: 60%;display: none;" id="load">
 			<div class="spinner">
-					<div class="spinner-container container1">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container2">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container3">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
 				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+			</div>
 		</div>
 
 		<!------------底部定位层---------->
@@ -251,7 +86,165 @@
 				</div>
 			</div>
 		</footer>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var styles = {};
+				var threeBoard = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/threeBoardIndex";
+				var board = document.getElementById("bopard");
+				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
+				var load = document.getElementById("load");
+				var areaLoad = document.getElementById("areaLoad");
+				var famousDish = document.getElementById("famousDish");
+				var attentions = document.getElementById("attentions");
+				var liveList = document.getElementById("liveList");
+				var index = document.getElementById("index");
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(plus.webview.currentWebview(), styles);
+				findThreeBoard();
+				load.style.display = 'block';
 
+				function findThreeBoard() {
+					//获取新三板列表
+					var str = board.innerHTML;
+					mui.ajax(threeBoard, {
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							load.style.display = 'none';
+							for (var i = 0; i < data.length; i++) {
+								var smallId = data[i].smallId;
+								var bigId = data[i].bigId;
+								var typeName = data[i].name;
+								var item = data[i].item;
+								str += "<div class='xiangmu_t' id='more-lay'><h3>" + typeName + "</h3><a sId=" + data[i].smallId + " bId=" + data[i].bigId + " style='color:#4f4f4f;' id='more-ns'>更多</a></div><div class='yaowen_b'><ul class='lay-board'>";
+								for (var j = 0; j < item.length; j++) {
+									var title = item[j].title;
+									var id = item[j].id;
+									var desc = item[j].desc;
+									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+								}
+								str = str + "</ul></div>";
+								board.innerHTML = str;
+							}
+							board.innerHTML = str;
+							if (data.length > 0) {
+								//进入新三板详细页面
+								mui(".lay-board").on("tap", "li", function() {
+										var nId = this.getAttribute("id");
+										mui.openWindow({
+											url: "newsDetail.html",
+											id: "newsDetail",
+											extras: {
+												newsId: nId
+											},
+											waiting: {
+												autoShow: false
+											}
+										})
+									}, false)
+									//更多新三板
+								mui("#bopard").on("tap", "a", function() {
+									var sId = this.getAttribute("sId");
+									var bId = this.getAttribute("bId");
+									mui.openWindow({
+										url: "news/moreNews.html",
+										id: "moreNews",
+										extras: {
+											bigId: bId,
+											smallId: sId
+										},
+										waiting: {
+											autoShow: false
+										}
+									})
+								}, false)
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				// 跳转登录界面
+				pageTop1_show_login_link.addEventListener("tap", function() {
+						var uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+						} else {
+							mui.openWindow({
+								url: "vipcenter.html",
+								id: "vipcenter",
+								waiting: {
+									autoShow: false
+								}
+							})
+						}
+					}, false)
+					//跳转到首页
+				index.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "index.html",
+							id: "index",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到直播
+				liveList.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "livelist.html",
+							id: "livelist",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到关注
+				attentions.addEventListener('tap', function() {
+						mui.openWindow({
+							url: "attention.html",
+							id: "attention",
+							waiting: {
+								autoShow: false
+							},
+							show: {
+								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							}
+						})
+					}, false)
+					//跳转到名家
+				famousDish.addEventListener('tap', function() {
+					mui.openWindow({
+						url: "famousDish.html",
+						id: "famousDish",
+						waiting: {
+							autoShow: false
+						},
+						show: {
+							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+						}
+					})
+				}, false)
+			})
+		</script>
 	</body>
 
 </html>

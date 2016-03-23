@@ -19,459 +19,7 @@
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<link rel="stylesheet" href="css/app.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack: true, //启用右滑关闭功能
-				gestureConfig: {
-					hold: true,
-					release: true
-				}
-			});
-			mui.plusReady(function() {
-				var news_detailUrl = "http://121.40.227.121:8080/AccumulateWealth/accumulate/newsDetail";
-				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
-				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
-				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
-				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
-				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
-				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
-				var list = document.getElementById("lv-share");
-				var web = plus.webview.currentWebview();
-				var title = document.getElementById("show_newstit");
-				var repoter = document.getElementById("show_newsinfo");
-				var content = document.getElementById("show_newsbody");
-				var relate = document.getElementById("data-relate");
-				var comm_count = document.getElementById("show_Video_CommCount");
-				var comment = document.getElementById("newscommlist");
-				var inputs = document.getElementById("input");
-				var myinput = document.getElementById("myinput");
-				var HiddenFieldId = document.getElementById("HiddenFieldId");
-				var btn_sub_comm = document.getElementById("btn_sub_comm");
-				var getMore = document.getElementById("getMore");
-				var li_share = document.getElementById("li-share");
-				var iv_share = document.getElementById("iv-share");
-				var iv_collect = document.getElementById("iv-collect");
-				var li_collect = document.getElementById("li-collect");
-				var more = document.getElementById("more");
-				var li_more = document.getElementById("li-more");
-				var coll_lab = document.getElementById("coll_lab");
-				var moreLoad = document.getElementById("moreLoad");
-				var newsInfo = document.getElementById("newsInfo");
-				var newsAbout = document.getElementById("newsAbout");
-				var showvideoinfo_3 = document.getElementById("showvideoinfo_3");
-				var newsDetail_load=document.getElementById("newsDetail_load");
-				var bhref = false;
-				var isCollected;
-				var currentPage = 1;
-				var totlePage;
-				var id = web.newsId;
-				var share;
-				var appenStr = "";
-				var classId;
-				var linkUrl;
-				var descript;
-				var typeId = 0;
-				var uId;
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				newsDetail_load.style.display='block';
-				if (id <= 0) {
-					plus.nativeUI.toast("新闻ID异常");
-					return;
-				}
-				findCollectState();
-				//获取新闻详细信息
-				mui.ajax(news_detailUrl, {
-					data: {
-						id: id
-					},
-					dataType: "json",
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						newsDetail_load.style.display='none';
-						newsInfo.style.display = 'block';
-						descript = data.descript;
-						linkUrl = "http://jucaipen.com/" + data.htmlPath;
-						title.innerHTML = data.title;
-						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + subStr(2, data.publishDate);
-						content.innerHTML = data.Bodys;
-					},
-					error: function(e) {
-						newsDetail_load.style.display='none';
-						newsInfo.style.display = 'block';
-						mui.toast('获取数据失败');
-					}
-				});
-				//获取相关新闻
-				var relaUrl = "";
-				mui.ajax(relate_news, {
-					data: {
-						id: id
-					},
-					dataType: "json",
-					type: "get",
-					timeout: 10000,
-					success: function(data) {
-						newsDetail_load.style.display='none';
-						newsAbout.style.display = 'block';
-						for (var i = 0; i < data.length; i++) {
-							relaUrl = relaUrl + "<li id=" + data[i].id + ">•<a>" + data[i].title + "</a></li>";
-						}
-						relate.innerHTML = relaUrl;
-						mui("#data-relate").on("tap", "li", function() {
-							var nId = this.getAttribute("id");
-							mui.openWindow({
-								url: "newsDetail.html",
-								id: "newsDetail",
-								extras: {
-									newsId: nId
-								},
-								waiting: {
-									autoShow: false
-								},
-								createNew: true //重新创建页面
-							})
-						},false)
-					},
-					error: function(e) {
-						mui.toast('获取数据失败，请稍后重试');
-					}
-				});
-				findCommList(currentPage);
-
-				function findCommList(p) {
-					//获取评论信息
-					var commUrl = "";
-					mui.ajax(querry_comm, {
-						data: {
-							typeId: typeId,
-							id: id,
-							pager: p
-						},
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							showvideoinfo_3.style.display = 'block';
-							if (moreLoad.style.display = 'block') {
-								moreLoad.style.display = 'none';
-							}
-							comm_count.innerHTML = "共" + data.length + "条";
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[0].totlePage;
-								var logoStr = data[i].userLogo;
-								var myDate = subStr(3, data[i].insertDate);
-								if (logoStr.indexOf("121.40.227.121") > 0) {
-									logoStr = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + logoStr;
-								}
-								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" + "<labe style='margin-left:10px;'>" + data[i].userName + "</lable></span>" + "<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
-									"</span><span id='sp_comm'  class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
-									"</span></h4><span id='comBody' style='margin-left:10px;'>" + data[i].body + "</span><span id='commTime'>" +
-									myDate + "</span>" + "	</div></li> "
-							}
-							comment.innerHTML = commUrl;
-							if (currentPage < totlePage) {
-								getMore.style.display = 'block';
-							} else {
-								getMore.style.display = 'none';
-							}
-								//点赞
-								mui("#newscommlist").on("tap", "#sp_good", function() {
-									uId = plus.storage.getItem("userId");
-									var commId = this.getAttribute("class");
-									if (uId <= 0) {
-										mui.openWindow({
-											url: "login.html",
-											id: "login"
-										})
-										return;
-									}
-									mui.ajax(add_goods, {
-										data: {
-											userId: uId,
-											commId: commId
-										},
-										dataType: "json",
-										type: "get",
-										timeout: 10000,
-										success: function(data) {
-											if (data.ret_code == 0) {
-												plus.nativeUI.toast("点赞成功");
-											} else {
-												plus.nativeUI.toast(data.err_msg);
-											}
-										},
-										error: function(e) {
-											plus.nativeUI.toast("连接失败");
-										}
-									});
-								},false);
-								//回复评论
-								mui("#newscommlist").on("tap", "#sp_comm", function() {
-									var name = this.getAttribute("name");
-									var commId = this.getAttribute("class");
-									myInputState(commId, "回复@" + name + "的评论:");
-								},false)
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					});
-				}
-				//设置默认图片
-				function isNull(str) {
-					if (str.length <= 0 || str == null) {
-						return 'image/head.png';
-					}
-					return str;
-				}
-				//获取收藏状况
-				function findCollectState() {
-					var uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						return;
-					}
-					mui.ajax(queryCollect, {
-						data: {
-							userId: uId,
-							newsId: id
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code == 0) {
-								iv_collect.src = "image/collect_s.png";
-								isCollected = true;
-								coll_lab.innerHTML = '取消收藏';
-							} else {
-								iv_collect.src = "image/collect_c.png";
-								isCollected = false;
-								coll_lab.innerHTML = '收藏';
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				//收藏资讯
-				function collectNewsOp(t) {
-					mui.ajax(collectNews, {
-						data: {
-							type: t,
-							userId: uId,
-							newsId: id
-						},
-						dataType: "json",
-						type: "get",
-						timeout: 10000,
-						success: function(data) {
-							//收藏
-							if (t == 0) {
-								if (data.ret_code == 0) {
-									isCollected = true;
-									mui.toast("收藏成功");
-									coll_lab.innerHTML = '取消收藏';
-									iv_collect.src = "image/collect_s.png";
-								} else {
-									coll_lab.innerHTML = '收藏';
-									mui.toast("收藏失败");
-									isCollected = false;
-								}
-							} else {
-								if (data.ret_code == 0) {
-									isCollected = false;
-									coll_lab.innerHTML = '收藏';
-									mui.toast("取消收藏成功");
-									iv_collect.src = "image/collect_c.png";
-								} else {
-									coll_lab.innerHTML = '收藏';
-									mui.toast("取消收藏失败");
-									isCollected = true;
-								}
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				li_collect.addEventListener("tap", function() {
-						mui(".mui-popover").popover('hide');
-						uId = plus.storage.getItem("userId");
-						if (uId <= 0) {
-							mui.openWindow({
-								url: "login.html",
-								id: "login"
-							})
-							return ;
-						}
-						if (isCollected) {
-							//取消收藏
-							collectNewsOp(1);
-						} else {
-							//收藏
-							collectNewsOp(0);
-						}
-					},false)
-					//弹出评论／回复框
-				inputs.addEventListener("tap", function() {
-					myInputState(0, "想说点什么");
-				},false);
-				//发表评论，回复
-				btn_sub_comm.addEventListener("tap", function() {
-						if (HiddenFieldId.value.length <= 0) {
-							plus.nativeUI.toast("请输入内容");
-							return;
-						}
-						remarkNews();
-					},false)
-					//弹出评论／回复对话框
-				function myInputState(cId, str) {
-					uId = plus.storage.getItem("userId");
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login"
-						})
-						return;
-					}
-					var d = myinput.style.display;
-					HiddenFieldId.value = "";
-					if (d == "block") {
-						myinput.style.display = "none";
-					} else {
-						myinput.style.display = "block";
-						classId = cId;
-						if (cId > 0) {
-							appenStr = str;
-						}
-						HiddenFieldId.placeholder = str;
-					}
-				}
-				//发表评论／回复
-				function remarkNews() {
-					mui.ajax(add_remark, {
-						data: {
-							typeId: typeId,
-							classId: classId,
-							userId: uId,
-							newsId: id,
-							bodys: appenStr + HiddenFieldId.value
-						},
-						dataType: "json",
-						type: "post",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code) {
-								plus.nativeUI.toast("评论发表成功");
-								HiddenFieldId.value = "";
-								currentPage = 1;
-								findCommList(currentPage);
-							} else {
-								plus.nativeUI.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				//获取更多评论信息
-				getMore.addEventListener("tap", function() {
-					getMore.style.display = 'none';
-					if (currentPage < totlePage) {
-						moreLoad.style.display = 'block';
-						findCommList(++currentPage);
-					}
-				},false);
-				//分享点击事件
-				li_share.addEventListener("hold", function() {
-						iv_share.src = 'image/share_press.png';
-					},false)
-					//分享按钮释放事件
-				li_share.addEventListener("release", function() {
-						iv_share.src = 'image/share_normal.png';
-						mui(".mui-popover").popover('hide');
-					},false)
-					//分享
-				li_share.addEventListener("tap", function() {
-						updateSerivces();
-					},false)
-					// 打开分享
-				function shareShow(s) {
-					bhref = false;
-					bts = [{
-						title: "分享到新浪微博"
-					}, {
-						title: "分享到腾讯微博"
-					}, {
-						title: "分享到QQ"
-					}, {
-						title: "分享到微信"
-					}];
-					plus.nativeUI.actionSheet({
-							cancel: "取消",
-							buttons: bts
-						},
-						function(e) {
-							var i = e.index;
-							if (i > 0) {
-								shareAction(s, i - 1);
-							}
-						}
-					);
-				}
-				/**
-				 * 更新分享服务
-				 */
-				function updateSerivces() {
-					plus.share.getServices(function(s) {
-						share = s;
-						shareShow(share);
-					}, function(e) {
-						mui.toast('获取分享列表失败');
-					});
-				}
-
-				function shareAction(s, index) {
-					var sa = s[index];
-					if (!sa.authenticated) {
-						sa.authorize(function() {
-							shareMessage(sa);
-						}, function() {
-							mui.toast('分享认证失败');
-						})
-					} else {
-						shareMessage(sa);
-					}
-				}
-				/**
-				 * 发送分享消息
-				 * @param
-				 */
-				function shareMessage(s) {
-					s.send({
-						content: descript,
-						href: linkUrl,
-						title: title.innerHTML,
-					}, function() {
-						mui.toast('分享成功');
-					}, function(e) {
-						mui.toast('分享失败');
-					});
-				}
-				li_more.addEventListener("tap", function() {
-					mui(".mui-popover").popover('hide');
-				},false)
-			})
-		</script>
-
+		<script type="text/javascript" src="js/style.js"></script>
 		<style type="text/css">
 			#newscommlist {
 				float: left;
@@ -709,9 +257,9 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div style="text-align: center;margin-top: 80%;display: none;" id="newsDetail_load">
-			<div class="spinner">
+				<div class="spinner">
 					<div class="spinner-container container1">
 						<div class="circle1"></div>
 						<div class="circle2"></div>
@@ -731,7 +279,7 @@
 						<div class="circle4"></div>
 					</div>
 				</div>
-	      	</div>
+			</div>
 			<!------------底部定位层---------->
 
 		</div>
@@ -768,6 +316,458 @@
 				</ul>
 			</div>
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+				gestureConfig: {
+					hold: true,
+					release: true
+				}
+			});
+			mui.plusReady(function() {
+				var news_detailUrl = "http://121.40.227.121:8080/AccumulateWealth/accumulate/newsDetail";
+				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
+				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
+				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
+				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
+				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
+				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
+				var list = document.getElementById("lv-share");
+				var web = plus.webview.currentWebview();
+				var title = document.getElementById("show_newstit");
+				var repoter = document.getElementById("show_newsinfo");
+				var content = document.getElementById("show_newsbody");
+				var relate = document.getElementById("data-relate");
+				var comm_count = document.getElementById("show_Video_CommCount");
+				var comment = document.getElementById("newscommlist");
+				var inputs = document.getElementById("input");
+				var myinput = document.getElementById("myinput");
+				var HiddenFieldId = document.getElementById("HiddenFieldId");
+				var btn_sub_comm = document.getElementById("btn_sub_comm");
+				var getMore = document.getElementById("getMore");
+				var li_share = document.getElementById("li-share");
+				var iv_share = document.getElementById("iv-share");
+				var iv_collect = document.getElementById("iv-collect");
+				var li_collect = document.getElementById("li-collect");
+				var more = document.getElementById("more");
+				var li_more = document.getElementById("li-more");
+				var coll_lab = document.getElementById("coll_lab");
+				var moreLoad = document.getElementById("moreLoad");
+				var newsInfo = document.getElementById("newsInfo");
+				var newsAbout = document.getElementById("newsAbout");
+				var showvideoinfo_3 = document.getElementById("showvideoinfo_3");
+				var newsDetail_load = document.getElementById("newsDetail_load");
+				var bhref = false;
+				var isCollected;
+				var currentPage = 1;
+				var totlePage;
+				var id = web.newsId;
+				var share;
+				var appenStr = "";
+				var classId;
+				var linkUrl;
+				var descript;
+				var typeId = 0;
+				var uId;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				newsDetail_load.style.display = 'block';
+				if (id <= 0) {
+					plus.nativeUI.toast("新闻ID异常");
+					return;
+				}
+				findCollectState();
+				//获取新闻详细信息
+				mui.ajax(news_detailUrl, {
+					data: {
+						id: id
+					},
+					dataType: "json",
+					type: "get",
+					timeout: 10000,
+					success: function(data) {
+						newsDetail_load.style.display = 'none';
+						newsInfo.style.display = 'block';
+						descript = data.descript;
+						linkUrl = "http://jucaipen.com/" + data.htmlPath;
+						title.innerHTML = data.title;
+						repoter.innerHTML = data.from + "&nbsp;&nbsp;发布时间：" + subStr(2, data.publishDate);
+						content.innerHTML = data.Bodys;
+					},
+					error: function(xhr,type,e) {
+						newsDetail_load.style.display = 'none';
+						newsInfo.style.display = 'block';
+						mui.toast('获取数据失败:'+type);
+					}
+				});
+				//获取相关新闻
+				var relaUrl = "";
+				mui.ajax(relate_news, {
+					data: {
+						id: id
+					},
+					dataType: "json",
+					type: "get",
+					timeout: 10000,
+					success: function(data) {
+						newsDetail_load.style.display = 'none';
+						newsAbout.style.display = 'block';
+						for (var i = 0; i < data.length; i++) {
+							relaUrl = relaUrl + "<li id=" + data[i].id + ">•<a>" + data[i].title + "</a></li>";
+						}
+						relate.innerHTML = relaUrl;
+						mui("#data-relate").on("tap", "li", function() {
+							var nId = this.getAttribute("id");
+							mui.openWindow({
+								url: "newsDetail.html",
+								id: "newsDetail",
+								extras: {
+									newsId: nId
+								},
+								waiting: {
+									autoShow: false
+								},
+								createNew: true //重新创建页面
+							})
+						}, false)
+					},
+					error: function(xhr,type,e) {
+						mui.toast('获取数据失败，请稍后重试:'+type);
+					}
+				});
+				findCommList(currentPage);
+
+				function findCommList(p) {
+					//获取评论信息
+					var commUrl = "";
+					mui.ajax(querry_comm, {
+						data: {
+							typeId: typeId,
+							id: id,
+							pager: p
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							showvideoinfo_3.style.display = 'block';
+							if (moreLoad.style.display = 'block') {
+								moreLoad.style.display = 'none';
+							}
+							comm_count.innerHTML = "共" + data.length + "条";
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
+								var logoStr = data[i].userLogo;
+								var myDate = subStr(3, data[i].insertDate);
+								if (logoStr.indexOf("121.40.227.121") > 0) {
+									logoStr = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + logoStr;
+								}
+								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" + "<labe style='margin-left:10px;'>" + data[i].userName + "</lable></span>" + "<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
+									"</span><span id='sp_comm'  class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
+									"</span></h4><span id='comBody' style='margin-left:10px;'>" + data[i].body + "</span><span id='commTime'>" +
+									myDate + "</span>" + "	</div></li> "
+							}
+							comment.innerHTML = commUrl;
+							if (currentPage < totlePage) {
+								getMore.style.display = 'block';
+							} else {
+								getMore.style.display = 'none';
+							}
+							//点赞
+							mui("#newscommlist").on("tap", "#sp_good", function() {
+								uId = plus.storage.getItem("userId");
+								var commId = this.getAttribute("class");
+								if (uId <= 0) {
+									mui.openWindow({
+										url: "login.html",
+										id: "login"
+									})
+									return;
+								}
+								mui.ajax(add_goods, {
+									data: {
+										userId: uId,
+										commId: commId
+									},
+									dataType: "json",
+									type: "get",
+									timeout: 10000,
+									success: function(data) {
+										if (data.ret_code == 0) {
+											plus.nativeUI.toast("点赞成功");
+										} else {
+											plus.nativeUI.toast(data.err_msg);
+										}
+									},
+									error: function(xhr,type,e) {
+										plus.nativeUI.toast("连接失败:"+type);
+									}
+								});
+							}, false);
+							//回复评论
+							mui("#newscommlist").on("tap", "#sp_comm", function() {
+								var name = this.getAttribute("name");
+								var commId = this.getAttribute("class");
+								myInputState(commId, "回复@" + name + "的评论:");
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					});
+				}
+				//设置默认图片
+				function isNull(str) {
+					if (str.length <= 0 || str == null) {
+						return 'image/head.png';
+					}
+					return str;
+				}
+				//获取收藏状况
+				function findCollectState() {
+					var uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						return;
+					}
+					mui.ajax(queryCollect, {
+						data: {
+							userId: uId,
+							newsId: id
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								iv_collect.src = "image/collect_s.png";
+								isCollected = true;
+								coll_lab.innerHTML = '取消收藏';
+							} else {
+								iv_collect.src = "image/collect_c.png";
+								isCollected = false;
+								coll_lab.innerHTML = '收藏';
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//收藏资讯
+				function collectNewsOp(t) {
+					mui.ajax(collectNews, {
+						data: {
+							type: t,
+							userId: uId,
+							newsId: id
+						},
+						dataType: "json",
+						type: "get",
+						timeout: 10000,
+						success: function(data) {
+							//收藏
+							if (t == 0) {
+								if (data.ret_code == 0) {
+									isCollected = true;
+									mui.toast("收藏成功");
+									coll_lab.innerHTML = '取消收藏';
+									iv_collect.src = "image/collect_s.png";
+								} else {
+									coll_lab.innerHTML = '收藏';
+									mui.toast("收藏失败");
+									isCollected = false;
+								}
+							} else {
+								if (data.ret_code == 0) {
+									isCollected = false;
+									coll_lab.innerHTML = '收藏';
+									mui.toast("取消收藏成功");
+									iv_collect.src = "image/collect_c.png";
+								} else {
+									coll_lab.innerHTML = '收藏';
+									mui.toast("取消收藏失败");
+									isCollected = true;
+								}
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				li_collect.addEventListener("tap", function() {
+						mui(".mui-popover").popover('hide');
+						uId = plus.storage.getItem("userId");
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login"
+							})
+							return;
+						}
+						if (isCollected) {
+							//取消收藏
+							collectNewsOp(1);
+						} else {
+							//收藏
+							collectNewsOp(0);
+						}
+					}, false)
+					//弹出评论／回复框
+				inputs.addEventListener("tap", function() {
+					myInputState(0, "想说点什么");
+				}, false);
+				//发表评论，回复
+				btn_sub_comm.addEventListener("tap", function() {
+						if (HiddenFieldId.value.length <= 0) {
+							plus.nativeUI.toast("请输入内容");
+							return;
+						}
+						remarkNews();
+					}, false)
+					//弹出评论／回复对话框
+				function myInputState(cId, str) {
+					uId = plus.storage.getItem("userId");
+					if (uId <= 0) {
+						mui.openWindow({
+							url: "login.html",
+							id: "login"
+						})
+						return;
+					}
+					var d = myinput.style.display;
+					HiddenFieldId.value = "";
+					if (d == "block") {
+						myinput.style.display = "none";
+					} else {
+						myinput.style.display = "block";
+						classId = cId;
+						if (cId > 0) {
+							appenStr = str;
+						}
+						HiddenFieldId.placeholder = str;
+					}
+				}
+				//发表评论／回复
+				function remarkNews() {
+					mui.ajax(add_remark, {
+						data: {
+							typeId: typeId,
+							classId: classId,
+							userId: uId,
+							newsId: id,
+							bodys: appenStr + HiddenFieldId.value
+						},
+						dataType: "json",
+						type: "post",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code) {
+								plus.nativeUI.toast("评论发表成功");
+								HiddenFieldId.value = "";
+								currentPage = 1;
+								findCommList(currentPage);
+							} else {
+								plus.nativeUI.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//获取更多评论信息
+				getMore.addEventListener("tap", function() {
+					getMore.style.display = 'none';
+					if (currentPage < totlePage) {
+						moreLoad.style.display = 'block';
+						findCommList(++currentPage);
+					}
+				}, false);
+				//分享点击事件
+				li_share.addEventListener("hold", function() {
+						iv_share.src = 'image/share_press.png';
+					}, false)
+					//分享按钮释放事件
+				li_share.addEventListener("release", function() {
+						iv_share.src = 'image/share_normal.png';
+						mui(".mui-popover").popover('hide');
+					}, false)
+					//分享
+				li_share.addEventListener("tap", function() {
+						updateSerivces();
+					}, false)
+					// 打开分享
+				function shareShow(s) {
+					bhref = false;
+					bts = [{
+						title: "分享到新浪微博"
+					}, {
+						title: "分享到腾讯微博"
+					}, {
+						title: "分享到QQ"
+					}, {
+						title: "分享到微信"
+					}];
+					plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: bts
+						},
+						function(e) {
+							var i = e.index;
+							if (i > 0) {
+								shareAction(s, i - 1);
+							}
+						}
+					);
+				}
+				/**
+				 * 更新分享服务
+				 */
+				function updateSerivces() {
+					plus.share.getServices(function(s) {
+						share = s;
+						shareShow(share);
+					}, function(e) {
+						mui.toast('获取分享列表失败');
+					});
+				}
+
+				function shareAction(s, index) {
+					var sa = s[index];
+					if (!sa.authenticated) {
+						sa.authorize(function() {
+							shareMessage(sa);
+						}, function() {
+							mui.toast('分享认证失败');
+						})
+					} else {
+						shareMessage(sa);
+					}
+				}
+				/**
+				 * 发送分享消息
+				 * @param
+				 */
+				function shareMessage(s) {
+					s.send({
+						content: descript,
+						href: linkUrl,
+						title: title.innerHTML,
+					}, function() {
+						mui.toast('分享成功');
+					}, function(e) {
+						mui.toast('分享失败');
+					});
+				}
+				li_more.addEventListener("tap", function() {
+					mui(".mui-popover").popover('hide');
+				}, false)
+			})
+		</script>
 
 	</body>
 

@@ -10,171 +10,12 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
-		<!--标准mui.css--> 
-		<link rel="stylesheet" href="css/mui.min.css"> 
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var askListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
-				var askList = document.getElementById("askList");
-				var retAnswer = document.getElementById("retAnswer");
-				var web = plus.webview.currentWebview();
-				var retAsk = document.getElementById("retAsk");
-				var ask_gengduo = document.getElementById("ask_gengduo");
-				var loading=document.getElementById("loading");
-				var teacherId = web.teacherId;
-				var nodataLay=document.getElementById("layer-nodata");
-				var loadMore=document.getElementById("loadMore");
-				var totlePage;
-				var currentPage = 1;
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				if (teacherId > 0) {
-					//根据讲师ID获取提问列表
-					loading.style.display='block'; 
-					findByTeacherId(currentPage);
-				} else {
-					//获取全部的提问信息
-					loading.style.display='block'; 
-					findAll(currentPage);
-				}
-				//加载更多数据
-				ask_gengduo.addEventListener("tap", function() {
-					ask_gengduo.style.display='none';
-					if (currentPage < totlePage) {
-						loadMore.style.display='block';
-						if (teacherId > 0) {
-							findByTeacherId(++currentPage);
-						} else {
-							findAll(++currentPage);
-						}
-					}
-				},false)
-				//获取全部提问列表
-				function findAll(p) {
-					var askStr = askList.innerHTML;;
-					mui.ajax(askListPath, {
-						data: {
-							isAll: 0,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loading.style.display='none';
-							loadMore.style.display='none';
-							if(data.length<=0){
-								nodataLay.style.display='block';
-							}else{
-								nodataLay.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[0].totlePage;
-								var logoStr = data[i].headFace;
-								var myDate=subStr(2,data[i].insertDate);
-								if (logoStr.indexOf("121.40.227.121") > 0) {
-									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
-								}
-								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" 
-								+ "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" 
-								+ "<div class='content' ><a><span class='u_name' style='margin-left:15px;'>" + data[i].userName
-								+ "</span></a><span class='u_date' style='margin-left:15px;'>" + myDate + "</span>" 
-								+ "<div class='bodys'><a style='color:#8D8D8D;' style='margin-left:20px;'>" 
-								+ data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
-							}
-							askList.innerHTML = askStr;
-							if (currentPage < totlePage) {
-								ask_gengduo.style.display = 'block';
-							} else {
-								ask_gengduo.style.display = 'none';
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍重试');
-						}
-					})
-				}
-				//根据讲师ID获取提问列表
-				function findByTeacherId(p) {
-					var askStr = askList.innerHTML;
-					mui.ajax(askListPath, {
-						data: {
-							isAll: 1,
-							teacherId: teacherId,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loading.style.display='none';
-							loadMore.style.display='none';
-							if(data.length<=0){
-								nodataLay.style.display='block';
-							}else{
-								nodataLay.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[i].totlePage;
-								var myDate=subStr(2,data[i].insertDate);
-								var logoStr = data[i].headFace;
-								if (logoStr.indexOf("121.40.227.121") > 0) {
-									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
-								}
-								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name' style='margin-left:15px;'>" + data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" + myDate+ "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
-							}
-							askList.innerHTML = askStr;
-							if (currentPage < totlePage) {
-								ask_gengduo.style.display = 'block';
-							} else {
-								ask_gengduo.style.display = 'none';
-							}
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				retAnswer.addEventListener("tap", function() {
-					//跳转最新回答
-					mui.openWindow({
-						url: "answerList.html",
-						id: "answerList",
-						extras: {
-							teacherId: teacherId
-						},
-						waiting:{
-							autoShow:false
-						}
-					})
-				},false)
-				retAsk.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "askList.html",
-						id: "askList",
-						waiting:{
-							autoShow:false
-						}
-					})
-				})
-
-				function isNull(images) {
-					if (images.length <= 0) {
-						images = 'image/jucaipen.png';
-					}
-					return images;
-				}
-			})
-		</script>
+		<script type="text/javascript" src="js/style.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 	</head>
 
 	<body>
@@ -203,12 +44,12 @@
 			</div>
 			<div class="linkmore">
 				<a id="ask_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
-				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore"/>
+				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore" />
 			</div>
 			<div class="nullList">
 				<img src="images/icon-alert.png" class="imgNull" /><span>暂无评论</span>
 			</div>
-			
+
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loading">
 				<div class="spinner">
 					<div class="spinner-container container1">
@@ -231,15 +72,168 @@
 					</div>
 				</div>
 			</div>
-			
-			
-		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label>
-				</div>
-			
+
+			<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+				<label style="font-size: 25px;">暂无数据</label>
+			</div>
 		</div>
-		
-		<!------------底部定位层---------->
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var askListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
+				var doc=document;
+				var askList = doc.getElementById("askList");
+				var retAnswer = doc.getElementById("retAnswer");
+				var web = plus.webview.currentWebview();
+				var retAsk = doc.getElementById("retAsk");
+				var ask_gengduo = doc.getElementById("ask_gengduo");
+				var loading = doc.getElementById("loading");
+				var teacherId = web.teacherId;
+				var nodataLay = doc.getElementById("layer-nodata");
+				var loadMore = doc.getElementById("loadMore");
+				var totlePage;
+				var currentPage = 1;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				if (teacherId > 0) {
+					//根据讲师ID获取提问列表
+					loading.style.display = 'block';
+					findByTeacherId(currentPage);
+				} else {
+					//获取全部的提问信息
+					loading.style.display = 'block';
+					findAll(currentPage);
+				}
+				//加载更多数据
+				ask_gengduo.addEventListener("tap", function() {
+						ask_gengduo.style.display = 'none';
+						if (currentPage < totlePage) {
+							loadMore.style.display = 'block';
+							if (teacherId > 0) {
+								findByTeacherId(++currentPage);
+							} else {
+								findAll(++currentPage);
+							}
+						}
+					}, false)
+					//获取全部提问列表
+				function findAll(p) {
+					var askStr = askList.innerHTML;;
+					mui.ajax(askListPath, {
+						data: {
+							isAll: 0,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							loadMore.style.display = 'none';
+							if (data.length <= 0) {
+								nodataLay.style.display = 'block';
+							} else {
+								nodataLay.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
+								var logoStr = data[i].headFace;
+								var myDate = subStr(2, data[i].insertDate);
+								if (logoStr.indexOf("121.40.227.121") > 0) {
+									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
+								}
+								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content' ><a><span class='u_name' style='margin-left:15px;'>" + data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" + myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;' style='margin-left:20px;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+							}
+							askList.innerHTML = askStr;
+							if (currentPage < totlePage) {
+								ask_gengduo.style.display = 'block';
+							} else {
+								ask_gengduo.style.display = 'none';
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍重试:'+type);
+						}
+					})
+				}
+				//根据讲师ID获取提问列表
+				function findByTeacherId(p) {
+					var askStr = askList.innerHTML;
+					mui.ajax(askListPath, {
+						data: {
+							isAll: 1,
+							teacherId: teacherId,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loading.style.display = 'none';
+							loadMore.style.display = 'none';
+							if (data.length <= 0) {
+								nodataLay.style.display = 'block';
+							} else {
+								nodataLay.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[i].totlePage;
+								var myDate = subStr(2, data[i].insertDate);
+								var logoStr = data[i].headFace;
+								if (logoStr.indexOf("121.40.227.121") > 0) {
+									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
+								}
+								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name' style='margin-left:15px;'>" + data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" + myDate + "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+							}
+							askList.innerHTML = askStr;
+							if (currentPage < totlePage) {
+								ask_gengduo.style.display = 'block';
+							} else {
+								ask_gengduo.style.display = 'none';
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				retAnswer.addEventListener("tap", function() {
+					//跳转最新回答
+					mui.openWindow({
+						url: "answerList.html",
+						id: "answerList",
+						extras: {
+							teacherId: teacherId
+						},
+						waiting: {
+							autoShow: false
+						}
+					})
+				}, false)
+				retAsk.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "askList.html",
+						id: "askList",
+						waiting: {
+							autoShow: false
+						}
+					})
+				})
+
+				function isNull(images) {
+					if (images.length <= 0) {
+						images = 'image/jucaipen.png';
+					}
+					return images;
+				}
+			})
+		</script>
+
 	</body>
 
 </html>

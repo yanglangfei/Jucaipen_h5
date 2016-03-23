@@ -1,106 +1,23 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<!--
+	<!--
 	作者：185601452@qq.com
 	时间：2016-03-11
 	描述：我的评论
 -->
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<link rel="stylesheet" href="css/loadAnim1.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
+		<script type="text/javascript" src="js/style.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
-		<script type="text/javascript">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var remarkLay = document.getElementById("remarkLay");
-				var remarkPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
-				var currentPage = 1;
-				var moreLoad=document.getElementById("moreLoad");
-				var totlePager;
-				var uId = plus.storage.getItem("userId");
-				var loadRemark = document.getElementById("loadRemark");
-				var nodataLay=document.getElementById("layer-nodata");
-				var linkmore_p = document.getElementById("linkmore_p");
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(plus.webview.currentWebview(),styles);
-				if (uId <= 0) {
-					return;
-				}
-				loadRemark.style.display = 'block';
-				getRemarkInfo(currentPage);
-				//加载更多
-				linkmore_p.addEventListener("tap", function() {
-					linkmore_p.style.display='none';
-					if (currentPage < totlePager) {
-						moreLoad.style.display='block';
-						getRemarkInfo(++currentPage);
-					}
-				},false)
-				//获取我的评论信息
-				function getRemarkInfo(p) {
-					var remarkStr = remarkLay.innerHTML;
-					mui.ajax(remarkPath, {
-						data: {
-							userId: uId,
-							pager: p
-						},
-						type: "post",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							moreLoad.style.display='none';
-							loadRemark.style.display = 'none';
-							if(data.length<=0){
-								nodataLay.style.display='block';
-							}else{
-								nodataLay.style.display='none';
-							}
-							for (var i = 0; i < data.length; i++) {
-								var myDate=subStr(3,data[i].insertDate);
-								totlePager = data[i].totlePager;
-								remarkStr = remarkStr + "<li style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>"+myDate+"</span><span class='content'>" + data[i].body + "</span></li>";
-							}
-							remarkLay.innerHTML = remarkStr;
-							mui("#remarkLay").on("tap", "li", function() {
-								var id = this.getAttribute("id");
-								mui.openWindow({
-									url: "newsDetail.html",
-									id: "newsDetail",
-									extras: {
-										newsId: id
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-							if (currentPage < totlePager) {
-								linkmore_p.style.display = 'block';
-							} else {
-								linkmore_p.style.display = 'none';
-							}
-						},
-						error: function(e) {
-							mui.toast('数据获取失败，请稍后重试');
-						}
-					})
-				}
-			})
-		</script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<title>
-
 		</title>
-
 		<style type="text/css">
 			.user_bodybg {
 				background: #efeff4;
@@ -129,7 +46,7 @@
 
 				</ul>
 				<p class="more" style="text-align: center;">
-					<img src="image/loading-0.gif"  style="display: none;margin: auto;" id="moreLoad"/>
+					<img src="image/loading-0.gif" style="display: none;margin: auto;" id="moreLoad" />
 					<a id="linkmore_p" class="linkmore" style="display: none;background: #e8e8e8;">查看更多>></a>
 				</p>
 
@@ -137,33 +54,116 @@
 			<!------------底部定位层---------->
 
 		</div>
-		
+
 		<div style="text-align: center;margin-top: 60%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label>
-				</div>
-		
+			<label style="font-size: 25px;">暂无数据</label>
+		</div>
+
 		<div style="text-align: center;margin-top: 60%;display: none;" id="loadRemark">
 			<div class="spinner">
-					<div class="spinner-container container1">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container2">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container3">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
 				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+			</div>
 		</div>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var remarkLay = document.getElementById("remarkLay");
+				var remarkPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/myRemark";
+				var currentPage = 1;
+				var moreLoad = document.getElementById("moreLoad");
+				var totlePager;
+				var uId = plus.storage.getItem("userId");
+				var loadRemark = document.getElementById("loadRemark");
+				var nodataLay = document.getElementById("layer-nodata");
+				var linkmore_p = document.getElementById("linkmore_p");
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(plus.webview.currentWebview(), styles);
+				if (uId <= 0) {
+					return;
+				}
+				loadRemark.style.display = 'block';
+				getRemarkInfo(currentPage);
+				//加载更多
+				linkmore_p.addEventListener("tap", function() {
+						linkmore_p.style.display = 'none';
+						if (currentPage < totlePager) {
+							moreLoad.style.display = 'block';
+							getRemarkInfo(++currentPage);
+						}
+					}, false)
+					//获取我的评论信息
+				function getRemarkInfo(p) {
+					var remarkStr = remarkLay.innerHTML;
+					mui.ajax(remarkPath, {
+						data: {
+							userId: uId,
+							pager: p
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							moreLoad.style.display = 'none';
+							loadRemark.style.display = 'none';
+							if (data.length <= 0) {
+								nodataLay.style.display = 'block';
+							} else {
+								nodataLay.style.display = 'none';
+							}
+							for (var i = 0; i < data.length; i++) {
+								var myDate = subStr(3, data[i].insertDate);
+								totlePager = data[i].totlePager;
+								remarkStr += "<li style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>" + myDate + "</span><span class='content'>" + data[i].body + "</span></li>";
+							}
+							remarkLay.innerHTML = remarkStr;
+							mui("#remarkLay").on("tap", "li", function() {
+								var id = this.getAttribute("id");
+								mui.openWindow({
+									url: "newsDetail.html",
+									id: "newsDetail",
+									extras: {
+										newsId: id
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							}, false)
+							if (currentPage < totlePager) {
+								linkmore_p.style.display = 'block';
+							} else {
+								linkmore_p.style.display = 'none';
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('数据获取失败，请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
+
 	</body>
 
 </html>

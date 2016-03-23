@@ -6,6 +6,7 @@
     	时间：2016-02-04
     	描述：投资观点
     -->
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -19,163 +20,8 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
-		<script type="text/javascript" src="js/style.js" ></script>
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var allIdeaPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList";
-				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
-				var intrivlIdea = document.getElementById("intrivlIdea");
-				var web = plus.webview.currentWebview();
-				var loadIdea = document.getElementById("loadIdea");
-				var gengduo = document.getElementById("gengduo");
-				var teacherId = web.teacherId;
-				var nodata=document.getElementById("layer-nodata");
-				var loadMorfe=document.getElementById("loadMorfe");
-				var currentPage = 1;
-				var totlePage;
-				var styles={};
-				styles.scrollIndicator='none';
-				//隐藏滚动条
-				controlScrollBar(web,styles);
-				loadIdea.style.display = 'block';
-				if (teacherId>0) {
-					findByTesacherId(currentPage);
-				} else {
-					findAll(currentPage);
-				}
-				//加载更多
-				gengduo.addEventListener("tap", function() {
-					gengduo.style.display='none';
-					if (currentPage < totlePage) {
-						loadMorfe.style.display='block';
-						if (teacherId > 0) {
-							findByTesacherId(++currentPage);
-						} else {
-							findAll(++currentPage);
-						}
-					}
-				},false)
-				//获取全部的投资观点
-				function findAll(p) {
-					var ideaStr = intrivlIdea.innerHTML;
-					mui.ajax(allIdeaPath, {
-						data: {
-							whichPage: 1,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loadIdea.style.display = 'none';
-							if(loadMorfe.style.display='block'){
-								loadMorfe.style.display='none';
-							}
-							if(data.length<=0){
-								nodata.style.display='block';
-								intrivlIdea.style.display='none';
-							}else{
-								nodata.style.display='none';
-								intrivlIdea.style.display='block';
-							}
-							totlePage = data[0].totlePage;
-							for (var i = 0; i < data.length; i++) {
-								var myDate=subStr(4,data[i].insertDate);
-								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								ideaStr = ideaStr + "<div datas="+myDate+" id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate+ "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
-							}
-							intrivlIdea.innerHTML = ideaStr;
-							if (currentPage < totlePage) {
-								gengduo.style.display = 'block';
-							} else {
-								gengduo.style.display = 'none';
-							}
-							mui("#intrivlIdea").on("tap", ".item", function() {
-								var id = this.getAttribute("id");
-								var myDate=this.getAttribute('datas');
-								mui.openWindow({
-									url: "ideaDetail.html",
-									id: "ideaDetail",
-									extras: {
-										ideaId: id,
-										data:myDate
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				//根据讲师ID获取投资观点
-				function findByTesacherId(p) {
-					var ideaStr = intrivlIdea.innerHTML;
-					mui.ajax(byTeacherPath, {
-						data: {
-							teacherId: teacherId,
-							page: p
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							loadIdea.style.display = 'none';
-							if(loadMorfe.style.display='block'){
-								loadMorfe.style.display='none';
-							}
-							
-							if(data.length<=0){
-								nodata.style.display='block';
-								intrivlIdea.style.display='none';
-							}else{
-								nodata.style.display='none';
-								intrivlIdea.style.display='block';
-							}
-							
-							for (var i = 0; i < data.length; i++) {
-								totlePage = data[0].totlePage;
-								var myDate=subStr(4,data[i].insertDate);
-								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								ideaStr = ideaStr + "<div datas="+myDate+" id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" +myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
-							}
-							intrivlIdea.innerHTML = ideaStr;
-							if (currentPage < totlePage) {
-								gengduo.style.display = 'block';
-							} else {
-								gengduo.style.display = 'none';
-							}
-							mui("#intrivlIdea").on("tap", ".item", function() {
-								var id = this.getAttribute("id");
-								var myDate=this.getAttribute('datas');
-								mui.openWindow({
-									url: "ideaDetail.html",
-									id: "ideaDetail",
-									extras: {
-										ideaId: id,
-										data:myDate
-									},
-									waiting: {
-										autoShow: false
-									}
-								})
-							},false)
-						},
-						error: function(e) {
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-			})
-		</script>
-
+		<script type="text/javascript" src="js/style.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 	</head>
 
 	<body>
@@ -204,39 +50,187 @@
 
 		<div class="linkmore">
 			<a id="gengduo" style="color: #8D8D8D;display: none;">更多>></a>
-			<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMorfe"/>
+			<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMorfe" />
 		</div>
 
 		<div style="text-align: center;margin-top: 80%;display: none;" id="loadIdea">
 			<div class="spinner">
-					<div class="spinner-container container1">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container2">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
-					<div class="spinner-container container3">
-						<div class="circle1"></div>
-						<div class="circle2"></div>
-						<div class="circle3"></div>
-						<div class="circle4"></div>
-					</div>
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
 				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+			</div>
 		</div>
-		
-		 <div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
-					<label style="font-size: 25px;">暂无数据</label>
-			</div> 
 
-		<!--------热门观点结束---------->
-
-		<!------------底部定位层---------->
+		<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+			<label style="font-size: 25px;">暂无数据</label>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var allIdeaPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList";
+				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
+				var intrivlIdea = document.getElementById("intrivlIdea");
+				var web = plus.webview.currentWebview();
+				var loadIdea = document.getElementById("loadIdea");
+				var gengduo = document.getElementById("gengduo");
+				var teacherId = web.teacherId;
+				var nodata = document.getElementById("layer-nodata");
+				var loadMorfe = document.getElementById("loadMorfe");
+				var currentPage = 1;
+				var totlePage;
+				var styles = {};
+				styles.scrollIndicator = 'none';
+				//隐藏滚动条
+				controlScrollBar(web, styles);
+				loadIdea.style.display = 'block';
+				if (teacherId > 0) {
+					findByTesacherId(currentPage);
+				} else {
+					findAll(currentPage);
+				}
+				//加载更多
+				gengduo.addEventListener("tap", function() {
+						gengduo.style.display = 'none';
+						if (currentPage < totlePage) {
+							loadMorfe.style.display = 'block';
+							if (teacherId > 0) {
+								findByTesacherId(++currentPage);
+							} else {
+								findAll(++currentPage);
+							}
+						}
+					}, false)
+					//获取全部的投资观点
+				function findAll(p) {
+					var ideaStr = intrivlIdea.innerHTML;
+					mui.ajax(allIdeaPath, {
+						data: {
+							whichPage: 1,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loadIdea.style.display = 'none';
+							if (loadMorfe.style.display = 'block') {
+								loadMorfe.style.display = 'none';
+							}
+							if (data.length <= 0) {
+								nodata.style.display = 'block';
+								intrivlIdea.style.display = 'none';
+							} else {
+								nodata.style.display = 'none';
+								intrivlIdea.style.display = 'block';
+							}
+							totlePage = data[0].totlePage;
+							for (var i = 0; i < data.length; i++) {
+								var myDate = subStr(4, data[i].insertDate);
+								var body = data[i].bodys.replace(/<[^>]+>/g, "");
+								ideaStr += "<div datas=" + myDate + " id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+							}
+							intrivlIdea.innerHTML = ideaStr;
+							if (currentPage < totlePage) {
+								gengduo.style.display = 'block';
+							} else {
+								gengduo.style.display = 'none';
+							}
+							mui("#intrivlIdea").on("tap", ".item", function() {
+								var id = this.getAttribute("id");
+								var myDate = this.getAttribute('datas');
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: id,
+										data: myDate
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//根据讲师ID获取投资观点
+				function findByTesacherId(p) {
+					var ideaStr = intrivlIdea.innerHTML;
+					mui.ajax(byTeacherPath, {
+						data: {
+							teacherId: teacherId,
+							page: p
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							loadIdea.style.display = 'none';
+							if (loadMorfe.style.display = 'block') {
+								loadMorfe.style.display = 'none';
+							}
+							if (data.length <= 0) {
+								nodata.style.display = 'block';
+								intrivlIdea.style.display = 'none';
+							} else {
+								nodata.style.display = 'none';
+								intrivlIdea.style.display = 'block';
+							}
+							for (var i = 0; i < data.length; i++) {
+								totlePage = data[0].totlePage;
+								var myDate = subStr(4, data[i].insertDate);
+								var body = data[i].bodys.replace(/<[^>]+>/g, "");
+								ideaStr += "<div datas=" + myDate + " id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+							}
+							intrivlIdea.innerHTML = ideaStr;
+							if (currentPage < totlePage) {
+								gengduo.style.display = 'block';
+							} else {
+								gengduo.style.display = 'none';
+							}
+							mui("#intrivlIdea").on("tap", ".item", function() {
+								var id = this.getAttribute("id");
+								var myDate = this.getAttribute('datas');
+								mui.openWindow({
+									url: "ideaDetail.html",
+									id: "ideaDetail",
+									extras: {
+										ideaId: id,
+										data: myDate
+									},
+									waiting: {
+										autoShow: false
+									}
+								})
+							}, false)
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
 
 	</body>
 

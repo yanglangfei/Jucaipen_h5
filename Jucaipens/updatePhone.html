@@ -7,156 +7,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/mui.min.js" ></script>
-		<script>
-			mui.init({ 
-				swipeBack:true //启用右滑关闭功能
-			});  
-			mui.plusReady(function(){
-				var phone=document.getElementById("phone");
-				var vaile=document.getElementById("vaile");
-				var sendVail=document.getElementById("sendVail");
-				var savePhone=document.getElementById("savePhone");
-				var restSecond;
-				var web=plus.webview.currentWebview();
-				var name=web.name;
-				var sex=web.sex;
-				var birth=web.birth;
-				var email=web.email;
-				var address=web.address;
-				var introduce=web.introduce;
-				var userLogo=web.userLogo;
-				var uId=plus.storage.getItem("userId");
-				var updatePhonePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePhone";
-				var sendMobileCodePath="http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
-				//获取手机验证码
-				sendVail.addEventListener("tap",function(){
-					if(phone.value.length<10){ 
-						mui.toast("输入手机号不合法");   
-						return ;
-					}
-					restSecond=60;
-					setInterval(rest,1000);
-					getPhoneCheckCode(phone.value);
-				},false)
-				
-				//提交手机号
-				savePhone.addEventListener("tap",function(){
-					if(phone.value.length<=0){
-						mui.toast('手机号不能为空');
-						return ;
-					}
-					if(vaile.length<=0){
-						mui.toast("验证码不能为空");
-						return ;
-					}
-					var wait=plus.nativeUI.showWaiting('正在修改手机号，请稍等...');
-					checkPhoneCode(phone.value,vaile.value,wait);
-				},false)
-				
-				
-				//获取手机验证码
-				function getPhoneCheckCode(phone){
-					mui.ajax(sendMobileCodePath,{
-						data:{
-							telPhone:phone,
-							msgId:1
-						},
-						type:"get",
-						dataType:"json",
-						timeout:10000,
-						success: function(data){
-							if(data.ret_code==0){
-								mui.toast('验证码发送成功');
-							}else{
-								mui.toast(data.err_msg);
-							}
-						},
-						error: function(e){
-							mui.toast('连接失败，请稍后重试');
-						}
-					})
-				}
-				
-				//验证手机号
-				function checkPhoneCode(tel,code,wait){
-					mui.ajax(updatePhonePath,{
-						data:{
-							userId:uId,
-							telPhone:tel,
-							actionCode:code
-						},
-						dataType:"json",
-						type:"post", 
-						timeout:10000,
-						success: function(data){  
-							wait.close();
-							if(data.ret_code==0){
-								mui.toast("手机号保存成功");
-								mui.openWindow({
-									url:"userInfo.html",
-									id:"userInfo",
-									extras:{
-										fromType:1,
-										name:name,
-				                        sex:sex,
-				                        birth:birth,
-				                        email:email,
-				                        address:address,
-				                        introduce:introduce,
-				                        userLogo:userLogo,
-				                        telPhont:tel
-									}
-								})
-							//	mui.back();
-							}else{
-								mui.toast(data.err_msg);
-							}
-						},
-						error: function(e){
-							wait,close();
-							mui.toast("连接失败,请稍后重试");
-						}
-					})
-					
-				}
-				
-				
-					//获取手机验证码 按钮文字
-				function rest(){
-					if(restSecond>0){
-						sendVail.disabled='disabled';
-					     sendVail.innerHTML=(restSecond--)+"秒后重新发送";
-					}else{
-						sendVail.disabled='';
-						sendVail.innerHTML="获取验证码";
-					}
-				}
-				
-			})
-		</script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
 		<style type="text/css">
-			.userbodys{
+			.userbodys {
 				margin-top: 80px;
 				margin-left: 10px;
 				margin-right: 10px;
 			}
-			.userbodys .items{
+			
+			.userbodys .items {
 				height: 50px;
 			}
-			#sendVail{
+			
+			#sendVail {
 				height: 40px;
 				background: #bb1121;
 				color: white;
 				border: 0px;
-				font-size: 15px; 
+				font-size: 15px;
 				margin-left: 20px;
 				padding: 10px;
 			}
-			#sendVail:active{
+			
+			#sendVail:active {
 				background: #CC3300;
 			}
-			#savePhone{
+			
+			#savePhone {
 				margin-top: 10px;
 				width: 100%;
 				height: 50px;
@@ -166,7 +43,8 @@
 				font-size: 18px;
 				border: 0px;
 			}
-			#savePhone:active{
+			
+			#savePhone:active {
 				background: #CC3300;
 			}
 		</style>
@@ -188,24 +66,142 @@
 		</header>
 		<!------------账户资料------------->
 		<div class="userbodys">
-        <div  class='items'>
-        	<label style="float: left;line-height: 40px;">手机号&nbsp;:&nbsp;</label>
-        	<div >
-        		 	<input type="tel" style="float: left;width: 70%;"  id="phone"/>
-        	</div>
-        </div>
-        
-        <div  class='items' style="clear: both;">
-        	<label style="float: left;line-height: 40px;">验证码&nbsp;:&nbsp;</label>
-        	<div >
-        		 	<input type="number" style="float: left;width: 25%;"  id="vaile"/>
-        	</div>
-        	<button  id="sendVail">获取验证码</button>
-        </div>
-        <button  id="savePhone">确定保存</button>
+			<div class='items'>
+				<label style="float: left;line-height: 40px;">手机号&nbsp;:&nbsp;</label>
+				<div>
+					<input type="tel" style="float: left;width: 70%;" id="phone" />
+				</div>
+			</div>
 
+			<div class='items' style="clear: both;">
+				<label style="float: left;line-height: 40px;">验证码&nbsp;:&nbsp;</label>
+				<div>
+					<input type="number" style="float: left;width: 25%;" id="vaile" />
+				</div>
+				<button id="sendVail">获取验证码</button>
+			</div>
+			<button id="savePhone">确定保存</button>
 		</div>
-		<!------------底部定位层---------->
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var phone = document.getElementById("phone");
+				var vaile = document.getElementById("vaile");
+				var sendVail = document.getElementById("sendVail");
+				var savePhone = document.getElementById("savePhone");
+				var restSecond;
+				var web = plus.webview.currentWebview();
+				var name = web.name;
+				var sex = web.sex;
+				var birth = web.birth;
+				var email = web.email;
+				var address = web.address;
+				var introduce = web.introduce;
+				var userLogo = web.userLogo;
+				var uId = plus.storage.getItem("userId");
+				var updatePhonePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePhone";
+				var sendMobileCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode";
+				//获取手机验证码
+				sendVail.addEventListener("tap", function() {
+					if (phone.value.length < 10) {
+						mui.toast("输入手机号不合法");
+						return;
+					}
+					restSecond = 60;
+					setInterval(rest, 1000);
+					getPhoneCheckCode(phone.value);
+				}, false)
+				//提交手机号
+				savePhone.addEventListener("tap", function() {
+					if (phone.value.length <= 0) {
+						mui.toast('手机号不能为空');
+						return;
+					}
+					if (vaile.length <= 0) {
+						mui.toast("验证码不能为空");
+						return;
+					}
+					var wait = plus.nativeUI.showWaiting('正在修改手机号，请稍等...');
+					checkPhoneCode(phone.value, vaile.value, wait);
+				}, false)
+				//获取手机验证码
+				function getPhoneCheckCode(phone) {
+					mui.ajax(sendMobileCodePath, {
+						data: {
+							telPhone: phone,
+							msgId: 1
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								mui.toast('验证码发送成功');
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast('连接失败，请稍后重试:'+type);
+						}
+					})
+				}
+				//验证手机号
+				function checkPhoneCode(tel, code, wait) {
+					mui.ajax(updatePhonePath, {
+						data: {
+							userId: uId,
+							telPhone: tel,
+							actionCode: code
+						},
+						dataType: "json",
+						type: "post",
+						timeout: 10000,
+						success: function(data) {
+							wait.close();
+							if (data.ret_code == 0) {
+								mui.toast("手机号保存成功");
+								mui.openWindow({
+										url: "userInfo.html",
+										id: "userInfo",
+										extras: {
+											fromType: 1,
+											name: name,
+											sex: sex,
+											birth: birth,
+											email: email,
+											address: address,
+											introduce: introduce,
+											userLogo: userLogo,
+											telPhont: tel
+										}
+									})
+									//	mui.back();
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							wait,
+							close();
+							mui.toast("连接失败,请稍后重试:"+type);
+						}
+					})
+				}
+				//获取手机验证码 按钮文字
+				function rest() {
+					if (restSecond > 0) {
+						sendVail.disabled = 'disabled';
+						sendVail.innerHTML = (restSecond--) + "秒后重新发送";
+					} else {
+						sendVail.disabled = '';
+						sendVail.innerHTML = "获取验证码";
+					}
+				}
+			})
+		</script>
 	</body>
 
 </html>

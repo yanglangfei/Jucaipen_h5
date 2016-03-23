@@ -14,361 +14,6 @@
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var width = plus.screen.resolutionWidth; 
-				var height = plus.screen.resolutionHeight;
-				var uId = plus.storage.getItem("userId");
-				var name = document.getElementById("name");
-				name.disabled = true;
-				var tel = document.getElementById("tel");
-				tel.disabled = true;
-				var birth = document.getElementById("birth");
-				birth.disabled = true;
-				var email = document.getElementById("email");
-				email.disabled = true;
-				var userLogo = document.getElementById("userLogo");
-				userLogo.disabled = true;
-				var address = document.getElementById("address");
-				var introduce = document.getElementById("introduce");
-				introduce.disabled = true;
-				var editInfo = document.getElementById("editInfo");
-				var sex = document.getElementById("sex");
-				sex.disabled = true;
-				var btn_send = document.getElementById("btn_send");
-				btn_send.disabled = true;
-				var web=plus.webview.currentWebview();
-				var updateImagePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/imageUpload";
-				var getMyInfo = "http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
-				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
-				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
-				var queryArea = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
-				var uploadPath = "http://user.jucaipen.com/ashx/AndroidUser.ashx?action=ImageUpload";
-				var sendUserInfoPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/completeInfo";
-				var images;
-				var returePro;
-				var retureCy;
-				var returnArea;
-				var currentPro;
-				var currentCy;
-				var currentArea;
-				var type=web.fromType;
-				    if(type==0){
-				    	//获取用户信息
-				    	 getUserInfo(); 
-				    }else if(type==1){
-				    	//修改手机号返回数据
-				     name.value=web.name;
-				     sex.innerHTML=web.sex;
-				     birth.value=web.birth;
-				     email.value=web.email;
-				     address.innerHTML=web.address;
-				     introduce.value=web.introduce;
-				     userLogo.src=web.userLogo;
-				     tel.value=web.tel;
-				    	 changeState(false,'完成');
-				    }else if(type==2){
-				    	//修改所在地返回数据
-				    	name.value=web.name;
-				    	sex.innerHTML=web.sex;
-				    	birth.value=web.birth;
-				    	tel.value=web.tel;
-				    	address.innerHTML=web.proStr+"-"+web.cityStr+"-"+web.areaStr;
-				    	address.proIndex=web.proIndex;
-				    	address.cityIndex=web.cityIndex;
-				    	address.areaIndex=web.areaIndex;
-				    	email.value=web.email;
-				    	introduce.value=web.introduce;
-				    	userLogo.src=web.userLogo;
-				    changeState(false,'完成');
-                    }
-			   
-				function getUserInfo() {
-					//获取个人信息
-					mui.ajax(getMyInfo, {
-						data: {
-							id: uId
-						},
-						dataType: "json",
-						type: "post",
-						timeout: 10000,
-						success: function(data) {
-							name.value = data.userName;
-							tel.value = data.telPhone;
-							var time = dateForm(data.birthday);
-							birth.valueAsDate = time;
-							email.value = data.email;
-							if(data.sex.length>0){
-								sex.innerHTML = data.sex;
-							}else{
-								sex.innerHTML='选择性别'; 
-							}
-						
-							if (data.localProId > 0 || data.localCityId > 0 || data.localAreaId > 0) {
-								currentPro=data.localProvince;
-								currentCy=data.localCity;
-								currentArea=data.localArea;
-								address.innerHTML = data.localProvince + "-" + data.localCity + "-" + data.localArea;
-							}else{
-								address.innerHTML='选择城市';
-							}
-							introduce.value = data.descript;
-							if (data.faceImage.length > 0 && data.faceImage.indexOf("121.40.227.121") > 0) {
-								images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
-							} else if (data.faceImage.length <= 0) {
-								images = 'image/head.png';
-							} else {
-								images = data.faceImage;
-							}
-							userLogo.src = images;
-						},
-						error: function(e) {
-							mui.toast('获取数据失败，请稍后重试');
-						}
-					});
-				}
-				//更换头像
-				userLogo.addEventListener("tap", function() {
-						var btnArray = [{
-							title: "打开相册"
-						}, {
-							title: "打开相机"
-						}];
-						plus.nativeUI.actionSheet({
-							title: "选择头像",
-							cancel: "取消",
-							buttons: btnArray
-						}, function(e) {
-							if (e.index == 0) {
-								//取消
-							} else if (e.index == 1) {
-								//打开相册
-								getGrial();
-							} else if (e.index == 2) {
-								//打开相机
-								getCame();
-							}
-						})
-					},false)
-					//打开相册
-				function getGrial() {
-					plus.gallery.pick(function(data) {
-						userLogo.src = data;
-						var photoExt=data.substr(data.lastIndexOf(".")).toLowerCase();
-						if(photoExt!='.jpg'&&photoExt!='.jpeg'&&photoExt!='.png'&&photoExt!='.bmp'){
-							mui.toast('图片格式只允许为 "jpg"或"jpeg"或"png"或"bmp"');
-							return ;
-						} 
-						uploadLogo(data);
-					}, function(e) {
-					})
-				}
-				//获取拍照图片
-				function getCame() {
-					var camera = plus.camera.getCamera();
-					var form = camera.supportedImageFormats[0];
-					var res = camera.supportedImageResolutions[0];
-					camera.captureImage(function(data) {
-						userLogo.src = data;
-						var photoExt=data.substr(data.lastIndexOf(".")).toLowerCase();
-						if(photoExt!='.jpg'&&photoExt!='.jpeg'&&photoExt!='.png'&&photoExt!='.bmp'){
-							mui.toast('图片格式只允许为 "jpg"或"jpeg"或"png"或"bmp"');
-							return ;
-						}
-						uploadLogo(data);
-					}, function(e) {
-						 mui.toast('获取图片失败，请稍后重试');
-					})
-				}
-				//编辑资料按钮
-				editInfo.addEventListener("tap", function() {
-					if (editInfo.innerHTML == "编辑") {
-						changeState(false,'完成');
-					} else {
-						//提交数据
-						sendUserInfo();
-					}
-				});
-				
-				function changeState(isEdit,editStr){
-						editInfo.innerHTML = editStr;
-						userLogo.disabled = isEdit;
-						name.disabled = isEdit;
-						sex.disabled = isEdit;
-						birth.disabled = isEdit;
-						btn_send.disabled = isEdit;
-						email.disabled = isEdit;
-						address.disabled = isEdit;
-						introduce.disabled = isEdit;
-				}
-				
-				//上传文件
-				function uploadLogo(filePath) {
-					var wt = plus.nativeUI.showWaiting();
-					var task = plus.uploader.createUpload(uploadPath, {
-						method: "POST"
-					}, function(t, s) {
-						wt.close();
-						if (s == 200) {
-							var data = "(" + t.responseText + ")";
-							var jsonObj = eval(data);
-							updateImage(jsonObj.ImageUrl);
-						} else {
-							mui.toast("文件上传失败");
-						}
-					})
-					task.addFile(filePath, {
-						key: "imgFile"
-					});
-					task.start();
-				}
-				//更新图片
-				function updateImage(imageUrl) {
-					mui.ajax(updateImagePath, {
-						data: {
-							userId: uId,
-							imgFile: imageUrl
-						},
-						type: "POST",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code == 0) {
-								mui.toast("文件更新成功");
-							} else {
-								mui.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							mui.toast("连接失败,请稍后重试");
-						}
-					})
-				}
-					//提交非文件信息
-				function sendUserInfo() { 
-					if (name.value.length <= 0) {
-						mui.toast(" 昵称不能为空");
-						return;
-					}
-					if (sex.innerHTML.length <= 0) {
-						mui.toast("性别不能为空");
-						return;
-					}
-					if (birth.value.length <= 0) {
-						mui.toast("生日不能为空");
-						return;
-					}
-					if (tel.value.length <= 0) {
-						mui.toast("手机号不能为空");
-						return;
-					}
-					if (email.value.length <= 0) {
-						mui.toast("Email不能为空");
-						return;
-					}
-					mui.ajax(sendUserInfoPath, {
-						data: {
-							id:uId,
-							nikeName: name.value,
-							telPhone: tel.value,
-							sex: sex.innerHTML,
-							email: email.value,
-							bodys: introduce.value,
-							birthday: birth.value,
-							localProvince: address.proIndex,
-							localCity: address.cityIndex,
-							localArea: address.areaIndex
-						},
-						type: "post",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							if (data.ret_code == 0) {
-								mui.toast("个人资料提交成功");
-								mui.back();
-							} else {
-								mui.toast(data.err_msg);
-							}
-						},
-						error: function(e) {
-							mui.toast("连接失败,请稍后重试");
-						}
-					})
-				}
-				//选择性别
-				var btnsAry = [{
-					title: "男"
-				}, {
-					title: "女"
-				}, {
-					title: "保密"
-				}];
-				sex.addEventListener("tap", function() {
-						plus.nativeUI.actionSheet({
-							buttons: btnsAry,
-							title: "选择性别",
-							cancel: "取消"
-						}, function(e) {
-							if (e.index == 1) {
-								//男
-								sex.innerText = '男';
-							} else if (e.index == 2) {
-								//女
-								sex.innerText = '女';
-							} else if (e.index == 3) {
-								//保密
-								sex.innerText = '保密';
-							}
-						})
-					},false)
-					//跳转到修改手机号
-				btn_send.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "updatePhone.html",
-							id: "updatePhone",
-							waiting: {
-								autoShow: false
-							},
-							extras:{
-								name:name.value,
-								sex:sex.innerHTML,
-								birth:birth.value,
-								address:address.innerHTML,
-								email:email.value,
-								introduce:introduce.value,
-								userLogo:userLogo.src
-							}
-						})
-					},false)
-				
-				//跳转到城市列表
-				address.addEventListener("tap", function() {
-						mui.openWindow({
-							url: "choseCity.html",
-							id: "choseCity",
-							waiting: {
-								autoShow: false
-							},
-							extras:{
-								province:currentPro,
-								city:currentCy,
-								county:currentArea,
-								name:name.value,
-								sex:sex.innerHTML,
-								birth:birth.value,
-								email:email.value,
-								introduce:introduce.value,
-								userLogo:userLogo.src,
-								tel:tel.value,
-								isEdit:editInfo.innerHTML
-                          }
-						})
-					},false)
-			});
-		</script>
 		<style type="text/css">
 			.mui-btn {
 				margin-top: 5px;
@@ -400,13 +45,14 @@
 				font-size: 15px;
 				background: #efeff4;
 			}
+			
 			#btn_send:active {
 				color: #E73822;
 			}
 		</style>
 	</head>
 
-	<body >
+	<body>
 		<header class="header">
 			<div class="head">
 				<div class="denglu1 mui-action-back">
@@ -445,7 +91,7 @@
 
 			<div class="items">
 				<span style="line-height: 50px;float: left;"> Email：</span>
-				 <input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" placeholder="输入邮箱" />
+				<input type="email" style="width: 80%;border: solid #E0E0E0 1px;border-radius: 5px;float: left;" id="email" placeholder="输入邮箱" />
 			</div>
 
 			<div class="items">
@@ -458,7 +104,357 @@
 				<textarea style="width: 80%;min-height: 100px;border: solid #E0E0E0 1px;border-radius: 5px;" id="introduce" placeholder="个人简介"></textarea>
 			</div>
 		</div>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var width = plus.screen.resolutionWidth;
+				var height = plus.screen.resolutionHeight;
+				var uId = plus.storage.getItem("userId");
+				var name = document.getElementById("name");
+				name.disabled = true;
+				var tel = document.getElementById("tel");
+				tel.disabled = true;
+				var birth = document.getElementById("birth");
+				birth.disabled = true;
+				var email = document.getElementById("email");
+				email.disabled = true;
+				var userLogo = document.getElementById("userLogo");
+				userLogo.disabled = true;
+				var address = document.getElementById("address");
+				var introduce = document.getElementById("introduce");
+				introduce.disabled = true;
+				var editInfo = document.getElementById("editInfo");
+				var sex = document.getElementById("sex");
+				sex.disabled = true;
+				var btn_send = document.getElementById("btn_send");
+				btn_send.disabled = true;
+				var web = plus.webview.currentWebview();
+				var updateImagePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/imageUpload";
+				var getMyInfo = "http://121.40.227.121:8080/AccumulateWealth/accumulate/myInfo";
+				var queryProvincePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
+				var queryCityPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
+				var queryArea = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
+				var uploadPath = "http://user.jucaipen.com/ashx/AndroidUser.ashx?action=ImageUpload";
+				var sendUserInfoPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/completeInfo";
+				var images;
+				var returePro;
+				var retureCy;
+				var returnArea;
+				var currentPro;
+				var currentCy;
+				var currentArea;
+				var type = web.fromType;
+				if (type == 0) {
+					//获取用户信息
+					getUserInfo();
+				} else if (type == 1) {
+					//修改手机号返回数据
+					name.value = web.name;
+					sex.innerHTML = web.sex;
+					birth.value = web.birth;
+					email.value = web.email;
+					address.innerHTML = web.address;
+					introduce.value = web.introduce;
+					userLogo.src = web.userLogo;
+					tel.value = web.tel;
+					changeState(false, '完成');
+				} else if (type == 2) {
+					//修改所在地返回数据
+					name.value = web.name;
+					sex.innerHTML = web.sex;
+					birth.value = web.birth;
+					tel.value = web.tel;
+					address.innerHTML = web.proStr + "-" + web.cityStr + "-" + web.areaStr;
+					address.proIndex = web.proIndex;
+					address.cityIndex = web.cityIndex;
+					address.areaIndex = web.areaIndex;
+					email.value = web.email;
+					introduce.value = web.introduce;
+					userLogo.src = web.userLogo;
+					changeState(false, '完成');
+				}
 
+				function getUserInfo() {
+					//获取个人信息
+					mui.ajax(getMyInfo, {
+						data: {
+							id: uId
+						},
+						dataType: "json",
+						type: "post",
+						timeout: 10000,
+						success: function(data) {
+							name.value = data.userName;
+							tel.value = data.telPhone;
+							var time = dateForm(data.birthday);
+							birth.valueAsDate = time;
+							email.value = data.email;
+							if (data.sex.length > 0) {
+								sex.innerHTML = data.sex;
+							} else {
+								sex.innerHTML = '选择性别';
+							}
+							if (data.localProId > 0 || data.localCityId > 0 || data.localAreaId > 0) {
+								currentPro = data.localProvince;
+								currentCy = data.localCity;
+								currentArea = data.localArea;
+								address.innerHTML = data.localProvince + "-" + data.localCity + "-" + data.localArea;
+							} else {
+								address.innerHTML = '选择城市';
+							}
+							introduce.value = data.descript;
+							if (data.faceImage.length > 0 && data.faceImage.indexOf("121.40.227.121") > 0) {
+								images = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo" + "?filename=" + data.faceImage;
+							} else if (data.faceImage.length <= 0) {
+								images = 'image/head.png';
+							} else {
+								images = data.faceImage;
+							}
+							userLogo.src = images;
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					});
+				}
+				//更换头像
+				userLogo.addEventListener("tap", function() {
+						var btnArray = [{
+							title: "打开相册"
+						}, {
+							title: "打开相机"
+						}];
+						plus.nativeUI.actionSheet({
+							title: "选择头像",
+							cancel: "取消",
+							buttons: btnArray
+						}, function(e) {
+							if (e.index == 0) {
+								//取消
+							} else if (e.index == 1) {
+								//打开相册
+								getGrial();
+							} else if (e.index == 2) {
+								//打开相机
+								getCame();
+							}
+						})
+					}, false)
+					//打开相册
+				function getGrial() {
+					plus.gallery.pick(function(data) {
+						userLogo.src = data;
+						var photoExt = data.substr(data.lastIndexOf(".")).toLowerCase();
+						if (photoExt != '.jpg' && photoExt != '.jpeg' && photoExt != '.png' && photoExt != '.bmp') {
+							mui.toast('图片格式只允许为 "jpg"或"jpeg"或"png"或"bmp"');
+							return;
+						}
+						uploadLogo(data);
+					}, function(e) {})
+				}
+				//获取拍照图片
+				function getCame() {
+					var camera = plus.camera.getCamera();
+					var form = camera.supportedImageFormats[0];
+					var res = camera.supportedImageResolutions[0];
+					camera.captureImage(function(data) {
+						userLogo.src = data;
+						var photoExt = data.substr(data.lastIndexOf(".")).toLowerCase();
+						if (photoExt != '.jpg' && photoExt != '.jpeg' && photoExt != '.png' && photoExt != '.bmp') {
+							mui.toast('图片格式只允许为 "jpg"或"jpeg"或"png"或"bmp"');
+							return;
+						}
+						uploadLogo(data);
+					}, function(e) {
+						mui.toast('获取图片失败，请稍后重试');
+					})
+				}
+				//编辑资料按钮
+				editInfo.addEventListener("tap", function() {
+					if (editInfo.innerHTML == "编辑") {
+						changeState(false, '完成');
+					} else {
+						//提交数据
+						sendUserInfo();
+					}
+				});
+
+				function changeState(isEdit, editStr) {
+					editInfo.innerHTML = editStr;
+					userLogo.disabled = isEdit;
+					name.disabled = isEdit;
+					sex.disabled = isEdit;
+					birth.disabled = isEdit;
+					btn_send.disabled = isEdit;
+					email.disabled = isEdit;
+					address.disabled = isEdit;
+					introduce.disabled = isEdit;
+				}
+				//上传文件
+				function uploadLogo(filePath) {
+					var wt = plus.nativeUI.showWaiting();
+					var task = plus.uploader.createUpload(uploadPath, {
+						method: "POST"
+					}, function(t, s) {
+						wt.close();
+						if (s == 200) {
+							var data = "(" + t.responseText + ")";
+							var jsonObj = eval(data);
+							updateImage(jsonObj.ImageUrl);
+						} else {
+							mui.toast("文件上传失败");
+						}
+					})
+					task.addFile(filePath, {
+						key: "imgFile"
+					});
+					task.start();
+				}
+				//更新图片
+				function updateImage(imageUrl) {
+					mui.ajax(updateImagePath, {
+						data: {
+							userId: uId,
+							imgFile: imageUrl
+						},
+						type: "POST",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								mui.toast("文件更新成功");
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast("连接失败,请稍后重试:"+type);
+						}
+					})
+				}
+				//提交非文件信息
+				function sendUserInfo() {
+					if (name.value.length <= 0) {
+						mui.toast(" 昵称不能为空");
+						return;
+					}
+					if (sex.innerHTML.length <= 0) {
+						mui.toast("性别不能为空");
+						return;
+					}
+					if (birth.value.length <= 0) {
+						mui.toast("生日不能为空");
+						return;
+					}
+					if (tel.value.length <= 0) {
+						mui.toast("手机号不能为空");
+						return;
+					}
+					if (email.value.length <= 0) {
+						mui.toast("Email不能为空");
+						return;
+					}
+					mui.ajax(sendUserInfoPath, {
+						data: {
+							id: uId,
+							nikeName: name.value,
+							telPhone: tel.value,
+							sex: sex.innerHTML,
+							email: email.value,
+							bodys: introduce.value,
+							birthday: birth.value,
+							localProvince: address.proIndex,
+							localCity: address.cityIndex,
+							localArea: address.areaIndex
+						},
+						type: "post",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								mui.toast("个人资料提交成功");
+								mui.back();
+							} else {
+								mui.toast(data.err_msg);
+							}
+						},
+						error: function(xhr,type,e) {
+							mui.toast("连接失败,请稍后重试:"+type);
+						}
+					})
+				}
+				//选择性别
+				var btnsAry = [{
+					title: "男"
+				}, {
+					title: "女"
+				}, {
+					title: "保密"
+				}];
+				sex.addEventListener("tap", function() {
+						plus.nativeUI.actionSheet({
+							buttons: btnsAry,
+							title: "选择性别",
+							cancel: "取消"
+						}, function(e) {
+							if (e.index == 1) {
+								//男
+								sex.innerText = '男';
+							} else if (e.index == 2) {
+								//女
+								sex.innerText = '女';
+							} else if (e.index == 3) {
+								//保密
+								sex.innerText = '保密';
+							}
+						})
+					}, false)
+					//跳转到修改手机号
+				btn_send.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "updatePhone.html",
+						id: "updatePhone",
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							name: name.value,
+							sex: sex.innerHTML,
+							birth: birth.value,
+							address: address.innerHTML,
+							email: email.value,
+							introduce: introduce.value,
+							userLogo: userLogo.src
+						}
+					})
+				}, false)
+				//跳转到城市列表
+				address.addEventListener("tap", function() {
+					mui.openWindow({
+						url: "choseCity.html",
+						id: "choseCity",
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							province: currentPro,
+							city: currentCy,
+							county: currentArea,
+							name: name.value,
+							sex: sex.innerHTML,
+							birth: birth.value,
+							email: email.value,
+							introduce: introduce.value,
+							userLogo: userLogo.src,
+							tel: tel.value,
+							isEdit: editInfo.innerHTML
+						}
+					})
+				}, false)
+			});
+		</script>
 	</body>
 
 </html>

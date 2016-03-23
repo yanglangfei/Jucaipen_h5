@@ -202,29 +202,29 @@
 			"splashscreen": {
 				"ios": {
 					"ipad": {
-						"portrait": "unpackage/res/prologue/start1080x1882.png",
-						"landscape": "unpackage/res/prologue/start.png",
-						"portrait7": "unpackage/res/prologue/start.png",
-						"landscape7": "unpackage/res/prologue/start.png",
-						"portrait-retina": "unpackage/res/prologue/start.png",
-						"portrait-retina7": "unpackage/res/prologue/start.png",
-						"landscape-retina": "unpackage/res/prologue/start.png",
-						"landscape-retina7": "unpackage/res/prologue/start.png"
+						"portrait": "unpackage/res/prologue/start1242x2208.png",
+						"landscape": "unpackage/res/prologue/start2208x1242.png",
+						"portrait7": "unpackage/res/prologue/start1242x2208.png",
+						"landscape7": "unpackage/res/prologue/start2208x1242.png",
+						"portrait-retina": "unpackage/res/prologue/start1242x2208.png",
+						"portrait-retina7": "unpackage/res/prologue/start1242x2208.png",
+						"landscape-retina": "unpackage/res/prologue/start2208x1242.png",
+						"landscape-retina7": "unpackage/res/prologue/start2208x1242.png"
 					},
 					"iphone": {
-						"default": "unpackage/res/prologue/start640x1136.png",
-						"retina55": "unpackage/res/prologue/start640x1136.png",
-						"retina47": "unpackage/res/prologue/start640x1136.png",
+						"default": "unpackage/res/prologue/start320x480.png",
+						"retina55": "unpackage/res/prologue/start1242x2208.png",
+						"retina47": "unpackage/res/prologue/start750x1134.png",
 						"retina40": "unpackage/res/prologue/start640x1136.png",
-						"retina35": "unpackage/res/prologue/start640x1136.png",
-						"retina55l": "unpackage/res/prologue/start640x1136.png"
+						"retina35": "unpackage/res/prologue/start640x960.png",
+						"retina55l": "unpackage/res/prologue/start2208x1242.png"
 					}
 				},
 				"android": {
-					"hdpi": "unpackage/res/prologue/start640x1136.png",
-					"ldpi": "unpackage/res/prologue/start640x1136.png",
-					"mdpi": "unpackage/res/prologue/start640x1136.png",
-					"xhdpi": "unpackage/res/prologue/start640x1136.png",
+					"hdpi": "unpackage/res/prologue/start480x762.png",
+					"ldpi": "unpackage/res/prologue/start320x442.png",
+					"mdpi": "unpackage/res/prologue/start240x282.png",
+					"xhdpi": "unpackage/res/prologue/start720x1242.png",
 					"xxhdpi": "unpackage/res/prologue/start1080x1882.png"
 				}
 			},

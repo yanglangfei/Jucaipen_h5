@@ -12,120 +12,7 @@
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-
 		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				swipeBack:true //启用右滑关闭功能
-			});
-			mui.plusReady(function() {
-				var buy_live = document.getElementById("buy_live");
-				var sign_tearcher = document.getElementById("sign_tearcher");
-				var tearchername = document.getElementById("tearchername");
-				var title = document.getElementById("title");
-				var price = document.getElementById("price");
-				var xianjia = document.getElementById("xianjia");
-				var yuanjia = document.getElementById("yuanjia");
-				var tearchimg = document.getElementById("tearchimg");
-				var year = document.getElementById("year");
-				var moth = document.getElementById("moth");
-				var quart = document.getElementById("quart");
-				var queryPrice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/txtLivePayInfo";
-				var web = plus.webview.currentWebview();
-				var weekStr;
-				var nickName = web.nickName;
-				var logo = web.logo;
-				var teacherId = web.teacherId;
-				var liveId = web.liveId;
-				var title_value = web.title;
-				var xianjiaMoth;
-				var yuanjiaMoth;
-				var xianjiaQuart;
-				var yuanjiaQuart;
-				var xianjiaYear;
-				var yuanjiaYear;
-				title.innerHTML = title_value;
-				tearchername.innerHTML = nickName;
-				tearchimg.src = logo;
-				queryTxtLivePrice();
-				//购买直播
-				buy_live.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "orderInfo.html",
-						id: "orderInfo",
-						extras: {
-							money: price.innerText,
-							title:title_value,
-							week:"",
-							perPrice:price.innerText
-						},
-						waiting: {
-							autoShow: false
-						}
-					})
-				},false)
-				//签约
-				sign_tearcher.addEventListener("tap", function() {
-					mui.openWindow({
-						url: "orderInfo.html",
-						id: "orderInfo",
-						extras: {
-							money: xianjia.innerText,
-							perPrice:yuanjia.innerText,
-							week:weekStr,
-							title:title_value
-						},
-						waiting: {
-							autoShow: false
-						}
-					})
-				},false)
-				//签约  －－月
-				moth.addEventListener('tap',function(){
-					xianjia.innerText = xianjiaMoth;
-					yuanjia.innerText = yuanjiaMoth;
-					weekStr="1个月";
-				},false)
-				//签约    －－季度
-				quart.addEventListener('tap',function(){
-					xianjia.innerText = xianjiaQuart;
-					yuanjia.innerText = yuanjiaQuart;
-					weekStr="1个季度";
-				},false)
-				//签约   ---年
-				year.addEventListener('tap',function(){
-					xianjia.innerText = xianjiaYear;
-					yuanjia.innerText = yuanjiaYear;
-					weekStr="1年";
-				},false)
-				
-				function queryTxtLivePrice() {
-					mui.ajax(queryPrice, {
-						data: {
-							liveId: liveId,
-							teacherId: teacherId
-						},
-						type: "get",
-						dataType: "json",
-						timeout: 10000,
-						success: function(data) {
-							//{"txtPrice":10,"title":"CCTV智远老师实盘教学直播1.14","yearPrice":2520,"mothPrice":270,"quarterPrice":960,"dayPrice":10}
-							yuanjiaMoth = "¥" + data.dayPrice * 30;
-							xianjiaMoth = "¥" + data.mothPrice;
-							yuanjiaQuart = "¥" + data.dayPrice * 30 * 3;
-							xianjiaQuart = "¥" + data.quarterPrice;
-							yuanjiaYear = "¥" + data.dayPrice * 30 * 12;
-							xianjiaYear = "¥" + data.yearPrice;
-							price.innerText = "¥" + data.txtPrice;
-							year.click();
-						},
-						error: function(e) {
-							mui.toast('获取数据失败，请稍后重试');
-						}
-					})
-				}
-			})
-		</script>
 		<style type="text/css">
 			.signBybuy div.buy table tr td img {
 				display: inline-block;
@@ -302,23 +189,27 @@
 			#sign_tearcher {
 				background: #bd0b19;
 				border: 0px;
-				color: white; 
+				color: white;
 			}
-			#sign_tearcher:active{
+			
+			#sign_tearcher:active {
 				background: #CC3300;
 			}
-			#tearchimg{ 
+			
+			#tearchimg {
 				width: 50px;
 				height: 50px;
 				position: absolute;
 				top: 30px;
-				right: 5px; 
+				right: 5px;
 			}
-			#buy_live{
+			
+			#buy_live {
 				border: 0px;
 				background: #bd0b19;
 			}
-			#buy_live:active{
+			
+			#buy_live:active {
 				border: 0px;
 				background: #CC3300;
 			}
@@ -384,12 +275,122 @@
 						</div>
 
 					</div>
-					<!--------购买直播或签约结束---------->
-					<!------------底部定位层---------->
-
 				</div>
 			</div>
 		</div>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var buy_live = document.getElementById("buy_live");
+				var sign_tearcher = document.getElementById("sign_tearcher");
+				var tearchername = document.getElementById("tearchername");
+				var title = document.getElementById("title");
+				var price = document.getElementById("price");
+				var xianjia = document.getElementById("xianjia");
+				var yuanjia = document.getElementById("yuanjia");
+				var tearchimg = document.getElementById("tearchimg");
+				var year = document.getElementById("year");
+				var moth = document.getElementById("moth");
+				var quart = document.getElementById("quart");
+				var queryPrice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/txtLivePayInfo";
+				var web = plus.webview.currentWebview();
+				var weekStr;
+				var nickName = web.nickName;
+				var logo = web.logo;
+				var teacherId = web.teacherId;
+				var liveId = web.liveId;
+				var title_value = web.title;
+				var xianjiaMoth;
+				var yuanjiaMoth;
+				var xianjiaQuart;
+				var yuanjiaQuart;
+				var xianjiaYear;
+				var yuanjiaYear;
+				title.innerHTML = title_value;
+				tearchername.innerHTML = nickName;
+				tearchimg.src = logo;
+				queryTxtLivePrice();
+				//购买直播
+				buy_live.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "orderInfo.html",
+							id: "orderInfo",
+							extras: {
+								money: price.innerText,
+								title: title_value,
+								week: "",
+								perPrice: price.innerText
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//签约
+				sign_tearcher.addEventListener("tap", function() {
+						mui.openWindow({
+							url: "orderInfo.html",
+							id: "orderInfo",
+							extras: {
+								money: xianjia.innerText,
+								perPrice: yuanjia.innerText,
+								week: weekStr,
+								title: title_value
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					}, false)
+					//签约  －－月
+				moth.addEventListener('tap', function() {
+						xianjia.innerText = xianjiaMoth;
+						yuanjia.innerText = yuanjiaMoth;
+						weekStr = "1个月";
+					}, false)
+					//签约    －－季度
+				quart.addEventListener('tap', function() {
+						xianjia.innerText = xianjiaQuart;
+						yuanjia.innerText = yuanjiaQuart;
+						weekStr = "1个季度";
+					}, false)
+					//签约   ---年
+				year.addEventListener('tap', function() {
+					xianjia.innerText = xianjiaYear;
+					yuanjia.innerText = yuanjiaYear;
+					weekStr = "1年";
+				}, false)
+
+				function queryTxtLivePrice() {
+					mui.ajax(queryPrice, {
+						data: {
+							liveId: liveId,
+							teacherId: teacherId
+						},
+						type: "get",
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							//{"txtPrice":10,"title":"CCTV智远老师实盘教学直播1.14","yearPrice":2520,"mothPrice":270,"quarterPrice":960,"dayPrice":10}
+							yuanjiaMoth = "¥" + data.dayPrice * 30;
+							xianjiaMoth = "¥" + data.mothPrice;
+							yuanjiaQuart = "¥" + data.dayPrice * 30 * 3;
+							xianjiaQuart = "¥" + data.quarterPrice;
+							yuanjiaYear = "¥" + data.dayPrice * 30 * 12;
+							xianjiaYear = "¥" + data.yearPrice;
+							price.innerText = "¥" + data.txtPrice;
+							year.click();
+						},
+						error: function(xhr,type,e) {
+							mui.toast('获取数据失败，请稍后重试:'+type);
+						}
+					})
+				}
+			})
+		</script>
 	</body>
 
 </html>

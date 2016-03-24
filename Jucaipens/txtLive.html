@@ -162,7 +162,9 @@
 							todayLive.innerHTML = todayStr;
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							loading.style.display = 'none';
+							nodata.style.display='block';
+							nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 				}
@@ -190,7 +192,9 @@
 							todayLive.innerHTML = todayStr;
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							loading.style.display = 'none';
+							nodata.style.display='block';
+							nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 				}

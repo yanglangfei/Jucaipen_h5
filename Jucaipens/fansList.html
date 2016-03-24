@@ -116,9 +116,7 @@
 						timeout: 10000,
 						success: function(data) {
 							loadFans.style.display = 'none';
-							if (loadMore.style.display = 'block') {
-								loadMore.style.display = 'none';
-							}
+							loadMore.style.display = 'none';
 							if (data.length <= 0) {
 								nodata.style.display = 'block';
 								fansLay.style.display = 'none';
@@ -142,7 +140,11 @@
 							}
 						},
 						error: function(xhr,type,e) {
-							mui.toast('获取数据失败，请稍后重试:'+type);
+							loadFans.style.display = 'none';
+							loadMore.style.display = 'none';
+							nodata.style.display='block';
+							fansLay.style.display = 'none';
+							nodata.innerHTML='获取数据失败，请稍后重试:'+type;
 						}
 					})
 				}

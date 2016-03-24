@@ -45,7 +45,12 @@
 				</div>
 			</div>
 			<!--------------------->
-
+		</div>
+		
+		<div style="text-align: center;margin-top: 80%;display: none;" id="no-data">
+			<div>
+				暂无数据
+			</div>
 		</div>
 
 		<div style="text-align: center;margin-top: 60%;display: none;" id="load">
@@ -77,7 +82,7 @@
 			<div class="foot">
 				<div class="footcenter">
 					<ul style="height: 60px;">
-						<li><a id="index"><span><img src="image/indexnormal.png"  style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="indexs"><span><img src="image/indexnormal.png"  style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a><span><img src="image/licaipress.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a id="liveList"><span><img src="image/livenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
@@ -100,7 +105,8 @@
 				var famousDish = document.getElementById("famousDish");
 				var attentions = document.getElementById("attentions");
 				var liveList = document.getElementById("liveList");
-				var index = document.getElementById("index");
+				var index = document.getElementById("indexs");
+				var nodata=document.getElementById("no-data");
 				styles.scrollIndicator = 'none';
 				//隐藏滚动条
 				controlScrollBar(plus.webview.currentWebview(), styles);
@@ -116,6 +122,11 @@
 						timeout: 10000,
 						success: function(data) {
 							load.style.display = 'none';
+							if(data.length<=0){
+								nodata.style.display='block';
+							}else{
+								nodata.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								var smallId = data[i].smallId;
 								var bigId = data[i].bigId;
@@ -166,7 +177,9 @@
 							}
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							load.style.display='none';
+							nodata.style.display='block';
+							nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 				}

@@ -57,11 +57,11 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label for="" style="font-size: 15px;">账号</label>
-					<input type="text" class="mui-input " id="username" style="font-size: 15px;" />
+					<input type="text" class="mui-input " id="username" style="font-size: 15px;" maxlength="23" />
 				</div>
 				<div class="mui-input-row">
 					<label for="" style="font-size: 15px;">密码</label>
-					<input type="password" id="password" class="mui-input " placeholder="输入6-23位密码" maxlength="23" style="font-size: 15px;" />
+					<input type="password" id="password" class="mui-input mui-input-password " placeholder="输入6-23位密码" maxlength="23" style="font-size: 15px;" />
 				</div>
 			</form>
 			<div style="margin: 10px 10px 0 10px;" id="loginLogo">
@@ -166,16 +166,16 @@
 							}
 						});
 					}, false)
-					//第三方登录
+					//第三方登录  打包后 qq 0 
 					//qq登录
 				qq.addEventListener("tap", function() {
 						//获取openID
-						authLogin(0, 1);
+						authLogin(0, 0);
 					}, false)
 					//微信登录
 				weixin.addEventListener("tap", function() {
 						//获取openID
-						authLogin(1, 0);
+						authLogin(1, 1);
 					}, false)
 					//新浪登录
 				sina.addEventListener("tap", function() {

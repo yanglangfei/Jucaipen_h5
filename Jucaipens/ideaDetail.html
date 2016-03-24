@@ -503,6 +503,7 @@
 						timeout: 10000,
 						success: function(data) {
 							if (data.ret_code == 0) {
+								goodsAdd.innerHTML=parseInt(goodsAdd.innerHTML)+1;
 								plus.nativeUI.toast("点赞成功");
 							} else {
 								plus.nativeUI.toast("点赞失败");

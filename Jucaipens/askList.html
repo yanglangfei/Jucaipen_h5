@@ -157,7 +157,10 @@
 							}
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍重试:'+type);
+							loading.style.display = 'none';
+							loadMore.style.display = 'none';
+							nodataLay.style.display='block';
+							nodataLay.innerHTML='连接失败，请稍重试:'+type;
 						}
 					})
 				}
@@ -198,7 +201,10 @@
 							}
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							loading.style.display = 'none';
+							loadMore.style.display = 'none';
+							nodataLay.style.display='block';
+							nodataLay.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 				}

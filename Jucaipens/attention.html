@@ -39,7 +39,13 @@
 					</div>
 				</div>
 			</div>
-			<div style="text-align: center;margin-top: 60%;display: none;" id="loaging">
+			<div style="text-align: center;margin-top: 80%;display: none;" id="nodata" >
+				<div>
+					暂无数据
+				</div>
+				</div>
+			
+			<div style="text-align: center;margin-top: 65%;display: none;" id="loaging">
 				<div class="spinner">
 					<div class="spinner-container container1">
 						<div class="circle1"></div>
@@ -93,6 +99,7 @@
 				var trhreeBoard = doc.getElementById("trhreeBoard");
 				var liveList = doc.getElementById("liveList");
 				var famousDish = doc.getElementById("famousDish");
+				var nodata=document.getElementById("nodata");
 				var styles = {};
 				styles.scrollIndicator = 'none';
 				//隐藏滚动条
@@ -106,6 +113,11 @@
 						timeout: 10000,
 						success: function(data) {
 							loading.style.display = 'none';
+							if(data.length<=0){
+								nodata.style.display='block';
+							}else{
+								nodata.style.display='none';
+							}
 							for (var i = 0; i < data.length; i++) {
 								var typeName = data[i].name;
 								var item = data[i].item;
@@ -152,7 +164,9 @@
 							}
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							loading.style.display='none';
+							nodata.style.display='block';
+							nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 					//进入登录界面

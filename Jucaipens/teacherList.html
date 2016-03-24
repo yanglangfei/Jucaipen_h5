@@ -41,6 +41,11 @@
 				<a id="find_gengduo" style="color: #8D8D8D;display: none;">更多>></a>
 				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore" />
 			</div>
+			<div style="text-align: center;margin-top: 80%;display: none;" id="nodata">
+				<div>
+					暂无数据
+				</div>
+				</div>
 
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loadTeacher">
 				<div class="spinner">
@@ -83,6 +88,7 @@
 				var find_gengduo = document.getElementById("find_gengduo");
 				var styles = {};
 				styles.scrollIndicator = 'none';
+				var nodata=document.getElementById("nodata");
 				//隐藏滚动条
 				controlScrollBar(plus.webview.currentWebview(), styles);
 				loadTeacher.style.display = 'block';
@@ -107,8 +113,11 @@
 						timeout: 10000,
 						success: function(data) {
 							loadTeacher.style.display = 'none';
-							if (loadMore.style.display = 'block') {
-								loadMore.style.display = 'none';
+							loadMore.style.display = 'none';
+							if(data.length<=0){
+								nodata.style.display='block';
+							}else{
+								nodata.style.display='none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[0].totlePage;
@@ -191,7 +200,10 @@
 							}, false)
 						},
 						error: function(xhr,type,e) {
-							mui.toast('获取数据失败，请稍后重试:'+type);
+							loadTeacher.style.display = 'none';
+							loadMore.style.display = 'none';
+							nodata.style.display='block';
+							nodata.innerHTML='获取数据失败，请稍后重试:'+type;
 						}
 					})
 				}

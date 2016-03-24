@@ -46,6 +46,11 @@
 
 				<!------------------------->
 			</div>
+			<div style="text-align: center;margin-top: 80%;display: none;" id="nodata">
+				<div>
+					暂无数据
+				</div>
+				</div>
 
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loadDish">
 				<div class="spinner">
@@ -85,6 +90,7 @@
 					var txtlive_gd = document.getElementById("txtlive_gd");
 					var loadDish = document.getElementById("loadDish");
 					var currentPage = 1;
+					var nodata=document.getElementById("nodata");
 					var totlePage;
 					var isShow;
 					var loadMore = document.getElementById("loadMore");
@@ -114,10 +120,13 @@
 							type: "get",
 							timeout: 10000,
 							success: function(data) {
+								loadMore.style.display = 'none';
 								loadDish.style.display = 'none';
 								totlePage = data[0].totlePage;
-								if (loadMore.style.display = 'block') {
-									loadMore.style.display = 'none';
+								if(data.length<=0){
+									nodata.style.display='block';
+								}else{
+									nodata.style.display='none';
 								}
 								for (var i = 0; i < data.length; i++) {
 									var dateStr = subStr(0, data[i].startDate);
@@ -181,7 +190,10 @@
 								}, false)
 							},
 							error: function(xhr,type,e) {
-								mui.toast('获取数据失败，请稍后重试:'+type);
+								loadMore.style.display = 'none';
+								loadDish.style.display = 'none';
+								nodata.style.display='block';
+								nodata.innerHTML='获取数据失败，请稍后重试:'+type;
 							}
 						})
 					}

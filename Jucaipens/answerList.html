@@ -189,7 +189,8 @@
 						error: function(xhr,type,e) {
 							loading.style.display = 'none';
 							loadNMore.style.display = 'none';
-							mui.toast('连接异常:'+type);
+							nodataLay.style.display='block';
+							nodataLay.innerHTML='连接异常:'+type;
 						}
 					})
 				}
@@ -279,7 +280,8 @@
 						error: function(xhr,type,e) {
 							loading.style.display = 'none';
 							loadNMore.style.display = 'none';
-							mui.toast('连接异常:'+type);
+							nodataLay.style.display='block';
+							nodataLay.innerHTML='连接异常:'+type;
 						}
 					})
 				}

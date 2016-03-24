@@ -116,7 +116,7 @@
 				</div>
 			</div>
 
-			<div style="text-align: center;margin-top: 60%;display: none;" id="load_index">
+			<div style="text-align: center;margin-top: 65%;display: none;" id="load_index">
 				<div class="spinner">
 					<div class="spinner-container container1">
 						<div class="circle1"></div>
@@ -163,7 +163,7 @@
 			mui.plusReady(function() {
 				setTimeout(function() {
 					plus.navigator.closeSplashscreen();
-				}, 500);
+				}, 100);
 				var osName = plus.os.name;
 				var styles = {};
 				var screenWidth = plus.screen.resolutionWidth;
@@ -210,7 +210,7 @@
 				var wDpi = width * plus.screen.scale;
 				var doc=document;
 				var getVersionPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/updateVersion";
-				var dowLoadPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downLoadApk";
+				var dowLoadPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downFile";
 				var page = doc.getElementById('pager');
 				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
 				var live = doc.getElementById("data-live");
@@ -243,20 +243,19 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							if (data.ret_code == 0) {
+							if (data.ret_code == 0) { 
 								var versionCode = data.versionCode;
 								var apkUrl = data.apkUrl;
-								if (versionCode > version) {
+								if (parseInt(versionCode) > parseInt(version)) {
 									//更新版本
-									mui.confirm("有新版本可更新", "更新提示", ["确定", "取消"], function(e) {
-										if (e.index == 0) {
+									var array = ["取消","确认"];
+									mui.confirm("有新版本可更新",function(e) {
+										if (e.index == 1) { 
 											//更新版本
 											var wait = plus.nativeUI.showWaiting("正在更新安装包");
-											downLoadApk(apkUrl, wait);
-										} else {
-											//downLoadApk(apkUrl,'');
+											downLoadApk(dowLoadPath+"?fileName="+apkUrl, wait);
 										}
-									})
+									},'更新提示',array)
 								}
 							}
 						},
@@ -269,18 +268,20 @@
 				 * 下载需要更新的apk
 				 */
 				function downLoadApk(downPath, wait) {
-					var task = plus.downloader.createDownload(dowLoadPath + "?fileName=" + downPath, {}, function(d, state) {
+					var task = plus.downloader.createDownload(downPath, {}, function(d, state) {
 						if (state == 200) {
-							wait.close();
-							var filePath = d.url;
+							wait.close(); 
+							var filePath = d.filename;
 							//安装apk文件
-							plus.runtime.install(filePath, {}, function(d) {
-								console.log(JSON.stringify(d));
+							plus.runtime.install(filePath, {force:true}, function(d) {
+								plus.runtime.restart();
+								mui.toast('APK更新成功');
 							}, function(e) {
-								console.log(e.message);
+								mui.toast('APK启动失败,请手动启动');
 							});
 						} else {
-							mui.toast('版本号获取失败');
+							wait.close(); 
+							mui.toast('APK更新失败');
 						}
 					});
 					task.start();
@@ -338,7 +339,7 @@
 						});
 					},
 					error: function(xhr,type,e) {
-						mui.toast('连接异常:'+type);
+						//mui.toast('连接异常:'+type);
 					}
 				});
 				var liveUrl = '';
@@ -379,7 +380,7 @@
 						})
 					},
 					error: function(xhr,type,e) {
-						mui.toast('连接异常：'+type);
+						//mui.toast('连接异常：'+type);
 					}
 				});
 				var three_board = '';
@@ -415,7 +416,7 @@
 						})
 					},
 					error: function(xhr,type,e) {
-						mui.toast('连接异常：'+type);
+						//mui.toast('连接异常：'+type);
 					}
 				});
 				//特别关注
@@ -451,7 +452,7 @@
 						})
 					},
 					error: function(xhr,type,e) {
-						mui.toast('连接异常：'+type);
+						//mui.toast('连接异常：'+type);
 					}
 				});
 				//热门观点
@@ -488,7 +489,7 @@
 							})
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接异常:'+type);
+							//mui.toast('连接异常:'+type);
 						}
 					})
 					//进入登录页面

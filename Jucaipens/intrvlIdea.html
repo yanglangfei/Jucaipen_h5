@@ -130,9 +130,7 @@
 						timeout: 10000,
 						success: function(data) {
 							loadIdea.style.display = 'none';
-							if (loadMorfe.style.display = 'block') {
-								loadMorfe.style.display = 'none';
-							}
+							loadMorfe.style.display = 'none';
 							if (data.length <= 0) {
 								nodata.style.display = 'block';
 								intrivlIdea.style.display = 'none';
@@ -169,7 +167,11 @@
 							}, false)
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							loadIdea.style.display = 'none';
+							loadMorfe.style.display = 'none';
+							intrivlIdea.style.display = 'none';
+							nodata.style.display='block';
+							nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 				}
@@ -186,9 +188,7 @@
 						timeout: 10000,
 						success: function(data) {
 							loadIdea.style.display = 'none';
-							if (loadMorfe.style.display = 'block') {
-								loadMorfe.style.display = 'none';
-							}
+							loadMorfe.style.display = 'none';
 							if (data.length <= 0) {
 								nodata.style.display = 'block';
 								intrivlIdea.style.display = 'none';
@@ -225,7 +225,11 @@
 							}, false)
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							loadIdea.style.display = 'none';
+							loadMorfe.style.display = 'none';
+							intrivlIdea.style.display = 'none';
+							nodata.style.display='block';
+							nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 				}

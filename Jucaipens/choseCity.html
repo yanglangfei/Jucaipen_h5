@@ -228,7 +228,7 @@
 								proPicker.setData(jsonStr);
 							},
 							error: function(xhr,type,e) {
-								mui.toast('获取信息失败，请稍后重试:'+type);
+								//mui.toast('获取信息失败，请稍后重试:'+type);
 							}
 						})
 					}
@@ -254,7 +254,7 @@
 								ctyPicker.setData(jsonStr);
 							},
 							error: function(xhr,type,e) {
-								mui.toast('获取数据失败，请稍后重试:'+type);
+								//mui.toast('获取数据失败，请稍后重试:'+type);
 							}
 						})
 					}
@@ -280,7 +280,7 @@
 								areaPicker.setData(jsonStr);
 							},
 							error: function(xhr,type,e) {
-								mui.toast('获取数据失败，请稍后重试:'+type);
+								//mui.toast('获取数据失败，请稍后重试:'+type);
 							}
 						})
 					}
@@ -293,23 +293,23 @@
 							areaLay.innerText = '请选择区／县';
 							areaLay.index = '0';
 							cityLay.index = '0';
+							querryCityData(provinceLay.index);
 							//返回 false 可以阻止选择框的关闭
 							//return false;
 						});
 					}, false);
 					//市逻辑处理
 					ctyButton.addEventListener("tap", function() {
-						querryCityData(provinceLay.index);
 						ctyPicker.show(function(items) {
 							cityLay.innerText = items[0].text;
 							cityLay.index = items[0].value;
+							querryCountyData(cityLay.index);
 							//返回 false 可以阻止选择框的关闭
 							//return false;
 						});
 					}, false);
 					//区县逻辑处理
 					adrButton.addEventListener("tap", function() {
-						querryCountyData(cityLay.index);
 						areaPicker.show(function(items) {
 							areaLay.innerText = items[0].text;
 							areaLay.index = items[0].value;

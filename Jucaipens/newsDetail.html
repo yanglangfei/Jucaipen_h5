@@ -624,7 +624,7 @@
 				btn_sub_comm.addEventListener("tap", function() {
 						if (HiddenFieldId.value.length <= 0) {
 							plus.nativeUI.toast("请输入内容");
-							return;
+							return false;
 						}
 						remarkNews();
 					}, false)
@@ -653,7 +653,7 @@
 				}
 				//发表评论／回复
 				function remarkNews() {
-					mui.ajax(add_remark, {
+					mui.ajax(add_remark, { 
 						data: {
 							typeId: typeId,
 							classId: classId,

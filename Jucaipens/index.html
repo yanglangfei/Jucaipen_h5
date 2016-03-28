@@ -12,7 +12,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script type="text/javascript" src="js/netUtils.js"></script>
-		<script src="js/mui.min.js"></script>
+		<script src="js/mui.min.js"></script> 
 		<style type="text/css">
 			.mui-slider {
 				margin-top: 40px;
@@ -158,8 +158,27 @@
 
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack: true //启用右滑关闭功能
-			});
+				swipeBack: true, //启用右滑关闭功能
+				preloadPages:[
+				{
+					url:'trhreeBoard.html',
+					id:'trhreeBoard'
+				},
+				{
+					url:"liveList.html",
+					id:"liveList"
+				},
+				{
+					url:'attention.html',
+					id:"attention"
+				},
+				{
+					url:"famousDish.html",
+					id:"famousDish"
+				}
+				]
+			}
+			);
 			mui.plusReady(function() {
 				setTimeout(function() {
 					plus.navigator.closeSplashscreen();
@@ -172,7 +191,7 @@
 				var screenHeightDpi = screenHeight * plus.screen.scale;
 				//console.log(screenWidthDpi + " " + screenHeightDpi);
 				//双击退出应用
-				var preTime = 0;
+				var preTime = 0; 
 				plus.key.addEventListener('backbutton', function() {
 						var now = new Date().getTime();
 						if (now - preTime > 2000) {
@@ -185,23 +204,6 @@
 					//隐藏滚动条
 				styles.scrollIndicator = 'none';
 				controlScrollBar(plus.webview.currentWebview(), styles);
-				//预加载主页面
-				var indexPage = mui.preload({
-					url: "index.html",
-					id: "index"
-				})
-				var newsPage = mui.preload({
-					url: "trhreeBoard.html",
-					id: "trhreeBoard"
-				})
-				var livePage = mui.preload({
-					url: "liveList.html",
-					id: "livelist"
-				})
-				var dishPage = mui.preload({
-					url: "famousDish.html",
-					id: "famousDish"
-				})
 				var version;
 				var name = plus.os.name;
 				var hei = plus.screen.resolutionHeight;
@@ -555,8 +557,8 @@
 					//直播互动
 				lList.addEventListener('tap', function() {
 						mui.openWindow({
-							url: "livelist.html",
-							id: "livelist",
+							url: "liveList.html",
+							id: "liveList",
 							waiting: {
 								autoShow: false
 							},

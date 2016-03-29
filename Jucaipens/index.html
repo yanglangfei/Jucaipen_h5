@@ -356,7 +356,7 @@
 							live_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							liveUrl += "<li style='float: left;width: 120px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3>" + data[i].title + "</h3></a></span></li>";
+							liveUrl += "<li style='float: left;width: "+(width/2-50)+"px;margin-left:10px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3 style='font-size:13px;'>" + data[i].title + "</h3></a></span></li>";
 						}
 						live.innerHTML = liveUrl;
 						mui("#data-live").on("tap", "li", function() {
@@ -544,8 +544,8 @@
 					//跳转到直播
 				liveList.addEventListener('tap', function() {
 						mui.openWindow({
-							url: "livelist.html",
-							id: "livelist",
+							url: "liveList.html",
+							id: "liveList",
 							waiting: {
 								autoShow: false
 							},

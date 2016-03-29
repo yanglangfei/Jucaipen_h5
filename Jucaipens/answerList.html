@@ -115,7 +115,7 @@
 
 				function findAll(p) {
 					//获取所有的最新回答信息
-					var questionStr = "";
+					var questionStr =answerList.innerHTML;
 					mui.ajax(allQuestionPath, {
 						data: {
 							whichPage: 1,
@@ -134,7 +134,12 @@
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
-								questionStr += "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' id='ask' tag=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+								questionStr += "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>"
+								+ "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName 
+								+ "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' id='ask' tag=" 
+								+ data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
+								+ data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em style='font-size:15px'>已回答</em></div>" 
+								+ "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
 							}
 							answerList.innerHTML = questionStr;
 							if (currentPage < totlePage) {

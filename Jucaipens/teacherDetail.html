@@ -126,7 +126,7 @@
 						},
 						dataType: "json",
 						type: "get",
-						timeout: 10000,
+						timeout: 30000,
 						success: function(data) {
 							liveId = data.liveId;
 							title.innerText = data.nickName + "主页";
@@ -304,7 +304,7 @@
 							} else {}
 						},
 						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+							//mui.toast('连接失败，请稍后重试:'+type);
 						}
 					})
 				}

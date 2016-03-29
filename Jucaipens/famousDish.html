@@ -216,7 +216,7 @@
 			<div class="foot">
 				<div class="footcenter">
 					<ul style="height: 60px;">
-						<li><a id="index"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
+						<li><a id="indexs"><span><img src="image/indexnormal.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a id="trhreeBoard"><span><img src="image/licainorma.png" style="width: 50px;height: 50px;"/></span></a></li>
 						<li><a id="liveList"><span><img src="image/livenormal.png"style="width: 50px;height: 50px;" /></span></a></li>
 						<li><a id="attentions"><span><img src="image/fincenormal.png" style="width: 50px;height: 50px;"/></span></a></li>
@@ -258,7 +258,7 @@
 				var hotIdeas = document.getElementById("data-hotIdeas");
 				var intoLogin = document.getElementById("pageTop1_show_login_link");
 				var famousList = document.getElementById("famousList");
-				var index = document.getElementById("index");
+				var index = document.getElementById("indexs");
 				var trhreeBoard = document.getElementById("trhreeBoard");
 				var question = document.getElementById("data-question");
 				var renqi = document.getElementById("renqi");
@@ -425,7 +425,10 @@
 								wenda_banner.style.display = 'block';
 							}
 							for (var i = 0; i < data.length; i++) {
-								questionStr += "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" + data[i].headFace + "></span></a><div class='name'><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+								questionStr += "<div id=" + data[i].teacherId + " class='item'><div class='huida'><a><span><img src=" + data[i].headFace + "></span></a><div class='name'><a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" 
+								+ "</a><em>" + data[i].level + "</em></div><a class='ask' t=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" 
+								+ "<span> <img src='image/askinfo.png'></span><p><a>" + data[i].askName + ":</a>" + "<a style='color: #666'>" 
+								+ data[i].askBody + "</a></p><em style='font-size:15px'>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>";
 							}
 							question.innerHTML = questionStr;
 							mui("#data-question").on("tap", ".ask", function() {

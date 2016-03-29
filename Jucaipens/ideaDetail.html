@@ -14,6 +14,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/style.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<style type="text/css">
@@ -136,8 +137,14 @@
 			
 			.showarticle_good a i,
 			.showarticle_good a em,
-			.showarticle_good a span {
+			.showarticle_good a span,label {
 				display: inline-block;
+			}
+			.showarticle_good label{
+				position: absolute;
+				left: 45%;
+				color: #bb1121;
+				display: none;
 			}
 			
 			.showarticle_fenxain {
@@ -251,8 +258,10 @@
 
 					<p id="big"></p>
 					<a id="sa_zan">
-						<i>
-                    <img src="image/good.png" /></i>&nbsp;<em id="goodsAdd"></em>&nbsp;<span>赞一个</span></a>
+					<i><img src="image/good.png" /></i>&nbsp;
+					<em id="goodsAdd"></em>&nbsp;<span>赞一个</span>
+					<label id="zan_texiao">+1</label>
+					</a>
 				</div>
 				<div class="showarticle_fenxain">
 					【仅代表个人观点，不构成投资建议，风险自负】
@@ -298,6 +307,7 @@
 				var teacherLogo = document.getElementById("teacherLogo");
 				var vLogo = document.getElementById("vLogo");
 				var zan = document.getElementById("sa_zan");
+				var zan_texiao=document.getElementById("zan_texiao");
 				var btn_commen = document.getElementById("btn_commen");
 				var web = plus.webview.currentWebview();
 				var log_commen_list = document.getElementById("commList");

@@ -147,7 +147,7 @@
 					var txt_name_value = txt_name.value;
 					var txt_iphone_value = txt_iphone.value;
 					var txt_code_value = txt_code.value;
-					var uId = plus.storage.getItem("userId");
+					var uId = localStorage.getItem("userId");
 					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",

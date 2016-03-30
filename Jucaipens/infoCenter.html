@@ -13,7 +13,6 @@
 		<link rel="stylesheet" href="css/mui.min.css" />
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<title>
-
 		</title>
 		<style type="text/css">
 			.user_bodybg {
@@ -53,7 +52,7 @@
 			});
 			mui.plusReady(function() {
 				var getInfoPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/infoCenter";
-				var uId = plus.storage.getItem('userId');
+				var uId = localStorage.getItem('userId');
 				var noDataLay = document.getElementById("layer-nodata");
 				var currentPage = 1;
 				getInfo(currentPage);

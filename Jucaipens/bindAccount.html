@@ -14,7 +14,6 @@
 			.mui-content div {
 				margin-top: 50px;
 			}
-			
 			.mui-pull-right {
 				color: #0033FF;
 			}
@@ -74,7 +73,7 @@
 				var sinaState = doc.getElementById("sina-state");
 				var bindList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountList";
 				var bindAccount = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updateOtherAccount";
-				var uId = plus.storage.getItem("userId");
+				var uId = localStorage.getItem("userId");
 				var isQQBind;
 				var isWeixinBind;
 				var isSinaBind;

@@ -75,7 +75,7 @@
 						//提交咨询数据
 						button.addEventListener("tap", function() {
 							var ques = textfield.value;
-							var userId = plus.storage.getItem("userId");
+							var userId = localStorage.getItem("userId");
 							if (userId <= 0) {
 								mui.openWindow({
 									url: "login.html",
@@ -96,14 +96,14 @@
 								return;
 							}
 							var wait = plus.nativeUI.showWaiting('正在提交信息，请稍等...');
-							submitAskInfo(wait);
+							submitAskInfo(wait,userId,ques);
 						})
 						//提交咨询信息
-						function submitAskInfo(wait) {
+						function submitAskInfo(wait,uId,ques) {
 							mui.ajax(askQuestion, {
 								data: {
 									questionType: typeId,
-									userId: userId,
+									userId: uId,
 									askBodys: ques,
 									teacherId: teacherId
 								},

@@ -94,7 +94,7 @@
 				var pwdPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
 				// 修改密码
 				btn_changeuserpwd.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
+					var uId = localStorage.getItem("userId");
 					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",

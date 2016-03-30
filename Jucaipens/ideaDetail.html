@@ -376,7 +376,7 @@
 				queryComments(currentPage);
 				//点赞
 				sa_zan.addEventListener("tap", function() {
-						var uId = plus.storage.getItem("userId");
+						var uId = localStorage.getItem("userId");
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
@@ -391,7 +391,7 @@
 					}, false)
 					//提交评论信息
 				btn_commen.addEventListener('tap', function() {
-					var uId = plus.storage.getItem('userId');
+					var uId = localStorage.getItem('userId');
 					var body = txt_commen.value;
 					if (uId <= 0) {
 						mui.openWindow({

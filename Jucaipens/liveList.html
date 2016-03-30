@@ -127,7 +127,7 @@
 								var visitDay = this.getAttribute("visitDay");
 								//试听用户等级
 								var visitLeal = this.getAttribute("visitLeal");
-								var uId = plus.storage.getItem("userId");
+								var uId = localStorage.getItem("userId");
 								if (uId <= 0) {
 									//跳转到登录
 									if (visit == 0) {
@@ -194,7 +194,7 @@
 				}
 				//进入登录界面
 				pageTop1_show_login_link.addEventListener("tap", function() {
-						var uId = plus.storage.getItem("userId");
+						var uId = localStorage.getItem("userId");
 						if (uId <= 0) {
 							intoLogin();
 						} else {
@@ -239,10 +239,10 @@
 				}
 				//根据用户信息进入相关的页面
 				function intoWhichPage(endDate, lId, face, visitLeal, visit, isServer, isManager, buyProductId, userType, visitDay) {
-					var isServer = plus.storage.getItem("isServer");
-					var isManager = plus.storage.getItem("isManager");
-					var buyProductId = plus.storage.getItem("buyProductId");
-					var reginDate = plus.storage.getItem('reginDate');
+					var isServer = localStorage.getItem("isServer");
+					var isManager =localStorage.getItem("isManager");
+					var buyProductId = localStorage.getItem("buyProductId");
+					var reginDate = localStorage.getItem('reginDate');
 					var days = chat(reginDate.split('.', 1) + '');
 					//金刚用户
 					if (userType == 2) {

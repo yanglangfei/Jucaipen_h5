@@ -249,7 +249,7 @@
 					}
 				})
 				btn_send.addEventListener("tap", function() {
-					var uId = plus.storage.getItem("userId");
+					var uId = localStorage.getItem("userId");
 					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",
@@ -348,7 +348,7 @@
 							if (data.length > 0) {
 								//点赞
 								mui("#page_commenlist").on('tap', '.good', function() {
-										var usId = plus.storage.getItem('userId');
+										var usId = localStorage.getItem('userId');
 										var coId = this.getAttribute('tag');
 										if (usId <= 0) {
 											mui.openWindow({

@@ -34,7 +34,6 @@
 				</div>
 			</header>
 			<div id="popover" class="mui-popover">
-				jooijoijo
 				<button type="button" class="mui-btn mui-btn-blue">按钮</button>
 			</div>
 
@@ -79,7 +78,6 @@
 				<a id="txtlive_gd" style="color: #8D8D8D;display: none;">更多>></a>
 				<img src="image/loading-0.gif" style="display: none;margin: auto;" id="loadMore" />
 			</div>
-
 			<script type="text/javascript" charset="UTF-8">
 				mui.init({
 					swipeBack: true //启用右滑关闭功能
@@ -150,7 +148,7 @@
 										intoTxtLive(liveId, name);
 									} else {
 										//1   是否登录 
-										var uId = plus.storage.getItem("userId");
+										var uId = localStorage.getItem("userId");
 										if (uId <= 0) {
 											mui.openWindow({
 												url: "login.html",
@@ -162,14 +160,14 @@
 											return;
 										}
 										//2是否是管理员或者客服
-										var isServer = plus.storage.getItem("isServer");
-										var isManager = plus.storage.getItem("isManager");
+										var isServer = localStorage.getItem("isServer");
+										var isManager = localStorage.getItem("isManager");
 										if (isManager == 1 || isServer == 1) {
 											intoTxtLive(liveId, name);
 											return;
 										}
 										//3是否购买
-										var buyProductId = plus.storage.getItem("buyProductId");
+										var buyProductId =localStorage.getItem("buyProductId");
 										if (liveId == buyProductId) {
 											intoTxtLive(liveId, name);
 											return;

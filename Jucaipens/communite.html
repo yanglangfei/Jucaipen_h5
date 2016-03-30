@@ -205,7 +205,7 @@
 					}, false)
 					//提交评论信息
 				buttons.addEventListener("tap", function() {
-					var userId = plus.storage.getItem("userId");
+					var userId = localStorage.getItem("userId");
 					if (userId <= 0) {
 						mui.openWindow({
 							url: "login.html",

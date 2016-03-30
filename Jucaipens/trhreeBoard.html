@@ -185,7 +185,7 @@
 				}
 				// 跳转登录界面
 				pageTop1_show_login_link.addEventListener("tap", function() {
-						var uId = plus.storage.getItem("userId");
+						var uId = localStorage.getItem("userId");
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",

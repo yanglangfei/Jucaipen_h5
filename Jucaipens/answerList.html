@@ -166,7 +166,7 @@
 									//咨询讲师
 								mui("#answerList").on('tap', '#ask', function() {
 									var tId = this.getAttribute('tag');
-									var uId = plus.storage.getItem('userId');
+									var uId = localStorage.getItem('userId');
 									if (uId <= 0) {
 										mui.openWindow({
 											url: "login.html",
@@ -258,7 +258,7 @@
 								//咨询讲师
 							mui("#answerList").on('tap', '#ask', function() {
 								var tId = this.getAttribute('tag');
-								var uId = plus.storage.getItem('userId');
+								var uId = localStorage.getItem('userId');
 								if (uId <= 0) {
 									mui.openWindow({
 										url: "login.html",

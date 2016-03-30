@@ -496,7 +496,7 @@
 					})
 					//进入登录页面
 				intoLogin.addEventListener("tap", function() {
-						var uId = plus.storage.getItem("userId");
+						var uId = localStorage.getItem("userId");
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",

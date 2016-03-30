@@ -10,7 +10,6 @@
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-
 		<script src="js/mui.min.js"></script>
 		<script src="js/castapp.js"></script>
 		<style type="text/css">
@@ -288,7 +287,7 @@
 				}
 				//提交订单到服务器
 				function submitService() {
-					var userId = plus.storage.getItem("userId");
+					var userId = localStorage.getItem("userId");
 					mui.ajax(submitPath, {
 						data: {
 							orderCode: pay_order_zb.innerText,

@@ -478,7 +478,7 @@
 							}
 							//点赞
 							mui("#newscommlist").on("tap", "#sp_good", function() {
-								uId = plus.storage.getItem("userId");
+								uId = localStorage.getItem("userId");
 								var commId = this.getAttribute("class");
 								if (uId <= 0) {
 									mui.openWindow({
@@ -528,7 +528,7 @@
 				}
 				//获取收藏状况
 				function findCollectState() {
-					var uId = plus.storage.getItem("userId");
+					var uId = localStorage.getItem("userId");
 					if (uId <= 0) {
 						return;
 					}
@@ -600,7 +600,7 @@
 				}
 				li_collect.addEventListener("tap", function() {
 						mui(".mui-popover").popover('hide');
-						uId = plus.storage.getItem("userId");
+						uId =localStorage.getItem("userId");
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
@@ -630,7 +630,7 @@
 					}, false)
 					//弹出评论／回复对话框
 				function myInputState(cId, str) {
-					uId = plus.storage.getItem("userId");
+					uId = localStorage.getItem("userId");
 					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",

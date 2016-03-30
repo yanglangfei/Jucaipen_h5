@@ -115,7 +115,7 @@
 				var answerCount = document.getElementById("answerCount");
 				var isAttention;
 				var liveId;
-				var userId = plus.storage.getItem('userId');
+				var userId =localStorage.getItem('userId');
 				getTeacherDetailInfo();
 				getAtttentionState(id, userId);
 				//获取讲师详细信息
@@ -218,7 +218,7 @@
 					//关注讲师
 				attention.addEventListener("tap", function() {
 						var type;
-						var uId = plus.storage.getItem('userId');
+						var uId = localStorage.getItem('userId');
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
@@ -238,7 +238,7 @@
 					}, false)
 					//咨询名师
 				ask.addEventListener("tap", function() {
-						var uId = plus.storage.getItem('userId');
+						var uId =localStorage.getItem('userId');
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
@@ -262,7 +262,7 @@
 					}, false)
 					//签约
 				sign.addEventListener("tap", function() {
-						var uId = plus.storage.getItem('userId');
+						var uId = localStorage.getItem('userId');
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",

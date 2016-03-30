@@ -145,7 +145,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var uId = plus.storage.getItem('userId');
+				var uId = localStorage.getItem('userId');
 				if (uId > 0) {
 					var commInfo = mui.preload({
 						url: "myRemark.html",
@@ -154,7 +154,7 @@
 				}
 				var abord = document.getElementById("abord");
 				abord.addEventListener("tap", function() {
-					plus.storage.setItem("userId", -1 + "");
+					localStorage.setItem("userId", -1 + "");
 					mui.back();
 				}, false);
 				mui(".mui-table-view").on("tap", ".mui-table-view-cell", function() {

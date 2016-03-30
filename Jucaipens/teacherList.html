@@ -132,7 +132,7 @@
 								//咨询讲师 
 								mui("#teacherLay").on("tap", '#zx', function() {
 										var tag = this.getAttribute('tag');
-										var uId = plus.storage.getItem('userId');
+										var uId = localStorage.getItem('userId');
 										if (uId <= 0) {
 											mui.openWindow({
 												url: "login.html",
@@ -158,7 +158,7 @@
 									//关注监听
 								mui('#teacherLay').on('tap', '#attention', function() {
 									var tag = this.getAttribute('tag');
-									var uId = plus.storage.getItem('userId');
+									var uId = localStorage.getItem('userId');
 									var i = this.getElementsByTagName('i');
 									if (uId <= 0) {
 										mui.openWindow({

@@ -111,7 +111,7 @@
 			mui.plusReady(function() {
 				var width = plus.screen.resolutionWidth;
 				var height = plus.screen.resolutionHeight;
-				var uId = plus.storage.getItem("userId");
+				var uId = localStorage.getItem("userId");
 				var name = document.getElementById("name");
 				name.disabled = true;
 				var tel = document.getElementById("tel");

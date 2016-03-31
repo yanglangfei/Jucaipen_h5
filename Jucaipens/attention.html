@@ -162,9 +162,9 @@
 							}
 						},
 						error: function(xhr,type,e) {
-							loading.style.display='none';
-							nodata.style.display='block';
-							nodata.innerHTML='连接失败，请稍后重试:'+type;
+							//loading.style.display='none';
+							//nodata.style.display='block';
+							//nodata.innerHTML='连接失败，请稍后重试:'+type;
 						}
 					})
 					//进入登录界面
@@ -172,7 +172,7 @@
 						var uId = localStorage.getItem("userId");
 						if (uId <= 0) {
 							mui.openWindow({
-								url: "login.html",
+								url: "login.html", 
 								id: "login",
 								waiting: {
 									autoShow: false

@@ -398,9 +398,9 @@
 						content.innerHTML = data.Bodys;
 					},
 					error: function(xhr,type,e) {
-						newsDetail_load.style.display = 'none';
-						newsInfo.style.display = 'block';
-						mui.toast('获取数据失败:'+type);
+						//newsDetail_load.style.display = 'none';
+						//newsInfo.style.display = 'block';
+						//mui.toast('获取数据失败:'+type);
 					}
 				});
 				//获取相关新闻
@@ -442,7 +442,7 @@
 
 				function findCommList(p) {
 					//获取评论信息
-					var commUrl = "";
+					var commUrl = comment.innerHTML;
 					mui.ajax(querry_comm, {
 						data: {
 							typeId: typeId,

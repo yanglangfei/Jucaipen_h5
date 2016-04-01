@@ -132,12 +132,12 @@
 								var bigId = data[i].bigId;
 								var typeName = data[i].name;
 								var item = data[i].item;
-								str += "<div class='xiangmu_t' id='more-lay'><h3>" + typeName + "</h3><a sId=" + data[i].smallId + " bId=" + data[i].bigId + " style='color:#4f4f4f;' id='more-ns'>更多</a></div><div class='yaowen_b'><ul class='lay-board'>";
+								str += "<div class='xiangmu_t' id='more-lay'><h3>" + typeName + "</h3><a class='mui-btn mui-btn-link' sId=" + data[i].smallId + " bId=" + data[i].bigId + " name="+typeName+" style='color:#4f4f4f;' id='more-ns'>更多</a></div><div class='yaowen_b'><ul class='lay-board'>";
 								for (var j = 0; j < item.length; j++) {
 									var title = item[j].title;
 									var id = item[j].id;
 									var desc = item[j].desc;
-									str = str + "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+									str = str + "<li  id=" + id + " name="+typeName+" class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
 								}
 								str = str + "</ul></div>";
 								board.innerHTML = str;
@@ -147,11 +147,13 @@
 								//进入新三板详细页面
 								mui(".lay-board").on("tap", "li", function() {
 										var nId = this.getAttribute("id");
+										var name=this.getAttribute('name');
 										mui.openWindow({
 											url: "newsDetail.html",
 											id: "newsDetail",
 											extras: {
-												newsId: nId
+												newsId: nId,
+												name:name
 											},
 											waiting: {
 												autoShow: false
@@ -162,12 +164,14 @@
 								mui("#bopard").on("tap", "a", function() {
 									var sId = this.getAttribute("sId");
 									var bId = this.getAttribute("bId");
+									var name=this.getAttribute('name');
 									mui.openWindow({
 										url: "news/moreNews.html",
 										id: "moreNews",
 										extras: {
 											bigId: bId,
-											smallId: sId
+											smallId: sId,
+											name:name
 										},
 										waiting: {
 											autoShow: false
@@ -212,11 +216,12 @@
 							waiting: {
 								autoShow: false
 							},
+							createNew:true,
 							show: {
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
-					}, false)
+					})
 					//跳转到直播
 				liveList.addEventListener('tap', function() {
 						mui.openWindow({

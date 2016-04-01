@@ -212,7 +212,7 @@
 						<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
 					<div class="logo1 mui-action-back">
-						<span style="line-height: 25px;">私募动态 </span>
+						<span style="line-height: 25px;" id="name"></span>
 					</div>
 					<div class="sousuo1" id="more">
 						<a href="#topPopover" class="mui-action-menu" style="width: 45px;height: 100%;text-align: center;"><img src="image/more.png" /></a>
@@ -335,6 +335,9 @@
 				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
 				var list = document.getElementById("lv-share");
 				var web = plus.webview.currentWebview();
+				var name=web.name;
+				var nameLay=document.getElementById("name");
+				nameLay.innerHTML=name;
 				var title = document.getElementById("show_newstit");
 				var repoter = document.getElementById("show_newsinfo");
 				var content = document.getElementById("show_newsbody");

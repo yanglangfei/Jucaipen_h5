@@ -20,7 +20,7 @@
 						<a><img src="../image/into_back.png" style="margin-top:0.2rem;" /></a>
 					</div>
 					<div class="logo1 mui-action-back" style="margin-top:0.2rem;">
-						<span>私募动态 </span>
+						<span id="nameLay"></span>
 					</div>
 				</div>
 			</header>
@@ -77,8 +77,11 @@
 				var web = plus.webview.currentWebview();
 				var loadNews = document.getElementById("loadNews");
 				var nodata=document.getElementById('nodata');
+				var nameLay=document.getElementById("nameLay");
 				var smallId = web.smallId;
 				var bigId = web.bigId;
+				var name=web.name;
+				nameLay.innerHTML=name;
 				var totlePage;
 				var loadMore = document.getElementById("loadMore");
 				var currentPage = 1;
@@ -131,7 +134,8 @@
 									url: "../newsDetail.html",
 									id: "newsDetail",
 									extras: {
-										newsId: id
+										newsId: id,
+										name:name
 									},
 									waiting: {
 										autoShow: false

@@ -119,12 +119,12 @@
 							for (var i = 0; i < data.length; i++) {
 								var typeName = data[i].name;
 								var item = data[i].item;
-								str += "<div class='xiangmu_t'><h3>" + typeName + "</h3><a id='mo' sId=" + data[i].smallId + " bId=" + data[i].bigId + " style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
+								str += "<div class='xiangmu_t'><h3>" + typeName + "</h3><a class='mui-btn mui-btn-link' id='mo' sId=" + data[i].smallId + " bId=" + data[i].bigId + " name="+typeName+" style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
 								for (var j = 0; j < item.length; j++) {
 									var title = item[j].title;
 									var id = item[j].id;
 									var desc = item[j].desc;
-									str += "<li  id=" + id + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+									str += "<li  id=" + id + " name="+typeName+" class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
 								}
 								str += "</ul></div>";
 								typeLay.innerHTML = str;
@@ -133,11 +133,13 @@
 							if (data.length > 0) {
 								mui(".layer").on("tap", "li", function() {
 									var id = this.getAttribute("id");
+									var name=this.getAttribute('name');
 									mui.openWindow({
 										url: "newsDetail.html",
 										id: "newsDetail",
 										extras: {
-											newsId: id
+											newsId: id,
+											name:name
 										},
 										waiting: {
 											autoShow: false
@@ -147,12 +149,14 @@
 								mui("#typeLay").on("tap", "#mo", function() {
 									var sId = this.getAttribute("sId");
 									var bId = this.getAttribute("bId");
+									var name=this.getAttribute('name');
 									mui.openWindow({
 										url: "news/moreNews.html",
 										id: "moreNews",
 										extras: {
 											bigId: bId,
-											smallId: sId
+											smallId: sId,
+											name:name
 										},
 										waiting: {
 											autoShow: false
@@ -196,6 +200,7 @@
 							waiting: {
 								autoShow: false
 							},
+							createNew:true,
 							show: {
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}

@@ -185,11 +185,10 @@
 				}, 100);
 				var osName = plus.os.name;
 				var styles = {};
-				var screenWidth = plus.screen.resolutionWidth;
+				/*var screenWidth = plus.screen.resolutionWidth;
 				var screenHeight = plus.screen.resolutionHeight;
 				var screenWidthDpi = screenWidth * plus.screen.scale;
-				var screenHeightDpi = screenHeight * plus.screen.scale;
-				//console.log(screenWidthDpi + " " + screenHeightDpi);
+				var screenHeightDpi = screenHeight * plus.screen.scale;*/
 				//双击退出应用
 				var preTime = 0; 
 				plus.key.addEventListener('backbutton', function() {
@@ -409,7 +408,8 @@
 								url: "newsDetail.html",
 								id: "newsDetail",
 								extras: {
-									newsId: nId
+									newsId: nId,
+									name:'新三板'
 								},
 								waiting: {
 									autoShow: false
@@ -445,7 +445,8 @@
 								url: "newsDetail.html",
 								id: "newsDetail",
 								extras: {
-									newsId: nId
+									newsId: nId,
+									name:'特别关注'
 								},
 								waiting: {
 									autoShow: false

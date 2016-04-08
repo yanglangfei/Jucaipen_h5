@@ -17,6 +17,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" href="css/loadAnim1.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script src="js/mui.min.js"></script>
 		<style type="text/css">
 			.mj_menu {
@@ -251,10 +252,11 @@
 					id: "teacherList"
 				})
 				var page = document.getElementById('pager');
-				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
-				var teacherList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousTeacherList";
-				var teacherQuestion = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/teacherQuestion";
-				var sumData = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/indexStatisticsData";
+				var queryAdice = "http://"+portStr()+"/AccumulateWealth/jucaipen/adverQuerry";
+				var teacherList = "http://"+portStr()+"/AccumulateWealth/jucaipen/famousTeacherList";
+				var teacherQuestion = "http://"+portStr()+"/AccumulateWealth/jucaipen/teacherQuestion";
+				var sumData = "http://"+portStr()+"/AccumulateWealth/jucaipen/indexStatisticsData";
+				var ideaPath="http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaList";
 				var hotIdeas = document.getElementById("data-hotIdeas");
 				var intoLogin = document.getElementById("pageTop1_show_login_link");
 				var famousList = document.getElementById("famousList");
@@ -338,7 +340,7 @@
 				});
 				//热门观点
 				var hotUrl = '';
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList", {
+				mui.ajax(ideaPath, {
 						data: {
 							whichPage: 0,
 						},

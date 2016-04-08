@@ -83,7 +83,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var videoList = "http://121.40.227.121:8080/AccumulateWealth/accumulate/teachVideo";
+				var videoList = "http://"+portStr()+"/AccumulateWealth/accumulate/teachVideo";
 				var video = document.getElementById("data-live");
 				var pageTop1_show_login_link = document.getElementById("pageTop1_show_login_link");
 				var load = document.getElementById("load");
@@ -92,7 +92,7 @@
 				var famousDish = document.getElementById("famousDish");
 				var attentions = document.getElementById("attentions");
 				var nodata=document.getElementById("nodata");
-				var getPurshInfoPath = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoPurseInfo';
+				var getPurshInfoPath = 'http://'+portStr()+'/AccumulateWealth/jucaipen/videoPurseInfo';
 				var styles = {};
 				var extras = {};
 				//获取直播列表信息

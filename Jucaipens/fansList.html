@@ -20,6 +20,7 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/style.js"></script>
 	</head>
 
@@ -82,7 +83,7 @@
 				var web = plus.webview.currentWebview();
 				var teacherId = web.teacherId;
 				var fansLay = document.getElementById("fansLay");
-				var querryFans = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/fansList";
+				var querryFans = "http://"+portStr()+"/AccumulateWealth/jucaipen/fansList";
 				var currentPage = 1;
 				var nodata = document.getElementById("layer-nodata");
 				var totlePage;

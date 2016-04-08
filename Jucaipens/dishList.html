@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -84,12 +83,10 @@
 				});
 				mui.plusReady(function() {
 					var dishList = document.getElementById("dishList");
-					var dishPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/famousDish";
+					var dishPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/famousDish";
 					var txtlive_gd = document.getElementById("txtlive_gd");
 					var loadDish = document.getElementById("loadDish");
 					var web=plus.webview.currentWebview();
-					web.re
-					//web.reload();
 					var currentPage = 1;
 					var nodata=document.getElementById("nodata");
 					var totlePage;

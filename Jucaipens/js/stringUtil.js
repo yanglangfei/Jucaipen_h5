@@ -182,3 +182,17 @@ var mintChat=function(endTime){
     var date3=(curr-begin)/(1000);
     return date3;
 }
+
+//IP 端口信息
+var portStr=function(){
+	var isTest;
+	var port;
+	if(isTest){
+		//测试接口
+		port="192.168.1.86:8080";
+	}else{
+		//发布
+		port="121.40.227.121:8080";
+	}
+	return port;
+}

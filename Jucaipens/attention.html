@@ -5,6 +5,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -14,6 +15,7 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script type="text/javascript" src="js/style.js"></script>
 	</head>
@@ -37,12 +39,12 @@
 					</div>
 				</div>
 			</div>
-			<div style="text-align: center;margin-top: 80%;display: none;" id="nodata" >
+			<div style="text-align: center;margin-top: 80%;display: none;" id="nodata">
 				<div>
 					暂无数据
 				</div>
-				</div>
-			
+			</div>
+
 			<div style="text-align: center;margin-top: 65%;display: none;" id="loaging">
 				<div class="spinner">
 					<div class="spinner-container container1">
@@ -88,8 +90,8 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var newsListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/finalInfo"
-				var doc=document;
+				var newsListPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/finalInfo";
+				var doc = document;
 				var typeLay = doc.getElementById("typeLay");
 				var pageTop1_show_login_link = doc.getElementById("pageTop1_show_login_link");
 				var loading = doc.getElementById("loaging");
@@ -97,7 +99,7 @@
 				var trhreeBoard = doc.getElementById("trhreeBoard");
 				var liveList = doc.getElementById("liveList");
 				var famousDish = doc.getElementById("famousDish");
-				var nodata=document.getElementById("nodata");
+				var nodata = document.getElementById("nodata");
 				var styles = {};
 				styles.scrollIndicator = 'none';
 				//隐藏滚动条
@@ -111,20 +113,20 @@
 						timeout: 10000,
 						success: function(data) {
 							loading.style.display = 'none';
-							if(data.length<=0){
-								nodata.style.display='block';
-							}else{
-								nodata.style.display='none';
+							if (data.length <= 0) {
+								nodata.style.display = 'block';
+							} else {
+								nodata.style.display = 'none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								var typeName = data[i].name;
 								var item = data[i].item;
-								str += "<div class='xiangmu_t'><h3>" + typeName + "</h3><a class='mui-btn mui-btn-link' id='mo' sId=" + data[i].smallId + " bId=" + data[i].bigId + " name="+typeName+" style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
+								str += "<div class='xiangmu_t'><h3>" + typeName + "</h3><a class='mui-btn mui-btn-link' id='mo' sId=" + data[i].smallId + " bId=" + data[i].bigId + " name=" + typeName + " style='color:#4f4f4f;'>更多</a></div><div class='yaowen_b'><ul class='layer'>";
 								for (var j = 0; j < item.length; j++) {
 									var title = item[j].title;
 									var id = item[j].id;
 									var desc = item[j].desc;
-									str += "<li  id=" + id + " name="+typeName+" class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
+									str += "<li  id=" + id + " name=" + typeName + " class='noimg'><div><h3><a>" + title + "</a></h3>" + "<p style='height:40px;overflow: hidden;'>" + desc + "</p></div></li>";
 								}
 								str += "</ul></div>";
 								typeLay.innerHTML = str;
@@ -133,13 +135,13 @@
 							if (data.length > 0) {
 								mui(".layer").on("tap", "li", function() {
 									var id = this.getAttribute("id");
-									var name=this.getAttribute('name');
+									var name = this.getAttribute('name');
 									mui.openWindow({
 										url: "newsDetail.html",
 										id: "newsDetail",
 										extras: {
 											newsId: id,
-											name:name
+											name: name
 										},
 										waiting: {
 											autoShow: false
@@ -149,14 +151,14 @@
 								mui("#typeLay").on("tap", "#mo", function() {
 									var sId = this.getAttribute("sId");
 									var bId = this.getAttribute("bId");
-									var name=this.getAttribute('name');
+									var name = this.getAttribute('name');
 									mui.openWindow({
 										url: "news/moreNews.html",
 										id: "moreNews",
 										extras: {
 											bigId: bId,
 											smallId: sId,
-											name:name
+											name: name
 										},
 										waiting: {
 											autoShow: false
@@ -165,7 +167,7 @@
 								}, false)
 							}
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							//loading.style.display='none';
 							//nodata.style.display='block';
 							//nodata.innerHTML='连接失败，请稍后重试:'+type;
@@ -176,7 +178,7 @@
 						var uId = localStorage.getItem("userId");
 						if (uId <= 0) {
 							mui.openWindow({
-								url: "login.html", 
+								url: "login.html",
 								id: "login",
 								waiting: {
 									autoShow: false
@@ -200,7 +202,7 @@
 							waiting: {
 								autoShow: false
 							},
-							createNew:true,
+							createNew: true,
 							show: {
 								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
 							}

@@ -84,8 +84,8 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var allIdeaPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList";
-				var byTeacherPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaByTeacher";
+				var allIdeaPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaList";
+				var byTeacherPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaByTeacher";
 				var intrivlIdea = document.getElementById("intrivlIdea");
 				var web = plus.webview.currentWebview();
 				var loadIdea = document.getElementById("loadIdea");
@@ -225,11 +225,11 @@
 							}, false)
 						},
 						error: function(xhr,type,e) {
-							loadIdea.style.display = 'none';
+							/*loadIdea.style.display = 'none';
 							loadMorfe.style.display = 'none';
 							intrivlIdea.style.display = 'none';
 							nodata.style.display='block';
-							nodata.innerHTML='连接失败，请稍后重试:'+type;
+							nodata.innerHTML='连接失败，请稍后重试:'+type;*/
 						}
 					})
 				}

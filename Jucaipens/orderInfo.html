@@ -10,6 +10,7 @@
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/castapp.js"></script>
 		<style type="text/css">
@@ -228,8 +229,8 @@
 				var perPrice = document.getElementById("perPrice");
 				var nowPrice = document.getElementById("nowPrice");
 				var orderDetail = document.getElementById("orderDetail");
-				var orderCodePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/getOrderCode";
-				var submitPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/payOrder";
+				var orderCodePath = "http://"+portStr()+"/AccumulateWealth/jucaipen/getOrderCode";
+				var submitPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/payOrder";
 				var title = document.getElementById("title");
 				var week = document.getElementById("week");
 				var web = plus.webview.currentWebview();

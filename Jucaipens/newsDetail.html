@@ -326,13 +326,13 @@
 				}
 			});
 			mui.plusReady(function() {
-				var news_detailUrl = "http://121.40.227.121:8080/AccumulateWealth/accumulate/newsDetail";
-				var relate_news = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/relateArticle";
-				var add_remark = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/remarkNews";
-				var querry_comm = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryComm';
-				var add_goods = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/addGood";
-				var collectNews = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/collectNews";
-				var queryCollect = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryNewsCollect";
+				var news_detailUrl = "http://"+portStr()+"/AccumulateWealth/accumulate/newsDetail";
+				var relate_news = "http://"+portStr()+"/AccumulateWealth/jucaipen/relateArticle";
+				var add_remark = "http://"+portStr()+"/AccumulateWealth/jucaipen/remarkNews";
+				var querry_comm = 'http://'+portStr()+'/AccumulateWealth/jucaipen/querryComm';
+				var add_goods = "http://"+portStr()+"/AccumulateWealth/jucaipen/addGood";
+				var collectNews = "http://"+portStr()+"/AccumulateWealth/jucaipen/collectNews";
+				var queryCollect = "http://"+portStr()+"/AccumulateWealth/jucaipen/querryNewsCollect";
 				var list = document.getElementById("lv-share");
 				var web = plus.webview.currentWebview();
 				var name=web.name;

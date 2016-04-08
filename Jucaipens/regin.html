@@ -14,6 +14,7 @@
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/tuch.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<style type="text/css">
 			.mui-content {
 				margin: 12px;
@@ -109,6 +110,8 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				var sendPath="http://"+portStr()+"/AccumulateWealth/jucaipen/sendMobileCode";
+				var reginPath="http://"+portStr()+"/AccumulateWealth/jucaipen/regin";
 				var getCode = document.getElementById("btn_getcode");
 				var telPhone = document.getElementById("tel");
 				var login = document.getElementById("into-login");
@@ -130,9 +133,10 @@
 							getCode.innerHTML = "获取验证码";
 						}
 					}, 1000);
-					mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/sendMobileCode", {
+					mui.ajax(sendPath, {
 						data: {
-							telPhone: telPhone.value
+							telPhone: telPhone.value,
+							msgId:1
 						},
 						dataType: "json",
 						type: "post",
@@ -186,7 +190,7 @@
 							back: 'close'
 						}
 					})
-					mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/regin", {
+					mui.ajax(reginPath, {
 						data: {
 							userName: userName.value,
 							password: pws.value,

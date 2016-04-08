@@ -13,6 +13,7 @@
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<link rel="stylesheet" href="css/tuch.css" />
 		<style type="text/css">
 			.mui-content {
@@ -87,8 +88,8 @@
 			});
 			//获取认证列表
 			var authos;
-			var otherLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountLogin";
-			var oriLoginPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/login";
+			var otherLoginPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/otherAccountLogin";
+			var oriLoginPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/login";
 			document.addEventListener("plusready", function() {
 				plus.oauth.getServices(function(serice) {
 					authos = serice;
@@ -155,9 +156,6 @@
 									localStorage.setItem('userName', data.userName);
 									//用户类型   0  普通用户   1  聚财盆用户  2  金刚用户
 									localStorage.setItem("userType", data.userType + '');
-									
-									var uId=localStorage.getItem('userId');
-								console.log("id:"+uId);
 									mui.back();
 								} else {
 									plus.ui.toast(data.err_msg);

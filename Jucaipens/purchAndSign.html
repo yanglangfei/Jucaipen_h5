@@ -10,6 +10,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
 		<script src="js/mui.min.js"></script>
@@ -295,7 +296,7 @@
 				var year = document.getElementById("year");
 				var moth = document.getElementById("moth");
 				var quart = document.getElementById("quart");
-				var queryPrice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/txtLivePayInfo";
+				var queryPrice = "http://"+portStr()+"/AccumulateWealth/jucaipen/txtLivePayInfo";
 				var web = plus.webview.currentWebview();
 				var weekStr;
 				var nickName = web.nickName;

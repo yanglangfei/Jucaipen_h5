@@ -5,8 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<title>
-		</title>
+		<title></title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="css/tuch.css" rel="stylesheet" type="text/css" />
 		<link href="css/mingjia.css" rel="stylesheet" type="text/css" />
@@ -17,7 +16,6 @@
 		<script type="text/javascript" src="js/style.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 	</head>
-
 	<body>
 		<div class="wrapper">
 			<!------------头部--------------->
@@ -83,7 +81,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var askListPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/askForTeacher";
+				var askListPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/askForTeacher";
 				var doc=document;
 				var askList = doc.getElementById("askList");
 				var retAnswer = doc.getElementById("retAnswer");
@@ -109,6 +107,7 @@
 					loading.style.display = 'block';
 					findAll(currentPage);
 				}
+				
 				//加载更多数据
 				ask_gengduo.addEventListener("tap", function() {
 						ask_gengduo.style.display = 'none';
@@ -147,7 +146,12 @@
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
 								}
-								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content' ><a><span class='u_name' style='margin-left:15px;'>" + data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" + myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;' style='margin-left:20px;'>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>"
+								+ "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>"
+								+ "<div class='content' ><a><span class='u_name' style='margin-left:15px;'>" 
+								+ data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" 
+								+ myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;' style='margin-left:20px;'>" 
+								+ data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>";
 							}
 							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
@@ -189,9 +193,15 @@
 								var myDate = subStr(2, data[i].insertDate);
 								var logoStr = data[i].headFace;
 								if (logoStr.indexOf("121.40.227.121") > 0) {
-									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
+									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' 
+									+ logoStr;
 								}
-								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" + "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>" + "<div class='content'><a><span class='u_name' style='margin-left:15px;'>" + data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" + myDate + "</span>" + "<div class='bodys'><a>" + data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>"
+								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" 
+								+ "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr)
+								+ "></a></div>" + "<div class='content'><a><span class='u_name' style='margin-left:15px;'>" 
+								+ data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" 
+								+ myDate + "</span>" + "<div class='bodys'><a>" + data[i].askBodys 
+								+ "</a></div><span class='type'>0人回答</span></div></div>";
 							}
 							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
@@ -232,7 +242,7 @@
 				})
 
 				function isNull(images) {
-					if (images.length <= 0) {
+					if (images.length <= 0) { 
 						images = 'image/jucaipen.png';
 					}
 					return images;

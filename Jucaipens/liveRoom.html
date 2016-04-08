@@ -118,11 +118,11 @@
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
 				var chatLay = document.getElementById("chatLay");
-				var liveResourcePath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/videoResource";
+				var liveResourcePath = "http://"+portStr()+"/AccumulateWealth/jucaipen/videoResource";
 				var topIdPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getTopId";
 				var getChatMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=getlist";
 				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
-				var changeState = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/chatMessage";
+				var changeState = "http://"+portStr()+"/AccumulateWealth/jucaipen/chatMessage";
 				var uId = localStorage.getItem("userId");
 				var liveId = web.liveId;
 				var isLand;

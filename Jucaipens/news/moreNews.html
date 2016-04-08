@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="../css/loadAnim1.css" />
 		<script type="text/javascript" src="../js/mui.min.js"></script>
 		<script type="text/javascript" src="../js/style.js"></script>
+		<script type="text/javascript" src="../js/stringUtil.js" ></script>
 		<title></title>
 	</head>
 	<body>
@@ -72,7 +73,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var moreNews = "http://121.40.227.121:8080/AccumulateWealth/accumulate/tapeAnalysis";
+				var moreNews = "http://"+portStr()+"/AccumulateWealth/accumulate/tapeAnalysis";
 				var more = document.getElementById("moreNews");
 				var web = plus.webview.currentWebview();
 				var loadNews = document.getElementById("loadNews");

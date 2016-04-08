@@ -10,6 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/mui.min.js"></script>
 		<style type="text/css">
 			.mui-content div {
@@ -72,8 +73,8 @@
 				var qqState = doc.getElementById("qq-state");
 				var weixinState = doc.getElementById("weixin-state");
 				var sinaState = doc.getElementById("sina-state");
-				var bindList = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/otherAccountList";
-				var bindAccount = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updateOtherAccount";
+				var bindList = "http://"+portStr()+"/AccumulateWealth/jucaipen/otherAccountList";
+				var bindAccount = "http://"+portStr()+"/AccumulateWealth/jucaipen/updateOtherAccount";
 				var uId = localStorage.getItem("userId");
 				var isQQBind;
 				var isWeixinBind;

@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/netUtils.js"></script>
 		<script src="js/mui.min.js"></script> 
 		<style type="text/css">
@@ -210,10 +211,14 @@
 				var hDpi = hei * plus.screen.scale;
 				var wDpi = width * plus.screen.scale;
 				var doc=document;
-				var getVersionPath = "http://121.40.227.121:8080/AccumulateWealth/accumulate/updateVersion";
-				var dowLoadPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downFile";
+				var getVersionPath = "http://"+portStr()+"/AccumulateWealth/accumulate/updateVersion";
+				var dowLoadPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/downFile";
 				var page = doc.getElementById('pager');
-				var queryAdice = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/adverQuerry";
+				var queryAdice = "http://"+portStr()+"/AccumulateWealth/jucaipen/adverQuerry";
+				var livePath="http://"+portStr()+"/AccumulateWealth/accumulate/indexSchool";
+				var boradPath="http://"+portStr()+"/AccumulateWealth/accumulate/indexNews";
+				var actionPath="http://"+portStr()+"/AccumulateWealth/accumulate/indexNews";
+				var ideaPath="http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaList";
 				var live = doc.getElementById("data-live");
 				var board = doc.getElementById("data-threeboard");
 				var attention = doc.getElementById("data-attention");
@@ -345,7 +350,7 @@
 				});
 				var liveUrl = '';
 				//直播回顾
-				mui.ajax(" http://121.40.227.121:8080/AccumulateWealth/accumulate/indexSchool", {
+				mui.ajax(livePath, {
 					dataType: 'json',
 					type: 'post',
 					timeout: 10000,
@@ -386,7 +391,7 @@
 				});
 				var three_board = '';
 				//新三板
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/indexNews", {
+				mui.ajax(boradPath, {
 					data: {
 						type: 2
 					},
@@ -423,7 +428,7 @@
 				});
 				//特别关注
 				var attentionUrl = '';
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/accumulate/indexNews", {
+				mui.ajax(actionPath, {
 					data: {
 						type: 1
 					},
@@ -460,7 +465,7 @@
 				});
 				//热门观点
 				var hotUrl = '';
-				mui.ajax("http://121.40.227.121:8080/AccumulateWealth/jucaipen/hotIdeaList", {
+				mui.ajax(ideaPath, {
 						data: {
 							whichPage: 0,
 						},

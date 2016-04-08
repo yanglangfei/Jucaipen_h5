@@ -9,10 +9,10 @@
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/mui.picker.css" />
 		<link rel="stylesheet" href="css/mui.poppicker.css" />
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<script type="text/javascript" src="js/mui.picker.js"></script>
 		<script type="text/javascript" src="js/mui.poppicker.js"></script>
-		<script type="text/javascript" src="js/city.data-3.js"></script>
-		<script type="text/javascript" charset="UTF-8"> 
+		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
 				var sure = document.getElementById("sure");
@@ -33,13 +33,11 @@
 				var orlPro = web.province;
 				var orlCity = web.city;
 				var orlArea = web.county;
-				
 				if (orlPro != null && orlCity != null && orlArea != null) {
 					provinceLay.innerHTML = orlPro;
 					cityLay.innerHTML = orlCity;
 					addressLay.innerHTML = orlArea;
 				}
-				
 				//确定提交信息 
 				sure.addEventListener('tap', function() {
 						mui.openWindow({
@@ -65,7 +63,7 @@
 								tel: tel
 							}
 						})
-					},false)
+					}, false)
 					//定位
 				locations.addEventListener("tap", function() {
 					var wait = plus.nativeUI.showWaiting();
@@ -79,7 +77,7 @@
 						wait.close();
 						mui.toast(e.message);
 					})
-				},false)
+				}, false)
 			})
 		</script>
 		<style type="text/css">
@@ -192,9 +190,9 @@
 			(function($, doc) {
 				$.init();
 				$.ready(function() {
-					var proDataPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryProvince";
-					var ctyDatapath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryCity";
-					var areaDataPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/querryArea";
+					var proDataPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/querryProvince";
+					var ctyDatapath = "http://"+portStr()+"/AccumulateWealth/jucaipen/querryCity";
+					var areaDataPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/querryArea";
 					var sure = doc.getElementById("sure");
 					var proPickerButton = doc.getElementById('pro');
 					var provinceLay = doc.getElementById("province");
@@ -227,7 +225,7 @@
 								var jsonStr = eval((proData));
 								proPicker.setData(jsonStr);
 							},
-							error: function(xhr,type,e) {
+							error: function(xhr, type, e) {
 								//mui.toast('获取信息失败，请稍后重试:'+type);
 							}
 						})
@@ -245,15 +243,15 @@
 							success: function(data) {
 								for (var i = 0; i < data.length; i++) {
 									if (i < data.length - 1) {
-										ctyData +="{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
+										ctyData += "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + ",";
 									} else {
-										ctyData +="{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
+										ctyData += "{" + "value:" + "'" + data[i].id + "'" + "," + "text:" + "'" + data[i].name + "'" + "}" + "]";
 									}
 								}
 								var jsonStr = eval((ctyData));
 								ctyPicker.setData(jsonStr);
 							},
-							error: function(xhr,type,e) {
+							error: function(xhr, type, e) {
 								//mui.toast('获取数据失败，请稍后重试:'+type);
 							}
 						})
@@ -279,7 +277,7 @@
 								var jsonStr = eval((areaData));
 								areaPicker.setData(jsonStr);
 							},
-							error: function(xhr,type,e) {
+							error: function(xhr, type, e) {
 								//mui.toast('获取数据失败，请稍后重试:'+type);
 							}
 						})

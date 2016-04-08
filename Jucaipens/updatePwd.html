@@ -8,6 +8,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js" ></script>
 		<title></title>
 		<style type="text/css">
 			.mui-content {
@@ -91,7 +92,7 @@
 				var txb_newpwd = document.getElementById("txb_newpwd");
 				var txb_surepwd = document.getElementById("txb_surepwd");
 				var btn_changeuserpwd = document.getElementById("btn_changeuserpwd");
-				var pwdPath = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/updatePwd";
+				var pwdPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/updatePwd";
 				// 修改密码
 				btn_changeuserpwd.addEventListener("tap", function() {
 					var uId = localStorage.getItem("userId");
@@ -129,7 +130,7 @@
 							wait.close();
 							if (data.ret_code == 0) {
 								plus.nativeUI.toast("密码修改成功");
-								mui.back();
+								mui.back(); 
 							} else {
 								plus.nativeUI.toast(data.err_msg);
 							}

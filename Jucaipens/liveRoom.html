@@ -77,10 +77,10 @@
 	<body>
 		<header class="header">
 			<div class="head">
-				<div class="denglu1 mui-action-back">
+				<div class="denglu1 back">
 					<a><img src="image/into_back.png" style="margin-top:0.2rem;" /></a>
 				</div>
-				<div class="logo1 mui-action-back" style="margin-top:0.2rem;">
+				<div class="logo1 back" style="margin-top:0.2rem;">
 					<span>直播室</span>
 				</div>
 			</div>
@@ -124,6 +124,15 @@
 				var sendMsgPath = "http://chat.jucaipen.com/ashx/chat_msg.ashx?action=add";
 				var changeState = "http://"+portStr()+"/AccumulateWealth/jucaipen/chatMessage";
 				var uId = localStorage.getItem("userId");
+				var back=document.getElementsByClassName('back');
+				back[0].addEventListener('tap',function(){
+					//msgType, fromId, roomId, managerId, serverId, userName
+					sendUserState(1, uId, liveId, isManager, isServer, userName);
+				})
+				back[1].addEventListener('tap',function(){
+					//msgType, fromId, roomId, managerId, serverId, userName
+					sendUserState(1, uId, liveId, isManager, isServer, userName);
+				})
 				var liveId = web.liveId;
 				var isLand;
 				var topId;
@@ -144,10 +153,6 @@
 				}
 				//msType,fromId,roomId,managerId,serverId,userName
 				sendUserState(0, uId, liveId, isManager, isServer, userName);
-				web.addEventListener('close', function() {
-						console.log('close');
-						sendUserState(1, uId, liveId, isManager, isServer, userName);
-					}, false)
 					//获取视频资源
 				mui.ajax(liveResourcePath, {
 					data: {
@@ -386,9 +391,14 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
+							if(msgType==1){
+								mui.back();
+							}
 						},
 						error: function(xhr,type,e) {
-							
+							if(msgType==1){
+								mui.back();
+							}
 						}
 					})
 				}

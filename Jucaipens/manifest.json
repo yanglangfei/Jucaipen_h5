@@ -417,7 +417,8 @@
 					"attention.html",
 					"image/loading-0.gif",
 					"js/style.js",
-					"css/loadAnim1.css"
+					"css/loadAnim1.css",
+					"js/stringUtil.js"
 				],
 				"refer": [
 					"login.html",
@@ -840,7 +841,8 @@
 					"image/loading-0.gif",
 					"js/stringUtil.js",
 					"css/loadAnim1.css",
-					"js/style.js"
+					"js/style.js",
+					null
 				],
 				"refer": [
 					"purchAndSign.html",

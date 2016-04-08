@@ -114,14 +114,18 @@
 								var roomFace = data[i].RoomFace;
 								var UserLevel = data[i].UserLevel;
 								if (liveUrl != null) {
-									liveInfo += "<li face=" + roomFace + " style='float: left;width: 46%;'id=" + data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" + data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" + "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName + "</h3></a></span></li>";
+									liveInfo += "<li face=" + roomFace + " style='float: left;width: 46%;'id=" 
+									+ data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" 
+									+ data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" 
+									+ "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName 
+									+ "</h3></a></span></li>";
 								}
 							}
 							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
 								var face = this.getAttribute('face');
-								// 是否免费试听  0   是     1   否
+								//是否免费试听  0   是     1   否
 								var visit = this.getAttribute("isVisit");
 								//试听天数
 								var visitDay = this.getAttribute("visitDay");

@@ -14,7 +14,6 @@
 		<title> </title>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<script type="text/javascript" src="js/stringUtil.js"></script>
@@ -412,18 +411,19 @@
 					data: {
 						id: id
 					},
-					dataType: "json",
+					dataType: "json",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 					type: "get",
 					timeout: 10000,
-					success: function(data) {
+					success: function(data) { 
 						newsDetail_load.style.display = 'none';
 						newsAbout.style.display = 'block';
 						for (var i = 0; i < data.length; i++) {
-							relaUrl = relaUrl + "<li id=" + data[i].id + ">•<a>" + data[i].title + "</a></li>";
+							relaUrl = relaUrl + "<li id=" + data[i].id + " name="+data[i].typeName+"  >•<a>" + data[i].title + "</a></li>";
 						}
 						relate.innerHTML = relaUrl;
 						mui("#data-relate").on("tap", "li", function() {
 							var nId = this.getAttribute("id");
+							var name=th
 							mui.openWindow({
 								url: "newsDetail.html",
 								id: "newsDetail",

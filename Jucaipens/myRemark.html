@@ -123,7 +123,7 @@
 						type: "post",
 						dataType: "json",
 						timeout: 10000,
-						success: function(data) {
+						success: function(data) { 
 							moreLoad.style.display = 'none';
 							loadRemark.style.display = 'none';
 							if (data.length <= 0) {
@@ -134,16 +134,21 @@
 							for (var i = 0; i < data.length; i++) {
 								var myDate = subStr(3, data[i].insertDate);
 								totlePager = data[i].totlePager;
-								remarkStr += "<li style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>" + myDate + "</span><span class='content'>" + data[i].body + "</span></li>";
+								remarkStr += "<li name="+data[i].typeName+" style='margin-left:10px;' id=" + data[i].newsId + "><h3>原文：<a>" + data[i].newsTitle + "</a></h3>" + "<span>" + myDate + "</span><span class='content'>" + data[i].body + "</span></li>";
 							}
 							remarkLay.innerHTML = remarkStr;
 							mui("#remarkLay").on("tap", "li", function() {
 								var id = this.getAttribute("id");
+								var name=this.getAttribute('name');
+								if(name=='null'){
+									name="财经详情";
+								}
 								mui.openWindow({
 									url: "newsDetail.html",
 									id: "newsDetail",
 									extras: {
-										newsId: id
+										newsId: id,
+										name:name
 									},
 									waiting: {
 										autoShow: false

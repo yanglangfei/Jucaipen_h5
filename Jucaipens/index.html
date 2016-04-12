@@ -11,25 +11,30 @@
 		<link rel="stylesheet" href="css/loadAnim1.css" />
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-		<script type="text/javascript" src="js/stringUtil.js" ></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<script type="text/javascript" src="js/netUtils.js"></script>
-		<script src="js/mui.min.js"></script> 
+		<script src="js/mui.min.js"></script>
 		<style type="text/css">
 			.mui-slider {
 				margin-top: 40px;
 			}
+			
 			.nav {
 				display: none;
 			}
+			
 			#board-banner {
 				display: none;
 			}
+			
 			#live-banner {
 				display: none;
 			}
+			
 			#attention-banner {
 				display: none;
 			}
+			
 			#idea-banner {
 				display: none;
 			}
@@ -160,26 +165,20 @@
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
 				swipeBack: true, //启用右滑关闭功能
-				preloadPages:[
-				{
-					url:'trhreeBoard.html',
-					id:'trhreeBoard'
-				},
-				{
-					url:"liveList.html",
-					id:"liveList"
-				},
-				{
-					url:'attention.html',
-					id:"attention"
-				},
-				{
-					url:"famousDish.html",
-					id:"famousDish"
-				}
-				]
-			}
-			);
+				preloadPages: [{
+					url: 'trhreeBoard.html',
+					id: 'trhreeBoard'
+				}, {
+					url: "liveList.html",
+					id: "liveList"
+				}, {
+					url: 'attention.html',
+					id: "attention"
+				}, {
+					url: "famousDish.html",
+					id: "famousDish"
+				}]
+			});
 			mui.plusReady(function() {
 				setTimeout(function() {
 					plus.navigator.closeSplashscreen();
@@ -191,7 +190,7 @@
 				var screenWidthDpi = screenWidth * plus.screen.scale;
 				var screenHeightDpi = screenHeight * plus.screen.scale;*/
 				//双击退出应用
-				var preTime = 0; 
+				var preTime = 0;
 				plus.key.addEventListener('backbutton', function() {
 						var now = new Date().getTime();
 						if (now - preTime > 2000) {
@@ -210,15 +209,15 @@
 				var width = plus.screen.resolutionWidth;
 				var hDpi = hei * plus.screen.scale;
 				var wDpi = width * plus.screen.scale;
-				var doc=document;
-				var getVersionPath = "http://"+portStr()+"/AccumulateWealth/accumulate/updateVersion";
-				var dowLoadPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/downFile";
+				var doc = document;
+				var getVersionPath = "http://" + portStr() + "/AccumulateWealth/accumulate/updateVersion";
+				var dowLoadPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/downFile";
 				var page = doc.getElementById('pager');
-				var queryAdice = "http://"+portStr()+"/AccumulateWealth/jucaipen/adverQuerry";
-				var livePath="http://"+portStr()+"/AccumulateWealth/accumulate/indexSchool";
-				var boradPath="http://"+portStr()+"/AccumulateWealth/accumulate/indexNews";
-				var actionPath="http://"+portStr()+"/AccumulateWealth/accumulate/indexNews";
-				var ideaPath="http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaList";
+				var queryAdice = "http://" + portStr() + "/AccumulateWealth/jucaipen/adverQuerry";
+				var livePath = "http://" + portStr() + "/AccumulateWealth/accumulate/indexSchool";
+				var boradPath = "http://" + portStr() + "/AccumulateWealth/accumulate/indexNews";
+				var actionPath = "http://" + portStr() + "/AccumulateWealth/accumulate/indexNews";
+				var ideaPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/hotIdeaList";
 				var live = doc.getElementById("data-live");
 				var board = doc.getElementById("data-threeboard");
 				var attention = doc.getElementById("data-attention");
@@ -249,23 +248,23 @@
 						dataType: "json",
 						timeout: 10000,
 						success: function(data) {
-							if (data.ret_code == 0) { 
+							if (data.ret_code == 0) {
 								var versionCode = data.versionCode;
 								var apkUrl = data.apkUrl;
 								if (parseInt(versionCode) > parseInt(version)) {
 									//更新版本
-									var array = ["取消","确认"];
-									mui.confirm("有新版本可更新",function(e) {
-										if (e.index == 1) { 
+									var array = ["取消", "确认"];
+									mui.confirm("有新版本可更新", function(e) {
+										if (e.index == 1) {
 											//更新版本
 											var wait = plus.nativeUI.showWaiting("正在更新安装包");
-											downLoadApk(dowLoadPath+"?fileName="+apkUrl, wait);
+											downLoadApk(dowLoadPath + "?fileName=" + apkUrl, wait);
 										}
-									},'更新提示',array)
+									}, '更新提示', array)
 								}
 							}
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							//mui.toast('连接异常:'+type);
 						}
 					})
@@ -276,17 +275,19 @@
 				function downLoadApk(downPath, wait) {
 					var task = plus.downloader.createDownload(downPath, {}, function(d, state) {
 						if (state == 200) {
-							wait.close(); 
+							wait.close();
 							var filePath = d.filename;
 							//安装apk文件
-							plus.runtime.install(filePath, {force:true}, function(d) {
+							plus.runtime.install(filePath, {
+								force: true
+							}, function(d) {
 								plus.runtime.restart();
 								mui.toast('APK更新成功');
 							}, function(e) {
 								mui.toast('APK启动失败,请手动启动');
 							});
 						} else {
-							wait.close(); 
+							wait.close();
 							mui.toast('APK更新失败');
 						}
 					});
@@ -344,7 +345,7 @@
 							interval: 2000
 						});
 					},
-					error: function(xhr,type,e) {
+					error: function(xhr, type, e) {
 						//mui.toast('连接异常:'+type);
 					}
 				});
@@ -360,14 +361,23 @@
 							live_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							liveUrl += "<li style='float: left;width: "+(width/2-50)+"px;margin-left:10px;'id=" + data[i].id + ">" + "<span><a ><img src=" + data[i].url + "  /><h3 style='font-size:13px;'>" + data[i].title + "</h3></a></span></li>";
+							liveUrl += "<li title="+data[i].title
+							+" money="+data[i].payMoney+" types="+data[i].isPay+"  style='float: left;width: " + (width / 2 - 50) + "px;margin-left:10px;'id=" + data[i].id + ">"
+							+ "<span><a ><img src=" + data[i].url + "  /><h3 style='font-size:13px;'>"
+							+ data[i].title + "</h3></a></span></li>";
 						}
 						live.innerHTML = liveUrl;
 						mui("#data-live").on("tap", "li", function() {
 							var liveId = this.getAttribute("id");
 							var name = plus.os.name;
+							var title=this.getAttribute('title');
+							var type=this.getAttribute('types');
+							var money=this.getAttribute("money");
 							if (name == 'Android' && !plus.webview.defauleHardwareAccelerated() && parseInt(plus.os.version) >= 5) {
 								extras.liveId = liveId;
+								extras.type=type;
+								extras.money=money;
+								extras.title=title;
 								styles.hardwareAccelerated = true;
 								var historys = plus.webview.create("historyLive.html", "history", styles, extras);
 								plus.webview.show(historys);
@@ -376,7 +386,10 @@
 									url: "historyLive.html",
 									id: "historyLive",
 									extras: {
-										liveId: liveId
+										liveId: liveId,
+										type:type,
+										money:money,
+										title:title
 									},
 									waiting: {
 										autoShow: false
@@ -385,7 +398,7 @@
 							}
 						})
 					},
-					error: function(xhr,type,e) {
+					error: function(xhr, type, e) {
 						//mui.toast('连接异常：'+type);
 					}
 				});
@@ -414,7 +427,7 @@
 								id: "newsDetail",
 								extras: {
 									newsId: nId,
-									name:'新三板'
+									name: '新三板'
 								},
 								waiting: {
 									autoShow: false
@@ -422,7 +435,7 @@
 							})
 						})
 					},
-					error: function(xhr,type,e) {
+					error: function(xhr, type, e) {
 						//mui.toast('连接异常：'+type);
 					}
 				});
@@ -451,7 +464,7 @@
 								id: "newsDetail",
 								extras: {
 									newsId: nId,
-									name:'特别关注'
+									name: '特别关注'
 								},
 								waiting: {
 									autoShow: false
@@ -459,7 +472,7 @@
 							})
 						})
 					},
-					error: function(xhr,type,e) {
+					error: function(xhr, type, e) {
 						//mui.toast('连接异常：'+type);
 					}
 				});
@@ -496,7 +509,7 @@
 								})
 							})
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							//mui.toast('连接异常:'+type);
 						}
 					})

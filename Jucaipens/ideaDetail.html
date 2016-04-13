@@ -9,15 +9,187 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<title>
-		</title>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="css/mui.min.css" />
-		<script type="text/javascript" src="js/style.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
-		<script src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			
+			#ideaBody img {
+				max-width: 100%;
+				height: auto;
+			}
+			
 			.showarticletit {
 				width: 100%;
 				float: left;
@@ -137,10 +309,12 @@
 			
 			.showarticle_good a i,
 			.showarticle_good a em,
-			.showarticle_good a span,label {
+			.showarticle_good a span,
+			label {
 				display: inline-block;
 			}
-			.showarticle_good label{
+			
+			.showarticle_good label {
 				position: absolute;
 				left: 45%;
 				color: #bb1121;
@@ -204,13 +378,6 @@
 			.tit {
 				margin-top: 50px;
 			}
-			
-			#imgFrame {
-				position: absolute;
-				z-index: 1000;
-				display: none;
-				top: 50px;
-			}
 		</style>
 
 	</head>
@@ -249,18 +416,13 @@
 				<div class="showarticlebody" id="ideaBody">
 				</div>
 
-				<div id="imgFrame">
-					<div><a id="close">关闭</a></div>
-					<div id="imgbox"></div>
-				</div>
-
 				<div class="showarticle_good">
 
 					<p id="big"></p>
 					<a id="sa_zan">
-					<i><img src="image/good.png" /></i>&nbsp;
-					<em id="goodsAdd"></em>&nbsp;<span>赞一个</span>
-					<label id="zan_texiao">+1</label>
+						<i><img src="image/good.png" /></i>&nbsp;
+						<em id="goodsAdd"></em>&nbsp;<span>赞一个</span>
+						<label id="zan_texiao">+1</label>
 					</a>
 				</div>
 				<div class="showarticle_fenxain">
@@ -289,25 +451,31 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
+		<script type="text/javascript" src="js/style.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/mui.previewimage.js"></script>
+		<script type="text/javascript" src="js/mui.zoom.js"></script>
+		<script type="text/javascript" src="js/stringUtil.js"></script>
+		<script >
+		    mui.previewImage();
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
-				var ideaDetail = "http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaDetaile";
-				var commListPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/ideaCommList";
-				var addGoodPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/hotIdeaGoods";
-				var addCommentPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/addIdeaComm";
+				var ideaDetail = "http://" + portStr() + "/AccumulateWealth/jucaipen/hotIdeaDetaile";
+				var commListPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/ideaCommList";
+				var addGoodPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/hotIdeaGoods";
+				var addCommentPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/addIdeaComm";
 				var teacherName = document.getElementById("teacherName");
 				var leader = document.getElementById("leader");
 				var times = document.getElementById("time");
-				var titles = document.getElementById("titles");
+				var titles = document.getElementById("titles"); 
 				var ideaBody = document.getElementById("ideaBody");
 				var goodsAdd = document.getElementById("goodsAdd");
 				var teacherLogo = document.getElementById("teacherLogo");
 				var vLogo = document.getElementById("vLogo");
 				var zan = document.getElementById("sa_zan");
-				var zan_texiao=document.getElementById("zan_texiao");
+				var zan_texiao = document.getElementById("zan_texiao");
 				var btn_commen = document.getElementById("btn_commen");
 				var web = plus.webview.currentWebview();
 				var log_commen_list = document.getElementById("commList");
@@ -345,19 +513,12 @@
 							teacherLogo.src = data.headFace;
 							if (body != null && body.length > 0) {
 								var bs = document.getElementsByTagName('img');
-								for (var i = 0; i < bs.length; i++) {
+						 		for (var i = 0; i < bs.length; i++) {
 									if (bs[i].src.indexOf("attached") > 0) {
 										var u = bs[i].src.replace('file://', "http://live.jucaipen.com");
 										bs[i].src = u;
-										bs[i].style.width = '100%';
-										bs[i].addEventListener('tap', function() {
-											document.getElementById("imgFrame").style.display = "block";
-											document.getElementById("imgbox").innerHTML = "<img src='" + this.getAttribute("src") + "' />";
-											document.getElementById("imgbox").style.width = '100px';
-											document.getElementById("imgbox").style.height = '200px';
-											document.getElementById("imgFrame").style.width = '100px';
-											document.getElementById("imgFrame").style.height = '200px';
-										}, false)
+										bs[i].setAttribute('data-preview-src','');
+										bs[i].style.width='100%';
 									}
 								}
 							}
@@ -368,8 +529,8 @@
 								vLogo.src = "";
 							}
 						},
-						error: function(xhr,type,e) {
-							mui.toast('连接失败:'+type);
+						error: function(xhr, type, e) {
+							mui.toast('连接失败:' + type);
 						}
 					})
 				}
@@ -391,36 +552,33 @@
 					}, false)
 					//提交评论信息
 				btn_commen.addEventListener('tap', function() {
-					var uId = localStorage.getItem('userId');
-					var body = txt_commen.value;
-					if (uId <= 0) {
-						mui.openWindow({
-							url: "login.html",
-							id: "login",
-							waiting: {
-								autoShow: false
-							}
-						})
-						return;
-					}
-					if (body.length <= 0) {
-						mui.toast('评论内容不能为空');
-						return;
-					}
-					if (opType != 1) {
-						opType = 0;
-						var wait = plus.nativeUI.showWaiting('正在提交评论，请稍等...');
-						addIdeaComment(opType, uId, id, body, 0, wait);
-					} else {
-						body = body + "//@" + name + ":" + lastBody;
-						var wait = plus.nativeUI.showWaiting('正在提交评论，请稍等...');
-						addIdeaComment(opType, uId, id, body, commId, wait);
-					}
-				}, false)
-				document.getElementById("close").addEventListener('tap', function() {
-					document.getElementById("imgFrame").style.display = 'none';
-				}, false);
-				//提交评论信息
+						var uId = localStorage.getItem('userId');
+						var body = txt_commen.value;
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+							return;
+						}
+						if (body.length <= 0) {
+							mui.toast('评论内容不能为空');
+							return;
+						}
+						if (opType != 1) {
+							opType = 0;
+							var wait = plus.nativeUI.showWaiting('正在提交评论，请稍等...');
+							addIdeaComment(opType, uId, id, body, 0, wait);
+						} else {
+							body = body + "//@" + name + ":" + lastBody;
+							var wait = plus.nativeUI.showWaiting('正在提交评论，请稍等...');
+							addIdeaComment(opType, uId, id, body, commId, wait);
+						}
+					}, false)
+					//提交评论信息
 				function addIdeaComment(type, uId, iId, body, cId, wait) {
 					mui.ajax(addCommentPath, {
 						data: {
@@ -442,9 +600,9 @@
 								mui.toast(data.err_msg);
 							}
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							wait.close();
-							mui.toast('连接失败，请稍后重试:'+type);
+							mui.toast('连接失败，请稍后重试:' + type);
 						}
 					})
 				}
@@ -489,8 +647,8 @@
 								txt_commen.placeholder = '回复' + name + ":";
 							}, false)
 						},
-						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+						error: function(xhr, type, e) {
+							mui.toast('连接失败，请稍后重试:' + type);
 						}
 					})
 				}
@@ -513,14 +671,14 @@
 						timeout: 10000,
 						success: function(data) {
 							if (data.ret_code == 0) {
-								goodsAdd.innerHTML=parseInt(goodsAdd.innerHTML)+1;
+								goodsAdd.innerHTML = parseInt(goodsAdd.innerHTML) + 1;
 								plus.nativeUI.toast("点赞成功");
 							} else {
 								plus.nativeUI.toast("点赞失败");
 							}
 						},
-						error: function(xhr,type,e) {
-							plus.nativeUI.toast("连接失败:"+type);
+						error: function(xhr, type, e) {
+							plus.nativeUI.toast("连接失败:" + type);
 						}
 					})
 				}

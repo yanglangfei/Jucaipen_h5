@@ -423,14 +423,16 @@
 						relate.innerHTML = relaUrl;
 						mui("#data-relate").on("tap", "li", function() {
 							var nId = this.getAttribute("id");
-							var name=th
+							var name=this.getAttribute('name');
 							mui.openWindow({
 								url: "newsDetail.html",
 								id: "newsDetail",
 								extras: {
-									newsId: nId
+									newsId: nId,
+									name:name
 								},
-								waiting: {
+							
+							waiting: {
 									autoShow: false
 								},
 								createNew: true //重新创建页面

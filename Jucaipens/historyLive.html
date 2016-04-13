@@ -57,7 +57,8 @@
 			#btn_send:active {
 				background: #CC3300;
 			}
-			#promot{
+			
+			#promot {
 				color: black;
 				font-size: 15px;
 				line-height: 200px;
@@ -82,7 +83,7 @@
 		<div class="mui-content" style="width: 100%;">
 			<div id="show_Video_url" class="showvideo_player">
 				<label id="promot">当前视频需付费观看，请点击付费</label>
-				<iframe id="video"  frameborder='0' style="width: 100%;height: 100%;" webkit-playsinline ></iframe>
+				<iframe id="video" frameborder='0' style="width: 100%;height: 100%;" webkit-playsinline></iframe>
 			</div>
 
 			<div class="mui-slider" id="videoInfo">
@@ -159,13 +160,13 @@
 			mui.init();
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
-				var get_video = "http://"+portStr()+"/AccumulateWealth/jucaipen/videoResource";
-				var getVideoInfo = "http://"+portStr()+"/AccumulateWealth/jucaipen/videoDetaile";
-				var add_remark = "http://"+portStr()+"/AccumulateWealth/jucaipen/remarkNews";
-				var querry_comm = 'http://'+portStr()+'/AccumulateWealth/jucaipen/querryComm';
-				var addGoodPath = 'http://'+portStr()+'/AccumulateWealth/jucaipen/addGood';
+				var get_video = "http://" + portStr() + "/AccumulateWealth/jucaipen/videoResource";
+				var getVideoInfo = "http://" + portStr() + "/AccumulateWealth/jucaipen/videoDetaile";
+				var add_remark = "http://" + portStr() + "/AccumulateWealth/jucaipen/remarkNews";
+				var querry_comm = 'http://' + portStr() + '/AccumulateWealth/jucaipen/querryComm';
+				var addGoodPath = 'http://' + portStr() + '/AccumulateWealth/jucaipen/addGood';
 				var video = document.getElementById("video");
-				var promot=document.getElementById("promot");
+				var promot = document.getElementById("promot");
 				var teach = document.getElementById("teachInfo");
 				var commBody = document.getElementById("commMsg");
 				var video_comment = document.getElementById("video-comment");
@@ -183,42 +184,55 @@
 				var btn_send = document.getElementById("btn_send");
 				var commCount = document.getElementById("show_Video_CommCount");
 				var id = web.liveId;
-				var type=web.type;
-				var title=web.title;
-				var money=web.money;
+				var type = web.type;
+				var title = web.title;
+				var money = web.money;
 				var styles = {};
 				styles.scrollIndicator = 'none';
 				controlScrollBar(web, styles);
 				if (id <= 0) {
 					return;
 				}
-				if(type==1){
+				if (type == 1) {
 					//收费
-					promot.style.display='block';
-					video.style.display='none';
-					promot.addEventListener('tap',function(){
+					promot.style.display = 'block';
+					video.style.display = 'none';
+					promot.addEventListener('tap', function() {
+						var uId = localStorage.getItem('userId');
+						if (uId <= 0) {
+							//跳转到登录
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+							return;
+						}
+						//跳转到支付界面
 						mui.openWindow({
-							url:"orderInfo.html",
-							id:"orderInfo",
-							extras:{
-								money:money,
-								perPrice:money,
-								week:"无",
-								title:title
+							url: "orderInfo.html",
+							id: "orderInfo",
+							extras: {
+								money: money,
+								perPrice: money,
+								week: "无",
+								title: title
 							},
-							waiting:{
-								autoShow:false
+							waiting: {
+								autoShow: false
 							}
 						})
 					})
-				}else{
+				} else {
 					//免费
-					promot.style.display='none';
-					video.style.display='block';
+					promot.style.display = 'none';
+					video.style.display = 'block';
 					getVideo();
 				}
 				//获取视频资源
-				function getVideo(){
+				function getVideo() {
 					mui.ajax(get_video, {
 						data: {
 							typeId: 1,
@@ -262,12 +276,12 @@
 								}
 							}, false);
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							//mui.toast('获取数据失败，请稍后重试:'+type);
 						}
 					})
 				}
-					//获取视频相关信息
+				//获取视频相关信息
 				mui.ajax(getVideoInfo, {
 					data: {
 						videoId: id
@@ -282,8 +296,8 @@
 						showDate.innerHTML = myDate;
 						plain.innerHTML = data.title;
 					},
-					error: function(xhr,type,e) {
-						mui.toast('获取数据失败，请稍后重试:'+type);
+					error: function(xhr, type, e) {
+						mui.toast('获取数据失败，请稍后重试:' + type);
 					}
 				})
 				btn_send.addEventListener("tap", function() {
@@ -335,9 +349,9 @@
 								plus.nativeUI.toast(data.err_msg);
 							}
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							wait.close();
-							plus.nativeUI.toast("连接失败:"+type);
+							plus.nativeUI.toast("连接失败:" + type);
 						}
 					})
 				}
@@ -407,8 +421,8 @@
 								})
 							}
 						},
-						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+						error: function(xhr, type, e) {
+							mui.toast('连接失败，请稍后重试:' + type);
 						}
 					})
 				}
@@ -429,8 +443,8 @@
 								mui.toast(data.err_msg);
 							}
 						},
-						error: function(xhr,type,e) {
-							mui.toast('连接失败，请稍后重试:'+type);
+						error: function(xhr, type, e) {
+							mui.toast('连接失败，请稍后重试:' + type);
 						}
 					})
 				}

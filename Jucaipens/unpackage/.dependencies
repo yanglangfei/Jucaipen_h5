@@ -1,9 +1,7 @@
 {
   "news/moreNews.html": {
     "href": "news/moreNews.html",
-    "resources": [
-      "css/loadAnim1.css"
-    ],
+    "resources": [],
     "refer": [],
     "priority": 15
   }

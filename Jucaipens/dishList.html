@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -48,7 +49,7 @@
 				<div>
 					暂无数据
 				</div>
-				</div>
+			</div>
 
 			<div style="text-align: center;margin-top: 80%;display: none;" id="loadDish">
 				<div class="spinner">
@@ -83,12 +84,13 @@
 				});
 				mui.plusReady(function() {
 					var dishList = document.getElementById("dishList");
-					var dishPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/famousDish";
+					var dishPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/famousDish";
+					var getPurshInfoPath = 'http://'+portStr()+'/AccumulateWealth/jucaipen/isPurshLive';
 					var txtlive_gd = document.getElementById("txtlive_gd");
 					var loadDish = document.getElementById("loadDish");
-					var web=plus.webview.currentWebview();
+					var web = plus.webview.currentWebview();
 					var currentPage = 1;
-					var nodata=document.getElementById("nodata");
+					var nodata = document.getElementById("nodata");
 					var totlePage;
 					var isShow;
 					var loadMore = document.getElementById("loadMore");
@@ -121,10 +123,10 @@
 								loadMore.style.display = 'none';
 								loadDish.style.display = 'none';
 								totlePage = data[0].totlePage;
-								if(data.length<=0){
-									nodata.style.display='block';
-								}else{
-									nodata.style.display='none';
+								if (data.length <= 0) {
+									nodata.style.display = 'block';
+								} else {
+									nodata.style.display = 'none';
 								}
 								for (var i = 0; i < data.length; i++) {
 									var dateStr = subStr(0, data[i].startDate);
@@ -159,41 +161,60 @@
 											})
 											return;
 										}
-										//2是否是管理员或者客服
-										var isServer = localStorage.getItem("isServer");
-										var isManager = localStorage.getItem("isManager");
-										if (isManager == 1 || isServer == 1) {
-											intoTxtLive(liveId, name);
-											return;
-										}
-										//3是否购买
-										var buyProductId =localStorage.getItem("buyProductId");
-										if (liveId == buyProductId) {
-											intoTxtLive(liveId, name);
-											return;
-										}
-										if (!isShow) {
-											isShow = true;
-											var array = ["确认", "取消"];
-											plus.nativeUI.confirm("当前直播为收费直播，请进行购买查看", function(e) {
-												if (e.index == 0) {
-													intoPayRoom(liveId, name, logo, title, teacherId);
-													isShow = false;
-												} else {
-													isShow = false;
-												}
-											}, "", array);
-										}
+										//获取用户购买信息
+										getPurseInfo(uId,liveId,name,type,logo,title,teacherId);
 									}
 								}, false)
 							},
-							error: function(xhr,type,e) {
+							error: function(xhr, type, e) {
 								loadMore.style.display = 'none';
 								loadDish.style.display = 'none';
-								nodata.style.display='block';
-								nodata.innerHTML='获取数据失败，请稍后重试:'+type;
+								nodata.style.display = 'block';
+								nodata.innerHTML = '获取数据失败，请稍后重试:' + type;
 							}
 						})
+					}
+					//获取用户购买的相关信息
+					function getPurseInfo(id,liveId,name,type,logo,title,teacherId) {
+						mui.ajax(getPurshInfoPath, {
+							data: {
+								userId: id,
+								liveId:liveId
+							},
+							type: 'get',
+							dataType: "json",
+							timeout: 10000,
+							success: function(data) {
+							    if(data.ret_code==0){
+							    	  intoTxtLive(liveId,name);
+							    }else{
+							    	intoWhichPage(false,liveId,name,type,logo,title,teacherId);
+							    }
+							},
+							error: function(xhr, type, e) {
+								mui.toast('连接失败，请稍后重试:' + type);
+							}
+						})
+					}
+
+					function intoWhichPage(isPursh,liveId,name,type,logo,title,teacherId) {
+						//3是否购买
+						if (isPursh) {
+							intoTxtLive(liveId, name);
+							return;
+						}
+						if (!isShow) {
+							isShow = true;
+							var array = ["确认", "取消"];
+							plus.nativeUI.confirm("当前直播为收费直播，请进行购买查看", function(e) {
+								if (e.index == 0) {
+									intoPayRoom(liveId, name, logo, title, teacherId);
+									isShow = false;
+								} else {
+									isShow = false;
+								}
+							}, "", array);
+						}
 					}
 					//进入直播间
 					function intoTxtLive(lId, t) {

@@ -144,8 +144,6 @@
 									plus.nativeUI.toast("登录成功");
 									//用户ID 
 									localStorage.setItem("userId", data.userId + "");
-									//购买产品ID
-									localStorage.setItem("buyProductId", data.buyProductId + "");
 									//是否是客服   0    不是    
 									localStorage.setItem("isServer", data.isServer + "");
 									//是否是管理员   0  不是
@@ -154,8 +152,6 @@
 									localStorage.setItem("reginDate", data.reginDate);
 									//用户名
 									localStorage.setItem('userName', data.userName);
-									//用户类型   0  普通用户   1  聚财盆用户  2  金刚用户
-									localStorage.setItem("userType", data.userType + '');
 									mui.back();
 								} else {
 									plus.ui.toast(data.err_msg);
@@ -199,8 +195,6 @@
 								plus.nativeUI.toast("登录成功");
 								//用户ID 
 								localStorage.setItem("userId", data.userId + "");
-								//购买产品ID
-								localStorage.setItem("buyProductId", data.buyProductId + "");
 								//是否是客服   0    不是    
 								localStorage.setItem("isServer", data.isServer + "");
 								//是否是管理员   0  不是
@@ -209,8 +203,6 @@
 								localStorage.setItem("reginDate", data.reginDate);
 								//用户名
 								localStorage.setItem('userName', data.userName);
-								//用户类型   0  普通用户   1  聚财盆用户  2  金刚用户
-								localStorage.setItem("userType", data.userType + '');
 								mui.back();
 							} else {
 								plus.nativeUI.toast(data.err_msg);

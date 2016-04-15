@@ -188,7 +188,7 @@
 			}
 			
 			#sign_tearcher {
-				background: #bd0b19;
+				background: #fc0d1b;
 				border: 0px;
 				color: white;
 			}
@@ -207,7 +207,7 @@
 			
 			#buy_live {
 				border: 0px;
-				background: #bd0b19;
+				background: #fc0d1b;
 			}
 			
 			#buy_live:active {
@@ -359,11 +359,17 @@
 						weekStr = "1个季度";
 					}, false)
 					//签约   ---年
-				year.addEventListener('tap', function() {
+					
+					year.onclick=function(){
+					   xianjia.innerText = xianjiaYear;
+					   yuanjia.innerText = yuanjiaYear;
+					   weekStr = "1年";	
+					}
+				/*year.addEventListener('tap', function() {
 					xianjia.innerText = xianjiaYear;
 					yuanjia.innerText = yuanjiaYear;
 					weekStr = "1年";
-				}, false)
+				}, false)*/
 
 				function queryTxtLivePrice() {
 					mui.ajax(queryPrice, {

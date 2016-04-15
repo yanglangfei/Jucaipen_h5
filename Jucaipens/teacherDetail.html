@@ -90,9 +90,10 @@
 			mui.plusReady(function() {
 				var web = plus.webview.currentWebview();
 				var id = web.teacherId;
-				var teacherDetails = "http://"+portStr()+"/AccumulateWealth/jucaipen/famousTeacherDetaile";
-				var queryAttentionPath = "http://"+portStr()+"/AccumulateWealth/jucaipen/querryAttention";
-				var teacherAttentionPath = 'http://'+portStr()+'/AccumulateWealth/jucaipen/teacherAttention';
+				var teacherDetails = "http://" + portStr() + "/AccumulateWealth/jucaipen/famousTeacherDetaile";
+				var queryAttentionPath = "http://" + portStr() + "/AccumulateWealth/jucaipen/querryAttention";
+				var teacherAttentionPath = 'http://' + portStr() + '/AccumulateWealth/jucaipen/teacherAttention';
+				var getPurshInfoPath = 'http://' + portStr() + '/AccumulateWealth/jucaipen/isPurshLive';
 				var title = document.getElementById("title");
 				var teacherPic = document.getElementById("teacherPic");
 				var team = document.getElementById("team");
@@ -113,10 +114,13 @@
 				var iv_attention = document.getElementById("iv-attention");
 				var ideaCount = document.getElementById("ideaCount");
 				var answerCount = document.getElementById("answerCount");
+				var isShow;
 				var isAttention;
 				var liveId;
-				var userId =localStorage.getItem('userId');
+				var liveTitle;
+				var userId = localStorage.getItem('userId');
 				getTeacherDetailInfo();
+				var type;
 				getAtttentionState(id, userId);
 				//获取讲师详细信息
 				function getTeacherDetailInfo() {
@@ -128,7 +132,9 @@
 						type: "get",
 						timeout: 30000,
 						success: function(data) {
+							type = data.liveType;
 							liveId = data.liveId;
+							liveTitle=data.liveTitle;
 							title.innerText = data.nickName + "主页";
 							teacherPic.src = data.headFace;
 							team.innerText = data.nickName;
@@ -141,8 +147,8 @@
 							hoby.innerText = data.hoby;
 							introduce.innerHTML = data.introduce;
 						},
-						error: function(xhr,type,e) {
-							mui.toast('连接失败:'+type);
+						error: function(xhr, type, e) {
+							mui.toast('连接失败:' + type);
 						}
 					})
 				}
@@ -161,21 +167,112 @@
 					}, false)
 					//进入看盘直播
 				intoLive.addEventListener("tap", function() {
+					if (type == 1) {
+						//免费
+						intoTxtLive(liveId,team.innerText);
+					} else {
+						//收费   --需要登录
+						var uId = localStorage.getItem('userId');
+						if (uId <= 0) {
+							mui.openWindow({
+								url: "login.html",
+								id: "login",
+								waiting: {
+									autoShow: false
+								}
+							})
+							return ;
+						}
+						getPurseInfo(uId,liveId,team.innerText,type,teacherPic.src,liveTitle,id);
+					}
+					
+				}, false)
+				
+				
+				//进入直播间
+					function intoTxtLive(lId, t) {
 						mui.openWindow({
 							url: "txtLive.html",
 							id: "txtLive",
 							extras: {
+								liveId: lId,
+								title: t,
 								querryType: 1,
 								teacherId: id,
-								liveId: liveId,
-								title: team.innerText
 							},
 							waiting: {
 								autoShow: false
 							}
 						})
-					}, false)
-					//进入投资观点
+					}
+					//进入支付页面
+					function intoPayRoom(lId, name, logo, title, tId) {
+						mui.openWindow({
+							url: "purchAndSign.html",
+							id: "purchAndSign",
+							extras: {
+								liveId: lId,
+								nickName: name,
+								logo: logo,
+								title: title,
+								teacherId: tId
+							},
+							waiting: {
+								autoShow: false
+							}
+						})
+					}
+				
+				
+				
+				
+				
+				//获取用户购买的相关信息
+				function getPurseInfo(id, liveId, name, type, logo, title, teacherId) {
+					mui.ajax(getPurshInfoPath, {
+						data: {
+							userId: id,
+							liveId: liveId
+						},
+						type: 'get',
+						dataType: "json",
+						timeout: 10000,
+						success: function(data) {
+							if (data.ret_code == 0) {
+								intoTxtLive(liveId, name);
+							} else {
+								intoWhichPage(false, liveId, name, type, logo, title, teacherId);
+							}
+						},
+						error: function(xhr, type, e) {
+							mui.toast('连接失败，请稍后重试:' + type);
+						}
+					})
+				}
+				
+					function intoWhichPage(isPursh,liveId,name,type,logo,title,teacherId) {
+						//是否购买
+						if (isPursh) {
+							intoTxtLive(liveId, name);
+							return;
+						}
+						if (!isShow) {
+							isShow = true;
+							var array = ["确认", "取消"];
+							plus.nativeUI.confirm("当前直播为收费直播，请进行购买查看", function(e) {
+								if (e.index == 0) {
+									intoPayRoom(liveId, name, logo, title, teacherId);
+									isShow = false;
+								} else {
+									isShow = false;
+								}
+							}, "", array);
+						}
+					}
+				
+				
+				
+				//进入投资观点
 				touziIdea.addEventListener("tap", function() {
 						mui.openWindow({
 							url: "intrvlIdea.html",
@@ -238,7 +335,7 @@
 					}, false)
 					//咨询名师
 				ask.addEventListener("tap", function() {
-						var uId =localStorage.getItem('userId');
+						var uId = localStorage.getItem('userId');
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
@@ -303,7 +400,7 @@
 								iv_attention.src = 'image/attention.png';
 							} else {}
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							//mui.toast('连接失败，请稍后重试:'+type);
 						}
 					})
@@ -342,7 +439,7 @@
 								}
 							}
 						},
-						error: function(xhr,type,e) {
+						error: function(xhr, type, e) {
 							//mui.toast('连接失败，请稍后重试:'+type);
 						}
 					})

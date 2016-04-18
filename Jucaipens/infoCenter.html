@@ -19,6 +19,22 @@
 			.user_bodybg {
 				background: #efeff4;
 			}
+			.mui-content{
+				margin-top: 60px;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			#info-data li{
+				background: white;
+				border-radius: 10px;
+				padding: 15px;
+			}
+			li p{
+				margin-top: 5px;
+			}
+			li .mui-pull-right{
+				font-size: 15px;
+			}
 		</style>
 	</head>
 
@@ -36,16 +52,24 @@
 					</div>
 				</div>
 			</header>
-			<!------------账户资料------------->
+			<div class="mui-content">
+			    <div>
+		     	<ul id="info-data">
+		     			
+		     	</ul>
+		     	
+		     </div>
 			<div class="userbody">
 				<p class="more"><a class="linkmore" id="moreInfo" style="display: none;background: #e8e8e8;">查看更多>></a></p>
 			</div>
 			<!------------底部定位层---------->
-			<div style="text-align: center;margin-top: 80%;display: none;" id="layer-nodata">
+			<div style="text-align: center;margin-top: 60%;display: none;" id="layer-nodata">
 				<label style="font-size: 25px;">暂无数据</label>
 			</div>
 
 		</div>
+			</div>
+		     
 
 		<script type="text/javascript">
 			mui.init({
@@ -55,6 +79,7 @@
 				var getInfoPath = "http://"+portStr()+"/AccumulateWealth/accumulate/infoCenter";
 				var uId = localStorage.getItem('userId');
 				var noDataLay = document.getElementById("layer-nodata");
+				var infoData=document.getElementById("info-data");
 				var currentPage = 1;
 				getInfo(currentPage);
 				//获取个人消息
@@ -69,6 +94,12 @@
 						timeout: 10000,
 						success: function(data) {
 							if (data.length > 0) {
+								for(vari=0;i<data.length;i++){
+									var infoStr="<li><span> "+data[i].title+"</span><p>"
+		     			            +data[i].bodys+"</p><span class='mui-pull-right'>"
+		     			            +data[i].sendDate+"</span></li>";
+									infoData.innerHTML+=infoStr;
+								}
 							} else {
 								noDataLay.style.display = 'block';
 							}

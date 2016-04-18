@@ -16,14 +16,6 @@
 		<script type="text/javascript" src="js/style.js"></script>
 		<script type="text/javascript" src="js/stringUtil.js"></script>
 		<style type="text/css">
-			html {
-				overflow-x: hidden;
-			}
-			
-			body {
-				overflow-x: hidden;
-			}
-			
 			#videoDetaile h3 {
 				width: 100%;
 				float: left;
@@ -226,6 +218,9 @@
 							},
 							waiting: {
 								autoShow: false
+							},
+							shiow:{
+								aniShow:'pop-in'	
 							}
 						})
 					})
@@ -309,7 +304,13 @@
 					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",
-							id: "login"
+							id: "login",
+							waiting: {
+								autoShow: false
+							},
+							show:{
+								aniShow:'pop-in'	
+							}
 						})
 						return false;
 					}
@@ -383,9 +384,11 @@
 									//app 头像
 									logo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logo;
 								}
-								commUrl += " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" + " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good' tag=" + data[i].id + "><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em >" + data[i].goodCount + "</em></a></span>" + "  <span class='comm' tag=" + data[i].id + " ns=" + data[i].userName + " bs=" + body + "><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>";
+								commUrl = " <li><div class='userhead'><img src=" + isNull(logo) + " style='width:50px;height:50px;'></div>" 
+								+ " <div class='vItem'> <h4> <span class='name'>" + data[i].userName + "</span>" + " <span class='good' tag=" 
+								+ data[i].id + "><a><i><img src='image/good.png' style='width:20px;height:20px;'></i><em >" + data[i].goodCount + "</em></a></span>" + "  <span class='comm' tag=" + data[i].id + " ns=" + data[i].userName + " bs=" + body + "><a><img src='image/comm_icon1.png' style='width:20px;height:20px;'></a></span>" + " </h4><span class='bodys' >" + body + " </span> <span class='date'>" + myDate + "</span>" + "</div></li>";
+							    commList.innerHTML += commUrl;
 							}
-							commList.innerHTML = commUrl;
 							if (currentPage < totlePage) {
 								liveComm_more.style.display = 'block';
 							} else {
@@ -409,7 +412,13 @@
 										if (usId <= 0) {
 											mui.openWindow({
 												url: "login.html",
-												id: "login"
+												id: "login",
+												waiting: {
+								                   autoShow: false
+							                        },
+												show:{
+													aniShow:'pop-in'	
+												}
 											})
 											return false;
 										}

@@ -299,6 +299,9 @@
 						id: "txtLive",
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				}, false)
@@ -312,6 +315,9 @@
 						},
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				}, false)
@@ -343,15 +349,15 @@
 							loading.style.display = 'none';
 							if (data.length <= 0) {
 								nodata.style.display = 'block';
-							} else {
+							} else { 
 								nodata.style.display = 'none';
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
 								var myDate = subStr(1, data[i].insertDate);
-								todayStr += "<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>" + myDate + "</span></li>" + "</ul><div class='content'><div id='body'>" + data[i].bodys + "</div><div><br></div></div></div>";
+								todayStr = "<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>" + myDate + "</span></li>" + "</ul><div class='content'><div id='body'>" + data[i].bodys + "</div><div><br></div></div></div>";
+							    todayLive.innerHTML += todayStr;
 							}
-							todayLive.innerHTML = todayStr;
 							if (p < totlePage) {
 								loadMore.style.display = 'block';
 							} else {
@@ -394,9 +400,9 @@
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
 								var myDate = subStr(1, data[i].insertDate);
-								todayStr += "<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>" + myDate + "</span></li>" + "</ul><div class='content'><div>" + data[i].bodys + "</div><div><br></div></div></div>";
+								todayStr = "<div class='item'><ul><li class='title_info'><img class='xx' src='image/yx.png'><span class='date' style='background: url(image/shijian.jpg);'>" + myDate + "</span></li>" + "</ul><div class='content'><div>" + data[i].bodys + "</div><div><br></div></div></div>";
+							    todayLive.innerHTML += todayStr;
 							}
-							todayLive.innerHTML = todayStr;
 							if (p < totlePage) {
 								loadMore.style.display = 'block';
 							} else {

@@ -326,6 +326,9 @@
 										},
 										waiting: {
 											autoShow: false
+										},
+										show:{
+											aniShow:'pop-in'
 										}
 									})
 								} else if (id == 3) {
@@ -335,6 +338,9 @@
 										id: "trhreeBoard",
 										waiting: {
 											autoShow: false
+										},
+										show:{
+										 aniShow:'pop-in'
 										}
 									})
 								}
@@ -361,12 +367,12 @@
 							live_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							liveUrl += "<li title="+data[i].title
+							liveUrl = "<li title="+data[i].title
 							+" money="+data[i].payMoney+" types="+data[i].isPay+"  style='float: left;width: " + (width / 2 - 50) + "px;margin-left:10px;'id=" + data[i].id + ">"
 							+ "<span><a ><img src=" + data[i].url + "  /><h3 style='font-size:13px;'>"
 							+ data[i].title + "</h3></a></span></li>";
+						   live.innerHTML += liveUrl;
 						}
-						live.innerHTML = liveUrl;
 						mui("#data-live").on("tap", "li", function() {
 							var liveId = this.getAttribute("id");
 							var name = plus.os.name;
@@ -393,6 +399,9 @@
 									},
 									waiting: {
 										autoShow: false
+									},
+									show:{
+									 aniShow:'pop-in'
 									}
 								})
 							}
@@ -417,9 +426,9 @@
 							board_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							three_board += "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
+							three_board = "<li id=" + data[i].id + "><span><a><img src=" + data[i].imageThumb + " /></a></span> " + " <div><h3><a>" + data[i].title + "</a></h3><p style='height: 40px;overflow: hidden;'>" + data[i].descript + "</p></div> </li>";
+						    board.innerHTML +=  three_board;
 						}
-						board.innerHTML = three_board;
 						mui("#data-threeboard").on("tap", "li", function() {
 							var nId = this.getAttribute("id");
 							mui.openWindow({
@@ -431,7 +440,11 @@
 								},
 								waiting: {
 									autoShow: false
+								},
+								show:{
+									aniShow:'pop-in'
 								}
+								
 							})
 						})
 					},
@@ -454,9 +467,9 @@
 							attention_banner.style.display = 'block';
 						}
 						for (var i = 0; i < data.length; i++) {
-							attentionUrl += " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
+							attentionUrl = " <li id=" + data[i].id + "><a>" + data[i].title + "</a></li>";
+						    attention.innerHTML += attentionUrl;
 						}
-						attention.innerHTML = attentionUrl;
 						mui("#data-attention").on("tap", "li", function() {
 							var nId = this.getAttribute("id");
 							mui.openWindow({
@@ -468,6 +481,9 @@
 								},
 								waiting: {
 									autoShow: false
+								},
+								show:{
+								  aniShow:'pop-in'
 								}
 							})
 						})
@@ -492,9 +508,9 @@
 							}
 							for (var i = 0; i < data.length; i++) {
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								hotUrl += "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+								hotUrl = "<li id=" + data[i].id + "><span><a><img src=" + data[i].logImage + "  /></a></span> " + " <div><h3><a style='margin-left:20px'>" + data[i].title + "</a></h3><lable style='height: 2.4rem;overflow: hidden;float:right;margin-left:20px;font-size: 0.8rem;color: #666;line-height:1.2rem;'>" + body + "</lable></div> </li>";
+							    hotIdea.innerHTML += hotUrl;
 							}
-							hotIdea.innerHTML = hotUrl;
 							mui("#data-hotidea").on("tap", "li", function() {
 								var nId = this.getAttribute("id");
 								mui.openWindow({
@@ -505,6 +521,9 @@
 									},
 									waiting: {
 										autoShow: false
+									},
+									show:{
+										aniShow:'pop-in'
 									}
 								})
 							})
@@ -522,6 +541,9 @@
 								id: "login",
 								waiting: {
 									autoShow: false
+								},
+								show:{
+									aniShow:'pop-in'
 								}
 							})
 						} else {
@@ -530,6 +552,9 @@
 								id: "vipcenter",
 								waiting: {
 									autoShow: false
+								},
+								show:{
+									aniShow:'pop-in'											
 								}
 							})
 						}
@@ -542,8 +567,8 @@
 							waiting: {
 								autoShow: false
 							},
-							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							show:{
+								aniShow:'none'	
 							}
 						})
 					})
@@ -556,7 +581,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'pop-in'	
 							}
 						})
 					})
@@ -569,7 +594,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'none'
 							}
 						})
 					})
@@ -582,7 +607,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'pop-in'	
 							}
 						})
 					})
@@ -595,7 +620,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'none'	
 							}
 						})
 					})
@@ -608,7 +633,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'pop-in'	
 							}
 						})
 					})
@@ -621,7 +646,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'none'	
 							}
 						})
 					})
@@ -634,7 +659,7 @@
 							autoShow: false
 						},
 						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							aniShow:'pop-in'	
 						}
 					})
 				})

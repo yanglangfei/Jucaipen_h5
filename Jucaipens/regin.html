@@ -154,7 +154,10 @@
 				login.addEventListener("tap", function() {
 					mui.openWindow({
 						url: "login.html",
-						id: "login"
+						id: "login",
+						show:{
+							aniShow:'pop-in'	
+						}
 					});
 				}, false);
 				regin.addEventListener("tap", function() {
@@ -209,7 +212,10 @@
 							if (isLogin == true) {
 								mui.openWindow({
 									url: "login.html",
-									id: "login"
+									id: "login",
+									show:{
+										aniShow:'pop-in'	
+									}
 								});
 							} else {
 								plus.ui.toast(msg);

@@ -114,14 +114,14 @@
 								var roomFace = data[i].RoomFace;
 								var UserLevel = data[i].UserLevel;
 								if (liveUrl != null) {
-									liveInfo += "<li face=" + roomFace + " style='float: left;width: 46%;'id=" 
+									liveInfo = "<li face=" + roomFace + " style='float: left;width: 46%;'id=" 
 									+ data[i].id + " isVisit=" + data[i].IsStopYouke + " visitDay=" 
 									+ data[i].ShiTingDay + " visitLeal=" + data[i].UserLevel + ">" 
 									+ "<span><a ><img src=" + roomFace + "  /><h3>" + data[i].roomName 
 									+ "</h3></a></span></li>";
 								}
+								video.innerHTML += liveInfo;
 							}
-							video.innerHTML = liveInfo;
 							mui("#data-live").on("tap", "li", function() {
 								var lId = this.getAttribute("id");
 								var face = this.getAttribute('face');
@@ -172,6 +172,9 @@
 							},
 							waiting: {
 								autoShow: false
+							},
+							show:{
+								aniShow:'pop-in'	
 							}
 						})
 					}
@@ -183,6 +186,9 @@
 						id: "login",
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				}
@@ -193,6 +199,9 @@
 						id: "vipcenter",
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				}
@@ -215,7 +224,7 @@
 							},
 							createNew:true,
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'none'	 //页面显示动画，默认为”slide-in-right“；
 							}
 						})
 					}, false)
@@ -291,7 +300,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'none' //页面显示动画，默认为”slide-in-right“；
 							}
 						})
 					}, false)
@@ -304,7 +313,7 @@
 								autoShow: false
 							},
 							show: {
-								aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+								aniShow:'none'	//页面显示动画，默认为”slide-in-right“；
 							}
 						})
 					}, false)
@@ -317,7 +326,7 @@
 							autoShow: false
 						},
 						show: {
-							aniShow: 'none' //页面显示动画，默认为”slide-in-right“；
+							aniShow:'none'	//页面显示动画，默认为”slide-in-right“；
 						}
 					})
 				}, false)

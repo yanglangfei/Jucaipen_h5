@@ -145,14 +145,14 @@
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + logoStr;
 								}
-								askStr = askStr + "<div class='item' style='margin-left:8px;'><div class='userhead'>"
+								askStr =  "<div class='item' style='margin-left:8px;'><div class='userhead'>"
 								+ "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr) + "></a></div>"
 								+ "<div class='content' ><a><span class='u_name' style='margin-left:15px;'>" 
 								+ data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" 
 								+ myDate + "</span>" + "<div class='bodys'><a style='color:#8D8D8D;' style='margin-left:20px;'>" 
 								+ data[i].askBodys + "</a></div><span class='type'>0人回答</span></div></div>";
+							    askList.innerHTML += askStr;
 							}
-							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
 								ask_gengduo.style.display = 'block';
 							} else {
@@ -195,14 +195,14 @@
 									logoStr = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' 
 									+ logoStr;
 								}
-								askStr = askStr + "<div style='margin-left:8px;' class='item'><div class='userhead'>" 
+								askStr = "<div style='margin-left:8px;' class='item'><div class='userhead'>" 
 								+ "<a><img style='width:50px;height:50px;' src=" + isNull(logoStr)
 								+ "></a></div>" + "<div class='content'><a><span class='u_name' style='margin-left:15px;'>" 
 								+ data[i].userName + "</span></a><span class='u_date' style='margin-left:15px;'>" 
 								+ myDate + "</span>" + "<div class='bodys'><a>" + data[i].askBodys 
 								+ "</a></div><span class='type'>0人回答</span></div></div>";
+							   askList.innerHTML += askStr;
 							}
-							askList.innerHTML = askStr;
 							if (currentPage < totlePage) {
 								ask_gengduo.style.display = 'block';
 							} else {
@@ -227,6 +227,9 @@
 						},
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				}, false)
@@ -236,6 +239,9 @@
 						id: "askList",
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				})

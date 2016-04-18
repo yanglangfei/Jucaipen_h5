@@ -131,9 +131,9 @@
 								if (fansLogo.indexOf("121.40.227.121") > 0) {
 									fansLogo = 'http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=' + fansLogo;
 								}
-								fansStr += "<div class='item'><span><img style='width:50px;height:50px;' src=" + isNull(fansLogo) + " /></span>" + "<em style='margin-left:13px;'>" + data[i].userName + "</em></div>";
+								fansStr = "<div class='item'><span><img style='width:50px;height:50px;' src=" + isNull(fansLogo) + " /></span>" + "<em style='margin-left:13px;'>" + data[i].userName + "</em></div>";
+							    fansLay.innerHTML += fansStr;
 							}
-							fansLay.innerHTML = fansStr;
 							if (currentPage < totlePage) {
 								fans_gd.style.display = 'block';
 							} else {

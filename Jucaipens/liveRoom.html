@@ -314,9 +314,9 @@
 									} else {
 										//非客服
 									}
-									content += "<li ><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+									content = "<li ><span id='chat-time'>" + myDate + "</span><span id='sp_head'>" + "<img src=" + headLogo + " id='iv_head'/>" + "</span><span id='chat-name'>" + data[i].SendUserName + "</span>" + "<span id='chat-content'>" + data[i].MessBody + "</span></li>";
+								    chatLay.innerHTML += content;
 								}
-								chatLay.innerHTML = content;
 								if (content != null) {
 									var imgs = document.getElementsByTagName("img");
 									for (var i = 0; i < imgs.length; i++) {

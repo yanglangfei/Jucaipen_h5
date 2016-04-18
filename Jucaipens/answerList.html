@@ -135,14 +135,14 @@
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
-								questionStr += "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>"
+								questionStr = "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>"
 								+ "<img src=" + data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName 
 								+ "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" + data[i].level + "</em></div><a class='ask' id='ask' tag=" 
 								+ data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
 								+ data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em style='font-size:12px'>已回答</em></div>" 
 								+ "<div class='huida_body'>" + data[i].answerBody + "</div></div>"
+							    answerList.innerHTML += questionStr;
 							}
-							answerList.innerHTML = questionStr;
 							if (currentPage < totlePage) {
 								getMore.style.display = 'block';
 							} else {
@@ -160,6 +160,9 @@
 											},
 											extras: {
 												teacherId: tId
+											},
+											show:{
+												aniShow:'pop-in'	
 											}
 										})
 										return false;
@@ -174,6 +177,9 @@
 											id: "login",
 											waiting: {
 												autoShow: false
+											},
+											show:{
+												aniShow:'pop-in'	
 											}
 										})
 										return false;
@@ -186,6 +192,9 @@
 										},
 										waiting: {
 											autoShow: false
+										},
+										show:{
+											aniShow:'pop-in'	
 										}
 									})
 									return false;
@@ -233,12 +242,12 @@
 							}
 							for (var i = 0; i < data.length; i++) {
 								totlePage = data[i].totlePage;
-								questionStr += "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" 
+								questionStr = "<div id=" + data[i].teacherId + " class='item' style='width:100%;'><div class='huida'><a><span>" + "<img src=" 
 								+ data[i].headFace + "></span></a><div class='name'>" + "<a><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4>" + "</a><em>" 
 								+ data[i].level + "</em></div><a class='ask' id='ask' tag=" + data[i].teacherId + ">咨询</a></div><div class='wen'>" + "<span> <img src='image/askinfo.png'></span><p><a>"
 								+ data[i].askName + ":</a>" + "<a style='color: #666'>" + data[i].askBody + "</a></p><em style='font-size:12px'>已回答</em></div>" + "<div class='huida_body'>" + data[i].answerBody + "</div></div>";
+							   answerList.innerHTML += questionStr;
 							}
-							answerList.innerHTML = questionStr;
 							if (currentPage < totlePage) {
 								getMore.style.display = 'block';
 							} else {
@@ -255,6 +264,9 @@
 										},
 										extras: {
 											teacherId: tId
+										},
+										show:{
+											aniShow:'pop-in'	
 										}
 									})
 									return false;
@@ -269,6 +281,9 @@
 										id: "login",
 										waiting: {
 											autoShow: false
+										},
+										show:{
+											aniShow:'pop-in'	
 										}
 									})
 									return false;
@@ -281,6 +296,9 @@
 									},
 									waiting: {
 										autoShow: false
+									},
+									show:{
+										aniShow:'pop-in'	
 									}
 								})
 								return false;
@@ -300,6 +318,9 @@
 						id: "answerList",
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				})
@@ -312,6 +333,9 @@
 						},
 						waiting: {
 							autoShow: false
+						},
+						show:{
+							aniShow:'pop-in'	
 						}
 					})
 				})

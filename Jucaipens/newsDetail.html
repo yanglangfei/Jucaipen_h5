@@ -418,9 +418,9 @@
 						newsDetail_load.style.display = 'none';
 						newsAbout.style.display = 'block';
 						for (var i = 0; i < data.length; i++) {
-							relaUrl = relaUrl + "<li id=" + data[i].id + " name="+data[i].typeName+"  >•<a>" + data[i].title + "</a></li>";
+							relaUrl =  "<li id=" + data[i].id + " name="+data[i].typeName+"  >•<a>" + data[i].title + "</a></li>";
+						    relate.innerHTML += relaUrl;
 						}
-						relate.innerHTML = relaUrl;
 						mui("#data-relate").on("tap", "li", function() {
 							var nId = this.getAttribute("id");
 							var name=this.getAttribute('name');
@@ -431,7 +431,9 @@
 									newsId: nId,
 									name:name
 								},
-							
+								show:{
+									aniShow:'pop-in'	
+								},
 							waiting: {
 									autoShow: false
 								},
@@ -470,12 +472,12 @@
 								if (logoStr.indexOf("121.40.227.121") > 0) {
 									logoStr = "http://121.40.227.121:8080/AccumulateWealth/jucaipen/downUserLogo?filename=" + logoStr;
 								}
-								commUrl = commUrl + "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" + "<labe style='margin-left:10px;'>" + data[i].userName + "</lable></span>" + "<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
+								commUrl =  "  <li><div  class='headFace'><img  style='border-radius:50%;width:50px;height:50px;' id='headLogo' src=" + isNull(logoStr) + " /></div><div id='vItem' ><h4 ><span id='nickName'>" + "<labe style='margin-left:10px;'>" + data[i].userName + "</lable></span>" + "<span id='sp_good' class=" + data[i].id + "><img src='image/good.png' id='iv_good' />" +
 									"</span><span id='sp_comm'  class=" + data[i].id + " name=" + data[i].userName + "><img src='image/comm_icon1.png' id='iv_comm'/>" +
 									"</span></h4><span id='comBody' style='margin-left:10px;'>" + data[i].body + "</span><span id='commTime'>" +
 									myDate + "</span>" + "	</div></li> "
+							      comment.innerHTML += commUrl;
 							}
-							comment.innerHTML = commUrl;
 							if (currentPage < totlePage) {
 								getMore.style.display = 'block';
 							} else {
@@ -488,7 +490,10 @@
 								if (uId <= 0) {
 									mui.openWindow({
 										url: "login.html",
-										id: "login"
+										id: "login",
+										show:{
+											aniShow:'pop-in'	
+										}
 									})
 									return;
 								}
@@ -609,7 +614,10 @@
 						if (uId <= 0) {
 							mui.openWindow({
 								url: "login.html",
-								id: "login"
+								id: "login",
+								show:{
+									aniShow:'pop-in'	
+								}
 							})
 							return;
 						}
@@ -639,7 +647,10 @@
 					if (uId <= 0) {
 						mui.openWindow({
 							url: "login.html",
-							id: "login"
+							id: "login",
+							shiow:{
+								aniShow:'pop-in'	
+							}
 						})
 						return;
 					}

@@ -140,9 +140,9 @@
 							for (var i = 0; i < data.length; i++) {
 								var myDate = subStr(4, data[i].insertDate);
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								ideaStr += "<div datas=" + myDate + " id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+								ideaStr = "<div datas=" + myDate + " id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+							    intrivlIdea.innerHTML += ideaStr;
 							}
-							intrivlIdea.innerHTML = ideaStr;
 							if (currentPage < totlePage) {
 								gengduo.style.display = 'block';
 							} else {
@@ -160,6 +160,9 @@
 									},
 									waiting: {
 										autoShow: false
+									},
+									show:{
+										aniShow:'pop-in'	
 									}
 								})
 							}, false)
@@ -198,9 +201,9 @@
 								totlePage = data[0].totlePage;
 								var myDate = subStr(4, data[i].insertDate);
 								var body = data[i].bodys.replace(/<[^>]+>/g, "");
-								ideaStr += "<div datas=" + myDate + " id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+								ideaStr = "<div datas=" + myDate + " id=" + data[i].id + " class='item'> <div class='tit'><a><span><img src=" + data[i].headFace + "></span></a>" + " <a  style='color:#333'><h4>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></h4><em>" + myDate + "</em>" + "</a> <p>" + data[i].level + "</p></div> <div class='newstit'> <h3><a>" + data[i].title + "</a></h3>" + "<a><p style='height: 40px;overflow: hidden;'>" + body + "</p></a></div>" + "<div class='img_read'> <span><i><img src='image/hits.png'></i><em>" + data[i].hits + "</em></span> </div></div>";
+							    intrivlIdea.innerHTML += ideaStr;
 							}
-							intrivlIdea.innerHTML = ideaStr;
 							if (currentPage < totlePage) {
 								gengduo.style.display = 'block';
 							} else {
@@ -218,6 +221,9 @@
 									},
 									waiting: {
 										autoShow: false
+									},
+									show:{
+										aniShow:'pop-in'	
 									}
 								})
 							}, false)

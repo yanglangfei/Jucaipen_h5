@@ -130,14 +130,14 @@
 								}
 								for (var i = 0; i < data.length; i++) {
 									var dateStr = subStr(0, data[i].startDate);
-									dishStr += "<div  tId=" + data[i].teacherId + "  title=" + data[i].title + " logo=" + data[i].headFace + " type=" + data[i].liveType + " name=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a></div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[" + dateStr + "]</span>" + data[i].title + "</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>	</a></div></div>"
+									dishStr = "<div  tId=" + data[i].teacherId + "  title=" + data[i].title + " logo=" + data[i].headFace + " type=" + data[i].liveType + " name=" + data[i].nickName + " id=" + data[i].id + " class='item'><div class='txt_head'>" + "<a><span><img src=" + data[i].headFace + "></span></a></div><div class='txt_tit'><h3><a>" + data[i].nickName + "&nbsp;<i><img src='image/v1.png'></i></a></h3>" + "<h4>" + data[i].level + "</h4><p><span>[" + dateStr + "]</span>" + data[i].title + "</p></div><div class='txt_guanzhu'><a><em>人气</em><br /><i>" + data[i].renQi + "</i>	</a></div></div>"
+								    dishList.innerHTML += dishStr;
 								}
 								if (currentPage < totlePage) {
 									txtlive_gd.style.display = 'block';
 								} else {
 									txtlive_gd.style.display = 'none';
 								}
-								dishList.innerHTML = dishStr;
 								mui("#dishList").on("tap", ".item", function() {
 									var liveId = this.getAttribute("id");
 									var name = this.getAttribute("name");
@@ -157,6 +157,9 @@
 												id: "login",
 												waiting: {
 													autoShow: false
+												},
+												show:{
+													aniShow:'pop-in'	
 												}
 											})
 											return;
@@ -228,6 +231,9 @@
 							},
 							waiting: {
 								autoShow: false
+							},
+							show:{
+								aniShow:'pop-in'	
 							}
 						})
 					}

@@ -228,8 +228,8 @@
 
 		<script type="text/javascript" charset="UTF-8">
 			mui.init({
-				swipeBack: true, //启用右滑关闭功能
-				preloadPages:[
+				swipeBack: true //启用右滑关闭功能
+				/*preloadPages:[
 				{
 					url:"dishList.html",
 					id:"dishList"
@@ -237,22 +237,22 @@
 					url:'teacherList.html',
 					id:"teacherList"
 				}
-				]
+				]*/
 			});
 			mui.plusReady(function() {
 				//预加载名师看盘信息
-				var dishPage = mui.preload({
+				/*var dishPage = mu i.preload({
 						url: "dishList.html",
-						id: "dishList",
+						id: "dishList",  
 						extras:{
 							querryType:1
 						}
-					})
+					})*/
 					//与加载找名家
-				var teacherListPage = mui.preload({
+				/*var teacherListPage = mui.preload({
 					url: "teacherList.html",
 					id: "teacherList"
-				})
+				})*/
 				var page = document.getElementById('pager');
 				var queryAdice = "http://"+portStr()+"/AccumulateWealth/jucaipen/adverQuerry";
 				var teacherList = "http://"+portStr()+"/AccumulateWealth/jucaipen/famousTeacherList";
@@ -524,6 +524,9 @@
 							waiting: {
 								autoShow: false
 							},
+							extras:{
+							querryType:1
+						},
 							show:{
 								aniShow:'pop-in'	
 							}

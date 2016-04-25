@@ -316,7 +316,9 @@
 					"image/response.png",
 					"fonts/mui.ttf",
 					"js/style.js",
-					"js/jquery-1.11.0.js"
+					"js/jquery-1.11.0.js",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [
 					"login.html"
